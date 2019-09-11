@@ -16,9 +16,4 @@ Pod::Spec.new do |s|
     default.source_files = ['Source/**/**/**/*.{h,m,swift}']
     s.dependency 'MLUI', '~> 5.0'
   end
-
-  #s.test_spec do |test_spec|
-    #test_spec.source_files = '/Tests/*'
-    #test_spec.frameworks = 'XCTest'
-  #end
 end
