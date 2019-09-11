@@ -3,6 +3,11 @@
 <a href="https://app.bitrise.io/app/3bb8e8193945cb87">
 <img src="https://app.bitrise.io/app/3bb8e8193945cb87/status.svg?token=nOcqLjeT7sqGObFhel48ag">
 </a>
+    
+<a href="https://codebeat.co/projects/github-com-mercadolibre-mlbusiness-components-ios-master">
+<img src="https://codebeat.co/badges/5cc16dc0-cfdf-435a-a6c5-9d86566a7e95" alt="Codebeat quality status" />
+</a>
+    
 <img src="https://img.shields.io/badge/Swift-4.2-orange.svg" />
 <a href="https://cocoapods.org/pods/MLBusinessComponents">
 <img src="https://img.shields.io/cocoapods/v/MLBusinessComponents.svg" alt="CocoaPods" />
@@ -126,8 +131,8 @@ We use `MLUI` open source library to customize accent colors and font labels. In
 https://github.com/mercadolibre/fury_mobile-ios-ui
 
 ## 😉 Next steps?
-* [ ] Bitrise for releases.
-* [ ] Codebeat integration.
+* [X] Bitrise for releases.
+* [X] Codebeat integration.
 * [ ] Snapshot Test cases.
 * [ ] SwiftLint.
 * [ ] Migration to Swift 5.
