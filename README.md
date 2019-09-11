@@ -125,6 +125,123 @@ This component allow you to show a group of N items in a grid system (3 cols by 
 #### Visual Example:
 ![MLBusinessDiscountBoxView](https://github.com/mercadolibre/mlbusiness-components-ios/blob/master/Documentation/images/discountBoxViewComponent.png?raw=true)
 
+### MLBusinessDiscountBoxView init
+You need to set `MLBusinessDiscountBoxData` protocol. This interface allow you to populate the draw data into component. (Title, subtitle for the main component and imageUrl. Title, subtitle, deepLinkItem and trackId for each item).
+
+```swift
+// DiscountData() is an implementation of MLBusinessDiscountBoxData protocol.
+let discountView = MLBusinessDiscountBoxView(DiscountData())
+view.addSubview(discountView)
+
+/* 
+    Set your constraints. You don't need to set up the HEIGHT contraint. 
+    Because this component is responsible for knowing and setting your own HEIGHT.
+*/
+NSLayoutConstraint.activate([
+   discountView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+   discountView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+   discountView.topAnchor.constraint(equalTo: targetView.bottomAnchor)
+])
+```
+
+### MLBusinessDiscountBoxData Protocol
+This protocol allow you to providade the proper data to draw `MLBusinessDiscountBoxView`. You can setup title and subtitle for the main component and a list of `MLBusinessDiscountSingleItemProtocol` that represent each element of the cell.
+
+#### Definition
+```swift
+@objc public protocol MLBusinessDiscountBoxData: NSObjectProtocol {
+    @objc optional func getTitle() -> String
+    @objc optional func getSubtitle() -> String
+    @objc func getItems() -> [MLBusinessSingleItemProtocol]
+}
+```
+
+Implementation of `MLBusinessDiscountBoxData` in DiscountData example:
+```swift
+class DiscountData: NSObject, MLBusinessDiscountBoxData {
+    func getTitle() -> String {
+        return "200 descuentos"
+    }
+
+    func getSubtitle() -> String {
+        return "por ser nivel 3"
+    }
+
+    func getItems() -> [MLBusinessSingleItemProtocol] {
+        var array: [MLBusinessSingleItemProtocol] = [MLBusinessSingleItemProtocol]()
+        array.append(SingleItemData(title: "Hasta", subtitle: "$ 200", iconImageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/McDonald%27s_Golden_Arches.svg/1200px-McDonald%27s_Golden_Arches.svg.png"))
+        array.append(SingleItemData(title: "Hasta", subtitle: "$ 200", iconImageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRY0eFECzyTCa83gOV3smCYDOSIggdUxSPirwtt5rS3LcWlzefo"))
+        array.append(SingleItemData(title: "Hasta", subtitle: "$ 200", iconImageUrl: "https://upload.wikimedia.org/wikipedia/commons/b/b3/Logo-freddo.jpg"))
+        array.append(SingleItemData(title: "Hasta", subtitle: "$ 200", iconImageUrl: "https://urbancomunicacion.com/wp-content/uploads/2017/04/Logotipos-famosos-Starbucks-Urban-comunicacion-1.png"))
+        array.append(SingleItemData(title: "Hasta", subtitle: "$ 200", iconImageUrl: "https://www.stickpng.com/assets/images/5a1c3211f65d84088faf13e8.png"))
+        array.append(SingleItemData(title: "Hasta", subtitle: "$ 200", iconImageUrl: "https://pbs.twimg.com/profile_images/1124417403566395394/9Wuzg8pf.png"))
+        return array
+    }
+}
+```
+### SingleItem Protocol
+This protocol/interfase represents the element of each cell for `MLBusinessDiscountBoxView`.
+Each element contains imageUrl, title, subtitle, deepLinkItem and trackId.
+
+#### Definition
+```swift
+@objc public protocol MLBusinessSingleItemProtocol: NSObjectProtocol {
+    @objc func titleForItem() -> String
+    @objc func subtitleForItem() -> String
+    @objc func iconImageUrlForItem() -> String
+    @objc func deepLinkForItem() -> String?
+    @objc func trackIdForItem() -> String?
+}
+```
+
+Implementation of `MLBusinessSingleItemProtocol` in example:
+```swift
+class SingleItemData: NSObject {
+    let title: String
+    let subTitle: String
+    let iconUrl: String
+    let deepLink: String?
+    let trackId: String?
+
+    init(title: String, subtitle: String, iconImageUrl: String, deepLink: String? = nil, trackId: String? = nil) {
+        self.title = title
+        self.subTitle = subtitle
+        self.iconUrl = iconImageUrl
+        self.deepLink = deepLink
+        self.trackId = trackId
+    }
+}
+
+extension SingleItemData: MLBusinessSingleItemProtocol {
+    func titleForItem() -> String {
+        return title
+    }
+
+    func subtitleForItem() -> String {
+        return subTitle
+    }
+
+    func iconImageUrlForItem() -> String {
+        return iconUrl
+    }
+
+    func deepLinkForItem() -> String? {
+        return deepLink
+    }
+
+    func trackIdForItem() -> String? {
+        return trackId
+    }
+}
+```
+
+### How to receive a tap action of item with the deep link and trackId?
+You can be informed when the user presses the item of the component and receive the deeplink, trackId and item index previously sent in `MLBusinessSingleItemProtocol`
+```swift
+discountView.addTapAction { (selectedIndex, deepLink, trackId) in
+   print(selectedIndex)
+}
+```
 
 ## 🔠 Font and color customization.
 We use `MLUI` open source library to customize accent colors and font labels. In order to change those values check the documentation of `MLUI` stylesheet protocol.
