@@ -14,6 +14,7 @@ final class MLBusinessDiscountTableViewCell: UITableViewCell {
     private let stackView = UIStackView(frame: .zero)
     private var itemViews: [MLBusinessDiscountSingleItemView] = [MLBusinessDiscountSingleItemView]()
     private weak var delegate: MLBusinessUserInteractionProtocol?
+    private var section: Int = 0
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -32,7 +33,8 @@ final class MLBusinessDiscountTableViewCell: UITableViewCell {
 
 // MARK: Setup Cell.
 extension MLBusinessDiscountTableViewCell {
-    func setupCell(discountItems: [MLBusinessDiscountSingleItem], interactionDelegate: MLBusinessUserInteractionProtocol? = nil) {
+    func setupCell(discountItems: [MLBusinessSingleItemProtocol], interactionDelegate: MLBusinessUserInteractionProtocol? = nil, section: Int) {
+        self.section = section
         delegate = interactionDelegate
         updateStackView(discountItems)
     }
@@ -55,10 +57,12 @@ extension MLBusinessDiscountTableViewCell {
         ])
     }
 
-    private func updateStackView(_ items: [MLBusinessDiscountSingleItem]) {
+    private func updateStackView(_ items: [MLBusinessSingleItemProtocol]) {
+        var currentIndex = 0
         for item in items {
-            let itemView = MLBusinessDiscountSingleItemView(discountSingleItem: item)
+            let itemView = MLBusinessDiscountSingleItemView(discountSingleItem: item, itemIndex: currentIndex, itemSection: section)
             itemViews.append(itemView)
+            currentIndex = currentIndex + 1
             itemView.delegate = self
             stackView.addArrangedSubview(itemView)
         }
@@ -74,7 +78,7 @@ extension MLBusinessDiscountTableViewCell {
 
 // MARK: MLBusinessUserInteractionProtocol.
 extension MLBusinessDiscountTableViewCell: MLBusinessUserInteractionProtocol {
-    func didTap(item: MLBusinessDiscountSingleItem) {
-        delegate?.didTap(item: item)
+    func didTap(item: MLBusinessSingleItemProtocol, index: Int, section: Int) {
+        delegate?.didTap(item: item, index: index, section: section)
     }
 }

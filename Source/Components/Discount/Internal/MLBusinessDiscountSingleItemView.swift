@@ -11,24 +11,32 @@ import UIKit
 import MLUI
 
 internal protocol MLBusinessUserInteractionProtocol: NSObjectProtocol {
-    func didTap(item: MLBusinessDiscountSingleItem)
+    func didTap(item: MLBusinessSingleItemProtocol, index: Int, section: Int)
 }
 
 final class MLBusinessDiscountSingleItemView: UIView {
     static let itemHeight: CGFloat = 104
-    private let discountSingleItem: MLBusinessDiscountSingleItem
+    private let discountSingleItem: MLBusinessSingleItemProtocol
     private let iconImageSize: CGFloat = 56
+    private var itemIndex: Int = 0
+    private var itemSection: Int = 0
 
     weak var delegate: MLBusinessUserInteractionProtocol?
 
-    init(discountSingleItem: MLBusinessDiscountSingleItem) {
+    init(discountSingleItem: MLBusinessSingleItemProtocol, itemIndex: Int, itemSection: Int) {
         self.discountSingleItem = discountSingleItem
+        self.itemIndex = itemIndex
+        self.itemSection = itemSection
         super.init(frame: .zero)
         render()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func getItemIndex() -> Int {
+        return itemIndex
     }
 }
 
@@ -39,7 +47,7 @@ extension MLBusinessDiscountSingleItemView {
         self.backgroundColor = .white
         let icon: CustomUIImageView = CustomUIImageView()
         icon.prepareForAutolayout(.clear)
-        icon.loadImage(url: discountSingleItem.iconImageUrl, placeholder: nil, placeHolderRadius: iconImageSize/2)
+        icon.loadImage(url: discountSingleItem.iconImageUrlForItem(), placeholder: nil, placeHolderRadius: iconImageSize/2)
         self.addSubview(icon)
         icon.contentMode = .scaleAspectFit
         NSLayoutConstraint.activate([
@@ -54,7 +62,7 @@ extension MLBusinessDiscountSingleItemView {
         self.addSubview(itemTitle)
         itemTitle.font = UIFont.ml_lightSystemFont(ofSize: UI.FontSize.XXS_FONT)
         itemTitle.applyBusinessLabelStyle()
-        itemTitle.text = discountSingleItem.title
+        itemTitle.text = discountSingleItem.titleForItem()
         itemTitle.textAlignment = .center
         itemTitle.numberOfLines = 1
         NSLayoutConstraint.activate([
@@ -68,7 +76,7 @@ extension MLBusinessDiscountSingleItemView {
         self.addSubview(itemSubtitle)
         itemSubtitle.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.M_FONT)
         itemSubtitle.applyBusinessLabelStyle()
-        itemSubtitle.text = discountSingleItem.subtitle
+        itemSubtitle.text = discountSingleItem.subtitleForItem()
         itemSubtitle.textAlignment = .center
         itemSubtitle.numberOfLines = 1
         NSLayoutConstraint.activate([
@@ -78,14 +86,12 @@ extension MLBusinessDiscountSingleItemView {
             itemSubtitle.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
 
-        if discountSingleItem.deepLink != nil {
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.didTapOnButton))
-            self.addGestureRecognizer(tapGesture)
-        }
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.didTapOnButton))
+        self.addGestureRecognizer(tapGesture)
     }
 
     // MARK: Tap Selector
     @objc private func didTapOnButton() {
-        delegate?.didTap(item: discountSingleItem)
+        delegate?.didTap(item: discountSingleItem, index: itemIndex, section: itemSection)
     }
 }

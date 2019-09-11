@@ -13,7 +13,7 @@ import MLUI
     private let viewData: MLBusinessDiscountBoxData
     private let itemsPerRow: Int = 3
     private let rowSeparationOffset: CGFloat = UI.Margin.L_MARGIN
-    private var tapAction: ((_ deepLink: String?, _ trackId: String?) -> Void)?
+    private var tapAction: ((_ index: Int, _ deepLink: String?, _ trackId: String?) -> Void)?
 
     public init(_ viewData: MLBusinessDiscountBoxData) {
         self.viewData = viewData
@@ -96,9 +96,9 @@ extension MLBusinessDiscountBoxView: UITableViewDelegate, UITableViewDataSource 
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let itemsData: [MLBusinessDiscountSingleItem] = getItems(indexPath.section)
+        let itemsData: [MLBusinessSingleItemProtocol] = getItems(indexPath.section)
         if let dequeueCell = tableView.dequeueReusableCell(withIdentifier: MLBusinessDiscountTableViewCell.cellIdentifier, for: indexPath) as? MLBusinessDiscountTableViewCell {
-            dequeueCell.setupCell(discountItems: itemsData, interactionDelegate: self)
+            dequeueCell.setupCell(discountItems: itemsData, interactionDelegate: self, section: indexPath.section)
             return dequeueCell
         }
         return UITableViewCell()
@@ -120,7 +120,7 @@ private extension MLBusinessDiscountBoxView {
         return itemsCount % itemsPerRow == 0 ? roundedValue : roundedValue + 1
     }
 
-    func getItems(_ index: Int) -> [MLBusinessDiscountSingleItem] {
+    func getItems(_ index: Int) -> [MLBusinessSingleItemProtocol] {
         var offset = itemsPerRow - 1
         let indexArray = index * itemsPerRow
         if indexArray >= 0 && indexArray + offset >= viewData.getItems().count {
@@ -137,14 +137,18 @@ private extension MLBusinessDiscountBoxView {
 
 // MARK: MLBusinessUserInteractionProtocol.
 extension MLBusinessDiscountBoxView: MLBusinessUserInteractionProtocol {
-    func didTap(item: MLBusinessDiscountSingleItem) {
-        tapAction?(item.deepLink, item.trackId)
+    func didTap(item: MLBusinessSingleItemProtocol, index: Int, section: Int) {
+        if section == 0 {
+            tapAction?(index, item.deepLinkForItem(), item.trackIdForItem())
+        } else {
+            tapAction?(itemsPerRow + index, item.deepLinkForItem(), item.trackIdForItem())
+        }
     }
 }
 
 // MARK: Public Methods.
 extension MLBusinessDiscountBoxView {
-    @objc open func addTapAction(_ action: ((_ deepLink: String?, _ trackId: String?) -> Void)?) {
+    @objc open func addTapAction(_ action: ((_ index: Int, _ deepLink: String?, _ trackId: String?) -> Void)?) {
         self.tapAction = action
     }
 }
