@@ -8,7 +8,6 @@
 import UIKit
 
 @objc open class DividingLineView: UIView {
-
     private let dividingLineViewHeight: CGFloat = 9.5
     private let triangleBaseWidth: CGFloat = 14
     private var path = UIBezierPath()
@@ -34,7 +33,7 @@ import UIKit
 // MARK: Privates.
 extension DividingLineView {
     private func createDividingLinePath() {
-        path.lineWidth = 2
+        path.lineWidth = 1
         UIColor.black.withAlphaComponent(0.1).setStroke()
         path.move(to: CGPoint(x: 0.0, y: 0.0))
         if hasTriangle {

@@ -71,8 +71,9 @@ extension ViewController {
             discountView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16)
         ])
 
-        discountView.addTapAction { (deepLink, trackId) in
+        discountView.addTapAction { (selectedIndex, deepLink, trackId) in
             // print(deepLink, trackId)
+            print(selectedIndex)
         }
     }
 }
