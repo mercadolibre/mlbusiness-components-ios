@@ -1,4 +1,4 @@
-![Screenshot iOS](https://github.com/mercadolibre/mlbusiness-components-ios/blob/refactor/Documentation/images/ios_cover.png?raw=true)
+![Screenshot iOS](https://github.com/mercadolibre/mlbusiness-components-ios/blob/master/refactor/Documentation/images/ios_cover.png?raw=true)
 <p align="center">
 <a href="https://app.bitrise.io/">
 <img src="https://app.bitrise.io/app/d2d19a45654ed1d8/status.svg?token=9BWGNvo1MwPKFb2wQB2dCg">
@@ -39,7 +39,7 @@ Each component is a subclass of UIView.
 ## 1️⃣ - MLBusinessLoyaltyRingView Component
 This component allow you to show the progress ring of points, a label and actionable button. The most common use of this component is to show a user's progress within the loyalty program.
 #### Visual Example:
-![MLBusinessLoyaltyRingView](https://github.com/mercadolibre/mlbusiness-components-ios/blob/refactor/Documentation/images/loyaltyRingViewComponent.png?raw=true)
+![MLBusinessLoyaltyRingView](https://github.com/mercadolibre/mlbusiness-components-ios/blob/master/refactor/Documentation/images/loyaltyRingViewComponent.png?raw=true)
 
 ### MLBusinessLoyaltyRingView init
 You need to set `MLBusinessLoyaltyRingData` protocol (interfase). This protocol allow you to populate the draw data into component. (Ring progress percent, ring color, label text, button title and button deeplink).
@@ -118,7 +118,7 @@ ringView.addTapAction { deepLink in
 ## 2️⃣ - MLBusinessDiscountBoxView Component
 This component allow you to show a group of N items in a grid system (3 cols by default). You can add a title and subtitle for the main component. Also, you can provide imageUrl, title and subtitle for each item. This component is responsible for knowing and setting your own height based on number of cols and item quantity.
 #### Visual Example:
-![MLBusinessDiscountBoxView](https://github.com/mercadolibre/mlbusiness-components-ios/blob/refactor/Documentation/images/discountBoxViewComponent.png?raw=true)
+![MLBusinessDiscountBoxView](https://github.com/mercadolibre/mlbusiness-components-ios/blob/master/refactor/Documentation/images/discountBoxViewComponent.png?raw=true)
 
 
 ## 🔠 Font and color customization.
