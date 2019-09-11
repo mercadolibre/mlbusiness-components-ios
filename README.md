@@ -1,7 +1,7 @@
 ![Screenshot iOS](https://github.com/mercadolibre/mlbusiness-components-ios/blob/master/Documentation/images/ios_cover.png?raw=true)
 <p align="center">
-<a href="https://app.bitrise.io/">
-<img src="https://app.bitrise.io/app/d2d19a45654ed1d8/status.svg?token=9BWGNvo1MwPKFb2wQB2dCg">
+<a href="https://app.bitrise.io/app/3bb8e8193945cb87">
+<img src="https://app.bitrise.io/app/3bb8e8193945cb87/status.svg?token=nOcqLjeT7sqGObFhel48ag">
 </a>
 <img src="https://img.shields.io/badge/Swift-4.2-orange.svg" />
 <a href="https://cocoapods.org/pods/MLBusinessComponents">
