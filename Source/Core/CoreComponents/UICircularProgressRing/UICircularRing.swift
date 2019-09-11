@@ -9,6 +9,7 @@ protocol UICircularProgressRingDelegate: class {
 }
 
 // MARK: UICircularRing
+// codebeat:disable[TOO_MANY_IVARS,TOO_MANY_FUNCTIONS,LOC,ABC,ARITY,CYCLO,TOTAL_COMPLEXITY,TOTAL_LOC]
 class UICircularRing: UIView {
     var fullCircle: Bool = true {
         didSet { ringLayer.setNeedsDisplay() }
@@ -384,6 +385,7 @@ internal extension CGFloat {
 }
 
 // MARK: UICircularRingLayer
+// codebeat:disable[TOO_MANY_IVARS,TOO_MANY_FUNCTIONS,LOC,ABC,ARITY,CYCLO,TOTAL_COMPLEXITY,TOTAL_LOC]
 class UICircularRingLayer: CAShapeLayer {
     // MARK: Properties
     @NSManaged var value: CGFloat
@@ -862,6 +864,7 @@ final class UICircularTimerRing: UICircularRing {
 }
 
 // MARK: UICircularTimerRing.State
+// codebeat:disable[TOO_MANY_IVARS,TOO_MANY_FUNCTIONS,LOC,ABC,ARITY,CYCLO,TOTAL_COMPLEXITY,TOTAL_LOC]
 extension UICircularTimerRing {
     /// state of the timer ring, used in handler
     enum State {
@@ -890,6 +893,7 @@ internal enum UICircularRingStyle {
     case bordered(width: CGFloat, color: UIColor)
 }
 
+// codebeat:disable[TOO_MANY_IVARS,TOO_MANY_FUNCTIONS,LOC,ABC,ARITY,CYCLO,TOTAL_COMPLEXITY,TOTAL_LOC]
 struct UICircularRingValueKnobStyle {
     /// default implmementation of the knob style
     static let `default` = UICircularRingValueKnobStyle(size: 15.0, color: .lightGray)
@@ -963,6 +967,7 @@ internal enum UICircularRingGradientPosition {
 }
 
 // MARK: UICircularRingGradientOptions
+// codebeat:disable[TOO_MANY_IVARS,TOO_MANY_FUNCTIONS,LOC,ABC,ARITY,CYCLO,TOTAL_COMPLEXITY,TOTAL_LOC]
 struct UICircularRingGradientOptions {
 
     /// a default styling option for the gradient style
@@ -1009,6 +1014,7 @@ protocol UICircularRingValueFormatter {
  The formatter used in UICircularTimerRing class, formats
  the ring value into a time string.
  */
+// codebeat:disable[TOO_MANY_IVARS,TOO_MANY_FUNCTIONS,LOC,ABC,ARITY,CYCLO,TOTAL_COMPLEXITY,TOTAL_LOC]
 struct UICircularTimerRingFormatter: UICircularRingValueFormatter {
     // MARK: Members
     /// defines the units allowed to be used when converting string, by default `[.minute, .second]`
@@ -1049,6 +1055,7 @@ struct UICircularTimerRingFormatter: UICircularRingValueFormatter {
  The formatter used in UICircularProgressRing class,
  responsible for formatting the value of the ring into a readable string
  */
+// codebeat:disable[TOO_MANY_IVARS,TOO_MANY_FUNCTIONS,LOC,ABC,ARITY,CYCLO,TOTAL_COMPLEXITY,TOTAL_LOC]
 struct UICircularProgressRingFormatter: UICircularRingValueFormatter {
     // MARK: Members
     /**
