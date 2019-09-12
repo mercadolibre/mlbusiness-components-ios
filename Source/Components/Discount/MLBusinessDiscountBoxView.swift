@@ -11,12 +11,18 @@ import MLUI
 
 @objc open class MLBusinessDiscountBoxView: UIView {
     private let viewData: MLBusinessDiscountBoxData
-    private let itemsPerRow: Int = 3
-    private let rowSeparationOffset: CGFloat = UI.Margin.L_MARGIN
+    private let itemsPerRow: Int
+    private let discountItems: [MLBusinessSingleItemProtocol]
     private var tapAction: ((_ index: Int, _ deepLink: String?, _ trackId: String?) -> Void)?
+
+    // Constants
+    private let maxAllowedNumberOfItems = 6
+    private let rowSeparationOffset: CGFloat = UI.Margin.L_MARGIN
 
     public init(_ viewData: MLBusinessDiscountBoxData) {
         self.viewData = viewData
+        self.discountItems = viewData.getItems().count > maxAllowedNumberOfItems ? Array(viewData.getItems()[0...maxAllowedNumberOfItems - 1]) : viewData.getItems()
+        self.itemsPerRow = MLBusinessDiscountBoxView.getNumberOfItemsPerRow(discountItems)
         super.init(frame: .zero)
         render()
     }
@@ -92,7 +98,7 @@ extension MLBusinessDiscountBoxView: UITableViewDelegate, UITableViewDataSource 
     }
 
     public func numberOfSections(in tableView: UITableView) -> Int {
-        return getNumbersOfRows(viewData.getItems().count)
+        return getNumbersOfRows(discountItems.count)
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -123,15 +129,19 @@ private extension MLBusinessDiscountBoxView {
     func getItems(_ index: Int) -> [MLBusinessSingleItemProtocol] {
         var offset = itemsPerRow - 1
         let indexArray = index * itemsPerRow
-        if indexArray >= 0 && indexArray + offset >= viewData.getItems().count {
-            offset = indexArray + 1 >= viewData.getItems().count ? 0 : 1
+        if indexArray >= 0 && indexArray + offset >= discountItems.count {
+            offset = indexArray + 1 >= discountItems.count ? 0 : 1
         }
-        return Array(viewData.getItems()[indexArray...indexArray+offset])
+        return Array(discountItems[indexArray...indexArray+offset])
     }
 
     func getTableViewHeight() -> CGFloat {
-        let numberOfRows: Int = getNumbersOfRows(viewData.getItems().count)
+        let numberOfRows: Int = getNumbersOfRows(discountItems.count)
         return CGFloat(numberOfRows) * MLBusinessDiscountSingleItemView.itemHeight + CGFloat(numberOfRows - 1) * rowSeparationOffset
+    }
+
+    class func getNumberOfItemsPerRow(_ discountItems: [MLBusinessSingleItemProtocol]) -> Int {
+        return discountItems.count == 4 ? 2 : 3
     }
 }
 
