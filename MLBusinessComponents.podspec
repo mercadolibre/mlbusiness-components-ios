@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.default_subspec = 'Default'
 
   s.subspec 'Default' do |default|
-    default.resources = ['Source/**/**/**/*.xib']
+    default.resources = ['Source/Assets/*.xcassets']
     default.source_files = ['Source/**/**/**/*.{h,m,swift}']
     s.dependency 'MLUI', '~> 5.0'
   end
