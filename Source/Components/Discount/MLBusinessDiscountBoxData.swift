@@ -9,7 +9,7 @@
 import Foundation
 
 @objc public protocol MLBusinessDiscountBoxData: NSObjectProtocol {
-    @objc optional func getTitle() -> String
-    @objc optional func getSubtitle() -> String
+    @objc optional func getTitle() -> String?
+    @objc optional func getSubtitle() -> String?
     @objc func getItems() -> [MLBusinessSingleItemProtocol]
 }

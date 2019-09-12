@@ -150,8 +150,8 @@ This protocol allow you to providade the proper data to draw `MLBusinessDiscount
 #### Definition
 ```swift
 @objc public protocol MLBusinessDiscountBoxData: NSObjectProtocol {
-    @objc optional func getTitle() -> String
-    @objc optional func getSubtitle() -> String
+    @objc optional func getTitle() -> String?
+    @objc optional func getSubtitle() -> String?
     @objc func getItems() -> [MLBusinessSingleItemProtocol]
 }
 ```

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "MLBusinessComponents"
-  s.version          = "1.0"
+  s.version          = "1.0.1"
   s.summary          = "MLBusinessComponents for iOS"
   s.homepage         = "https://www.mercadolibre.com"
   s.license          = { :type => "MIT", :file => "LICENSE" }
