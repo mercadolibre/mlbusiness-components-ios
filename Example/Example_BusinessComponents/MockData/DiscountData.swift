@@ -10,11 +10,11 @@ import UIKit
 import MLBusinessComponents
 
 class DiscountData: NSObject, MLBusinessDiscountBoxData {
-    func getTitle() -> String {
+    func getTitle() -> String? {
         return "200 descuentos"
     }
 
-    func getSubtitle() -> String {
+    func getSubtitle() -> String? {
         return "por ser nivel 3"
     }
 
