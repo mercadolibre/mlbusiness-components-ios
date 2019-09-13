@@ -52,7 +52,7 @@ extension DownloadAppView {
         let appIcon = UIImageView()
         appIcon.image = UIImage(named: appSite.rawValue)
         appIcon.translatesAutoresizingMaskIntoConstraints = false
-        appIcon.backgroundColor = .blue
+        appIcon.contentMode = .scaleAspectFit
         self.addSubview(appIcon)
         NSLayoutConstraint.activate([
             appIcon.centerYAnchor.constraint(equalTo: self.centerYAnchor),
