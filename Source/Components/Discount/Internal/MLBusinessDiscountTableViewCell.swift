@@ -16,6 +16,9 @@ final class MLBusinessDiscountTableViewCell: UITableViewCell {
     private weak var delegate: MLBusinessUserInteractionProtocol?
     private var section: Int = 0
 
+    private var stackViewLeadingConstraint: NSLayoutConstraint?
+    private var stackViewTrailingConstraint: NSLayoutConstraint?
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupStackView()
@@ -53,10 +56,14 @@ extension MLBusinessDiscountTableViewCell {
             stackView.topAnchor.constraint(equalTo: self.topAnchor),
             stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
+        stackViewLeadingConstraint = stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor)
+        stackViewTrailingConstraint = stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+        stackViewLeadingConstraint?.isActive = true
+        stackViewTrailingConstraint?.isActive = true
     }
 
     private func updateStackView(_ items: [MLBusinessSingleItemProtocol]) {
-        setStackViewConstraints(items)
+        updateStackViewConstraints(items)
         var currentIndex = 0
         for item in items {
             let itemView = MLBusinessDiscountSingleItemView(discountSingleItem: item, itemIndex: currentIndex, itemSection: section)
@@ -74,10 +81,10 @@ extension MLBusinessDiscountTableViewCell {
         itemViews.removeAll()
     }
 
-    private func setStackViewConstraints(_ items: [MLBusinessSingleItemProtocol]) {
+    private func updateStackViewConstraints(_ items: [MLBusinessSingleItemProtocol]) {
         let margin: CGFloat = items.count == 2 ? MLBusinessDiscountSingleItemView.iconImageSize : 0
-        stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: margin).isActive = true
-        stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -margin).isActive = true
+        stackViewLeadingConstraint?.constant = margin
+        stackViewTrailingConstraint?.constant = -margin
     }
 }
 
