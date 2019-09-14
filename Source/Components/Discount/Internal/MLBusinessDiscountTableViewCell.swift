@@ -16,6 +16,9 @@ final class MLBusinessDiscountTableViewCell: UITableViewCell {
     private weak var delegate: MLBusinessUserInteractionProtocol?
     private var section: Int = 0
 
+    private var stackViewLeadingConstraint: NSLayoutConstraint?
+    private var stackViewTrailingConstraint: NSLayoutConstraint?
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupStackView()
@@ -50,14 +53,17 @@ extension MLBusinessDiscountTableViewCell {
         stackView.alignment = .fill
         stackView.spacing = 5
         NSLayoutConstraint.activate([
-            stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             stackView.topAnchor.constraint(equalTo: self.topAnchor),
             stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
+        stackViewLeadingConstraint = stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor)
+        stackViewTrailingConstraint = stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+        stackViewLeadingConstraint?.isActive = true
+        stackViewTrailingConstraint?.isActive = true
     }
 
     private func updateStackView(_ items: [MLBusinessSingleItemProtocol]) {
+        updateStackViewConstraints(items)
         var currentIndex = 0
         for item in items {
             let itemView = MLBusinessDiscountSingleItemView(discountSingleItem: item, itemIndex: currentIndex, itemSection: section)
@@ -73,6 +79,12 @@ extension MLBusinessDiscountTableViewCell {
             stackView.removeArrangedSubview(itemView)
         }
         itemViews.removeAll()
+    }
+
+    private func updateStackViewConstraints(_ items: [MLBusinessSingleItemProtocol]) {
+        let margin: CGFloat = items.count == 2 ? MLBusinessDiscountSingleItemView.iconImageSize : 0
+        stackViewLeadingConstraint?.constant = margin
+        stackViewTrailingConstraint?.constant = -margin
     }
 }
 
