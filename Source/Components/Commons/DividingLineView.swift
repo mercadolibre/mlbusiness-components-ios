@@ -16,9 +16,9 @@ import UIKit
     public init(hasTriangle: Bool = false) {
         super.init(frame: .zero)
         self.hasTriangle = hasTriangle
-        self.backgroundColor = .clear
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.heightAnchor.constraint(equalToConstant: dividingLineViewHeight).isActive = true
+        backgroundColor = .clear
+        translatesAutoresizingMaskIntoConstraints = false
+        heightAnchor.constraint(equalToConstant: dividingLineViewHeight).isActive = true
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -37,11 +37,11 @@ extension DividingLineView {
         UIColor.black.withAlphaComponent(0.1).setStroke()
         path.move(to: CGPoint(x: 0.0, y: 0.0))
         if hasTriangle {
-            path.addLine(to: CGPoint(x: (self.frame.width/2) - triangleBaseWidth/2, y: 0.0))
-            path.addLine(to: CGPoint(x: self.frame.width/2, y: dividingLineViewHeight))
-            path.addLine(to: CGPoint(x: (self.frame.width/2) + triangleBaseWidth/2, y: 0.0))
+            path.addLine(to: CGPoint(x: (frame.width/2) - triangleBaseWidth/2, y: 0.0))
+            path.addLine(to: CGPoint(x: frame.width/2, y: dividingLineViewHeight))
+            path.addLine(to: CGPoint(x: (frame.width/2) + triangleBaseWidth/2, y: 0.0))
         }
-        path.addLine(to: CGPoint(x: self.frame.width, y: 0.0))
+        path.addLine(to: CGPoint(x: frame.width, y: 0.0))
         path.stroke()
     }
 }
