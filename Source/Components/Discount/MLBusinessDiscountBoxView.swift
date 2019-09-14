@@ -11,11 +11,15 @@ import MLUI
 
 @objc open class MLBusinessDiscountBoxView: UIView {
     // Constants
-    private let maxAllowedNumberOfItems = 6
     private var itemsPerRow: Int = 3
     internal let rowSeparationOffset: CGFloat = UI.Margin.L_MARGIN
 
     // Vars
+    private var maxAllowedNumberOfItems = 6 {
+        didSet {
+            updateModels(viewData)
+        }
+    }
     private var viewData: MLBusinessDiscountBoxData?
     private var tapAction: ((_ index: Int, _ deepLink: String?, _ trackId: String?) -> Void)?
     internal var discountItems: [MLBusinessSingleItemProtocol] = [MLBusinessSingleItemProtocol]() {
@@ -41,6 +45,10 @@ import MLUI
 
     public func update(_ data: MLBusinessDiscountBoxData) {
         updateModels(data)
+    }
+
+    public func setMaxAllowedItems(_ maxItems: Int) {
+        maxAllowedNumberOfItems = maxItems
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -103,7 +111,8 @@ private extension MLBusinessDiscountBoxView {
         ])
     }
 
-    private func updateModels(_ data: MLBusinessDiscountBoxData) {
+    private func updateModels(_ newData: MLBusinessDiscountBoxData?) {
+        guard let data = newData else { return }
         viewData = data
         itemsPerRow = MLBusinessDiscountBoxView.getNumberOfItemsPerRow(discountItems)
         discountItems = data.getItems().count > maxAllowedNumberOfItems ? Array(data.getItems()[0...maxAllowedNumberOfItems - 1]) : data.getItems()
