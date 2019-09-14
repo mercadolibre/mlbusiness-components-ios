@@ -32,17 +32,24 @@ import UIKit
 
 // MARK: Privates.
 extension DividingLineView {
+    // codebeat:disable
     private func createDividingLinePath() {
+        let frameWidth: CGFloat = frame.width
+        let xPosition: CGFloat = frameWidth / 2
+        let triangleBaseOffset: CGFloat = triangleBaseWidth / 2
         path.lineWidth = 1
-        UIColor.black.withAlphaComponent(0.1).setStroke()
-        path.move(to: CGPoint(x: 0.0, y: 0.0))
+        UI.Colors.dividingLineColor.setStroke()
+        path.move(to: .zero)
         if hasTriangle {
-            path.addLine(to: CGPoint(x: (frame.width/2) - triangleBaseWidth/2, y: 0.0))
-            path.addLine(to: CGPoint(x: frame.width/2, y: dividingLineViewHeight))
-            path.addLine(to: CGPoint(x: (frame.width/2) + triangleBaseWidth/2, y: 0.0))
+            drawLine(path, initialPosition: xPosition, offset: -triangleBaseOffset)
+            path.addLine(to: CGPoint(x: xPosition, y: dividingLineViewHeight))
+            drawLine(path, initialPosition: xPosition, offset: triangleBaseOffset)
         }
-        path.addLine(to: CGPoint(x: frame.width, y: 0.0))
+        path.addLine(to: CGPoint(x: frameWidth, y: 0))
         path.stroke()
     }
-}
 
+    private func drawLine(_ targetPath: UIBezierPath, initialPosition: CGFloat, offset: CGFloat) {
+        targetPath.addLine(to: CGPoint(x: initialPosition + offset, y: 0))
+    }
+}
