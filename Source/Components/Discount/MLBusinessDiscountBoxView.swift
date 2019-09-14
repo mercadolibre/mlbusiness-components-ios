@@ -10,21 +10,37 @@ import UIKit
 import MLUI
 
 @objc open class MLBusinessDiscountBoxView: UIView {
-    private let viewData: MLBusinessDiscountBoxData
-    private let itemsPerRow: Int
-    private let discountItems: [MLBusinessSingleItemProtocol]
-    private var tapAction: ((_ index: Int, _ deepLink: String?, _ trackId: String?) -> Void)?
-
     // Constants
     private let maxAllowedNumberOfItems = 6
-    private let rowSeparationOffset: CGFloat = UI.Margin.L_MARGIN
+    private var itemsPerRow: Int = 3
+    internal let rowSeparationOffset: CGFloat = UI.Margin.L_MARGIN
 
-    public init(_ viewData: MLBusinessDiscountBoxData) {
-        self.viewData = viewData
-        self.discountItems = viewData.getItems().count > maxAllowedNumberOfItems ? Array(viewData.getItems()[0...maxAllowedNumberOfItems - 1]) : viewData.getItems()
-        self.itemsPerRow = MLBusinessDiscountBoxView.getNumberOfItemsPerRow(discountItems)
+    // Vars
+    private var viewData: MLBusinessDiscountBoxData?
+    private var tapAction: ((_ index: Int, _ deepLink: String?, _ trackId: String?) -> Void)?
+    internal var discountItems: [MLBusinessSingleItemProtocol] = [MLBusinessSingleItemProtocol]() {
+        didSet {
+            updateUI()
+        }
+    }
+
+    // UI Elements
+    private let tableView = UITableView()
+    private let titleLabel = UILabel()
+    private let subtitleLabel = UILabel()
+
+    // Constraints
+    private var tableViewTopConstraint: NSLayoutConstraint = NSLayoutConstraint()
+    private var tableViewHeightConstraint: NSLayoutConstraint = NSLayoutConstraint()
+
+    public init(_ data: MLBusinessDiscountBoxData) {
         super.init(frame: .zero)
+        updateModels(data)
         render()
+    }
+
+    public func update(_ data: MLBusinessDiscountBoxData) {
+        updateModels(data)
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -32,12 +48,12 @@ import MLUI
     }
 }
 
-// MARK: Render.
+// MARK: Privates Methods.
 private extension MLBusinessDiscountBoxView {
     private func render() {
-        self.prepareForAutolayout()
+        guard let data = viewData else { return }
+        prepareForAutolayout()
 
-        let tableView = UITableView()
         tableView.prepareForAutolayout()
         tableView.delegate = self
         tableView.dataSource = self
@@ -46,15 +62,13 @@ private extension MLBusinessDiscountBoxView {
         tableView.isScrollEnabled = false
 
         tableView.register(MLBusinessDiscountTableViewCell.self, forCellReuseIdentifier: MLBusinessDiscountTableViewCell.cellIdentifier)
-        self.addSubview(tableView)
-        tableView.heightAnchor.constraint(equalToConstant: getTableViewHeight()).isActive = true
-        var tableViewTopConstraint: NSLayoutConstraint = tableView.topAnchor.constraint(equalTo: self.topAnchor)
+        addSubview(tableView)
+        tableViewHeightConstraint = tableView.heightAnchor.constraint(equalToConstant: getTableViewHeight())
+        tableViewTopConstraint = tableView.topAnchor.constraint(equalTo: self.topAnchor)
 
-        if let title = viewData.getTitle?(), let subtitle = viewData.getSubtitle?() {
-            let titleLabel = UILabel()
+        if let _ = data.getTitle?(), let _ = data.getSubtitle?() {
             titleLabel.prepareForAutolayout(.clear)
             self.addSubview(titleLabel)
-            titleLabel.text = title
             titleLabel.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.L_FONT)
             titleLabel.applyBusinessLabelStyle()
             titleLabel.textAlignment = .center
@@ -65,12 +79,10 @@ private extension MLBusinessDiscountBoxView {
                 titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -UI.Margin.S_MARGIN)
             ])
 
-            let subtitleLabel = UILabel()
             subtitleLabel.prepareForAutolayout(.clear)
             self.addSubview(subtitleLabel)
             subtitleLabel.font = UIFont.ml_lightSystemFont(ofSize: UI.FontSize.XS_FONT)
             subtitleLabel.applyBusinessLabelStyle()
-            subtitleLabel.text = subtitle
             subtitleLabel.textAlignment = .center
             subtitleLabel.numberOfLines = 1
             NSLayoutConstraint.activate([
@@ -83,44 +95,30 @@ private extension MLBusinessDiscountBoxView {
         }
 
         NSLayoutConstraint.activate([
+            tableViewHeightConstraint,
             tableView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             tableViewTopConstraint
         ])
     }
-}
 
-// MARK: Delegates TableView.
-extension MLBusinessDiscountBoxView: UITableViewDelegate, UITableViewDataSource {
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+    private func updateModels(_ data: MLBusinessDiscountBoxData) {
+        viewData = data
+        itemsPerRow = MLBusinessDiscountBoxView.getNumberOfItemsPerRow(discountItems)
+        discountItems = data.getItems().count > maxAllowedNumberOfItems ? Array(data.getItems()[0...maxAllowedNumberOfItems - 1]) : data.getItems()
     }
 
-    public func numberOfSections(in tableView: UITableView) -> Int {
-        return getNumbersOfRows(discountItems.count)
-    }
-
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let itemsData: [MLBusinessSingleItemProtocol] = getItems(indexPath.section)
-        if let dequeueCell = tableView.dequeueReusableCell(withIdentifier: MLBusinessDiscountTableViewCell.cellIdentifier, for: indexPath) as? MLBusinessDiscountTableViewCell {
-            dequeueCell.setupCell(discountItems: itemsData, interactionDelegate: self, section: indexPath.section)
-            return dequeueCell
-        }
-        return UITableViewCell()
-    }
-
-    public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return section == 0 ? 0 : rowSeparationOffset
-    }
-
-    public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return section == 0 ? nil : UIView()
+    private func updateUI() {
+        titleLabel.text = viewData?.getTitle?()
+        subtitleLabel.text = viewData?.getSubtitle?()
+        tableViewHeightConstraint.constant = getTableViewHeight()
+        tableView.reloadData()
     }
 }
 
 // MARK: DataSource functions.
-private extension MLBusinessDiscountBoxView {
+internal extension MLBusinessDiscountBoxView {
     func getNumbersOfRows(_ itemsCount: Int) -> Int {
         let roundedValue = Int(itemsCount/itemsPerRow)
         return itemsCount % itemsPerRow == 0 ? roundedValue : roundedValue + 1
