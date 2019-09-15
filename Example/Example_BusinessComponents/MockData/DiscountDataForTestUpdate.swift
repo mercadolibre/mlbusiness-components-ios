@@ -22,7 +22,7 @@ class DiscountDataForTestUpdate: NSObject, MLBusinessDiscountBoxData {
         var array: [MLBusinessSingleItemProtocol] = [MLBusinessSingleItemProtocol]()
         array.append(SingleItemData(title: "Hasta", subtitle: "$ 100", iconImageUrl: "https://urbancomunicacion.com/wp-content/uploads/2017/04/Logotipos-famosos-Starbucks-Urban-comunicacion-1.png"))
         array.append(SingleItemData(title: "Hasta", subtitle: "$ 500", iconImageUrl: "https://www.stickpng.com/assets/images/5a1c3211f65d84088faf13e8.png"))
-        array.append(SingleItemData(title: "Hasta", subtitle: "$ 300", iconImageUrl: "https://pbs.twimg.com/profile_images/1124417403566395394/9Wuzg8pf.png"))
+        //array.append(SingleItemData(title: "Hasta", subtitle: "$ 300", iconImageUrl: "https://pbs.twimg.com/profile_images/1124417403566395394/9Wuzg8pf.png"))
         return array
     }
 }

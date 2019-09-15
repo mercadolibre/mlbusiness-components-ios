@@ -37,6 +37,7 @@ import MLUI
     private var tableViewTopConstraint: NSLayoutConstraint = NSLayoutConstraint()
     private var tableViewHeightConstraint: NSLayoutConstraint = NSLayoutConstraint()
 
+    // Publics
     public init(_ data: MLBusinessDiscountBoxData) {
         super.init(frame: .zero)
         updateModels(data)
@@ -55,9 +56,7 @@ import MLUI
 // MARK: Privates Methods.
 private extension MLBusinessDiscountBoxView {
     private func render() {
-        guard let data = viewData else { return }
         prepareForAutolayout()
-
         tableView.prepareForAutolayout()
         tableView.delegate = self
         tableView.dataSource = self
@@ -67,44 +66,41 @@ private extension MLBusinessDiscountBoxView {
 
         tableView.register(MLBusinessDiscountTableViewCell.self, forCellReuseIdentifier: MLBusinessDiscountTableViewCell.cellIdentifier)
         addSubview(tableView)
-        tableViewHeightConstraint = tableView.heightAnchor.constraint(equalToConstant: getTableViewHeight())
         tableViewTopConstraint = tableView.topAnchor.constraint(equalTo: self.topAnchor)
+        tableViewHeightConstraint = tableView.heightAnchor.constraint(equalToConstant: getTableViewHeight())
 
-        if let _ = data.getTitle?(), let _ = data.getSubtitle?() {
-            titleLabel.prepareForAutolayout(.clear)
-            self.addSubview(titleLabel)
-            titleLabel.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.L_FONT)
-            titleLabel.applyBusinessLabelStyle()
-            titleLabel.textAlignment = .center
-            titleLabel.numberOfLines = 1
-            NSLayoutConstraint.activate([
-                titleLabel.topAnchor.constraint(equalTo: self.topAnchor),
-                titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: UI.Margin.S_MARGIN),
-                titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -UI.Margin.S_MARGIN)
-            ])
+        titleLabel.prepareForAutolayout(.clear)
+        self.addSubview(titleLabel)
+        titleLabel.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.L_FONT)
+        titleLabel.applyBusinessLabelStyle()
+        titleLabel.textAlignment = .center
+        titleLabel.numberOfLines = 1
+        NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(equalTo: self.topAnchor),
+            titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: UI.Margin.S_MARGIN),
+            titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -UI.Margin.S_MARGIN)
+        ])
 
-            subtitleLabel.prepareForAutolayout(.clear)
-            self.addSubview(subtitleLabel)
-            subtitleLabel.font = UIFont.ml_lightSystemFont(ofSize: UI.FontSize.XS_FONT)
-            subtitleLabel.applyBusinessLabelStyle()
-            subtitleLabel.textAlignment = .center
-            subtitleLabel.numberOfLines = 1
-            NSLayoutConstraint.activate([
-                subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
-                subtitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: UI.Margin.S_MARGIN),
-                subtitleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -UI.Margin.S_MARGIN)
-            ])
-
-            tableViewTopConstraint = tableView.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: UI.Margin.M_MARGIN)
-        }
+        subtitleLabel.prepareForAutolayout(.clear)
+        self.addSubview(subtitleLabel)
+        subtitleLabel.font = UIFont.ml_lightSystemFont(ofSize: UI.FontSize.XS_FONT)
+        subtitleLabel.applyBusinessLabelStyle()
+        subtitleLabel.textAlignment = .center
+        subtitleLabel.numberOfLines = 1
+        NSLayoutConstraint.activate([
+            subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
+            subtitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: UI.Margin.S_MARGIN),
+            subtitleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -UI.Margin.S_MARGIN)
+        ])
 
         NSLayoutConstraint.activate([
-            tableViewHeightConstraint,
+            tableViewTopConstraint,
             tableView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            tableViewTopConstraint
+            tableViewHeightConstraint
         ])
+        updateBoxConstraints()
     }
 
     private func updateModels(_ newData: MLBusinessDiscountBoxData?) {
@@ -117,8 +113,17 @@ private extension MLBusinessDiscountBoxView {
     private func updateUI() {
         titleLabel.text = viewData?.getTitle?()
         subtitleLabel.text = viewData?.getSubtitle?()
-        tableViewHeightConstraint.constant = getTableViewHeight()
+        updateBoxConstraints()
         tableView.reloadData()
+    }
+
+    private func updateBoxConstraints() {
+        tableViewHeightConstraint.constant = getTableViewHeight()
+        if let _ = viewData?.getTitle?(), let _ = viewData?.getSubtitle?() {
+            tableViewTopConstraint.constant = UI.Margin.XM_MARGIN * 2 + UI.Margin.L_MARGIN
+        } else {
+            tableViewTopConstraint.constant = 0
+        }
     }
 }
 
