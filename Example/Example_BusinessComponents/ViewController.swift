@@ -52,7 +52,7 @@ extension ViewController {
     }
 
     private func setupDividingLineView(bottomOf targetView: UIView) -> UIView {
-        let dividingLineView = DividingLineView(hasTriangle: true)
+        let dividingLineView = MLBusinessDividingLineView(hasTriangle: true)
         view.addSubview(dividingLineView)
         NSLayoutConstraint.activate([
             dividingLineView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
@@ -80,7 +80,7 @@ extension ViewController {
     }
 
     private func setupDownloadAppView(bottomOf targetView: UIView) {
-        let downloadAppView = DownloadAppView(appSite: AppSite.MP, title: "Exclusivo con la app de Mercado Pago", buttonTitle: "Descargar", deepLink: "http://mercadopago")
+        let downloadAppView = MLBusinessDownloadAppView(DownloadAppData())
         view.addSubview(downloadAppView)
         NSLayoutConstraint.activate([
             downloadAppView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16),
