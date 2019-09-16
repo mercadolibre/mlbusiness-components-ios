@@ -29,7 +29,8 @@ extension ViewController {
         let newRingView = setupRingView()
         self.ringView = newRingView
         let dividingLineView = setupDividingLineView(bottomOf: newRingView)
-        setupDiscountView(bottomOf: dividingLineView)
+        let discountView = setupDiscountView(bottomOf: dividingLineView)
+        setupDownloadAppView(bottomOf: discountView)
     }
 
     private func setupRingView() -> MLBusinessLoyaltyRingView {
@@ -51,7 +52,7 @@ extension ViewController {
     }
 
     private func setupDividingLineView(bottomOf targetView: UIView) -> UIView {
-        let dividingLineView = DividingLineView(hasTriangle: true)
+        let dividingLineView = MLBusinessDividingLineView(hasTriangle: true)
         view.addSubview(dividingLineView)
         NSLayoutConstraint.activate([
             dividingLineView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
@@ -62,7 +63,7 @@ extension ViewController {
         return dividingLineView
     }
 
-    private func setupDiscountView(bottomOf targetView: UIView) {
+    private func setupDiscountView(bottomOf targetView: UIView) -> MLBusinessDiscountBoxView {
         let discountView = MLBusinessDiscountBoxView(DiscountData())
         view.addSubview(discountView)
         NSLayoutConstraint.activate([
@@ -78,6 +79,21 @@ extension ViewController {
             } else {
                 discountView.update(DiscountData())
             }
+        }
+        return discountView
+    }
+
+    private func setupDownloadAppView(bottomOf targetView: UIView) {
+        let downloadAppView = MLBusinessDownloadAppView(DownloadAppData())
+        view.addSubview(downloadAppView)
+        NSLayoutConstraint.activate([
+            downloadAppView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16),
+            downloadAppView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            downloadAppView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+        ])
+
+        downloadAppView.addTapAction { (deepLink) in
+//            print(deepLink)
         }
     }
 }

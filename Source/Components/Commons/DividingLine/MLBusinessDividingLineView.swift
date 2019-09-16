@@ -1,5 +1,5 @@
 //
-//  DividingLineView.swift
+//  MLBusinessDividingLineView.swift
 //  MLBusinessComponents
 //
 //  Created by Esteban Adrian Boffa on 10/09/2019.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-@objc open class DividingLineView: UIView {
+@objc open class MLBusinessDividingLineView: UIView {
     private let dividingLineViewHeight: CGFloat = 9.5
     private let triangleBaseWidth: CGFloat = 14
     private var path = UIBezierPath()
@@ -31,7 +31,7 @@ import UIKit
 }
 
 // MARK: Privates.
-extension DividingLineView {
+extension MLBusinessDividingLineView {
     // codebeat:disable
     private func createDividingLinePath() {
         let frameWidth: CGFloat = frame.width
