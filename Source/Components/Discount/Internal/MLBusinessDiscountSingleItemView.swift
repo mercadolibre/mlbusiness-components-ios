@@ -10,10 +10,6 @@ import Foundation
 import UIKit
 import MLUI
 
-internal protocol MLBusinessUserInteractionProtocol: NSObjectProtocol {
-    func didTap(item: MLBusinessSingleItemProtocol, index: Int, section: Int)
-}
-
 final class MLBusinessDiscountSingleItemView: UIView {
     static let itemHeight: CGFloat = 104
     static let iconImageSize: CGFloat = 56

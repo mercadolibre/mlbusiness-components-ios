@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		23DECA26232D28E80083D01F /* DiscountDataForTestUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DECA25232D28E80083D01F /* DiscountDataForTestUpdate.swift */; };
 		23EE40662326B50B001322EC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE40652326B50B001322EC /* AppDelegate.swift */; };
 		23EE40682326B50B001322EC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE40672326B50B001322EC /* ViewController.swift */; };
 		23EE406B2326B50B001322EC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23EE40692326B50B001322EC /* Main.storyboard */; };
@@ -20,6 +21,7 @@
 
 /* Begin PBXFileReference section */
 		19F264F7F156FDD46A230BEC /* Pods-Example_BusinessComponents.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example_BusinessComponents.debug.xcconfig"; path = "Target Support Files/Pods-Example_BusinessComponents/Pods-Example_BusinessComponents.debug.xcconfig"; sourceTree = "<group>"; };
+		23DECA25232D28E80083D01F /* DiscountDataForTestUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscountDataForTestUpdate.swift; sourceTree = "<group>"; };
 		23EE40622326B50B001322EC /* Example_BusinessComponents.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example_BusinessComponents.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23EE40652326B50B001322EC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		23EE40672326B50B001322EC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 			children = (
 				23EE40782326BA33001322EC /* LoyaltyRingData.swift */,
 				23EE40792326BA33001322EC /* DiscountData.swift */,
+				23DECA25232D28E80083D01F /* DiscountDataForTestUpdate.swift */,
 				23EE407F23297CF8001322EC /* SingleItemData.swift */,
 			);
 			path = MockData;
@@ -202,22 +205,11 @@
 			files = (
 			);
 			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Example_BusinessComponents/Pods-Example_BusinessComponents-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/FXBlurView/FXBlurView.framework",
-				"${BUILT_PRODUCTS_DIR}/JRSwizzle/JRSwizzle.framework",
-				"${BUILT_PRODUCTS_DIR}/MLBusinessComponents/MLBusinessComponents.framework",
-				"${BUILT_PRODUCTS_DIR}/MLUI/MLUI.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-Example_BusinessComponents/Pods-Example_BusinessComponents-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FXBlurView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JRSwizzle.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MLBusinessComponents.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MLUI.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-Example_BusinessComponents/Pods-Example_BusinessComponents-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -234,6 +226,7 @@
 				23EE407B2326BA33001322EC /* DiscountData.swift in Sources */,
 				23EE408023297CF8001322EC /* SingleItemData.swift in Sources */,
 				23EE40682326B50B001322EC /* ViewController.swift in Sources */,
+				23DECA26232D28E80083D01F /* DiscountDataForTestUpdate.swift in Sources */,
 				23EE40662326B50B001322EC /* AppDelegate.swift in Sources */,
 				23EE407A2326BA33001322EC /* LoyaltyRingData.swift in Sources */,
 			);

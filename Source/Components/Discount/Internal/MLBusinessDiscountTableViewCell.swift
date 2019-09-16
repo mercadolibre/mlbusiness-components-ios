@@ -12,7 +12,6 @@ import MLUI
 final class MLBusinessDiscountTableViewCell: UITableViewCell {
     static let cellIdentifier: String = "discountTableViewCell"
     private let stackView = UIStackView(frame: .zero)
-    private var itemViews: [MLBusinessDiscountSingleItemView] = [MLBusinessDiscountSingleItemView]()
     private weak var delegate: MLBusinessUserInteractionProtocol?
     private var section: Int = 0
 
@@ -37,6 +36,7 @@ final class MLBusinessDiscountTableViewCell: UITableViewCell {
 // MARK: Setup Cell.
 extension MLBusinessDiscountTableViewCell {
     func setupCell(discountItems: [MLBusinessSingleItemProtocol], interactionDelegate: MLBusinessUserInteractionProtocol? = nil, section: Int) {
+        clearStackView()
         self.section = section
         delegate = interactionDelegate
         updateStackView(discountItems)
@@ -46,18 +46,18 @@ extension MLBusinessDiscountTableViewCell {
 // MARK: StackView Privates.
 extension MLBusinessDiscountTableViewCell {
     private func setupStackView() {
-        self.addSubview(stackView)
+        self.contentView.addSubview(stackView)
         stackView.prepareForAutolayout()
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
         stackView.alignment = .fill
         stackView.spacing = 5
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: self.topAnchor),
-            stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            stackView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+            stackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
         ])
-        stackViewLeadingConstraint = stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor)
-        stackViewTrailingConstraint = stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+        stackViewLeadingConstraint = stackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor)
+        stackViewTrailingConstraint = stackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor)
         stackViewLeadingConstraint?.isActive = true
         stackViewTrailingConstraint?.isActive = true
     }
@@ -67,7 +67,6 @@ extension MLBusinessDiscountTableViewCell {
         var currentIndex = 0
         for item in items {
             let itemView = MLBusinessDiscountSingleItemView(discountSingleItem: item, itemIndex: currentIndex, itemSection: section)
-            itemViews.append(itemView)
             currentIndex = currentIndex + 1
             itemView.delegate = self
             stackView.addArrangedSubview(itemView)
@@ -75,10 +74,17 @@ extension MLBusinessDiscountTableViewCell {
     }
 
     private func clearStackView() {
-        for itemView in itemViews {
-            stackView.removeArrangedSubview(itemView)
+        var arrangedViews: [UIView] = [UIView]()
+        for subArrangedView in stackView.arrangedSubviews {
+            arrangedViews.append(subArrangedView)
+            stackView.removeArrangedSubview(subArrangedView)
         }
-        itemViews.removeAll()
+        for subView in arrangedViews {
+            for targetConstraint in subView.constraints {
+                subView.removeConstraint(targetConstraint)
+            }
+            subView.removeFromSuperview()
+        }
     }
 
     private func updateStackViewConstraints(_ items: [MLBusinessSingleItemProtocol]) {
