@@ -45,11 +45,18 @@ import MLUI
 // MARK: Privates.
 extension MLBusinessDownloadAppView {
     private func render() {
-        translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = UI.Colors.downloadAppViewBackgroundColor
+        prepareForAutolayout(UI.Colors.downloadAppViewBackgroundColor)
         layer.cornerRadius = 6
         heightAnchor.constraint(equalToConstant: downloadAppViewHeight).isActive = true
 
+        let appIcon = buildAppIcon()
+        let titleLabel = buildTitleLabel(topOf: appIcon)
+        let downloadButton = buildDownloadButton(leftTo: titleLabel)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapOnButton))
+        downloadButton.addGestureRecognizer(tapGesture)
+    }
+
+    private func buildAppIcon() -> UIImageView {
         let appIcon = UIImageView()
         appIcon.image = MLBusinessResourceManager.shared.getImage(viewData.getAppSite().getValue)
         appIcon.translatesAutoresizingMaskIntoConstraints = false
@@ -61,7 +68,10 @@ extension MLBusinessDownloadAppView {
             appIcon.heightAnchor.constraint(equalToConstant: appIconImageHeight),
             appIcon.widthAnchor.constraint(equalToConstant: appIconImageWidth)
         ])
+        return appIcon
+    }
 
+    private func buildTitleLabel(topOf targetView: UIView) -> UILabel {
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(titleLabel)
@@ -70,27 +80,27 @@ extension MLBusinessDownloadAppView {
         titleLabel.applyBusinessLabelStyle()
         titleLabel.numberOfLines = 2
         NSLayoutConstraint.activate([
-            titleLabel.centerYAnchor.constraint(equalTo: appIcon.centerYAnchor),
-            titleLabel.leftAnchor.constraint(equalTo: appIcon.rightAnchor, constant: UI.Margin.S_MARGIN)
+            titleLabel.centerYAnchor.constraint(equalTo: targetView.centerYAnchor),
+            titleLabel.leftAnchor.constraint(equalTo: targetView.rightAnchor, constant: UI.Margin.S_MARGIN)
         ])
+        return titleLabel
+    }
 
+    private func buildDownloadButton(leftTo targetView: UIView) -> UIButton {
         let downloadButton = UIButton()
-        downloadButton.translatesAutoresizingMaskIntoConstraints = false
+        downloadButton.prepareForAutolayout(MLStyleSheetManager.styleSheet.secondaryColor)
         self.addSubview(downloadButton)
         downloadButton.layer.cornerRadius = 5
         downloadButton.setTitle(viewData.getButtonTitle(), for: .normal)
         downloadButton.titleLabel?.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.XS_FONT)
-        downloadButton.backgroundColor = MLStyleSheetManager.styleSheet.secondaryColor
         NSLayoutConstraint.activate([
             downloadButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            downloadButton.leftAnchor.constraint(equalTo: titleLabel.rightAnchor, constant: UI.Margin.S_MARGIN),
+            downloadButton.leftAnchor.constraint(equalTo: targetView.rightAnchor, constant: UI.Margin.S_MARGIN),
             downloadButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -UI.Margin.S_MARGIN),
             downloadButton.heightAnchor.constraint(equalToConstant: downloadButtonHeight),
             downloadButton.widthAnchor.constraint(equalToConstant: downloadButtonWidth)
         ])
-
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapOnButton))
-        downloadButton.addGestureRecognizer(tapGesture)
+        return downloadButton
     }
 
     // MARK: Tap Selector
