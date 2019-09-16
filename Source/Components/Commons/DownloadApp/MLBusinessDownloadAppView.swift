@@ -23,7 +23,7 @@ import MLUI
     }
 
     private let viewData: MLBusinessDownloadAppData
-    private var tapAction: ((_ deepLink: String?) -> Void)?
+    private var tapAction: ((_ deepLink: String) -> Void)?
 
     //Constants
     private let downloadAppViewHeight: CGFloat = 64
@@ -96,13 +96,13 @@ extension MLBusinessDownloadAppView {
 
     // MARK: Tap Selector
     @objc private func didTapOnButton() {
-        tapAction?(viewData.getButtonDeepLink?())
+        tapAction?(viewData.getButtonDeepLink())
     }
 }
 
 // MARK: Public Methods.
 extension MLBusinessDownloadAppView {
-    @objc open func addTapAction(_ action: ((_ deepLink: String?) -> Void)?) {
+    @objc open func addTapAction(_ action: ((_ deepLink: String) -> Void)?) {
         self.tapAction = action
     }
 }

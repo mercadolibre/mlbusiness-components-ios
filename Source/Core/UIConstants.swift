@@ -30,6 +30,6 @@ struct UI {
     struct Colors {
         static let placeHolderColor: UIColor = UIColor(red:0.94, green:0.94, blue:0.94, alpha:1.0)
         static let mainLabelColor: UIColor = UIColor(red:0, green:0, blue:0, alpha:0.8)
-        static let downloadAppViewBackgroundColor: UIColor = "#f5f5f5".hexaToUIColor()
+        static let downloadAppViewBackgroundColor: UIColor = UIColor(red:0.96, green:0.96, blue:0.96, alpha:1.0)
     }
 }

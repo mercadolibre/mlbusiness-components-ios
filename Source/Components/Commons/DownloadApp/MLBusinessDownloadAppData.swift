@@ -12,6 +12,6 @@ import Foundation
     @objc func getAppSite() -> MLBusinessDownloadAppView.AppSite
     @objc func getTitle() -> String
     @objc func getButtonTitle() -> String
-    @objc optional func getButtonDeepLink() -> String
+    @objc func getButtonDeepLink() -> String
 }
 
