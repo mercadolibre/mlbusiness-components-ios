@@ -44,6 +44,10 @@ import MLUI
         render()
     }
 
+    /*
+     Use this method to update MLBusinessDiscountBoxData.
+     You can keep the same component reference and update layout items only.
+    */
     public func update(_ data: MLBusinessDiscountBoxData) {
         updateModels(data)
     }
