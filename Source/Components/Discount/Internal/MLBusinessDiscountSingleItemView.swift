@@ -10,14 +10,10 @@ import Foundation
 import UIKit
 import MLUI
 
-internal protocol MLBusinessUserInteractionProtocol: NSObjectProtocol {
-    func didTap(item: MLBusinessSingleItemProtocol, index: Int, section: Int)
-}
-
 final class MLBusinessDiscountSingleItemView: UIView {
     static let itemHeight: CGFloat = 104
+    static let iconImageSize: CGFloat = 56
     private let discountSingleItem: MLBusinessSingleItemProtocol
-    private let iconImageSize: CGFloat = 56
     private var itemIndex: Int = 0
     private var itemSection: Int = 0
 
@@ -47,12 +43,12 @@ extension MLBusinessDiscountSingleItemView {
         self.backgroundColor = .white
         let icon: CustomUIImageView = CustomUIImageView()
         icon.prepareForAutolayout(.clear)
-        icon.loadImage(url: discountSingleItem.iconImageUrlForItem(), placeholder: nil, placeHolderRadius: iconImageSize/2)
+        icon.loadImage(url: discountSingleItem.iconImageUrlForItem(), placeholder: nil, placeHolderRadius: MLBusinessDiscountSingleItemView.iconImageSize/2)
         self.addSubview(icon)
         icon.contentMode = .scaleAspectFit
         NSLayoutConstraint.activate([
-            icon.heightAnchor.constraint(equalToConstant: iconImageSize),
-            icon.widthAnchor.constraint(equalToConstant: iconImageSize),
+            icon.heightAnchor.constraint(equalToConstant: MLBusinessDiscountSingleItemView.iconImageSize),
+            icon.widthAnchor.constraint(equalToConstant: MLBusinessDiscountSingleItemView.iconImageSize),
             icon.topAnchor.constraint(equalTo: self.topAnchor),
             icon.centerXAnchor.constraint(equalTo: self.centerXAnchor)
         ])

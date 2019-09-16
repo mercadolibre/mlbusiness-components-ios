@@ -73,8 +73,12 @@ extension ViewController {
         ])
 
         discountView.addTapAction { (selectedIndex, deepLink, trackId) in
-            // print(deepLink, trackId)
-            print(selectedIndex)
+            // To test update data feature.
+            if selectedIndex == 0 {
+                discountView.update(DiscountDataForTestUpdate())
+            } else {
+                discountView.update(DiscountData())
+            }
         }
         return discountView
     }

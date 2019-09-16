@@ -243,6 +243,12 @@ discountView.addTapAction { (selectedIndex, deepLink, trackId) in
 }
 ```
 
+### How to update component data ?
+In order to keep the same reference and update only the data and layout you can call to update method. `MLBusinessDiscountBoxView`
+```swift
+discountView.update(_ MLBusinessDiscountBoxData)
+```
+
 ## 🔠 Font and color customization.
 We use `MLUI` open source library to customize accent colors and font labels. In order to change those values check the documentation of `MLUI` stylesheet protocol.
 https://github.com/mercadolibre/fury_mobile-ios-ui
