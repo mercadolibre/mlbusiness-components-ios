@@ -3,7 +3,7 @@
     "TOTAL_LOC": [180, 300, 500, 600],
     "LOC": [30, 40, 60, 100],
     "TOO_MANY_IVARS": [12, 14, 16, 18],
-    "TOO_MANY_FUNCTIONS": [20, 25, 30, 50],	
+    "TOO_MANY_FUNCTIONS": [22, 25, 30, 50],	
     "ABC": [30, 40, 50, 70],
     "TOTAL_COMPLEXITY": [90, 150, 200, 400]
   }
