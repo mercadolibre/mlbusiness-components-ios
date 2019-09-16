@@ -1,5 +1,5 @@
 //
-//  DownloadAppView.swift
+//  MLBusinessDownloadAppView.swift
 //  MLBusinessComponents
 //
 //  Created by Esteban Adrian Boffa on 13/09/2019.
@@ -8,7 +8,7 @@
 import Foundation
 import MLUI
 
-@objc open class DownloadAppView: UIView {
+@objc open class MLBusinessDownloadAppView: UIView {
 
     private let appSite: AppSite
     private let title: String
@@ -42,7 +42,7 @@ public enum AppSite: String {
 }
 
 // MARK: Privates.
-extension DownloadAppView {
+extension MLBusinessDownloadAppView {
     private func render() {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.backgroundColor = UIColor(red:0.94, green:0.94, blue:0.94, alpha:1.0)
@@ -99,7 +99,7 @@ extension DownloadAppView {
 }
 
 // MARK: Public Methods.
-extension DownloadAppView {
+extension MLBusinessDownloadAppView {
     @objc open func addTapAction(_ action: ((_ deepLink: String?) -> Void)?) {
         self.tapAction = action
     }
