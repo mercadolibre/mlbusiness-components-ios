@@ -10,23 +10,30 @@ import MLUI
 
 @objc open class MLBusinessDownloadAppView: UIView {
 
-    private let appSite: AppSite
-    private let title: String
-    private let buttonTitle: String
-    private let deepLink: String?
+    @objc public enum AppSite: Int {
+        case ML
+        case MP
+
+        internal var getValue: String {
+            switch self {
+            case .ML: return "MLAppIcon"
+            case .MP: return "MPAppIcon"
+            }
+        }
+    }
+
+    private let viewData: MLBusinessDownloadAppData
     private var tapAction: ((_ deepLink: String?) -> Void)?
 
     //Constants
-    private let downloadAppViewHeight: CGFloat = 80
-    private let appIconImageSize: CGFloat = 40
-    private let downloadButtonHeight: CGFloat = 40
-    private let downloadButtonWidth: CGFloat = 110
+    private let downloadAppViewHeight: CGFloat = 64
+    private let appIconImageHeight: CGFloat = 24
+    private let appIconImageWidth: CGFloat = 34
+    private let downloadButtonHeight: CGFloat = 32
+    private let downloadButtonWidth: CGFloat = 101
 
-    public init(appSite: AppSite, title: String, buttonTitle: String, deepLink: String? = nil) {
-        self.appSite = appSite
-        self.title = title
-        self.buttonTitle = buttonTitle
-        self.deepLink = deepLink
+    public init(_ viewData: MLBusinessDownloadAppData) {
+        self.viewData = viewData
         super.init(frame: .zero)
         render()
     }
@@ -36,54 +43,49 @@ import MLUI
     }
 }
 
-public enum AppSite: String {
-    case ML = "MLAppIcon" //todo: add resources names
-    case MP = "AppIcon"
-}
-
 // MARK: Privates.
 extension MLBusinessDownloadAppView {
     private func render() {
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.backgroundColor = UIColor(red:0.94, green:0.94, blue:0.94, alpha:1.0)
-        self.layer.cornerRadius = 4
-        self.heightAnchor.constraint(equalToConstant: downloadAppViewHeight).isActive = true
+        translatesAutoresizingMaskIntoConstraints = false
+        backgroundColor = UI.Colors.downloadAppViewBackgroundColor
+        layer.cornerRadius = 6
+        heightAnchor.constraint(equalToConstant: downloadAppViewHeight).isActive = true
 
         let appIcon = UIImageView()
-        appIcon.image = UIImage(named: appSite.rawValue)
+        appIcon.image = MLBusinessResourceManager.shared.getImage(viewData.getAppSite().getValue)
         appIcon.translatesAutoresizingMaskIntoConstraints = false
         appIcon.contentMode = .scaleAspectFit
         self.addSubview(appIcon)
         NSLayoutConstraint.activate([
             appIcon.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            appIcon.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 12),
-            appIcon.heightAnchor.constraint(equalToConstant: appIconImageSize),
-            appIcon.widthAnchor.constraint(equalToConstant: appIconImageSize)
+            appIcon.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: UI.Margin.S_MARGIN),
+            appIcon.heightAnchor.constraint(equalToConstant: appIconImageHeight),
+            appIcon.widthAnchor.constraint(equalToConstant: appIconImageWidth)
         ])
 
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(titleLabel)
-        titleLabel.text = title
-        titleLabel.font = UIFont.ml_lightSystemFont(ofSize: UI.FontSize.S_FONT)
+        titleLabel.text = viewData.getTitle()
+        titleLabel.font = UIFont.ml_lightSystemFont(ofSize: UI.FontSize.XS_FONT)
         titleLabel.applyBusinessLabelStyle()
         titleLabel.numberOfLines = 2
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: appIcon.topAnchor),
-            titleLabel.leftAnchor.constraint(equalTo: appIcon.rightAnchor, constant: 12)
+            titleLabel.leftAnchor.constraint(equalTo: appIcon.rightAnchor, constant: UI.Margin.S_MARGIN)
         ])
 
         let downloadButton = UIButton()
         downloadButton.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(downloadButton)
-        downloadButton.layer.cornerRadius = 4
-        downloadButton.setTitle(buttonTitle, for: .normal)
-        downloadButton.titleLabel?.font = UIFont.ml_lightSystemFont(ofSize: UI.FontSize.S_FONT)
+        downloadButton.layer.cornerRadius = 6
+        downloadButton.setTitle(viewData.getButtonTitle(), for: .normal)
+        downloadButton.titleLabel?.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.XS_FONT)
         downloadButton.backgroundColor = MLStyleSheetManager.styleSheet.secondaryColor
         NSLayoutConstraint.activate([
             downloadButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            downloadButton.leftAnchor.constraint(equalTo: titleLabel.rightAnchor, constant: 12),
-            downloadButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -12),
+            downloadButton.leftAnchor.constraint(equalTo: titleLabel.rightAnchor, constant: UI.Margin.S_MARGIN),
+            downloadButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -UI.Margin.S_MARGIN),
             downloadButton.heightAnchor.constraint(equalToConstant: downloadButtonHeight),
             downloadButton.widthAnchor.constraint(equalToConstant: downloadButtonWidth)
         ])
@@ -94,7 +96,7 @@ extension MLBusinessDownloadAppView {
 
     // MARK: Tap Selector
     @objc private func didTapOnButton() {
-        tapAction?(deepLink)
+        tapAction?(viewData.getButtonDeepLink?())
     }
 }
 
