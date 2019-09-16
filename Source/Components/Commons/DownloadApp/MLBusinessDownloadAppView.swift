@@ -9,7 +9,6 @@ import Foundation
 import MLUI
 
 @objc open class MLBusinessDownloadAppView: UIView {
-
     @objc public enum AppSite: Int {
         case ML
         case MP
@@ -30,7 +29,7 @@ import MLUI
     private let appIconImageHeight: CGFloat = 24
     private let appIconImageWidth: CGFloat = 34
     private let downloadButtonHeight: CGFloat = 32
-    private let downloadButtonWidth: CGFloat = 101
+    private let downloadButtonWidth: CGFloat = 112
 
     public init(_ viewData: MLBusinessDownloadAppData) {
         self.viewData = viewData
@@ -71,14 +70,14 @@ extension MLBusinessDownloadAppView {
         titleLabel.applyBusinessLabelStyle()
         titleLabel.numberOfLines = 2
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: appIcon.topAnchor),
+            titleLabel.centerYAnchor.constraint(equalTo: appIcon.centerYAnchor),
             titleLabel.leftAnchor.constraint(equalTo: appIcon.rightAnchor, constant: UI.Margin.S_MARGIN)
         ])
 
         let downloadButton = UIButton()
         downloadButton.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(downloadButton)
-        downloadButton.layer.cornerRadius = 6
+        downloadButton.layer.cornerRadius = 5
         downloadButton.setTitle(viewData.getButtonTitle(), for: .normal)
         downloadButton.titleLabel?.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.XS_FONT)
         downloadButton.backgroundColor = MLStyleSheetManager.styleSheet.secondaryColor

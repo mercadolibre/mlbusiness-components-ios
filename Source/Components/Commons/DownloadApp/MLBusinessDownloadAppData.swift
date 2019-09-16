@@ -8,7 +8,6 @@
 import Foundation
 
 @objc public protocol MLBusinessDownloadAppData: NSObjectProtocol {
-
     @objc func getAppSite() -> MLBusinessDownloadAppView.AppSite
     @objc func getTitle() -> String
     @objc func getButtonTitle() -> String

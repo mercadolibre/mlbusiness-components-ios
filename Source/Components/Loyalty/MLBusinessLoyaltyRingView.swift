@@ -75,12 +75,12 @@ extension MLBusinessLoyaltyRingView {
     func makeConstraints(_ titleLabel: UILabel, _ button: UIButton, _ ring: UICircularProgressRing) {
         NSLayoutConstraint.activate([
             ring.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            ring.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: UI.Margin.S_MARGIN),
+            ring.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             ring.heightAnchor.constraint(equalToConstant: ringSize),
             ring.widthAnchor.constraint(equalToConstant: ringSize),
             titleLabel.leftAnchor.constraint(equalTo: ring.rightAnchor, constant: UI.Margin.M_MARGIN),
             titleLabel.centerYAnchor.constraint(equalTo: ring.centerYAnchor, constant: -UI.Margin.XXS_MARGIN),
-            titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -UI.Margin.S_MARGIN),
+            titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             button.heightAnchor.constraint(equalToConstant: buttonHeight),
             button.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             button.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
