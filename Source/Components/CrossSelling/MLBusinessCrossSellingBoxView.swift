@@ -16,6 +16,7 @@ import MLUI
     // Constants
     private let crossSellingBoxViewHeight: CGFloat = 92
     private let iconImageSize: CGFloat = 48
+    private let buttonHeight: CGFloat = 20
 
     public init(_ viewData: MLBusinessCrossSellingBoxData) {
         self.viewData = viewData
@@ -70,7 +71,7 @@ extension MLBusinessCrossSellingBoxView {
         title.numberOfLines = 2
         self.addSubview(title)
         NSLayoutConstraint.activate([
-            title.topAnchor.constraint(equalTo: targetView.topAnchor),
+            title.centerYAnchor.constraint(equalTo: targetView.centerYAnchor, constant: -UI.Margin.XXS_MARGIN),
             title.leftAnchor.constraint(equalTo: targetView.rightAnchor, constant: UI.Margin.S_MARGIN),
             title.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
@@ -90,7 +91,8 @@ extension MLBusinessCrossSellingBoxView {
         NSLayoutConstraint.activate([
             button.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: UI.Margin.XXXS_MARGIN),
             button.leadingAnchor.constraint(equalTo: targetView.leadingAnchor),
-            button.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+            button.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            button.heightAnchor.constraint(equalToConstant: buttonHeight)
         ])
         return button
     }
