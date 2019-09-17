@@ -19,10 +19,6 @@ class UICircularRing: UIView {
         didSet { ringLayer.setNeedsDisplay() }
     }
 
-    var gradientOptions: UICircularRingGradientOptions? = nil {
-        didSet { ringLayer.setNeedsDisplay() }
-    }
-
     var shouldShowValueText: Bool = true {
         didSet { ringLayer.setNeedsDisplay() }
     }
@@ -435,8 +431,10 @@ class UICircularRingLayer: CAShapeLayer {
     }
 
     override init(layer: Any) {
-        // copy our properties to this layer which will be used for animation
-        guard let layer = layer as? UICircularRingLayer else { fatalError("unable to copy layer") }
+        guard let layer = layer as? UICircularRingLayer else {
+            super.init()
+            return
+        }
         valueFormatter = layer.valueFormatter
         valueKnobStyle = layer.valueKnobStyle
         animationDuration = layer.animationDuration
@@ -570,33 +568,14 @@ class UICircularRingLayer: CAShapeLayer {
         ctx.addPath(innerPath.cgPath)
         ctx.drawPath(using: .stroke)
 
-        if let gradientOptions = ring.gradientOptions {
-            // Create gradient and draw it
-            var cgColors: [CGColor] = [CGColor]()
-            for color: UIColor in gradientOptions.colors {
-                cgColors.append(color.cgColor)
-            }
+        ctx.saveGState()
+        ctx.addPath(innerPath.cgPath)
+        ctx.replacePathWithStrokedPath()
+        ctx.clip()
 
-            guard let gradient: CGGradient = CGGradient(colorsSpace: nil,
-                                                        colors: cgColors as CFArray,
-                                                        locations: gradientOptions.colorLocations)
-                else {
-                    fatalError("\nUnable to create gradient for progress ring.\n" +
-                        "Check values of gradientColors and gradientLocations.\n")
-            }
+        ctx.setFillColor(ring.innerRingColor.cgColor)
 
-            ctx.saveGState()
-            ctx.addPath(innerPath.cgPath)
-            ctx.replacePathWithStrokedPath()
-            ctx.clip()
-
-            drawGradient(gradient,
-                         start: gradientOptions.startPosition,
-                         end: gradientOptions.endPosition,
-                         in: ctx)
-
-            ctx.restoreGState()
-        }
+        ctx.restoreGState()
 
         if let knobStyle = ring.valueKnobStyle, value > minValue {
             let knobOffset = knobStyle.size / 2
@@ -698,6 +677,7 @@ class UICircularRingLayer: CAShapeLayer {
                               start: UICircularRingGradientPosition,
                               end: UICircularRingGradientPosition,
                               in context: CGContext) {
+
 
         context.drawLinearGradient(gradient,
                                    start: start.pointForPosition(in: bounds),
@@ -963,35 +943,6 @@ internal enum UICircularRingGradientPosition {
         case .bottomRight:
             return CGPoint(x: rect.maxX, y: rect.maxY)
         }
-    }
-}
-
-// MARK: UICircularRingGradientOptions
-// codebeat:disable[TOO_MANY_IVARS,TOO_MANY_FUNCTIONS,LOC,ABC,ARITY,CYCLO,TOTAL_COMPLEXITY,TOTAL_LOC]
-struct UICircularRingGradientOptions {
-
-    /// a default styling option for the gradient style
-    static let `default` = UICircularRingGradientOptions(startPosition: .topRight,
-                                                                endPosition: .bottomLeft,
-                                                                colors: [.red, .blue],
-                                                                colorLocations: [0, 1])
-    /// the start location for the gradient
-    let startPosition: UICircularRingGradientPosition
-    /// the end location for the gradient
-    let endPosition: UICircularRingGradientPosition
-    /// the colors to use in the gradient, the count of this list must match the count of `colorLocations`
-    let colors: [UIColor]
-    /// the locations of where to place the colors, valid numbers are from 0.0 - 1.0
-    let colorLocations: [CGFloat]
-    /// create a new UICircularRingGradientOptions
-    init(startPosition: UICircularRingGradientPosition,
-                endPosition: UICircularRingGradientPosition,
-                colors: [UIColor],
-                colorLocations: [CGFloat]) {
-        self.startPosition = startPosition
-        self.endPosition = endPosition
-        self.colors = colors
-        self.colorLocations = colorLocations
     }
 }
 
