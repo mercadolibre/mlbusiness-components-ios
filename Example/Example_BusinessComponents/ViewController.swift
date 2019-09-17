@@ -30,7 +30,8 @@ extension ViewController {
         self.ringView = newRingView
         let dividingLineView = setupDividingLineView(bottomOf: newRingView)
         let discountView = setupDiscountView(bottomOf: dividingLineView)
-        setupDownloadAppView(bottomOf: discountView)
+        let downloadAppView = setupDownloadAppView(bottomOf: discountView)
+        setupCrossSellingBoxView(bottomOf: downloadAppView)
     }
 
     private func setupRingView() -> MLBusinessLoyaltyRingView {
@@ -83,7 +84,7 @@ extension ViewController {
         return discountView
     }
 
-    private func setupDownloadAppView(bottomOf targetView: UIView) {
+    private func setupDownloadAppView(bottomOf targetView: UIView) -> MLBusinessDownloadAppView {
         let downloadAppView = MLBusinessDownloadAppView(DownloadAppData())
         view.addSubview(downloadAppView)
         NSLayoutConstraint.activate([
@@ -94,6 +95,22 @@ extension ViewController {
 
         downloadAppView.addTapAction { (deepLink) in
 //            print(deepLink)
+        }
+        return downloadAppView
+    }
+
+    private func setupCrossSellingBoxView(bottomOf targetView: UIView) {
+
+        let crossSellingBoxView = MLBusinessCrossSellingBoxView(CrossSellingBoxData())
+        view.addSubview(crossSellingBoxView)
+        NSLayoutConstraint.activate([
+            crossSellingBoxView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            crossSellingBoxView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            crossSellingBoxView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16)
+        ])
+
+        crossSellingBoxView.addTapAction { (deepLink) in
+            print(deepLink)
         }
     }
 }

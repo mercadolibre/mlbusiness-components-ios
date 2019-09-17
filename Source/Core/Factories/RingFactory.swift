@@ -21,7 +21,7 @@ struct RingFactory {
         ring.outerRingColor = UI.Colors.placeHolderColor
         ring.innerCapStyle = .round
         ring.fontColor = hexaColor.hexaToUIColor()
-        ring.gradientOptions = UICircularRingGradientOptions(startPosition: .left, endPosition: .right, colors: [hexaColor.hexaToUIColor(), hexaColor.hexaToUIColor()], colorLocations: [0.5])
+        ring.innerRingColor = hexaColor.hexaToUIColor()
         if fillPercentage {
             ring.startProgress(to: CGFloat(percent), duration: 0)
         }

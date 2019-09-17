@@ -18,6 +18,7 @@
 		23EE408023297CF8001322EC /* SingleItemData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE407F23297CF8001322EC /* SingleItemData.swift */; };
 		BB9E26FC3DD45F207D4BB84B /* Pods_Example_BusinessComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8416BFAB081096869A35876 /* Pods_Example_BusinessComponents.framework */; };
 		CEE9F37C232FD72F0000C9CA /* DownloadAppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE9F37B232FD72F0000C9CA /* DownloadAppData.swift */; };
+		CEE9F390233062880000C9CA /* CrossSellingBoxData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE9F38F233062880000C9CA /* CrossSellingBoxData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		403C5DEEFE4FED153174F429 /* Pods-Example_BusinessComponents.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example_BusinessComponents.release.xcconfig"; path = "Target Support Files/Pods-Example_BusinessComponents/Pods-Example_BusinessComponents.release.xcconfig"; sourceTree = "<group>"; };
 		B8416BFAB081096869A35876 /* Pods_Example_BusinessComponents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Example_BusinessComponents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEE9F37B232FD72F0000C9CA /* DownloadAppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadAppData.swift; sourceTree = "<group>"; };
+		CEE9F38F233062880000C9CA /* CrossSellingBoxData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossSellingBoxData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 				23DECA25232D28E80083D01F /* DiscountDataForTestUpdate.swift */,
 				23EE407F23297CF8001322EC /* SingleItemData.swift */,
 				CEE9F37B232FD72F0000C9CA /* DownloadAppData.swift */,
+				CEE9F38F233062880000C9CA /* CrossSellingBoxData.swift */,
 			);
 			path = MockData;
 			sourceTree = "<group>";
@@ -233,6 +236,7 @@
 				23EE40662326B50B001322EC /* AppDelegate.swift in Sources */,
 				23EE407A2326BA33001322EC /* LoyaltyRingData.swift in Sources */,
 				CEE9F37C232FD72F0000C9CA /* DownloadAppData.swift in Sources */,
+				CEE9F390233062880000C9CA /* CrossSellingBoxData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
