@@ -7,8 +7,8 @@
 
 import UIKit
 
-class MLBusinessLoyaltyHeaderView: UIView {
-
+@objc public final class MLBusinessLoyaltyHeaderView: UIView {
+    
     let viewData: MLBusinessLoyaltyHeaderData?
     
     private let viewHeight: CGFloat = 60
@@ -17,7 +17,7 @@ class MLBusinessLoyaltyHeaderView: UIView {
     private let ringSize: CGFloat = 32
     
     private weak var ringView: UICircularProgressRing?
-
+    
     public init(_ viewData: MLBusinessLoyaltyHeaderData, fillPercentProgress: Bool = true) {
         self.viewData = viewData
         self.fillPercentProgress = fillPercentProgress
@@ -32,9 +32,11 @@ class MLBusinessLoyaltyHeaderView: UIView {
 
 // MARK: Privates methods
 private extension MLBusinessLoyaltyHeaderView {
-
+    
     private func render() {
         self.prepareForAutolayout()
+        
+        self.backgroundColor = viewData?.getBackgroundHexaColor().hexaToUIColor()
         
         let titleLabel = buildTitle()
         self.addSubview(titleLabel)
@@ -54,8 +56,8 @@ private extension MLBusinessLoyaltyHeaderView {
         titleLabel.prepareForAutolayout(.clear)
         titleLabel.numberOfLines = titleNumberOfLines
         titleLabel.text = viewData?.getTitle()
+        titleLabel.textColor = viewData?.getTextColor().hexaToUIColor()
         titleLabel.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.S_FONT)
-        titleLabel.applyBusinessLabelStyle()
         return titleLabel
     }
     
@@ -64,21 +66,39 @@ private extension MLBusinessLoyaltyHeaderView {
         subTitleLabel.prepareForAutolayout(.clear)
         subTitleLabel.numberOfLines = titleNumberOfLines
         subTitleLabel.text = viewData?.getSubtitle()
+        subTitleLabel.textColor = viewData?.getTextColor().hexaToUIColor()
         subTitleLabel.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.S_FONT)
-        subTitleLabel.applyBusinessLabelStyle()
         return subTitleLabel
     }
     
     private func buildRing() -> UIView {
         let ringNumber = viewData?.getRingNumber() ?? 1
-        let hexaColor = viewData?.getRingHexaColor() ?? "000000"
+        let ringHexaColor = "FFFFFF"
+        let secondaryHexaColor = viewData?.getRingHexaColor() ?? "FFFFFF"
         let ringPercentage = viewData?.getRingPercentage() ?? 0
         
-        return RingFactory.create(number: ringNumber,
-                                  hexaColor: hexaColor,
-                                  percent: ringPercentage,
-                                  fillPercentage: fillPercentProgress,
-                                  innerCenterText: String(ringNumber))
+        let ring = UICircularProgressRing()
+        ring.prepareForAutolayout(.clear)
+        ring.style = .ontop
+        ring.maxValue = 1
+        ring.minValue = 0
+        ring.startAngle = 270
+        ring.outerRingWidth = 2
+        ring.innerRingWidth = 2
+        ring.outerRingColor = UI.Colors.placeHolderColor
+        ring.innerCapStyle = .round
+        ring.fontColor = ringHexaColor.hexaToUIColor()
+        ring.innerRingColor = secondaryHexaColor.hexaToUIColor()
+        ring.outerRingColor = secondaryHexaColor.hexaToUIColor()
+        ring.gradientOptions = UICircularRingGradientOptions(startPosition: .left, endPosition: .right, colors: [ringHexaColor.hexaToUIColor(), ringHexaColor.hexaToUIColor()], colorLocations: [0.5])
+        ring.innerCenterText = String(ringNumber)
+        ring.shouldShowValueText = false
+        ring.font = UIFont.systemFont(ofSize: 20)
+        
+        if self.fillPercentProgress {
+            ring.startProgress(to: CGFloat(ringPercentage), duration: 0)
+        }
+        return ring
     }
     
     // MARK: Constraints.

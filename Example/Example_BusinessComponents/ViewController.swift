@@ -30,7 +30,8 @@ extension ViewController {
         self.ringView = newRingView
         let dividingLineView = setupDividingLineView(bottomOf: newRingView)
         let discountView = setupDiscountView(bottomOf: dividingLineView)
-        setupDownloadAppView(bottomOf: discountView)
+        let downloadAppView = setupDownloadAppView(bottomOf: discountView)
+        setupLoyaltyHeaderView(bottomOf: downloadAppView)
     }
 
     private func setupRingView() -> MLBusinessLoyaltyRingView {
@@ -83,7 +84,7 @@ extension ViewController {
         return discountView
     }
 
-    private func setupDownloadAppView(bottomOf targetView: UIView) {
+    private func setupDownloadAppView(bottomOf targetView: UIView) -> UIView {
         let downloadAppView = MLBusinessDownloadAppView(DownloadAppData())
         view.addSubview(downloadAppView)
         NSLayoutConstraint.activate([
@@ -95,6 +96,18 @@ extension ViewController {
         downloadAppView.addTapAction { (deepLink) in
 //            print(deepLink)
         }
+        
+        return downloadAppView
+    }
+    
+    private func setupLoyaltyHeaderView(bottomOf targetView: UIView) {
+        let loyaltyHeaderView = MLBusinessLoyaltyHeaderView(LoyaltyHeaderData(), fillPercentProgress: true)
+        view.addSubview(loyaltyHeaderView)
+        NSLayoutConstraint.activate([
+            loyaltyHeaderView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16),
+            loyaltyHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            loyaltyHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0)
+            ])
     }
 }
 

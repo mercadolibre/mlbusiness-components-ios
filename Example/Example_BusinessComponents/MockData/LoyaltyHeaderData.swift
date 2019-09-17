@@ -7,7 +7,35 @@
 //
 
 import UIKit
+import MLBusinessComponents
 
-class LoyaltyHeaderData: MLBusinessLoyaltyHeaderData {
+class LoyaltyHeaderData: NSObject, MLBusinessLoyaltyHeaderData {
+    func getBackgroundHexaColor() -> String {
+        return "1AC2B0"
+    }
+    
+    func getRingHexaColor() -> String {
+        return "65A69E"
+    }
+    
+    func getTextColor() -> String {
+        return "FFAA00"
+    }
+    
+    func getRingNumber() -> Int {
+        return 4
+    }
+    
+    func getRingPercentage() -> Float {
+        return 0.8
+    }
+    
+    func getTitle() -> String {
+        return "Beneficios"
+    }
+    
+    func getSubtitle() -> String {
+        return "Nivel 4 - Mercado Puntos"
+    }
     
 }
