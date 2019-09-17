@@ -18,7 +18,6 @@ struct UI {
         static let M_MARGIN: CGFloat = 18
         static let XM_MARGIN: CGFloat = 20
         static let L_MARGIN: CGFloat = 24
-        static let XL_MARGIN: CGFloat = 32
     }
 
     struct FontSize {

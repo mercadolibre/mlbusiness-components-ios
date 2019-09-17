@@ -54,7 +54,7 @@ extension MLBusinessCrossSellingBoxView {
         self.addSubview(icon)
         NSLayoutConstraint.activate([
             icon.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            icon.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: UI.Margin.XL_MARGIN),
+            icon.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             icon.heightAnchor.constraint(equalToConstant: iconImageSize),
             icon.widthAnchor.constraint(equalToConstant: iconImageSize)
         ])
@@ -72,7 +72,7 @@ extension MLBusinessCrossSellingBoxView {
         NSLayoutConstraint.activate([
             title.topAnchor.constraint(equalTo: targetView.topAnchor),
             title.leftAnchor.constraint(equalTo: targetView.rightAnchor, constant: UI.Margin.S_MARGIN),
-            title.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -UI.Margin.XL_MARGIN)
+            title.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
         return title
     }
@@ -90,7 +90,7 @@ extension MLBusinessCrossSellingBoxView {
         NSLayoutConstraint.activate([
             button.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: UI.Margin.XXXS_MARGIN),
             button.leadingAnchor.constraint(equalTo: targetView.leadingAnchor),
-            button.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -UI.Margin.XL_MARGIN)
+            button.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
         return button
     }
