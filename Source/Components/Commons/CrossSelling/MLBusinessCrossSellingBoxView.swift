@@ -34,7 +34,20 @@ extension MLBusinessCrossSellingBoxView {
         prepareForAutolayout()
         heightAnchor.constraint(equalToConstant: crossSellingBoxViewHeight).isActive = true
 
-        let icon: CustomUIImageView = CustomUIImageView()
+        let icon: CustomUIImageView = buildIconImage()
+        let title: UILabel = buildTitle(targetView: icon)
+        let button: UIButton = buildButton(targetView: title)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapOnButton))
+        button.addGestureRecognizer(tapGesture)
+    }
+
+    // MARK: Tap Selector
+    @objc private func didTapOnButton() {
+        tapAction?(viewData.getButtonDeepLink())
+    }
+
+    private func buildIconImage() -> CustomUIImageView {
+        let icon = CustomUIImageView()
         icon.loadImage(url: viewData.getIconUrl(), placeholder: nil, placeHolderRadius: iconImageSize/2)
         icon.translatesAutoresizingMaskIntoConstraints = false
         icon.contentMode = .scaleAspectFit
@@ -45,7 +58,10 @@ extension MLBusinessCrossSellingBoxView {
             icon.heightAnchor.constraint(equalToConstant: iconImageSize),
             icon.widthAnchor.constraint(equalToConstant: iconImageSize)
         ])
+        return icon
+    }
 
+    private func buildTitle(targetView: UIView) -> UILabel {
         let title = UILabel()
         title.translatesAutoresizingMaskIntoConstraints = false
         title.text = viewData.getText()
@@ -54,11 +70,14 @@ extension MLBusinessCrossSellingBoxView {
         title.numberOfLines = 2
         self.addSubview(title)
         NSLayoutConstraint.activate([
-            title.topAnchor.constraint(equalTo: icon.topAnchor),
-            title.leftAnchor.constraint(equalTo: icon.rightAnchor, constant: UI.Margin.S_MARGIN),
+            title.topAnchor.constraint(equalTo: targetView.topAnchor),
+            title.leftAnchor.constraint(equalTo: targetView.rightAnchor, constant: UI.Margin.S_MARGIN),
             title.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -UI.Margin.XL_MARGIN)
         ])
+        return title
+    }
 
+    private func buildButton(targetView: UIView) -> UIButton {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(viewData.getButtonTitle(), for: .normal)
@@ -69,18 +88,11 @@ extension MLBusinessCrossSellingBoxView {
         button.titleLabel?.numberOfLines = 2
         self.addSubview(button)
         NSLayoutConstraint.activate([
-            button.topAnchor.constraint(equalTo: title.bottomAnchor, constant: UI.Margin.XXXS_MARGIN),
-            button.leadingAnchor.constraint(equalTo: title.leadingAnchor),
+            button.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: UI.Margin.XXXS_MARGIN),
+            button.leadingAnchor.constraint(equalTo: targetView.leadingAnchor),
             button.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -UI.Margin.XL_MARGIN)
         ])
-
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapOnButton))
-        button.addGestureRecognizer(tapGesture)
-    }
-
-    // MARK: Tap Selector
-    @objc private func didTapOnButton() {
-        tapAction?(viewData.getButtonDeepLink())
+        return button
     }
 }
 
