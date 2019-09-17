@@ -333,6 +333,67 @@ downloadAppView.addTapAction { (deepLink) in
 }
 ```
 
+## 5️⃣ - MLBusinessCrossSellingBoxView Component
+This component allows you to show a view with an image icon, a text and an actionable button.
+#### Visual Example:
+![MLBusinessCrossSellingBoxView](         )
+
+### MLBusinessCrossSellingBoxView init
+You need to set `MLBusinessCrossSellingBoxData` protocol. This interface allows you to populate the draw data into the component (iconUrl, text, buttonTitle and buttonDeepLink, being all of them mandatory).
+
+```swift
+// CrossSellingBoxData() is an implementation of MLBusinessCrossSellingBoxData protocol.
+let crossSellingBoxView = MLBusinessCrossSellingBoxView(CrossSellingBoxData())
+view.addSubview(crossSellingBoxView)
+
+/* 
+    Set your constraints. You don't need to set up the HEIGHT contraint. 
+    Because this component is responsible for knowing and setting its own HEIGHT.
+*/
+NSLayoutConstraint.activate([
+    crossSellingBoxView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+    crossSellingBoxView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+    crossSellingBoxView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16)
+])
+```
+### MLBusinessCrossSellingBoxData Protocol
+This protocol allows you to provide the proper data to draw `MLBusinessCrossSellingBoxView`. You have to setup the following data: iconUrl, text, buttonTitle and buttonDeepLink.
+
+#### Definition
+```swift
+@objc public protocol MLBusinessCrossSellingBoxData: NSObjectProtocol {
+    @objc func getIconUrl() -> String
+    @objc func getText() -> String
+    @objc func getButtonTitle() -> String
+    @objc func getButtonDeepLink() -> String
+}
+```
+Implementation of `MLBusinessCrossSellingBoxData` in CrossSellingBoxData example:
+```swift
+class CrossSellingBoxData: NSObject, MLBusinessCrossSellingBoxData {
+
+    func getIconUrl() -> String {
+        return "https://urbancomunicacion.com/wp-content/uploads/2017/04/Logotipos-famosos-Starbucks-Urban-comunicacion-1.png"
+    }
+    func getText() -> String {
+        return "Ganá $ 50 de regalo para tus pagos diarios"
+    }
+    func getButtonTitle() -> String {
+        return "Invita a más amigos a usar la app"
+    }
+    func getButtonDeepLink() -> String {
+        return "https://mercadopago-crossSelling"
+    }
+}
+```
+### How to receive a tap action of item with the deep link?
+You can be informed when the user presses the actionable button and receive the deeplink previously sent in `MLBusinessCrossSellingBoxData`
+```swift
+crossSellingBoxView.addTapAction { (deepLink) in
+    print(deepLink)
+}
+```
+
 ## 🔠 Font and color customization.
 We use `MLUI` open source library to customize accent colors and font labels. In order to change those values check the documentation of `MLUI` stylesheet protocol.
 https://github.com/mercadolibre/fury_mobile-ios-ui
