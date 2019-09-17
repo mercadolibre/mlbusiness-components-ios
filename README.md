@@ -249,6 +249,90 @@ In order to keep the same reference and update only the data and layout you can 
 discountView.update(_ MLBusinessDiscountBoxData)
 ```
 
+## 3️⃣ - MLBusinessDividingLineView Component
+This component allows you to draw a dividing line in order to separate views. For example, it can be used to separate the MLBusinessLoyaltyRingView component from the MLBusinessDownloadAppView component.
+#### Visual Example:
+![MLBusinessDividingLineView](https://github.com/mercadolibre/mlbusiness-components-ios/blob/master/Documentation/images/dividingLineViewComponent.png)
+
+### MLBusinessDividingLineView init
+The init method receives an optional parameter named: 'hasTriangle'. This parameter is 'false' by default. When this parameter is sent as 'true', a rect line with a downward triangle in the center is drawn. Conversely, just a single rect line is shown.
+
+```swift
+let dividingLineView = MLBusinessDividingLineView(hasTriangle: true)
+view.addSubview(dividingLineView)
+
+/* 
+    Set your constraints. You don't have to set up the HEIGHT contraint. 
+*/
+NSLayoutConstraint.activate([
+    dividingLineView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+    dividingLineView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+    dividingLineView.topAnchor.constraint(equalTo: view.topAnchor)
+])
+```
+
+## 4️⃣ - MLBusinessDownloadAppView Component
+This component allows you to show a view with an image of the app icon (ML or MP), a title and an actionable button in order to download the app.
+#### Visual Example:
+![MLBusinessDownloadAppView](https://github.com/mercadolibre/mlbusiness-components-ios/blob/master/Documentation/images/downloadAppViewComponent.png)
+
+### MLBusinessDownloadAppView init
+You need to set `MLBusinessDownloadAppData` protocol. This interface allows you to populate the draw data into the component (appSite, title, buttonTitle and buttonDeepLink, being all of them mandatory).
+
+```swift
+// DownloadAppData() is an implementation of MLBusinessDownloadAppData protocol.
+let downloadAppView = MLBusinessDownloadAppView(DownloadAppData())
+view.addSubview(downloadAppView)
+
+/* 
+    Set your constraints. You don't need to set up the HEIGHT contraint. 
+    Because this component is responsible for knowing and setting its own HEIGHT.
+*/
+NSLayoutConstraint.activate([
+    downloadAppView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+    downloadAppView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+    downloadAppView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16)
+])
+```
+
+### MLBusinessDownloadAppData Protocol
+This protocol allows you to provide the proper data to draw `MLBusinessDownloadAppView`. You have to setup the following data: appSite(ML or MP), title, buttonTitle, and buttonDeepLink.
+
+#### Definition
+```swift
+@objc public protocol MLBusinessDownloadAppData: NSObjectProtocol {
+    @objc func getAppSite() -> MLBusinessDownloadAppView.AppSite
+    @objc func getTitle() -> String
+    @objc func getButtonTitle() -> String
+    @objc func getButtonDeepLink() -> String
+}
+```
+Implementation of `MLBusinessDownloadAppData` in DownloadAppData example:
+```swift
+class DownloadAppData: NSObject, MLBusinessDownloadAppData {
+
+    func getAppSite() -> MLBusinessDownloadAppView.AppSite {
+        return MLBusinessDownloadAppView.AppSite.MP
+    }
+    func getTitle() -> String {
+        return "Exclusivo con la app de Mercado Pago"
+    }
+    func getButtonTitle() -> String {
+        return "Descargar"
+    }
+    func getButtonDeepLink() -> String {
+        return "http://mercadopago"
+    }
+}
+```
+### How to receive a tap action of item with the deep link?
+You can be informed when the user presses the download button and receive the deeplink previously sent in `MLBusinessDownloadAppData`
+```swift
+downloadAppView.addTapAction { (deepLink) in
+   print(deepLink)
+}
+```
+
 ## 🔠 Font and color customization.
 We use `MLUI` open source library to customize accent colors and font labels. In order to change those values check the documentation of `MLUI` stylesheet protocol.
 https://github.com/mercadolibre/fury_mobile-ios-ui
