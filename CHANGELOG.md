@@ -1,3 +1,7 @@
+# v1.0.4
+🚀 1.0.4 🚀
+- Se agrega el componente MLBusinessLoyaltyHeaderView
+
 # v1.0.3
 🚀 1.0.3 🚀
 - CrossSellingBoxView Component
