@@ -467,6 +467,58 @@ return "Nivel 4 - Mercado Puntos"
 }
 ```
 
+## 7️⃣ - MLBusinessItemDescriptionView Component
+This component allow you to show the an icon and a title.
+#### Visual Example:
+![iconDescription](https://user-images.githubusercontent.com/1513008/65180512-6be70400-da33-11e9-8380-d915ad47902a.png)
+
+```swift
+// ItemDescriptionData() is an implementation of MLBusinessItemDescriptionData protocol.
+let itemDescriptionView = MLBusinessItemDescriptionView(ItemDescriptionData())
+containerView.addSubview(itemDescriptionView)
+
+/* 
+Set your constraints. You don't need to set up the HEIGHT contraint. 
+Because this component is responsible for knowing and setting its own HEIGHT.
+*/
+NSLayoutConstraint.activate([
+            itemDescriptionView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16),
+            itemDescriptionView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            itemDescriptionView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16)
+            ])
+```
+### MLBusinessItemDescriptionData Protocol
+This protocol allows you to provide the proper data to draw `MLBusinessItemDescriptionView`. You have to setup the following data:
+
+#### Definition
+```swift
+@objc func getTitle() -> String
+@objc func getIconImageURL() -> String
+@objc func getIconHexaColor() -> String
+}
+```
+
+Implementation of `MLBusinessItemDescriptionData` in ItemDescriptionData example:
+```swift
+import MLBusinessComponents
+
+final class ItemDescriptionData: NSObject, MLBusinessItemDescriptionData {
+
+    func getTitle() -> String {
+        return "Envíos gratis desde $ 1.999"
+    }
+
+    @objc func getIconImageURL() -> String {
+        return "https://http2.mlstatic.com/static/org-img/loyalty/benefits/mobile/ic-shipping-discount-64.png"
+    }
+
+    func getIconHexaColor() -> String {
+        return "1AC2B0"
+    }
+}
+
+```
+
 ## 🔠 Font and color customization.
 We use `MLUI` open source library to customize accent colors and font labels. In order to change those values check the documentation of `MLUI` stylesheet protocol.
 https://github.com/mercadolibre/fury_mobile-ios-ui
