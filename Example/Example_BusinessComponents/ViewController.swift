@@ -36,8 +36,9 @@ extension ViewController {
         let downloadAppView = setupDownloadAppView(bottomOf: discountView)
         let crossSellingBoxView = setupCrossSellingBoxView(bottomOf: downloadAppView)
         let loyaltyHeaderView = setupLoyaltyHeaderView(bottomOf: crossSellingBoxView)
+        let itemDescriptionView = setupItemDescriptionView(bottomOf: loyaltyHeaderView)
         
-        loyaltyHeaderView.bottomAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.bottomAnchor, constant: -64).isActive = true
+        itemDescriptionView.bottomAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.bottomAnchor, constant: -64).isActive = true
     }
 
     private func setupRingView() -> MLBusinessLoyaltyRingView {
@@ -134,6 +135,18 @@ extension ViewController {
         self.loyaltyHeaderView = loyaltyHeaderView
         return loyaltyHeaderView
     }
+    
+    private func setupItemDescriptionView(bottomOf targetView: UIView) -> MLBusinessItemDescriptionView {
+        let itemDescriptionView = MLBusinessItemDescriptionView(ItemDescriptionData())
+        containerView.addSubview(itemDescriptionView)
+        NSLayoutConstraint.activate([
+            itemDescriptionView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16),
+            itemDescriptionView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            itemDescriptionView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16)
+            ])
+        return itemDescriptionView
+    }
+    
 }
 
 extension ViewController {

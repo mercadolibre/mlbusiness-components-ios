@@ -13,6 +13,10 @@ final class CustomUIImageView: UIImageView {
     static let imageCache = NSCache<NSString, UIImage>()
 
     func loadImage(url: String, placeholder: String?, placeHolderRadius: CGFloat = 0) {
+        self.loadImage(url: url, placeholder: placeholder, success: nil)
+    }
+    
+    func loadImage(url: String, placeholder: String?, placeHolderRadius: CGFloat = 0, success:((UIImage)->Void)?) {
 
         //Add placeholder image
         if let placeHolderStr = placeholder, let image = UIImage(named: placeHolderStr) {
@@ -49,9 +53,13 @@ final class CustomUIImageView: UIImageView {
             DispatchQueue.main.async {
                 self.layer.cornerRadius = 0
                 self.backgroundColor = .clear
-                UIView.transition(with: self, duration: self.fadeInEnabled ? 0.5 : 0.0, options: .transitionCrossDissolve, animations: {
-                    self.image = image
-                }, completion: nil)
+                if success != nil {
+                    success?(image)
+                } else {
+                    UIView.transition(with: self, duration: self.fadeInEnabled ? 0.5 : 0.0, options: .transitionCrossDissolve, animations: {
+                        self.image = image
+                    }, completion: nil)
+                }
             }
         }.resume()
     }

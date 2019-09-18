@@ -124,7 +124,6 @@ private extension MLBusinessLoyaltyHeaderView {
             subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 0),
             subTitleLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             subTitleLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-            subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
             self.heightAnchor.constraint(equalToConstant: viewHeight)
             ])
     }
