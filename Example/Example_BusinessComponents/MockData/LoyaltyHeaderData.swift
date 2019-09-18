@@ -9,7 +9,7 @@
 import UIKit
 import MLBusinessComponents
 
-class LoyaltyHeaderData: NSObject, MLBusinessLoyaltyHeaderData {
+final class LoyaltyHeaderData: NSObject, MLBusinessLoyaltyHeaderData {
     func getBackgroundHexaColor() -> String {
         return "1AC2B0"
     }

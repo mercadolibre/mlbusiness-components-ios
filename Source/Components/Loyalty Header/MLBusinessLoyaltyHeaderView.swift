@@ -9,7 +9,7 @@ import UIKit
 
 @objc public final class MLBusinessLoyaltyHeaderView: UIView {
     
-    let viewData: MLBusinessLoyaltyHeaderData?
+    private var viewData: MLBusinessLoyaltyHeaderData?
     
     private let viewHeight: CGFloat = 60
     private let fillPercentProgress: Bool
@@ -17,12 +17,20 @@ import UIKit
     private let ringSize: CGFloat = 32
     
     private weak var ringView: UICircularProgressRing?
+    private weak var titleLabel: UILabel?
+    private weak var subTitleLabel: UILabel?
     
-    public init(_ viewData: MLBusinessLoyaltyHeaderData, fillPercentProgress: Bool = true) {
+    public init(_ viewData: MLBusinessLoyaltyHeaderData? = nil, fillPercentProgress: Bool = true) {
         self.viewData = viewData
         self.fillPercentProgress = fillPercentProgress
         super.init(frame: .zero)
         render()
+        update()
+    }
+    
+    public func update(_ viewData: MLBusinessLoyaltyHeaderData?) {
+        self.viewData = viewData
+        update()
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -33,10 +41,32 @@ import UIKit
 // MARK: Privates methods
 private extension MLBusinessLoyaltyHeaderView {
     
+    private func update() {
+        self.backgroundColor = viewData?.getBackgroundHexaColor().hexaToUIColor()
+        
+        self.titleLabel?.text = viewData?.getTitle()
+        self.titleLabel?.textColor = viewData?.getPrimaryHexaColor().hexaToUIColor()
+        
+        self.subTitleLabel?.text = viewData?.getSubtitle()
+        self.subTitleLabel?.textColor = viewData?.getPrimaryHexaColor().hexaToUIColor()
+        
+        let ringNumber = viewData?.getRingNumber() ?? 1
+        let ringHexaColor = viewData?.getPrimaryHexaColor() ?? "FFFFFF"
+        let secondaryHexaColor = viewData?.getSecondaryHexaColor() ?? "FFFFFF"
+        let ringPercentage = viewData?.getRingPercentage() ?? 0
+        
+        self.ringView?.fontColor = ringHexaColor.hexaToUIColor()
+        self.ringView?.innerRingColor = ringHexaColor.hexaToUIColor()
+        self.ringView?.outerRingColor = secondaryHexaColor.hexaToUIColor()
+        self.ringView?.innerCenterText = String(ringNumber)
+        
+        if self.fillPercentProgress {
+            self.ringView?.startProgress(to: CGFloat(ringPercentage), duration: 0)
+        }
+    }
+    
     private func render() {
         self.prepareForAutolayout()
-        
-        self.backgroundColor = viewData?.getBackgroundHexaColor().hexaToUIColor()
         
         let titleLabel = buildTitle()
         self.addSubview(titleLabel)
@@ -55,9 +85,8 @@ private extension MLBusinessLoyaltyHeaderView {
         let titleLabel = UILabel()
         titleLabel.prepareForAutolayout(.clear)
         titleLabel.numberOfLines = titleNumberOfLines
-        titleLabel.text = viewData?.getTitle()
-        titleLabel.textColor = viewData?.getPrimaryHexaColor().hexaToUIColor()
         titleLabel.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.S_FONT)
+        self.titleLabel = titleLabel
         return titleLabel
     }
     
@@ -65,39 +94,21 @@ private extension MLBusinessLoyaltyHeaderView {
         let subTitleLabel = UILabel()
         subTitleLabel.prepareForAutolayout(.clear)
         subTitleLabel.numberOfLines = titleNumberOfLines
-        subTitleLabel.text = viewData?.getSubtitle()
-        subTitleLabel.textColor = viewData?.getPrimaryHexaColor().hexaToUIColor()
         subTitleLabel.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.S_FONT)
+        self.subTitleLabel = subTitleLabel
         return subTitleLabel
     }
     
     private func buildRing() -> UIView {
-        let ringNumber = viewData?.getRingNumber() ?? 1
-        let ringHexaColor = viewData?.getPrimaryHexaColor() ?? "FFFFFF"
-        let secondaryHexaColor = viewData?.getSecondaryHexaColor() ?? "FFFFFF"
-        let ringPercentage = viewData?.getRingPercentage() ?? 0
-        
-        let ring = UICircularProgressRing()
-        ring.prepareForAutolayout(.clear)
-        ring.style = .ontop
-        ring.maxValue = 1
-        ring.minValue = 0
-        ring.startAngle = 270
-        ring.outerRingWidth = 2
-        ring.innerRingWidth = 2
-        ring.outerRingColor = UI.Colors.placeHolderColor
-        ring.innerCapStyle = .round
-        ring.fontColor = ringHexaColor.hexaToUIColor()
-        ring.innerRingColor = ringHexaColor.hexaToUIColor()
-        ring.outerRingColor = secondaryHexaColor.hexaToUIColor()
-        ring.innerCenterText = String(ringNumber)
-        ring.shouldShowValueText = false
-        ring.font = UIFont.systemFont(ofSize: 20)
-        
-        if self.fillPercentProgress {
-            ring.startProgress(to: CGFloat(ringPercentage), duration: 0)
-        }
-        return ring
+        let ring = RingFactory.create(number: self.viewData?.getRingNumber() ?? 1,
+                                      hexaColor: self.viewData?.getPrimaryHexaColor() ?? "FFFFFF",
+                                      percent: self.viewData?.getRingPercentage() ?? 0,
+                                      fillPercentage: self.fillPercentProgress) as? UICircularProgressRing
+        ring?.outerRingWidth = 2
+        ring?.innerRingWidth = 2
+        ring?.font = UIFont.systemFont(ofSize: 20)
+        self.ringView = ring
+        return ring!
     }
     
     // MARK: Constraints.
@@ -117,5 +128,12 @@ private extension MLBusinessLoyaltyHeaderView {
             self.heightAnchor.constraint(equalToConstant: viewHeight)
             ])
     }
-    
+}
+
+// MARK: Public Methods
+extension MLBusinessLoyaltyHeaderView {
+    @objc public final func fillPercentProgressWithAnimation(_ duration: TimeInterval = 1.0) {
+        guard let ringPercentage = viewData?.getRingPercentage() else { return }
+        ringView?.startProgress(to: CGFloat(ringPercentage), duration: duration)
+    }
 }

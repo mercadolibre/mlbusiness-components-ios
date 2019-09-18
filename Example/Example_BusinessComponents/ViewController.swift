@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     @IBOutlet private weak var containerView: UIView!
     
     private weak var ringView: MLBusinessLoyaltyRingView?
+    private weak var loyaltyHeaderView: MLBusinessLoyaltyHeaderView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -123,13 +124,14 @@ extension ViewController {
     }
     
     private func setupLoyaltyHeaderView(bottomOf targetView: UIView) -> MLBusinessLoyaltyHeaderView {
-        let loyaltyHeaderView = MLBusinessLoyaltyHeaderView(LoyaltyHeaderData(), fillPercentProgress: true)
+        let loyaltyHeaderView = MLBusinessLoyaltyHeaderView(LoyaltyHeaderData(), fillPercentProgress: false)
         containerView.addSubview(loyaltyHeaderView)
         NSLayoutConstraint.activate([
             loyaltyHeaderView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16),
             loyaltyHeaderView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
             loyaltyHeaderView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16)
             ])
+        self.loyaltyHeaderView = loyaltyHeaderView
         return loyaltyHeaderView
     }
 }
@@ -137,5 +139,6 @@ extension ViewController {
 extension ViewController {
     private func animateRing() {
         ringView?.fillPercentProgressWithAnimation()
+        loyaltyHeaderView?.fillPercentProgressWithAnimation()
     }
 }
