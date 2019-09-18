@@ -394,6 +394,79 @@ crossSellingBoxView.addTapAction { (deepLink) in
 }
 ```
 
+## 6️⃣ - MLBusinessLoyaltyHeaderView Component
+This component allow you to show the progress ring of points, title and subtitle.
+#### Visual Example:
+![loyaltyHeader](https://user-images.githubusercontent.com/1513008/65156105-da609d80-da04-11e9-9b8e-e896661e4d24.png)
+
+```swift
+// LoyaltyHeaderData() is an implementation of MLBusinessLoyaltyHeaderData protocol.
+let loyaltyHeaderView = MLBusinessLoyaltyHeaderView(LoyaltyHeaderData(), fillPercentProgress: true)
+containerView.addSubview(loyaltyHeaderView)
+
+/* 
+Set your constraints. You don't need to set up the HEIGHT contraint. 
+Because this component is responsible for knowing and setting its own HEIGHT.
+*/
+NSLayoutConstraint.activate([
+loyaltyHeaderView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16),
+loyaltyHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+loyaltyHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+])
+return loyaltyHeaderView
+])
+```
+### MLBusinessLoyaltyHeaderData Protocol
+This protocol allows you to provide the proper data to draw `MLBusinessLoyaltyHeaderView`. You have to setup the following data:
+
+#### Definition
+```swift
+@objc public protocol MLBusinessLoyaltyHeaderData: NSObjectProtocol {
+@objc func getBackgroundHexaColor() -> String
+@objc func getPrimaryHexaColor() -> String
+@objc func getSecondaryHexaColor() -> String
+@objc func getRingNumber() -> Int
+@objc func getRingPercentage() -> Float
+@objc func getTitle() -> String
+@objc func getSubtitle() -> String
+}
+```
+
+Implementation of `MLBusinessLoyaltyHeaderData` in LoyaltyHeaderData example:
+```swift
+import MLBusinessComponents
+
+class LoyaltyHeaderData: NSObject, MLBusinessLoyaltyHeaderData {
+func getBackgroundHexaColor() -> String {
+return "1AC2B0"
+}
+
+func getPrimaryHexaColor() -> String {
+return "FFFFFF"
+}
+
+func getSecondaryHexaColor() -> String {
+return "65A69E"
+}
+
+func getRingNumber() -> Int {
+return 4
+}
+
+func getRingPercentage() -> Float {
+return 0.8
+}
+
+func getTitle() -> String {
+return "Beneficios"
+}
+
+func getSubtitle() -> String {
+return "Nivel 4 - Mercado Puntos"
+}
+}
+```
+
 ## 🔠 Font and color customization.
 We use `MLUI` open source library to customize accent colors and font labels. In order to change those values check the documentation of `MLUI` stylesheet protocol.
 https://github.com/mercadolibre/fury_mobile-ios-ui
