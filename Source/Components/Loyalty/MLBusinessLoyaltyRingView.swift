@@ -43,11 +43,11 @@ extension MLBusinessLoyaltyRingView {
         let button = buildButton()
         self.addSubview(button)
 
-        if let ring = RingFactory.create(number: viewData.getRingNumber(), hexaColor: viewData.getRingHexaColor(), percent: viewData.getRingPercentage(), fillPercentage: fillPercentProgress, innerCenterText: String(viewData.getRingNumber())) as? UICircularProgressRing {
-            self.addSubview(ring)
-            self.ringView = ring
-            makeConstraints(titleLabel, button, ring)
-        }
+        let ring = RingFactory.create(number: viewData.getRingNumber(), hexaColor: viewData.getRingHexaColor(), percent: viewData.getRingPercentage(), fillPercentage: fillPercentProgress, innerCenterText: String(viewData.getRingNumber()))
+        self.addSubview(ring)
+        self.ringView = ring
+        
+        makeConstraints(titleLabel, button, ring)
     }
 
     // MARK: Builders.

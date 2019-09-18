@@ -10,7 +10,10 @@ import UIKit
 import MLBusinessComponents
 
 class ViewController: UIViewController {
+    @IBOutlet private weak var containerView: UIView!
+    
     private weak var ringView: MLBusinessLoyaltyRingView?
+    private weak var loyaltyHeaderView: MLBusinessLoyaltyHeaderView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,18 +34,21 @@ extension ViewController {
         let dividingLineView = setupDividingLineView(bottomOf: newRingView)
         let discountView = setupDiscountView(bottomOf: dividingLineView)
         let downloadAppView = setupDownloadAppView(bottomOf: discountView)
-        setupCrossSellingBoxView(bottomOf: downloadAppView)
+        let crossSellingBoxView = setupCrossSellingBoxView(bottomOf: downloadAppView)
+        let loyaltyHeaderView = setupLoyaltyHeaderView(bottomOf: crossSellingBoxView)
+        
+        loyaltyHeaderView.bottomAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.bottomAnchor, constant: -64).isActive = true
     }
 
     private func setupRingView() -> MLBusinessLoyaltyRingView {
         let ringView = MLBusinessLoyaltyRingView(LoyaltyRingData(), fillPercentProgress: false)
 
-        view.addSubview(ringView)
+        containerView.addSubview(ringView)
 
         NSLayoutConstraint.activate([
-            ringView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            ringView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            ringView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
+            ringView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            ringView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+            ringView.topAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.topAnchor)
         ])
 
         ringView.addTapAction { deepLink in
@@ -54,10 +60,10 @@ extension ViewController {
 
     private func setupDividingLineView(bottomOf targetView: UIView) -> UIView {
         let dividingLineView = MLBusinessDividingLineView(hasTriangle: true)
-        view.addSubview(dividingLineView)
+        containerView.addSubview(dividingLineView)
         NSLayoutConstraint.activate([
-            dividingLineView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            dividingLineView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            dividingLineView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 32),
+            dividingLineView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -32),
             dividingLineView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 20)
         ])
 
@@ -66,10 +72,10 @@ extension ViewController {
 
     private func setupDiscountView(bottomOf targetView: UIView) -> MLBusinessDiscountBoxView {
         let discountView = MLBusinessDiscountBoxView(DiscountData())
-        view.addSubview(discountView)
+        containerView.addSubview(discountView)
         NSLayoutConstraint.activate([
-            discountView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            discountView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            discountView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            discountView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
             discountView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16)
         ])
 
@@ -86,37 +92,53 @@ extension ViewController {
 
     private func setupDownloadAppView(bottomOf targetView: UIView) -> MLBusinessDownloadAppView {
         let downloadAppView = MLBusinessDownloadAppView(DownloadAppData())
-        view.addSubview(downloadAppView)
+        containerView.addSubview(downloadAppView)
         NSLayoutConstraint.activate([
             downloadAppView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16),
-            downloadAppView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            downloadAppView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+            downloadAppView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            downloadAppView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16)
         ])
 
         downloadAppView.addTapAction { (deepLink) in
 //            print(deepLink)
         }
+        
         return downloadAppView
     }
 
-    private func setupCrossSellingBoxView(bottomOf targetView: UIView) {
+    private func setupCrossSellingBoxView(bottomOf targetView: UIView) -> MLBusinessCrossSellingBoxView {
 
         let crossSellingBoxView = MLBusinessCrossSellingBoxView(CrossSellingBoxData())
-        view.addSubview(crossSellingBoxView)
+        containerView.addSubview(crossSellingBoxView)
         NSLayoutConstraint.activate([
-            crossSellingBoxView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            crossSellingBoxView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            crossSellingBoxView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            crossSellingBoxView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
             crossSellingBoxView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16)
         ])
 
         crossSellingBoxView.addTapAction { (deepLink) in
             print(deepLink)
         }
+        
+        return crossSellingBoxView
+    }
+    
+    private func setupLoyaltyHeaderView(bottomOf targetView: UIView) -> MLBusinessLoyaltyHeaderView {
+        let loyaltyHeaderView = MLBusinessLoyaltyHeaderView(LoyaltyHeaderData(), fillPercentProgress: false)
+        containerView.addSubview(loyaltyHeaderView)
+        NSLayoutConstraint.activate([
+            loyaltyHeaderView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16),
+            loyaltyHeaderView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            loyaltyHeaderView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16)
+            ])
+        self.loyaltyHeaderView = loyaltyHeaderView
+        return loyaltyHeaderView
     }
 }
 
 extension ViewController {
     private func animateRing() {
         ringView?.fillPercentProgressWithAnimation()
+        loyaltyHeaderView?.fillPercentProgressWithAnimation()
     }
 }

@@ -9,7 +9,7 @@
 import UIKit
 
 struct RingFactory {
-    static func create(number: Int, hexaColor: String, percent: Float, fillPercentage: Bool, innerCenterText: String? = nil) -> UIView {
+    static func create(number: Int, hexaColor: String, percent: Float, fillPercentage: Bool, innerCenterText: String? = nil) -> UICircularProgressRing {
         let ring = UICircularProgressRing()
         ring.prepareForAutolayout(.clear)
         ring.style = .ontop
