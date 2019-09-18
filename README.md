@@ -336,7 +336,7 @@ downloadAppView.addTapAction { (deepLink) in
 ## 5️⃣ - MLBusinessCrossSellingBoxView Component
 This component allows you to show a view with an image icon, a text and an actionable button.
 #### Visual Example:
-![MLBusinessCrossSellingBoxView](         )
+![MLBusinessCrossSellingBoxView](https://github.com/mercadolibre/mlbusiness-components-ios/blob/master/Documentation/images/crossSellingBoxViewComponent.png)
 
 ### MLBusinessCrossSellingBoxView init
 You need to set `MLBusinessCrossSellingBoxData` protocol. This interface allows you to populate the draw data into the component (iconUrl, text, buttonTitle and buttonDeepLink, being all of them mandatory).
