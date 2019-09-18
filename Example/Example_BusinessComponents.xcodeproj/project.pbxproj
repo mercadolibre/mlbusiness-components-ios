@@ -17,8 +17,10 @@
 		23EE407A2326BA33001322EC /* LoyaltyRingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE40782326BA33001322EC /* LoyaltyRingData.swift */; };
 		23EE407B2326BA33001322EC /* DiscountData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE40792326BA33001322EC /* DiscountData.swift */; };
 		23EE408023297CF8001322EC /* SingleItemData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE407F23297CF8001322EC /* SingleItemData.swift */; };
-		66D18E80EBDE544CA2CA4B9B /* Pods_Example_BusinessComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E48F7743CD0E7A83C97048F2 /* Pods_Example_BusinessComponents.framework */; };
+		66D18E80EBDE544CA2CA4B9B /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		CEE9F37C232FD72F0000C9CA /* DownloadAppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE9F37B232FD72F0000C9CA /* DownloadAppData.swift */; };
+		CEE9F390233062880000C9CA /* CrossSellingBoxData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE9F38F233062880000C9CA /* CrossSellingBoxData.swift */; };
+		F71E699B5871AF8878117D8F /* Pods_Example_BusinessComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70705FCCEC04254552DE2C7D /* Pods_Example_BusinessComponents.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,10 +36,11 @@
 		23EE40782326BA33001322EC /* LoyaltyRingData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoyaltyRingData.swift; sourceTree = "<group>"; };
 		23EE40792326BA33001322EC /* DiscountData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscountData.swift; sourceTree = "<group>"; };
 		23EE407F23297CF8001322EC /* SingleItemData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleItemData.swift; sourceTree = "<group>"; };
+		70705FCCEC04254552DE2C7D /* Pods_Example_BusinessComponents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Example_BusinessComponents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76BAD5F6C0ABF02248DA22EC /* Pods-Example_BusinessComponents.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example_BusinessComponents.debug.xcconfig"; path = "Target Support Files/Pods-Example_BusinessComponents/Pods-Example_BusinessComponents.debug.xcconfig"; sourceTree = "<group>"; };
 		83422D9498E92A1A94AAAABD /* Pods-Example_BusinessComponents.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example_BusinessComponents.release.xcconfig"; path = "Target Support Files/Pods-Example_BusinessComponents/Pods-Example_BusinessComponents.release.xcconfig"; sourceTree = "<group>"; };
 		CEE9F37B232FD72F0000C9CA /* DownloadAppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadAppData.swift; sourceTree = "<group>"; };
-		E48F7743CD0E7A83C97048F2 /* Pods_Example_BusinessComponents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Example_BusinessComponents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEE9F38F233062880000C9CA /* CrossSellingBoxData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossSellingBoxData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,7 +48,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				66D18E80EBDE544CA2CA4B9B /* Pods_Example_BusinessComponents.framework in Frameworks */,
+				66D18E80EBDE544CA2CA4B9B /* BuildFile in Frameworks */,
+				F71E699B5871AF8878117D8F /* Pods_Example_BusinessComponents.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,6 +97,7 @@
 				23EE407F23297CF8001322EC /* SingleItemData.swift */,
 				CEE9F37B232FD72F0000C9CA /* DownloadAppData.swift */,
 				0F660AFA23305CA9001B52DA /* LoyaltyHeaderData.swift */,
+				CEE9F38F233062880000C9CA /* CrossSellingBoxData.swift */,
 			);
 			path = MockData;
 			sourceTree = "<group>";
@@ -100,7 +105,7 @@
 		242326D6B495CE2C40D30AEC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E48F7743CD0E7A83C97048F2 /* Pods_Example_BusinessComponents.framework */,
+				70705FCCEC04254552DE2C7D /* Pods_Example_BusinessComponents.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -237,6 +242,7 @@
 				23EE40662326B50B001322EC /* AppDelegate.swift in Sources */,
 				23EE407A2326BA33001322EC /* LoyaltyRingData.swift in Sources */,
 				CEE9F37C232FD72F0000C9CA /* DownloadAppData.swift in Sources */,
+				CEE9F390233062880000C9CA /* CrossSellingBoxData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

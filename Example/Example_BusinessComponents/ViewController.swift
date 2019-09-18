@@ -31,7 +31,8 @@ extension ViewController {
         let dividingLineView = setupDividingLineView(bottomOf: newRingView)
         let discountView = setupDiscountView(bottomOf: dividingLineView)
         let downloadAppView = setupDownloadAppView(bottomOf: discountView)
-        setupLoyaltyHeaderView(bottomOf: downloadAppView)
+        let crossSellingBoxView = setupCrossSellingBoxView(bottomOf: downloadAppView)
+        setupLoyaltyHeaderView(bottomOf: crossSellingBoxView)
     }
 
     private func setupRingView() -> MLBusinessLoyaltyRingView {
@@ -84,7 +85,7 @@ extension ViewController {
         return discountView
     }
 
-    private func setupDownloadAppView(bottomOf targetView: UIView) -> UIView {
+    private func setupDownloadAppView(bottomOf targetView: UIView) -> MLBusinessDownloadAppView {
         let downloadAppView = MLBusinessDownloadAppView(DownloadAppData())
         view.addSubview(downloadAppView)
         NSLayoutConstraint.activate([
@@ -100,7 +101,7 @@ extension ViewController {
         return downloadAppView
     }
     
-    private func setupLoyaltyHeaderView(bottomOf targetView: UIView) {
+    private func setupLoyaltyHeaderView(bottomOf targetView: UIView) -> MLBusinessLoyaltyHeaderView {
         let loyaltyHeaderView = MLBusinessLoyaltyHeaderView(LoyaltyHeaderData(), fillPercentProgress: true)
         view.addSubview(loyaltyHeaderView)
         NSLayoutConstraint.activate([
@@ -108,6 +109,24 @@ extension ViewController {
             loyaltyHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             loyaltyHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0)
             ])
+        return loyaltyHeaderView
+    }
+
+    private func setupCrossSellingBoxView(bottomOf targetView: UIView) -> MLBusinessCrossSellingBoxView {
+
+        let crossSellingBoxView = MLBusinessCrossSellingBoxView(CrossSellingBoxData())
+        view.addSubview(crossSellingBoxView)
+        NSLayoutConstraint.activate([
+            crossSellingBoxView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            crossSellingBoxView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            crossSellingBoxView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16)
+        ])
+
+        crossSellingBoxView.addTapAction { (deepLink) in
+            print(deepLink)
+        }
+        
+        return crossSellingBoxView
     }
 }
 

@@ -11,6 +11,7 @@ import UIKit
 
 struct UI {
     struct Margin {
+        static let XXXS_MARGIN: CGFloat = 6
         static let XXS_MARGIN: CGFloat = 10
         static let XS_MARGIN: CGFloat = 12
         static let S_MARGIN: CGFloat = 16

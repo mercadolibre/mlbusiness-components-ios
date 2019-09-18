@@ -88,9 +88,8 @@ private extension MLBusinessLoyaltyHeaderView {
         ring.outerRingColor = UI.Colors.placeHolderColor
         ring.innerCapStyle = .round
         ring.fontColor = ringHexaColor.hexaToUIColor()
-        ring.innerRingColor = secondaryHexaColor.hexaToUIColor()
+        ring.innerRingColor = ringHexaColor.hexaToUIColor()
         ring.outerRingColor = secondaryHexaColor.hexaToUIColor()
-        ring.gradientOptions = UICircularRingGradientOptions(startPosition: .left, endPosition: .right, colors: [ringHexaColor.hexaToUIColor(), ringHexaColor.hexaToUIColor()], colorLocations: [0.5])
         ring.innerCenterText = String(ringNumber)
         ring.shouldShowValueText = false
         ring.font = UIFont.systemFont(ofSize: 20)
