@@ -103,12 +103,12 @@ private extension MLBusinessLoyaltyHeaderView {
         let ring = RingFactory.create(number: self.viewData?.getRingNumber() ?? 1,
                                       hexaColor: self.viewData?.getPrimaryHexaColor() ?? "FFFFFF",
                                       percent: self.viewData?.getRingPercentage() ?? 0,
-                                      fillPercentage: self.fillPercentProgress) as? UICircularProgressRing
-        ring?.outerRingWidth = 2
-        ring?.innerRingWidth = 2
-        ring?.font = UIFont.systemFont(ofSize: 20)
+                                      fillPercentage: self.fillPercentProgress)
+        ring.outerRingWidth = 2
+        ring.innerRingWidth = 2
+        ring.font = UIFont.systemFont(ofSize: 20)
         self.ringView = ring
-        return ring!
+        return ring
     }
     
     // MARK: Constraints.
