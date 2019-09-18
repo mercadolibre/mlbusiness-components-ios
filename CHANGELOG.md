@@ -1,3 +1,8 @@
+# v1.0.3
+🚀 1.0.3 🚀
+- CrossSellingBoxView Component
+- Fix bug LoyaltyRingView
+
 # v1.0.2
 🚀 1.0.2 🚀
 - Download Component
