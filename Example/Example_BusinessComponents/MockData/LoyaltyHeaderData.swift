@@ -14,12 +14,12 @@ class LoyaltyHeaderData: NSObject, MLBusinessLoyaltyHeaderData {
         return "1AC2B0"
     }
     
-    func getRingHexaColor() -> String {
-        return "65A69E"
+    func getPrimaryHexaColor() -> String {
+        return "FFFFFF"
     }
     
-    func getTextColor() -> String {
-        return "FFAA00"
+    func getSecondaryHexaColor() -> String {
+        return "65A69E"
     }
     
     func getRingNumber() -> Int {

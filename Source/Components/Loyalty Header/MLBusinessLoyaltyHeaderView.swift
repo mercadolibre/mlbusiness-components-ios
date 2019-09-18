@@ -56,7 +56,7 @@ private extension MLBusinessLoyaltyHeaderView {
         titleLabel.prepareForAutolayout(.clear)
         titleLabel.numberOfLines = titleNumberOfLines
         titleLabel.text = viewData?.getTitle()
-        titleLabel.textColor = viewData?.getTextColor().hexaToUIColor()
+        titleLabel.textColor = viewData?.getPrimaryHexaColor().hexaToUIColor()
         titleLabel.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.S_FONT)
         return titleLabel
     }
@@ -66,15 +66,15 @@ private extension MLBusinessLoyaltyHeaderView {
         subTitleLabel.prepareForAutolayout(.clear)
         subTitleLabel.numberOfLines = titleNumberOfLines
         subTitleLabel.text = viewData?.getSubtitle()
-        subTitleLabel.textColor = viewData?.getTextColor().hexaToUIColor()
+        subTitleLabel.textColor = viewData?.getPrimaryHexaColor().hexaToUIColor()
         subTitleLabel.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.S_FONT)
         return subTitleLabel
     }
     
     private func buildRing() -> UIView {
         let ringNumber = viewData?.getRingNumber() ?? 1
-        let ringHexaColor = "FFFFFF"
-        let secondaryHexaColor = viewData?.getRingHexaColor() ?? "FFFFFF"
+        let ringHexaColor = viewData?.getPrimaryHexaColor() ?? "FFFFFF"
+        let secondaryHexaColor = viewData?.getSecondaryHexaColor() ?? "FFFFFF"
         let ringPercentage = viewData?.getRingPercentage() ?? 0
         
         let ring = UICircularProgressRing()
