@@ -507,7 +507,6 @@ This protocol allows you to provide the proper data to draw `MLBusinessItemDescr
 @objc func getTitle() -> String
 @objc func getIconImageURL() -> String
 @objc func getIconHexaColor() -> String
-}
 ```
 
 Implementation of `MLBusinessItemDescriptionData` in ItemDescriptionData example:
@@ -520,7 +519,7 @@ final class ItemDescriptionData: NSObject, MLBusinessItemDescriptionData {
         return "Envíos gratis desde $ 1.999"
     }
 
-    @objc func getIconImageURL() -> String {
+    func getIconImageURL() -> String {
         return "https://http2.mlstatic.com/static/org-img/loyalty/benefits/mobile/ic-shipping-discount-64.png"
     }
 
