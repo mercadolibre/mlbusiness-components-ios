@@ -1,3 +1,9 @@
+# v1.0.5
+🚀 1.0.5 🚀
+- Se agrega el componente MLBusinessItemDescriptionView
+- Posibilidad de setear backgroundColor a DownloadAppView
+- Posibilidad de setear cornerRadius a DownloadAppView
+
 # v1.0.4
 🚀 1.0.4 🚀
 - Se agrega el componente MLBusinessLoyaltyHeaderView

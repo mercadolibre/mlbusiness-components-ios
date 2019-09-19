@@ -24,17 +24,28 @@ import MLUI
     private let viewData: MLBusinessDownloadAppData
     private var tapAction: ((_ deepLink: String) -> Void)?
 
-    //Constants
+    // Constants
     private let downloadAppViewHeight: CGFloat = 64
     private let appIconImageHeight: CGFloat = 24
     private let appIconImageWidth: CGFloat = 34
     private let downloadButtonHeight: CGFloat = 32
     private let downloadButtonWidth: CGFloat = 112
 
+    // Init
     public init(_ viewData: MLBusinessDownloadAppData) {
         self.viewData = viewData
         super.init(frame: .zero)
         render()
+    }
+
+    // Change component default background color.
+    public func setBackgroundColor(_ color: UIColor) {
+        backgroundColor = color
+    }
+
+    // Change component view corner radius.
+    public func setCornerRadius(_ radius: CGFloat) {
+        layer.cornerRadius = radius
     }
 
     required public init?(coder aDecoder: NSCoder) {
