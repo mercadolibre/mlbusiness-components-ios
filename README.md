@@ -333,6 +333,18 @@ downloadAppView.addTapAction { (deepLink) in
 }
 ```
 
+### How to change DownloadAppView background? 
+Using `setBackgroundColor` method.
+```swift
+downloadAppView.setBackgroundColor(.red)
+```
+
+### How to change DownloadAppView default corner radius? 
+Using `setCornerRadius` method.
+```swift
+downloadAppView.setCornerRadius(0)
+```
+
 ## 5️⃣ - MLBusinessCrossSellingBoxView Component
 This component allows you to show a view with an image icon, a text and an actionable button.
 #### Visual Example:
