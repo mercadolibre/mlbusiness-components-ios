@@ -40,18 +40,14 @@ private extension MLBusinessItemDescriptionView {
     
     private func update() {
         self.titleLabel?.text = viewData?.getTitle()
+        
         if let url = viewData?.getIconImageURL() {
             iconImageView?.loadImage(
                 url: url,
                 placeholder: nil,
                 placeHolderRadius: iconImageSize/2,
                 success: { [weak self] (image) in
-                    if let imageColor = self?.viewData?.getIconHexaColor().hexaToUIColor() {
-                        self?.iconImageView?.backgroundColor = imageColor
-                        self?.iconImageView?.image = image.ml_tintedImage(with: .white)
-                    } else {
-                        self?.iconImageView?.image = image
-                    }
+                    self?.setupImageView(image: image)
             })
         }
     }
@@ -84,6 +80,15 @@ private extension MLBusinessItemDescriptionView {
         iconImageView.prepareForAutolayout(.clear)
         self.iconImageView = iconImageView
         return iconImageView
+    }
+    
+    private func setupImageView(image: UIImage) {
+        if let imageColor = self.viewData?.getIconHexaColor().hexaToUIColor() {
+            self.iconImageView?.backgroundColor = imageColor
+            self.iconImageView?.image = image.ml_tintedImage(with: .white)
+        } else {
+            self.iconImageView?.image = image
+        }
     }
     
     // MARK: Constraints.

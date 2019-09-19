@@ -18,27 +18,13 @@ final class CustomUIImageView: UIImageView {
     
     func loadImage(url: String, placeholder: String?, placeHolderRadius: CGFloat = 0, success:((UIImage)->Void)?) {
 
-        //Add placeholder image
-        if let placeHolderStr = placeholder, let image = UIImage(named: placeHolderStr) {
-            self.image = image
-        } else {
-            self.layer.cornerRadius = placeHolderRadius
-            self.layer.masksToBounds = true
-            self.backgroundColor = UI.Colors.placeHolderColor
-        }
-
-        //Check & Load cached image
-        if let cachedImage = CustomUIImageView.imageCache.object(forKey: url as NSString) {
-            self.image = cachedImage
-            self.backgroundColor = .clear
-            self.layer.cornerRadius = 0
+        self.addPlaceholder(placeholder, radius: placeHolderRadius)
+    
+        guard let safeUrl = URL(string: url),
+            !(self.loadIfCached(for: url)) else {
             return
         }
-
-        guard let safeUrl = URL(string: url) else {
-            return
-        }
-
+        
         URLSession.shared.dataTask(with: safeUrl) { (data, response, error) in
             guard error == nil else {
                 return
@@ -50,17 +36,7 @@ final class CustomUIImageView: UIImageView {
             // Add image to cache
             CustomUIImageView.imageCache.setObject(image, forKey: url as NSString)
 
-            DispatchQueue.main.async {
-                self.layer.cornerRadius = 0
-                self.backgroundColor = .clear
-                if success != nil {
-                    success?(image)
-                } else {
-                    UIView.transition(with: self, duration: self.fadeInEnabled ? 0.5 : 0.0, options: .transitionCrossDissolve, animations: {
-                        self.image = image
-                    }, completion: nil)
-                }
-            }
+            self.handleSuccessImage(image, success: success)
         }.resume()
     }
 
@@ -70,5 +46,41 @@ final class CustomUIImageView: UIImageView {
 
     func disableFadeIn() {
         fadeInEnabled = false
+    }
+}
+
+private extension CustomUIImageView {
+    private func loadIfCached(for url: String) -> Bool {
+        if let cachedImage = CustomUIImageView.imageCache.object(forKey: url as NSString) {
+            self.image = cachedImage
+            self.backgroundColor = .clear
+            self.layer.cornerRadius = 0
+            return true
+        }
+        return false
+    }
+    
+    private func addPlaceholder(_ placeholder: String?, radius: CGFloat) {
+        if let placeHolderStr = placeholder, let image = UIImage(named: placeHolderStr) {
+            self.image = image
+        } else {
+            self.layer.cornerRadius = radius
+            self.layer.masksToBounds = true
+            self.backgroundColor = UI.Colors.placeHolderColor
+        }
+    }
+    
+    private func handleSuccessImage(_ image: UIImage, success:((UIImage)->Void)?) {
+        DispatchQueue.main.async {
+            self.layer.cornerRadius = 0
+            self.backgroundColor = .clear
+            if success != nil {
+                success?(image)
+            } else {
+                UIView.transition(with: self, duration: self.fadeInEnabled ? 0.5 : 0.0, options: .transitionCrossDissolve, animations: {
+                    self.image = image
+                }, completion: nil)
+            }
+        }
     }
 }
