@@ -19,9 +19,13 @@ final class CustomUIImageView: UIImageView {
     func loadImage(url: String, placeholder: String?, placeHolderRadius: CGFloat = 0, success:((UIImage)->Void)?) {
 
         self.addPlaceholder(placeholder, radius: placeHolderRadius)
-    
-        guard let safeUrl = URL(string: url),
-            !(self.loadIfCached(for: url)) else {
+        
+        guard let safeUrl = URL(string: url) else {
+            return
+        }
+        
+        if let cachedImage = self.cachedImage(for: url) {
+            self.handleSuccessImage(cachedImage, success: success)
             return
         }
         
@@ -50,14 +54,8 @@ final class CustomUIImageView: UIImageView {
 }
 
 private extension CustomUIImageView {
-    private func loadIfCached(for url: String) -> Bool {
-        if let cachedImage = CustomUIImageView.imageCache.object(forKey: url as NSString) {
-            self.image = cachedImage
-            self.backgroundColor = .clear
-            self.layer.cornerRadius = 0
-            return true
-        }
-        return false
+    private func cachedImage(for url: String) -> UIImage? {
+        return CustomUIImageView.imageCache.object(forKey: url as NSString)
     }
     
     private func addPlaceholder(_ placeholder: String?, radius: CGFloat) {
