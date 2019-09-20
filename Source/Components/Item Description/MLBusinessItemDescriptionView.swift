@@ -13,7 +13,7 @@ public final class MLBusinessItemDescriptionView: UIView {
     
     private let viewHeight: CGFloat = 36
     private let iconImageSize: CGFloat = 36
-    private let titleNumberOfLines: Int = 1
+    private let titleNumberOfLines: Int = 2
     
     private weak var iconImageView: CustomUIImageView?
     private weak var titleLabel: UILabel?
