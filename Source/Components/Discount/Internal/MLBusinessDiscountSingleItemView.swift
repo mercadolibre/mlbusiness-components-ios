@@ -43,8 +43,7 @@ extension MLBusinessDiscountSingleItemView {
         self.backgroundColor = .white
         let icon: UIImageView = UIImageView()
         icon.prepareForAutolayout(.clear)
-
-        icon.setRemoteImage(imageUrl: discountSingleItem.iconImageUrlForItem())
+        icon.setRemoteImage(imageUrl: discountSingleItem.iconImageUrlForItem(), placeHolderRadius: MLBusinessDiscountSingleItemView.iconImageSize/2)
         
         self.addSubview(icon)
         icon.contentMode = .scaleAspectFit
