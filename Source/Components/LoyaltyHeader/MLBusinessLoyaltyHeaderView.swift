@@ -7,7 +7,8 @@
 
 import UIKit
 
-@objc public final class MLBusinessLoyaltyHeaderView: UIView {
+@objcMembers
+public final class MLBusinessLoyaltyHeaderView: UIView {
     
     private var viewData: MLBusinessLoyaltyHeaderData?
     

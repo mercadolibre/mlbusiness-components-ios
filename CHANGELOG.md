@@ -1,3 +1,8 @@
+# v1.0.7
+🚀 1.0.7 🚀
+- Support full Objc
+- Change setBackgroundColor by setCustomBackgroundColor
+
 # v1.0.6
 🚀 1.0.6 🚀
 - Image cache improvements.

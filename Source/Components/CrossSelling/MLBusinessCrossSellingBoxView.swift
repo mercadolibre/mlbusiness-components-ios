@@ -8,7 +8,8 @@
 import Foundation
 import MLUI
 
-@objc open class MLBusinessCrossSellingBoxView: UIView {
+@objcMembers
+open class MLBusinessCrossSellingBoxView: UIView {
 
     private let viewData: MLBusinessCrossSellingBoxData
     private var tapAction: ((_ deepLink: String) -> Void)?

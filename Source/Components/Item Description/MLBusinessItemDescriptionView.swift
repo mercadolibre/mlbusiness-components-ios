@@ -7,8 +7,8 @@
 
 import UIKit
 
+@objcMembers
 public final class MLBusinessItemDescriptionView: UIView {
-
     private var viewData: MLBusinessItemDescriptionData?
     
     private let viewHeight: CGFloat = 36
