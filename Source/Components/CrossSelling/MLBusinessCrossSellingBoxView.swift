@@ -90,7 +90,7 @@ extension MLBusinessCrossSellingBoxView {
         button.titleLabel?.numberOfLines = 2
         self.addSubview(button)
         NSLayoutConstraint.activate([
-            button.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: UI.Margin.XXXS_MARGIN),
+            button.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: UI.Margin.XXS_MARGIN),
             button.leadingAnchor.constraint(equalTo: targetView.leadingAnchor),
             button.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             button.heightAnchor.constraint(equalToConstant: buttonHeight)
