@@ -7,7 +7,8 @@
 
 import UIKit
 
-@objc open class MLBusinessDividingLineView: UIView {
+@objcMembers
+open class MLBusinessDividingLineView: UIView {
     private let dividingLineViewHeight: CGFloat = 9.5
     private let triangleBaseWidth: CGFloat = 14
     private var path = UIBezierPath()

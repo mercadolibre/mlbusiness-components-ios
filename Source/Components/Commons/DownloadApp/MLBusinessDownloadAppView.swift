@@ -8,7 +8,8 @@
 import Foundation
 import MLUI
 
-@objc open class MLBusinessDownloadAppView: UIView {
+@objcMembers
+open class MLBusinessDownloadAppView: UIView {
     @objc public enum AppSite: Int {
         case ML
         case MP
@@ -39,7 +40,7 @@ import MLUI
     }
 
     // Change component default background color.
-    public func setBackgroundColor(_ color: UIColor) {
+    public func setCustomBackgroundColor(_ color: UIColor) {
         backgroundColor = color
     }
 

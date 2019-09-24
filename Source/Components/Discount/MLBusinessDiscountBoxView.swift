@@ -9,7 +9,8 @@
 import UIKit
 import MLUI
 
-@objc open class MLBusinessDiscountBoxView: UIView {
+@objcMembers
+open class MLBusinessDiscountBoxView: UIView {
     // Constants
     private var itemsPerRow: Int = 3
     internal let rowSeparationOffset: CGFloat = UI.Margin.L_MARGIN

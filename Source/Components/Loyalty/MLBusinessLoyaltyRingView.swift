@@ -9,7 +9,8 @@
 import UIKit
 import MLUI
 
-@objc open class MLBusinessLoyaltyRingView: UIView {
+@objcMembers
+open class MLBusinessLoyaltyRingView: UIView {
     let viewData: MLBusinessLoyaltyRingData
 
     private let viewHeight: CGFloat = 55
