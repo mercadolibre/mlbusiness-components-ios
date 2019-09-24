@@ -1,3 +1,7 @@
+# v1.0.6
+🚀 1.0.6 🚀
+- Image cache improvements.
+
 # v1.0.5
 🚀 1.0.5 🚀
 - Se agrega el componente MLBusinessItemDescriptionView
