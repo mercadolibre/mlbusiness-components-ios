@@ -15,7 +15,7 @@ public final class MLBusinessItemDescriptionView: UIView {
     private let iconImageSize: CGFloat = 36
     private let titleNumberOfLines: Int = 1
     
-    private weak var iconImageView: CustomUIImageView?
+    private weak var iconImageView: UIImageView?
     private weak var titleLabel: UILabel?
     
     public init(_ viewData: MLBusinessItemDescriptionData? = nil) {
@@ -39,15 +39,10 @@ public final class MLBusinessItemDescriptionView: UIView {
 private extension MLBusinessItemDescriptionView {
     
     private func update() {
-        self.titleLabel?.text = viewData?.getTitle()
-        
+        titleLabel?.text = viewData?.getTitle()
         if let url = viewData?.getIconImageURL() {
-            iconImageView?.loadImage(
-                url: url,
-                placeholder: nil,
-                placeHolderRadius: iconImageSize/2,
-                success: { [weak self] (image) in
-                    self?.setupImageView(image: image)
+            iconImageView?.setRemoteImage(imageUrl: url, placeHolderRadius: iconImageSize/2, success: { [weak self] loadedImage in
+                self?.setupImageView(image: loadedImage)
             })
         }
     }
@@ -76,7 +71,7 @@ private extension MLBusinessItemDescriptionView {
     }
     
     private func buildIconImageView() -> UIImageView {
-        let iconImageView = CustomUIImageView()
+        let iconImageView = UIImageView()
         iconImageView.prepareForAutolayout(.clear)
         self.iconImageView = iconImageView
         return iconImageView

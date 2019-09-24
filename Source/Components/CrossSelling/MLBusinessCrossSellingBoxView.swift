@@ -35,7 +35,7 @@ extension MLBusinessCrossSellingBoxView {
         prepareForAutolayout()
         heightAnchor.constraint(equalToConstant: crossSellingBoxViewHeight).isActive = true
 
-        let icon: CustomUIImageView = buildIconImage()
+        let icon: UIImageView = buildIconImage()
         let title: UILabel = buildTitle(targetView: icon)
         let button: UIButton = buildButton(targetView: title)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapOnButton))
@@ -47,9 +47,9 @@ extension MLBusinessCrossSellingBoxView {
         tapAction?(viewData.getButtonDeepLink())
     }
 
-    private func buildIconImage() -> CustomUIImageView {
-        let icon = CustomUIImageView()
-        icon.loadImage(url: viewData.getIconUrl(), placeholder: nil, placeHolderRadius: iconImageSize/2)
+    private func buildIconImage() -> UIImageView {
+        let icon = UIImageView()
+        icon.setRemoteImage(imageUrl: viewData.getIconUrl(), placeHolderRadius: iconImageSize/2)
         icon.translatesAutoresizingMaskIntoConstraints = false
         icon.contentMode = .scaleAspectFit
         self.addSubview(icon)
