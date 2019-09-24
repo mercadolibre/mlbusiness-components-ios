@@ -7,6 +7,7 @@
 
 import Foundation
 
+// codebeat:disable
 internal extension UIImageView {
     func setRemoteImage(imageUrl: String, placeHolderRadius: CGFloat = 0, customCache: URLCache? = nil, success:((UIImage)->Void)? = nil) {
         guard let url = URL(string: imageUrl) else { return }
