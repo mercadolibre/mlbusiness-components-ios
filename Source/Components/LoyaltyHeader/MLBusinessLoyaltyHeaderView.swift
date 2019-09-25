@@ -105,9 +105,9 @@ private extension MLBusinessLoyaltyHeaderView {
                                       hexaColor: self.viewData?.getPrimaryHexaColor() ?? "FFFFFF",
                                       percent: self.viewData?.getRingPercentage() ?? 0,
                                       fillPercentage: self.fillPercentProgress)
-        ring.outerRingWidth = 2
-        ring.innerRingWidth = 2
-        ring.font = UIFont.systemFont(ofSize: 20)
+        ring.outerRingWidth = 2.5
+        ring.innerRingWidth = 2.5
+        ring.font = UIFont.ml_semiboldSystemFont(ofSize: 20)
         self.ringView = ring
         return ring
     }
@@ -120,7 +120,7 @@ private extension MLBusinessLoyaltyHeaderView {
             ring.heightAnchor.constraint(equalToConstant: ringSize),
             ring.widthAnchor.constraint(equalToConstant: ringSize),
             titleLabel.leftAnchor.constraint(equalTo: ring.rightAnchor, constant: UI.Margin.M_MARGIN),
-            titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: UI.Margin.XXS_MARGIN),
+            titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: UI.Margin.XS_MARGIN),
             titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -UI.Margin.S_MARGIN),
             subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 0),
             subTitleLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
