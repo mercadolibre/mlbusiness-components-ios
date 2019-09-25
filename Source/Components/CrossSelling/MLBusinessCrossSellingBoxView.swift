@@ -15,9 +15,9 @@ open class MLBusinessCrossSellingBoxView: UIView {
     private var tapAction: ((_ deepLink: String) -> Void)?
 
     // Constants
-    private let crossSellingBoxViewHeight: CGFloat = 92
+    private let crossSellingBoxViewHeight: CGFloat = 60
     private let iconImageSize: CGFloat = 48
-    private let buttonHeight: CGFloat = 20
+    private let buttonHeight: CGFloat = 40
 
     public init(_ viewData: MLBusinessCrossSellingBoxData) {
         self.viewData = viewData
@@ -35,10 +35,10 @@ extension MLBusinessCrossSellingBoxView {
     private func render() {
         prepareForAutolayout()
         heightAnchor.constraint(equalToConstant: crossSellingBoxViewHeight).isActive = true
-
         let icon: UIImageView = buildIconImage()
         let title: UILabel = buildTitle(targetView: icon)
         let button: UIButton = buildButton(targetView: title)
+        button.contentVerticalAlignment = .top
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapOnButton))
         button.addGestureRecognizer(tapGesture)
     }
@@ -72,9 +72,9 @@ extension MLBusinessCrossSellingBoxView {
         title.numberOfLines = 2
         self.addSubview(title)
         NSLayoutConstraint.activate([
-            title.centerYAnchor.constraint(equalTo: targetView.centerYAnchor, constant: -UI.Margin.XXS_MARGIN),
+            title.centerYAnchor.constraint(equalTo: targetView.centerYAnchor, constant: -UI.Margin.XS_MARGIN),
             title.leftAnchor.constraint(equalTo: targetView.rightAnchor, constant: UI.Margin.S_MARGIN),
-            title.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+            title.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -UI.Margin.XXXS_MARGIN)
         ])
         return title
     }
@@ -86,11 +86,11 @@ extension MLBusinessCrossSellingBoxView {
         button.titleLabel?.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.XS_FONT)
         button.setTitleColor(MLStyleSheetManager.styleSheet.secondaryColor, for: .normal)
         button.contentHorizontalAlignment = .left
-        button.titleLabel?.lineBreakMode = .byWordWrapping
-        button.titleLabel?.numberOfLines = 2
+        button.titleLabel?.lineBreakMode = .byTruncatingTail
+        button.titleLabel?.numberOfLines = 1
         self.addSubview(button)
         NSLayoutConstraint.activate([
-            button.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: UI.Margin.XXXS_MARGIN),
+            button.topAnchor.constraint(equalTo: targetView.bottomAnchor),
             button.leadingAnchor.constraint(equalTo: targetView.leadingAnchor),
             button.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             button.heightAnchor.constraint(equalToConstant: buttonHeight)

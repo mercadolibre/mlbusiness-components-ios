@@ -13,6 +13,7 @@ import MLUI
 final class MLBusinessDiscountSingleItemView: UIView {
     static let itemHeight: CGFloat = 104
     static let iconImageSize: CGFloat = 56
+    private let iconCornerRadius: CGFloat = 6
     private let discountSingleItem: MLBusinessSingleItemProtocol
     private var itemIndex: Int = 0
     private var itemSection: Int = 0
@@ -43,8 +44,13 @@ extension MLBusinessDiscountSingleItemView {
         self.backgroundColor = .white
         let icon: UIImageView = UIImageView()
         icon.prepareForAutolayout(.clear)
-        icon.setRemoteImage(imageUrl: discountSingleItem.iconImageUrlForItem(), placeHolderRadius: MLBusinessDiscountSingleItemView.iconImageSize/2)
-        
+        icon.setRemoteImage(imageUrl: discountSingleItem.iconImageUrlForItem(), placeHolderRadius: iconCornerRadius, success: { [weak self] _ in
+            if let weakSelf = self {
+                icon.layer.cornerRadius = weakSelf.iconCornerRadius
+                icon.layer.masksToBounds = true
+            }
+        })
+
         self.addSubview(icon)
         icon.contentMode = .scaleAspectFit
         NSLayoutConstraint.activate([
