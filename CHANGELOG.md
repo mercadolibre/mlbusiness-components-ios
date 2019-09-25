@@ -1,3 +1,7 @@
+# v1.0.9
+🚀 1.0.9 🚀
+- Change Item Description label font to 14.
+
 # v1.0.8
 🚀 1.0.8 🚀
 - DiscountBox Items with Default 6px corner radius.
