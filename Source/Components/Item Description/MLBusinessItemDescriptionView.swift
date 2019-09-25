@@ -65,7 +65,7 @@ private extension MLBusinessItemDescriptionView {
         titleLabel.prepareForAutolayout(.clear)
         titleLabel.textColor = UI.Colors.mainLabelColor
         titleLabel.numberOfLines = titleNumberOfLines
-        titleLabel.font = UIFont.ml_regularSystemFont(ofSize: UI.FontSize.S_FONT)
+        titleLabel.font = UIFont.ml_regularSystemFont(ofSize: UI.FontSize.XS_FONT)
         self.titleLabel = titleLabel
         return titleLabel
     }
