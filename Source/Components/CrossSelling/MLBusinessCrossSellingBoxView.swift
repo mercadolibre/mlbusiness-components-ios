@@ -10,12 +10,11 @@ import MLUI
 
 @objcMembers
 open class MLBusinessCrossSellingBoxView: UIView {
-
     private let viewData: MLBusinessCrossSellingBoxData
     private var tapAction: ((_ deepLink: String) -> Void)?
 
     // Constants
-    private let crossSellingBoxViewHeight: CGFloat = 60
+    private let crossSellingBoxViewHeight: CGFloat = 80
     private let iconImageSize: CGFloat = 48
     private let buttonHeight: CGFloat = 40
 
