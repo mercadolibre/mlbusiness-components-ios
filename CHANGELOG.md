@@ -1,6 +1,7 @@
 # v1.0.8
 🚀 1.0.8 🚀
 - DiscountBox Items with Default 6px corner radius.
+- CrossSelling Box UI improvements.
 
 # v1.0.7
 🚀 1.0.7 🚀
