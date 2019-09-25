@@ -68,6 +68,7 @@ private extension MLBusinessDiscountBoxView {
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         tableView.isScrollEnabled = false
+        tableView.estimatedRowHeight = 104
 
         tableView.register(MLBusinessDiscountTableViewCell.self, forCellReuseIdentifier: MLBusinessDiscountTableViewCell.cellIdentifier)
         addSubview(tableView)

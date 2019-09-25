@@ -38,7 +38,7 @@ extension ViewController {
         let loyaltyHeaderView = setupLoyaltyHeaderView(bottomOf: crossSellingBoxView)
         let itemDescriptionView = setupItemDescriptionView(bottomOf: loyaltyHeaderView)
         
-        itemDescriptionView.bottomAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.bottomAnchor, constant: -64).isActive = true
+        itemDescriptionView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -64).isActive = true
     }
 
     private func setupRingView() -> MLBusinessLoyaltyRingView {
@@ -49,7 +49,7 @@ extension ViewController {
         NSLayoutConstraint.activate([
             ringView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
             ringView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
-            ringView.topAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.topAnchor)
+            ringView.topAnchor.constraint(equalTo: containerView.topAnchor)
         ])
 
         ringView.addTapAction { deepLink in

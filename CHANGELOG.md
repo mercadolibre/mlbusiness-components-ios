@@ -1,6 +1,8 @@
 # v1.0.9
 🚀 1.0.9 🚀
-- Change Item Description label font to 14.
+- Change target version to iOS 10
+- Fix an issue in MLBusinessDiscountBoxView in iOS 10
+- L&F fixes
 
 # v1.0.8
 🚀 1.0.8 🚀
