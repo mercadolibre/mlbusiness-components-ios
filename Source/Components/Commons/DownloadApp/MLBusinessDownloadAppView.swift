@@ -29,8 +29,9 @@ open class MLBusinessDownloadAppView: UIView {
     private let downloadAppViewHeight: CGFloat = 64
     private let appIconImageHeight: CGFloat = 24
     private let appIconImageWidth: CGFloat = 34
-    private let downloadButtonHeight: CGFloat = 32
-    private let downloadButtonWidth: CGFloat = 112
+    private let downloadButtonHeight: CGFloat = 36
+    private let downloadButtonWidth: CGFloat = 101
+    private let minWidthSizeConstraint: CGFloat = 320
 
     // Init
     public init(_ viewData: MLBusinessDownloadAppData) {
@@ -61,8 +62,15 @@ extension MLBusinessDownloadAppView {
         layer.cornerRadius = 6
         heightAnchor.constraint(equalToConstant: downloadAppViewHeight).isActive = true
 
-        let appIcon = buildAppIcon()
-        let titleLabel = buildTitleLabel(topOf: appIcon)
+        var titleLabel = UILabel()
+        if UIScreen.main.bounds.width > minWidthSizeConstraint {
+            let appIcon = buildAppIcon()
+            titleLabel = buildTitleLabel(topOf: appIcon)
+            titleLabel.leftAnchor.constraint(equalTo: appIcon.rightAnchor, constant: UI.Margin.S_MARGIN).isActive = true
+        } else {
+            titleLabel = buildTitleLabel(topOf: self)
+            titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: UI.Margin.S_MARGIN).isActive = true
+        }
         let downloadButton = buildDownloadButton(leftTo: titleLabel)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapOnButton))
         downloadButton.addGestureRecognizer(tapGesture)
@@ -92,8 +100,7 @@ extension MLBusinessDownloadAppView {
         titleLabel.applyBusinessLabelStyle()
         titleLabel.numberOfLines = 2
         NSLayoutConstraint.activate([
-            titleLabel.centerYAnchor.constraint(equalTo: targetView.centerYAnchor),
-            titleLabel.leftAnchor.constraint(equalTo: targetView.rightAnchor, constant: UI.Margin.S_MARGIN)
+            titleLabel.centerYAnchor.constraint(equalTo: targetView.centerYAnchor)
         ])
         return titleLabel
     }
@@ -102,9 +109,9 @@ extension MLBusinessDownloadAppView {
         let downloadButton = UIButton()
         downloadButton.prepareForAutolayout(MLStyleSheetManager.styleSheet.secondaryColor)
         self.addSubview(downloadButton)
-        downloadButton.layer.cornerRadius = 5
+        downloadButton.layer.cornerRadius = 6
         downloadButton.setTitle(viewData.getButtonTitle(), for: .normal)
-        downloadButton.titleLabel?.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.XS_FONT)
+        downloadButton.titleLabel?.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.XXS_FONT)
         NSLayoutConstraint.activate([
             downloadButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             downloadButton.leftAnchor.constraint(equalTo: targetView.rightAnchor, constant: UI.Margin.S_MARGIN),
