@@ -3,7 +3,7 @@
 - DownloadView improvements for small devices.
 
 # v1.0.9
-🚀 1.0.9 🚀	🚀 1.1 🚀
+🚀 1.0.9 🚀
 - Change target version to iOS 10	- DownloadView improvements for small devices.
 - Fix an issue in MLBusinessDiscountBoxView in iOS 10	
 - L&F fixes
