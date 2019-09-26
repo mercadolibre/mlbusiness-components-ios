@@ -2,6 +2,12 @@
 🚀 1.1 🚀
 - DownloadView improvements for small devices.
 
+# v1.0.9
+🚀 1.0.9 🚀	🚀 1.1 🚀
+- Change target version to iOS 10	- DownloadView improvements for small devices.
+- Fix an issue in MLBusinessDiscountBoxView in iOS 10	
+- L&F fixes
+
 # v1.0.8
 🚀 1.0.8 🚀
 - DiscountBox Items with Default 6px corner radius.
