@@ -1,3 +1,7 @@
+# Sin Publicar
+
+- Change the font size of header's labels.
+
 # v1.1
 🚀 1.1 🚀
 - DownloadView improvements for small devices.
