@@ -57,7 +57,7 @@ extension MLBusinessLoyaltyRingView {
         titleLabel.prepareForAutolayout(.clear)
         titleLabel.numberOfLines = titleNumberOfLines
         titleLabel.text = viewData.getTitle()
-        titleLabel.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.S_FONT)
+        titleLabel.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.XS_FONT)
         titleLabel.applyBusinessLabelStyle()
         return titleLabel
     }
@@ -66,7 +66,7 @@ extension MLBusinessLoyaltyRingView {
         let button = UIButton()
         button.prepareForAutolayout(.clear)
         button.setTitle(viewData.getButtonTitle(), for: .normal)
-        button.titleLabel?.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.XS_FONT)
+        button.titleLabel?.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.M_FONT)
         button.setTitleColor(MLStyleSheetManager.styleSheet.secondaryColor, for: .normal)
         button.addTarget(self, action:  #selector(self.didTapOnButton), for: .touchUpInside)
         return button

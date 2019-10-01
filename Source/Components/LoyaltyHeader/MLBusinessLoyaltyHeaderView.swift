@@ -86,7 +86,7 @@ private extension MLBusinessLoyaltyHeaderView {
         let titleLabel = UILabel()
         titleLabel.prepareForAutolayout(.clear)
         titleLabel.numberOfLines = titleNumberOfLines
-        titleLabel.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.S_FONT)
+        titleLabel.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.XS_FONT)
         self.titleLabel = titleLabel
         return titleLabel
     }
@@ -95,7 +95,7 @@ private extension MLBusinessLoyaltyHeaderView {
         let subTitleLabel = UILabel()
         subTitleLabel.prepareForAutolayout(.clear)
         subTitleLabel.numberOfLines = titleNumberOfLines
-        subTitleLabel.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.S_FONT)
+        subTitleLabel.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.M_FONT)
         self.subTitleLabel = subTitleLabel
         return subTitleLabel
     }
