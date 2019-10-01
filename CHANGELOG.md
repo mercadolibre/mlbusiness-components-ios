@@ -1,5 +1,5 @@
-# Sin Publicar
-
+# v1.2
+🚀 1.2 🚀
 - Change the font size of header's labels.
 
 # v1.1
