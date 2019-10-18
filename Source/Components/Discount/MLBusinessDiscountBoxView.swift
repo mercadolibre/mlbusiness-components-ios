@@ -118,14 +118,16 @@ private extension MLBusinessDiscountBoxView {
 
     private func updateUI() {
         titleLabel.text = viewData?.getTitle?()
-        subtitleLabel.text = viewData?.getSubtitle?()
+        subtitleLabel.text = titleLabel.text != nil ? viewData?.getSubtitle?() : nil
         updateBoxConstraints()
         tableView.reloadData()
     }
 
     private func updateBoxConstraints() {
         tableViewHeightConstraint.constant = getTableViewHeight()
-        if let _ = viewData?.getTitle?(), let _ = viewData?.getSubtitle?() {
+        if let _ = viewData?.getTitle?(), viewData?.getSubtitle?() == nil {
+            tableViewTopConstraint.constant = UI.Margin.XM_MARGIN + UI.Margin.L_MARGIN
+        } else if let _ = viewData?.getTitle?(), let _ = viewData?.getSubtitle?() {
             tableViewTopConstraint.constant = UI.Margin.XM_MARGIN * 2 + UI.Margin.L_MARGIN
         } else {
             tableViewTopConstraint.constant = 0
