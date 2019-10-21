@@ -29,8 +29,8 @@ open class MLBusinessDownloadAppView: UIView {
     private let downloadAppViewHeight: CGFloat = 64
     private let appIconImageHeight: CGFloat = 24
     private let appIconImageWidth: CGFloat = 34
-    private let downloadButtonHeight: CGFloat = 36
-    private let downloadButtonWidth: CGFloat = 101
+    private let downloadButtonHeight: CGFloat = 34
+    private let downloadButtonWidth: CGFloat = 95
     private let minWidthSizeConstraint: CGFloat = 320
 
     // Init
@@ -96,7 +96,7 @@ extension MLBusinessDownloadAppView {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(titleLabel)
         titleLabel.text = viewData.getTitle()
-        titleLabel.font = UIFont.ml_lightSystemFont(ofSize: UI.FontSize.XS_FONT)
+        titleLabel.font = UIFont.ml_lightSystemFont(ofSize: UI.FontSize.XXS_FONT)
         titleLabel.applyBusinessLabelStyle()
         titleLabel.numberOfLines = 2
         NSLayoutConstraint.activate([
