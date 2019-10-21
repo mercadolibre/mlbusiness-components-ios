@@ -1,3 +1,7 @@
+# v1.3
+🚀 1.3 🚀
+- Discount Box component 3 layout. (With title and subtitle, with title and without title/subtitle)
+
 # v1.2
 🚀 1.2 🚀
 - Change the font size of header's labels.
