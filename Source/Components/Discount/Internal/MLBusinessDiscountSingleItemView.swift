@@ -13,7 +13,7 @@ import MLUI
 final class MLBusinessDiscountSingleItemView: UIView {
     static let itemHeight: CGFloat = 104
     static let iconImageSize: CGFloat = 56
-    private let iconCornerRadius: CGFloat = 6
+    private let iconCornerRadius: CGFloat = 28
     private let discountSingleItem: MLBusinessSingleItemProtocol
     private var itemIndex: Int = 0
     private var itemSection: Int = 0
@@ -52,7 +52,7 @@ extension MLBusinessDiscountSingleItemView {
         })
 
         self.addSubview(icon)
-        icon.contentMode = .scaleAspectFit
+        icon.contentMode = .scaleAspectFill
         NSLayoutConstraint.activate([
             icon.heightAnchor.constraint(equalToConstant: MLBusinessDiscountSingleItemView.iconImageSize),
             icon.widthAnchor.constraint(equalToConstant: MLBusinessDiscountSingleItemView.iconImageSize),
