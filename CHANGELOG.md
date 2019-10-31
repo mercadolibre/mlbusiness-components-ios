@@ -1,7 +1,3 @@
-# v1.4
-🚀 1.4 🚀
-- Adjust the size of the Ring view.
-
 # v1.3
 🚀 1.3 🚀
 - Discount Box component 3 layout. (With title and subtitle, with title and without title/subtitle)
