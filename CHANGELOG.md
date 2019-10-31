@@ -1,6 +1,7 @@
 # v1.4
 🚀 1.4 🚀
 - Modified iconCornerRadius on MLBusinessDiscountSingleItemView to 28 in order to make circle icons. Changed icon contentMode to scaleAspectFill.
+- Adjust the size of the Ring view.
 
 # v1.3
 🚀 1.3 🚀
