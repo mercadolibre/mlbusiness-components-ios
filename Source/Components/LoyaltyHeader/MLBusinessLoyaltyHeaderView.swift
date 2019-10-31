@@ -15,7 +15,7 @@ public final class MLBusinessLoyaltyHeaderView: UIView {
     private let viewHeight: CGFloat = 60
     private let fillPercentProgress: Bool
     private let titleNumberOfLines: Int = 1
-    private let ringSize: CGFloat = 32
+    private let ringSize: CGFloat = 36
     
     private weak var ringView: UICircularProgressRing?
     private weak var titleLabel: UILabel?
@@ -105,8 +105,8 @@ private extension MLBusinessLoyaltyHeaderView {
                                       hexaColor: self.viewData?.getPrimaryHexaColor() ?? "FFFFFF",
                                       percent: self.viewData?.getRingPercentage() ?? 0,
                                       fillPercentage: self.fillPercentProgress)
-        ring.outerRingWidth = 2.5
-        ring.innerRingWidth = 2.5
+        ring.outerRingWidth = 3
+        ring.innerRingWidth = 3
         ring.font = UIFont.ml_semiboldSystemFont(ofSize: 20)
         self.ringView = ring
         return ring
@@ -119,10 +119,10 @@ private extension MLBusinessLoyaltyHeaderView {
             ring.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: UI.Margin.S_MARGIN),
             ring.heightAnchor.constraint(equalToConstant: ringSize),
             ring.widthAnchor.constraint(equalToConstant: ringSize),
-            titleLabel.leftAnchor.constraint(equalTo: ring.rightAnchor, constant: UI.Margin.M_MARGIN),
+            titleLabel.leftAnchor.constraint(equalTo: ring.rightAnchor, constant: UI.Margin.S_MARGIN),
             titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: UI.Margin.XS_MARGIN),
             titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -UI.Margin.S_MARGIN),
-            subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 0),
+            subTitleLabel.bottomAnchor.constraint(equalTo: ring.bottomAnchor, constant: 1),
             subTitleLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             subTitleLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
             self.heightAnchor.constraint(equalToConstant: viewHeight)
