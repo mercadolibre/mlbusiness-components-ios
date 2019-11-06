@@ -37,8 +37,9 @@ extension ViewController {
         let crossSellingBoxView = setupCrossSellingBoxView(bottomOf: downloadAppView)
         let loyaltyHeaderView = setupLoyaltyHeaderView(bottomOf: crossSellingBoxView)
         let itemDescriptionView = setupItemDescriptionView(bottomOf: loyaltyHeaderView)
+        let animatedButtonView = setupAnimatedButtonView(bottomOf: itemDescriptionView)
         
-        itemDescriptionView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -64).isActive = true
+        animatedButtonView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -64).isActive = true
     }
 
     private func setupRingView() -> MLBusinessLoyaltyRingView {
@@ -145,6 +146,26 @@ extension ViewController {
             itemDescriptionView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16)
             ])
         return itemDescriptionView
+    }
+
+    private func setupAnimatedButtonView(bottomOf targetView: UIView) -> MLBusinessBombCongratsAnimatedButton {
+        let animatedButtonView = MLBusinessBombCongratsAnimatedButton(normalLabel: "Normal", loadingLabel: "Loading", retryLabel: "Retry")
+        containerView.addSubview(animatedButtonView)
+        NSLayoutConstraint.activate([
+            animatedButtonView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16),
+            animatedButtonView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            animatedButtonView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16)
+            ])
+        animatedButtonView.addTarget(self, action: #selector(animatedButtonDidTap(_:)), for: .touchUpInside)
+
+        return animatedButtonView
+    }
+
+    @objc func animatedButtonDidTap(_ button: MLBusinessBombCongratsAnimatedButton) {
+        button.startLoading()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            button.finishLoading(color: UIColor.ml_meli_green(), image: "")
+        }
     }
     
 }
