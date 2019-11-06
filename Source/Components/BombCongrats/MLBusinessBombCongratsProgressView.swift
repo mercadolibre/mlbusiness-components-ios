@@ -6,5 +6,86 @@
 //
 
 import Foundation
+import MLUI
 
+class MLBusinessBombCongratsProgressView: UIView {
 
+    private let deltaIncrementFraction: CGFloat
+    private let progressViewHeight: CGFloat
+    private let progressViewWidth: CGFloat
+    private let progressViewAlpha: CGFloat = 0.35
+
+    private var timer: Timer?
+    private let timeOut: TimeInterval
+    private let timeInterval: TimeInterval = 0.3
+    private var timeCounter: Int = 0
+
+    init(view: UIView, timeOut: TimeInterval = 15) {
+        progressViewHeight = view.frame.height
+        progressViewWidth = view.frame.width
+        deltaIncrementFraction = CGFloat(timeOut * 0.4)
+        self.timeOut = timeOut
+
+        super.init(frame: CGRect(x: 0, y: 0, width: 0, height: progressViewHeight))
+
+        backgroundColor = MLStyleSheetManager.styleSheet.whiteColor
+        layer.cornerRadius = view.layer.cornerRadius
+        alpha = progressViewAlpha
+
+        view.layer.masksToBounds = true
+        view.addSubview(self)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func initTimer() {
+        timer = Timer.scheduledTimer(timeInterval: 0.3,
+                             target: self,
+                             selector: #selector(increment),
+                             userInfo: nil,
+                             repeats: true)
+    }
+
+    private func stopTimer () {
+        timer?.invalidate()
+        timer = nil
+    }
+
+    @objc
+    private func increment() {
+        timeCounter += 1
+
+        let oldWidth = progressViewWidth - frame.width
+        let newWidth = frame.width + oldWidth / deltaIncrementFraction
+        let newFrame = CGRect(x: 0, y: 0, width: newWidth, height: frame.height)
+        
+        UIView.animate(withDuration: 0.3, animations: { [weak self] in
+            self?.frame = newFrame
+        }, completion: { [weak self] _ in
+            guard let self = self else { return }
+
+            if Double(self.timeCounter) * self.timeInterval > self.timeOut {
+                self.stopTimer()
+            }
+        })
+        
+    }
+
+    func reset() {
+        frame = CGRect(x: 0, y: 0, width: 0, height: frame.height)
+    }
+
+    func finish(completion: @escaping () -> Void) {
+        let newFrame = CGRect(x: 0, y: 0, width: progressViewWidth, height: frame.height)
+
+        UIView.animate(withDuration: 0.5, animations: { [weak self] in
+            self?.frame = newFrame
+        }, completion: { [weak self] _ in
+            self?.stopTimer()
+            completion()
+        })
+    }
+
+}
