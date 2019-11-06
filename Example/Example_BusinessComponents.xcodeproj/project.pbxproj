@@ -225,26 +225,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Example_BusinessComponents/Pods-Example_BusinessComponents-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Example_BusinessComponents/Pods-Example_BusinessComponents-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/FXBlurView/FXBlurView.framework",
-				"${BUILT_PRODUCTS_DIR}/JRSwizzle/JRSwizzle.framework",
-				"${BUILT_PRODUCTS_DIR}/MLBusinessComponents/MLBusinessComponents.framework",
-				"${BUILT_PRODUCTS_DIR}/MLUI/MLUI.framework",
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Example_BusinessComponents/Pods-Example_BusinessComponents-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FXBlurView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JRSwizzle.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MLBusinessComponents.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MLUI.framework",
-			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Example_BusinessComponents/Pods-Example_BusinessComponents-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Example_BusinessComponents/Pods-Example_BusinessComponents-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -407,7 +394,7 @@
 		};
 		23EE40752326B50E001322EC /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0CE0A68323D444A42A3D7791 /* Pods-Example_BusinessComponents.debug.xcconfig */;
+			baseConfigurationReference = 76BAD5F6C0ABF02248DA22EC /* Pods-Example_BusinessComponents.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Manual;
@@ -427,7 +414,7 @@
 		};
 		23EE40762326B50E001322EC /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 821827EE71846DD251C475A6 /* Pods-Example_BusinessComponents.release.xcconfig */;
+			baseConfigurationReference = 83422D9498E92A1A94AAAABD /* Pods-Example_BusinessComponents.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Manual;
