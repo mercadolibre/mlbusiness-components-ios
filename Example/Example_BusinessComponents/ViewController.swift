@@ -157,6 +157,7 @@ extension ViewController {
             animatedButtonView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16)
         ])
         animatedButtonView.addTarget(self, action: #selector(animatedButtonDidTap(_:)), for: .touchUpInside)
+        animatedButtonView.delegate = self
 
         return animatedButtonView
     }
@@ -176,4 +177,22 @@ extension ViewController {
         ringView?.fillPercentProgressWithAnimation()
         loyaltyHeaderView?.fillPercentProgressWithAnimation()
     }
+}
+
+extension ViewController: MLBusinessBombCongratsAnimatedButtonDelegate {
+
+    func didFinishAnimation() {
+        let newVC = UIViewController()
+        newVC.view.backgroundColor = .red
+        let transition: CATransition = CATransition()
+        transition.duration = 0.3
+        transition.type = .fade
+        view.layer.add(transition, forKey: nil)
+        navigationController?.pushViewController(newVC, animated: false)
+    }
+
+    func progressButtonAnimationTimeOut() {
+        
+    }
+
 }

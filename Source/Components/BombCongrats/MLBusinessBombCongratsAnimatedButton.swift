@@ -8,7 +8,7 @@
 import Foundation
 import MLUI
 
-public class MLBusinessBombCongratsAnimatedButton: MLButton {
+public class MLBusinessBombCongratsAnimatedButton: UIButton {
 
     private var progressView: MLBusinessBombCongratsProgressView?
     private var animatedView = UIView(frame: .zero)
@@ -16,13 +16,13 @@ public class MLBusinessBombCongratsAnimatedButton: MLButton {
     private let normalLabel: String
     private let loadingLabel: String
 
-    weak var delegate: MLBusinessBombCongratsAnimatedButtonDelegate?
+    public weak var delegate: MLBusinessBombCongratsAnimatedButtonDelegate?
 
     public init(normalLabel: String, loadingLabel: String) {
         self.normalLabel = normalLabel
         self.loadingLabel = loadingLabel
 
-        super.init(config: MLButtonStylesFactory.config(for: .primaryAction))
+        super.init(frame: .zero)
         setupView()
     }
 
@@ -31,19 +31,25 @@ public class MLBusinessBombCongratsAnimatedButton: MLButton {
     }
 
     private func setupView() {
-        buttonTitle = normalLabel
+        translatesAutoresizingMaskIntoConstraints = false
+        heightAnchor.constraint(equalToConstant: 48).isActive = true
+        setTitle(normalLabel, for: .normal)
+        layer.cornerRadius = 4
+        backgroundColor = MLStyleSheetManager.styleSheet.secondaryColor
+        layer.borderColor = MLStyleSheetManager.styleSheet.secondaryColor.cgColor
+        titleLabel?.font = MLStyleSheetManager.styleSheet.regularSystemFont(ofSize: CGFloat(kMLFontsSizeMedium))
     }
 
     public func startLoading(timeOut: TimeInterval = 15.0) {
         progressView = MLBusinessBombCongratsProgressView(view: self, timeOut: timeOut)
-        buttonTitle = loadingLabel
+        setTitle(loadingLabel, for: .normal)
     }
 
     public func finishLoading(color: UIColor, image: String) {
         progressView?.finish { [weak self] in
             guard let self = self else { return }
 
-            self.animatedView = UIView(frame: self.frame)
+            self.animatedView.frame = self.frame
             self.animatedView.backgroundColor = self.backgroundColor
             self.animatedView.layer.cornerRadius = self.layer.cornerRadius
             self.superview?.addSubview(self.animatedView)
@@ -94,7 +100,7 @@ public class MLBusinessBombCongratsAnimatedButton: MLButton {
                     UIView.animate(withDuration: 0.5, animations: {
                         self?.animatedView.transform = CGAffineTransform(scaleX: 50, y: 50)
                     }, completion: { [weak self] _ in
-                        self?.delegate?.didFinishAnimation()
+                        self?.delegate?.didFinishAnimation?()
                     })
                 })
             })

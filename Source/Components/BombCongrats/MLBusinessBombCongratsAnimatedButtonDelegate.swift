@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol MLBusinessBombCongratsAnimatedButtonDelegate: class {
-    func didFinishAnimation()
-    func progressButtonAnimationTimeOut()
+@objc public protocol MLBusinessBombCongratsAnimatedButtonDelegate: NSObjectProtocol {
+    @objc optional func didFinishAnimation()
+    @objc func progressButtonAnimationTimeOut()
 }
