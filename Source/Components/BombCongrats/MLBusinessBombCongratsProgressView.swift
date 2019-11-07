@@ -34,6 +34,8 @@ class MLBusinessBombCongratsProgressView: UIView {
 
         view.layer.masksToBounds = true
         view.addSubview(self)
+
+        initTimer()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -41,11 +43,11 @@ class MLBusinessBombCongratsProgressView: UIView {
     }
 
     private func initTimer() {
-        timer = Timer.scheduledTimer(timeInterval: 0.3,
-                             target: self,
-                             selector: #selector(increment),
-                             userInfo: nil,
-                             repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 0.5,
+                                     target: self,
+                                     selector: #selector(increment),
+                                     userInfo: nil,
+                                     repeats: true)
     }
 
     private func stopTimer () {

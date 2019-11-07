@@ -15,12 +15,10 @@ public class MLBusinessBombCongratsAnimatedButton: MLButton {
 
     private let normalLabel: String
     private let loadingLabel: String
-    private let retryLabel: String
 
-    public init(normalLabel: String, loadingLabel: String, retryLabel: String) {
+    public init(normalLabel: String, loadingLabel: String) {
         self.normalLabel = normalLabel
         self.loadingLabel = loadingLabel
-        self.retryLabel = retryLabel
 
         super.init(config: MLButtonStylesFactory.config(for: .primaryAction))
         setupView()
@@ -43,7 +41,7 @@ public class MLBusinessBombCongratsAnimatedButton: MLButton {
         progressView?.finish { [weak self] in
             guard let self = self else { return }
 
-            self.animatedView.frame = self.frame
+            self.animatedView = UIView(frame: self.frame)
             self.animatedView.backgroundColor = self.backgroundColor
             self.animatedView.layer.cornerRadius = self.layer.cornerRadius
             self.superview?.addSubview(self.animatedView)

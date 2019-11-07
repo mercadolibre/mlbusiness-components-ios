@@ -149,19 +149,20 @@ extension ViewController {
     }
 
     private func setupAnimatedButtonView(bottomOf targetView: UIView) -> MLBusinessBombCongratsAnimatedButton {
-        let animatedButtonView = MLBusinessBombCongratsAnimatedButton(normalLabel: "Normal", loadingLabel: "Loading", retryLabel: "Retry")
+        let animatedButtonView = MLBusinessBombCongratsAnimatedButton(normalLabel: "Normal", loadingLabel: "Loading")
         containerView.addSubview(animatedButtonView)
         NSLayoutConstraint.activate([
             animatedButtonView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16),
             animatedButtonView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
             animatedButtonView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16)
-            ])
+        ])
         animatedButtonView.addTarget(self, action: #selector(animatedButtonDidTap(_:)), for: .touchUpInside)
 
         return animatedButtonView
     }
 
-    @objc func animatedButtonDidTap(_ button: MLBusinessBombCongratsAnimatedButton) {
+    @objc
+    private func animatedButtonDidTap(_ button: MLBusinessBombCongratsAnimatedButton) {
         button.startLoading()
         DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
             button.finishLoading(color: UIColor.ml_meli_green(), image: "")
