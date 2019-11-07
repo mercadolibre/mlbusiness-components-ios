@@ -16,6 +16,8 @@ public class MLBusinessBombCongratsAnimatedButton: MLButton {
     private let normalLabel: String
     private let loadingLabel: String
 
+    weak var delegate: MLBusinessBombCongratsAnimatedButtonDelegate?
+
     public init(normalLabel: String, loadingLabel: String) {
         self.normalLabel = normalLabel
         self.loadingLabel = loadingLabel
@@ -91,6 +93,8 @@ public class MLBusinessBombCongratsAnimatedButton: MLButton {
                     self?.superview?.layer.masksToBounds = false
                     UIView.animate(withDuration: 0.5, animations: {
                         self?.animatedView.transform = CGAffineTransform(scaleX: 50, y: 50)
+                    }, completion: { [weak self] _ in
+                        self?.delegate?.didFinishAnimation()
                     })
                 })
             })

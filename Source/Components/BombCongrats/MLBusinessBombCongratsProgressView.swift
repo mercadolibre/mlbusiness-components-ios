@@ -28,7 +28,7 @@ class MLBusinessBombCongratsProgressView: UIView {
 
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: progressViewHeight))
 
-        backgroundColor = MLStyleSheetManager.styleSheet.whiteColor
+        backgroundColor = #colorLiteral(red: 0.2666666667, green: 0.2666876018, blue: 0.2666300237, alpha: 0.4)
         layer.cornerRadius = view.layer.cornerRadius
         alpha = progressViewAlpha
 
@@ -70,6 +70,7 @@ class MLBusinessBombCongratsProgressView: UIView {
 
             if Double(self.timeCounter) * self.timeInterval > self.timeOut {
                 self.stopTimer()
+                // TODO: Delegate ProgressView.
             }
         })
         

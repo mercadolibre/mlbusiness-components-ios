@@ -164,8 +164,8 @@ extension ViewController {
     @objc
     private func animatedButtonDidTap(_ button: MLBusinessBombCongratsAnimatedButton) {
         button.startLoading()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-            button.finishLoading(color: UIColor.ml_meli_green(), image: "")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            button.finishLoading(color: .ml_meli_green(), image: "")
         }
     }
     
