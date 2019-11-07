@@ -184,10 +184,10 @@ extension ViewController: MLBusinessBombCongratsAnimatedButtonDelegate {
     func didFinishAnimation() {
         let newVC = UIViewController()
         newVC.view.backgroundColor = .red
-        let transition: CATransition = CATransition()
-        transition.duration = 0.3
+        let transition = CATransition()
+        transition.duration = 0.4
         transition.type = .fade
-        view.layer.add(transition, forKey: nil)
+        navigationController?.view.layer.add(transition, forKey: nil)
         navigationController?.pushViewController(newVC, animated: false)
     }
 

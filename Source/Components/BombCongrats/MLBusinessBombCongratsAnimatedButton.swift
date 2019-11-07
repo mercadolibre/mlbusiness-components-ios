@@ -8,16 +8,18 @@
 import Foundation
 import MLUI
 
+@objc
 public class MLBusinessBombCongratsAnimatedButton: UIButton {
 
     private var progressView: MLBusinessBombCongratsProgressView?
     private var animatedView = UIView(frame: .zero)
 
-    private let normalLabel: String
-    private let loadingLabel: String
+    @objc private let normalLabel: String
+    @objc private let loadingLabel: String
 
-    public weak var delegate: MLBusinessBombCongratsAnimatedButtonDelegate?
+    @objc public weak var delegate: MLBusinessBombCongratsAnimatedButtonDelegate?
 
+    @objc
     public init(normalLabel: String, loadingLabel: String) {
         self.normalLabel = normalLabel
         self.loadingLabel = loadingLabel
