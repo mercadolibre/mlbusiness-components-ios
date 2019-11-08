@@ -10,7 +10,7 @@ import MLUI
 
 class MLBusinessBombCongratsProgressView: UIView {
 
-    private let deltaIncrementFraction: CGFloat
+    private var deltaIncrementFraction: CGFloat
     private let progressViewHeight: CGFloat
     private let progressViewWidth: CGFloat
     private let progressViewAlpha: CGFloat = 0.35
@@ -73,6 +73,8 @@ class MLBusinessBombCongratsProgressView: UIView {
             if Double(self.timeCounter) * self.timeInterval > self.timeOut {
                 self.stopTimer()
                 self.delegate?.progressViewTimeOut()
+            } else if self.timeCounter == 5 || self.timeCounter == 10 {
+                self.deltaIncrementFraction *= 2
             }
         })
         
