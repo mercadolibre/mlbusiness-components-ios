@@ -1,3 +1,7 @@
+# Sin Publicar
+🚀 Sin Publicar 🚀
+- First version of Bomb Congrats.
+
 # v1.4
 🚀 1.4 🚀
 - Modified iconCornerRadius on MLBusinessDiscountSingleItemView to 28 in order to make circle icons. Changed icon contentMode to scaleAspectFill.
