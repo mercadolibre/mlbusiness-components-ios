@@ -77,7 +77,7 @@ private extension MLBusinessDiscountBoxView {
 
         titleLabel.prepareForAutolayout(.clear)
         self.addSubview(titleLabel)
-        titleLabel.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.L_FONT)
+        titleLabel.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.M_FONT)
         titleLabel.applyBusinessLabelStyle()
         titleLabel.textAlignment = .center
         titleLabel.numberOfLines = 1
