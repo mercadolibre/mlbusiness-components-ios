@@ -70,7 +70,7 @@ class MLBusinessBombCongratsProgressView: UIView {
         }, completion: { [weak self] _ in
             guard let self = self else { return }
 
-            if Double(self.timeCounter) * self.timeInterval > 4 {
+            if Double(self.timeCounter) * self.timeInterval > self.timeOut {
                 self.stopTimer()
                 self.delegate?.progressViewTimeOut()
             }
