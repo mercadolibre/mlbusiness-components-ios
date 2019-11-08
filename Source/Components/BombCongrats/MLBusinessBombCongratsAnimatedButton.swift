@@ -47,7 +47,7 @@ public class MLBusinessBombCongratsAnimatedButton: UIButton {
         setTitle(loadingLabel, for: .normal)
     }
 
-    public func finishLoading(color: UIColor, image: String) {
+    public func finishLoading(color: UIColor, image: UIImage?) {
         progressView?.finish { [weak self] in
             guard let self = self else { return }
 
@@ -75,7 +75,18 @@ public class MLBusinessBombCongratsAnimatedButton: UIButton {
         }
     }
 
-    private func explosion(newFrame: CGRect, color: UIColor, image: String) {
+    public func goToNextViewController(_ nextViewController: UIViewController,
+                                       _ navController: UINavigationController,
+                                       transitionDuration: TimeInterval = 0.4) {
+        let transition = CATransition()
+        transition.duration = transitionDuration
+        transition.type = .fade
+        
+        navController.view.layer.add(transition, forKey: nil)
+        navController.pushViewController(nextViewController, animated: false)
+    }
+
+    private func explosion(newFrame: CGRect, color: UIColor, image: UIImage?) {
         UIView.animate(withDuration: 0.3, animations: { [weak self] in
             self?.progressView?.alpha = 0
             self?.animatedView.backgroundColor = color
@@ -102,7 +113,8 @@ public class MLBusinessBombCongratsAnimatedButton: UIButton {
                     UIView.animate(withDuration: 0.5, animations: {
                         self?.animatedView.transform = CGAffineTransform(scaleX: 50, y: 50)
                     }, completion: { [weak self] _ in
-                        self?.delegate?.didFinishAnimation?()
+                        guard let self = self else { return }
+                        self.delegate?.didFinishAnimation(self)
                     })
                 })
             })

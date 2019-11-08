@@ -166,7 +166,7 @@ extension ViewController {
     private func animatedButtonDidTap(_ button: MLBusinessBombCongratsAnimatedButton) {
         button.startLoading()
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            button.finishLoading(color: .ml_meli_green(), image: "")
+            button.finishLoading(color: .ml_meli_green(), image: nil)
         }
     }
     
@@ -181,14 +181,13 @@ extension ViewController {
 
 extension ViewController: MLBusinessBombCongratsAnimatedButtonDelegate {
 
-    func didFinishAnimation() {
+    func didFinishAnimation(_ animatedButton: MLBusinessBombCongratsAnimatedButton) {
+        guard let navigationController = navigationController else { return }
+
         let newVC = UIViewController()
         newVC.view.backgroundColor = .red
-        let transition = CATransition()
-        transition.duration = 0.4
-        transition.type = .fade
-        navigationController?.view.layer.add(transition, forKey: nil)
-        navigationController?.pushViewController(newVC, animated: false)
+
+        animatedButton.goToNextViewController(newVC, navigationController)
     }
 
     func progressButtonAnimationTimeOut() {

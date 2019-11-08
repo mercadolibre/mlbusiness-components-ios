@@ -8,6 +8,6 @@
 import Foundation
 
 @objc public protocol MLBusinessBombCongratsAnimatedButtonDelegate: NSObjectProtocol {
-    @objc optional func didFinishAnimation()
+    @objc func didFinishAnimation(_ animatedButton: MLBusinessBombCongratsAnimatedButton)
     @objc func progressButtonAnimationTimeOut()
 }

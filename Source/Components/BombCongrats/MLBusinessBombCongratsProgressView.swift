@@ -20,6 +20,8 @@ class MLBusinessBombCongratsProgressView: UIView {
     private let timeInterval: TimeInterval = 0.3
     private var timeCounter: Int = 0
 
+    weak var delegate: MLBusinessBombCongratsProgressViewDelegate?
+
     init(view: UIView, timeOut: TimeInterval = 15) {
         progressViewHeight = view.frame.height
         progressViewWidth = view.frame.width
