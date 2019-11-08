@@ -42,11 +42,14 @@ public class MLBusinessBombCongratsAnimatedButton: UIButton {
         titleLabel?.font = MLStyleSheetManager.styleSheet.regularSystemFont(ofSize: CGFloat(kMLFontsSizeMedium))
     }
 
+    @objc
     public func startLoading(timeOut: TimeInterval = 15.0) {
         progressView = MLBusinessBombCongratsProgressView(view: self, timeOut: timeOut)
+        progressView?.delegate = self
         setTitle(loadingLabel, for: .normal)
     }
 
+    @objc
     public func finishLoading(color: UIColor, image: UIImage?) {
         progressView?.finish { [weak self] in
             guard let self = self else { return }
@@ -75,6 +78,7 @@ public class MLBusinessBombCongratsAnimatedButton: UIButton {
         }
     }
 
+    @objc
     public func goToNextViewController(_ nextViewController: UIViewController,
                                        _ navController: UINavigationController,
                                        transitionDuration: TimeInterval = 0.4) {
@@ -121,4 +125,10 @@ public class MLBusinessBombCongratsAnimatedButton: UIButton {
         })
     }
 
+}
+
+extension MLBusinessBombCongratsAnimatedButton: MLBusinessBombCongratsProgressViewDelegate {
+    func progressViewTimeOut() {
+        delegate?.progressButtonAnimationTimeOut()
+    }
 }
