@@ -103,6 +103,7 @@ public class MLBusinessBombCongratsAnimatedButton: UIButton {
 
             imageView.contentMode = .scaleAspectFit
             imageView.alpha = 0
+            imageView.image = image
 
             self.animatedView.addSubview(imageView)
 
