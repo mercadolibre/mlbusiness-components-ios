@@ -1,6 +1,6 @@
 # Sin Publicar
 🚀 Sin Publicar 🚀
-- First version of Bomb Congrats.
+- First version of Animated Button Component.
 
 # v1.4.1
 - Modified font size of discount box.
