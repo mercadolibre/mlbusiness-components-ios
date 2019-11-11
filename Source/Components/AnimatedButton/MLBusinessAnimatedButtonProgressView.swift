@@ -1,5 +1,5 @@
 //
-//  MLBusinessBombCongratsProgressView.swift
+//  MLBusinessAnimatedButtonProgressView.swift
 //  MLBusinessComponents
 //
 //  Created by Javier Quiles on 05/11/2019.
@@ -8,7 +8,7 @@
 import Foundation
 import MLUI
 
-class MLBusinessBombCongratsProgressView: UIView {
+final class MLBusinessAnimatedButtonProgressView: UIView {
 
     private var deltaIncrementFraction: CGFloat
     private let progressViewHeight: CGFloat
@@ -20,7 +20,7 @@ class MLBusinessBombCongratsProgressView: UIView {
     private let timeInterval: TimeInterval = 0.3
     private var timeCounter: Int = 0
 
-    weak var delegate: MLBusinessBombCongratsProgressViewDelegate?
+    weak var delegate: MLBusinessAnimatedButtonProgressViewDelegate?
 
     init(view: UIView, timeOut: TimeInterval = 15) {
         progressViewHeight = view.frame.height

@@ -1,5 +1,5 @@
 //
-//  MLBusinessBombCongratsProgressViewDelegate.swift
+//  MLBusinessAnimatedButtonProgressViewDelegate.swift
 //  MLBusinessComponents
 //
 //  Created by Javier Quiles on 07/11/2019.
@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol MLBusinessBombCongratsProgressViewDelegate: NSObjectProtocol {
+protocol MLBusinessAnimatedButtonProgressViewDelegate: NSObjectProtocol {
     func progressViewTimeOut()
 }

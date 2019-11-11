@@ -148,8 +148,8 @@ extension ViewController {
         return itemDescriptionView
     }
 
-    private func setupAnimatedButtonView(bottomOf targetView: UIView) -> MLBusinessBombCongratsAnimatedButton {
-        let animatedButtonView = MLBusinessBombCongratsAnimatedButton(normalLabel: "Normal", loadingLabel: "Loading")
+    private func setupAnimatedButtonView(bottomOf targetView: UIView) -> MLBusinessAnimatedButton {
+        let animatedButtonView = MLBusinessAnimatedButton(normalLabel: "Normal", loadingLabel: "Loading")
         containerView.addSubview(animatedButtonView)
         NSLayoutConstraint.activate([
             animatedButtonView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16),
@@ -163,13 +163,13 @@ extension ViewController {
     }
 
     @objc
-    private func animatedButtonDidTap(_ button: MLBusinessBombCongratsAnimatedButton) {
+    private func animatedButtonDidTap(_ button: MLBusinessAnimatedButton) {
         button.startLoading()
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             button.finishLoading(color: .ml_meli_green(), image: nil)
         }
     }
-    
+
 }
 
 extension ViewController {
@@ -179,9 +179,12 @@ extension ViewController {
     }
 }
 
-extension ViewController: MLBusinessBombCongratsAnimatedButtonDelegate {
+extension ViewController: MLBusinessAnimatedButtonDelegate {
+    func expandAnimationInProgress() {
+        
+    }
 
-    func didFinishAnimation(_ animatedButton: MLBusinessBombCongratsAnimatedButton) {
+    func didFinishAnimation(_ animatedButton: MLBusinessAnimatedButton) {
         guard let navigationController = navigationController else { return }
 
         let newVC = UIViewController()

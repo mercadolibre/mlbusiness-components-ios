@@ -1,5 +1,5 @@
 //
-//  MLBusinessBombCongratsAnimatedButton.swift
+//  MLBusinessAnimatedButton.swift
 //  MLBusinessComponents
 //
 //  Created by Javier Quiles on 06/11/2019.
@@ -9,15 +9,15 @@ import Foundation
 import MLUI
 
 @objc
-public class MLBusinessBombCongratsAnimatedButton: UIButton {
+public class MLBusinessAnimatedButton: UIButton {
 
-    private var progressView: MLBusinessBombCongratsProgressView?
+    private var progressView: MLBusinessAnimatedButtonProgressView?
     private var animatedView = UIView(frame: .zero)
 
     @objc private let normalLabel: String
     @objc private let loadingLabel: String
 
-    @objc public weak var delegate: MLBusinessBombCongratsAnimatedButtonDelegate?
+    @objc public weak var delegate: MLBusinessAnimatedButtonDelegate?
 
     @objc
     public init(normalLabel: String, loadingLabel: String) {
@@ -44,7 +44,7 @@ public class MLBusinessBombCongratsAnimatedButton: UIButton {
 
     @objc
     public func startLoading(timeOut: TimeInterval = 15.0) {
-        progressView = MLBusinessBombCongratsProgressView(view: self, timeOut: timeOut)
+        progressView = MLBusinessAnimatedButtonProgressView(view: self, timeOut: timeOut)
         progressView?.delegate = self
         setTitle(loadingLabel, for: .normal)
     }
@@ -114,9 +114,11 @@ public class MLBusinessBombCongratsAnimatedButton: UIButton {
                 UIView.animate(withDuration: 0.4, animations: {
                     imageView.alpha = 0
                 }, completion: { [weak self] _ in
-                    self?.superview?.layer.masksToBounds = false
+                    guard let self = self else { return }
+                    self.superview?.layer.masksToBounds = false
+                    self.delegate?.expandAnimationInProgress()
                     UIView.animate(withDuration: 0.5, animations: {
-                        self?.animatedView.transform = CGAffineTransform(scaleX: 50, y: 50)
+                        self.animatedView.transform = CGAffineTransform(scaleX: 50, y: 50)
                     }, completion: { [weak self] _ in
                         guard let self = self else { return }
                         self.delegate?.didFinishAnimation(self)
@@ -128,7 +130,7 @@ public class MLBusinessBombCongratsAnimatedButton: UIButton {
 
 }
 
-extension MLBusinessBombCongratsAnimatedButton: MLBusinessBombCongratsProgressViewDelegate {
+extension MLBusinessAnimatedButton: MLBusinessAnimatedButtonProgressViewDelegate {
     func progressViewTimeOut() {
         delegate?.progressButtonAnimationTimeOut()
     }
