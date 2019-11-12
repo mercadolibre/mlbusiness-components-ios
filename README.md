@@ -577,6 +577,7 @@ This protocol allows you to execute actions once the animation is over and also 
 ```swift
 @objc func didFinishAnimation(_ animatedButton: MLBusinessAnimatedButton)
 @objc func progressButtonAnimationTimeOut()
+@objc optional func expandAnimationInProgress()
 ```
 
 Implementation of `MLBusinessAnimatedButtonDelegate` :
@@ -595,6 +596,10 @@ extension ViewController: MLBusinessAnimatedButtonDelegate {
 
     func progressButtonAnimationTimeOut() {
         print("TimeOut")
+    }
+
+    func expandAnimationInProgress() {
+        navigationController?.setNavigationBarHidden(true, animated: true)
     }
 }
 
