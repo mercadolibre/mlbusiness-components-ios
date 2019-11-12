@@ -530,6 +530,76 @@ final class ItemDescriptionData: NSObject, MLBusinessItemDescriptionData {
 
 ```
 
+## 8️⃣ - MLBusinessAnimatedButton Component
+This component allow you to show a animated button. When you press it, it becomes a circle and then expands across the whole screen.
+#### Visual Example:
+![AnimatedButton](https://user-images.githubusercontent.com/45973176/68676280-7526b580-0538-11ea-83d9-7f91f4825644.gif)
+
+```swift
+/* 
+To implement this component we only need to initialize it with a String for its normal state 
+and another for its load state.
+*/
+
+let animatedButton = MLBusinessAnimatedButton(normalLabel: "Normal", loadingLabel: "Loading")
+containerView.addSubview(animatedButton)
+
+/* 
+Set your constraints. You don't need to set up the HEIGHT contraint. 
+Because this component is responsible for knowing and setting its own HEIGHT.
+*/
+
+NSLayoutConstraint.activate([
+animatedButton.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16),
+animatedButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+animatedButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16)
+])
+
+// To start the animation we must call the method called startLoading().
+animatedButton.startLoading()
+
+/* 
+To end the animation we must call the method called finishLoading(color: UIColor, image: UIImage)
+Where we can set the color with which it will expand
+and an optional image that will be displayed on the button when it becomes circular.
+*/
+animatedButton.finishLoading(color: .green, image: nil)
+
+/*
+Additionally, the component provides us with a function to push the next view controller with a Fade effect.
+*/
+animatedButton.goToNextViewController(newViewController, navigationController)
+```
+### MLBusinessAnimatedButtonDelegate
+This protocol allows you to execute actions once the animation is over and also in the case of a possible time out.
+
+#### Definition
+```swift
+@objc func didFinishAnimation(_ animatedButton: MLBusinessAnimatedButton)
+@objc func progressButtonAnimationTimeOut()
+```
+
+Implementation of `MLBusinessAnimatedButtonDelegate` :
+```swift
+import MLBusinessComponents
+
+extension ViewController: MLBusinessAnimatedButtonDelegate {
+    func didFinishAnimation(_ animatedButton: MLBusinessAnimatedButton) {
+        guard let navigationController = navigationController else { return }
+
+        let newVC = UIViewController()
+        newVC.view.backgroundColor = .red
+
+        animatedButton.goToNextViewController(newVC, navigationController)
+    }
+
+    func progressButtonAnimationTimeOut() {
+        print("TimeOut")
+    }
+}
+
+```
+
 ## 🔠 Font and color customization.
 We use `MLUI` open source library to customize accent colors and font labels. In order to change those values check the documentation of `MLUI` stylesheet protocol.
 https://github.com/mercadolibre/fury_mobile-ios-ui
