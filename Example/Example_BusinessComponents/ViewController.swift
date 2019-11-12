@@ -181,7 +181,7 @@ extension ViewController {
 
 extension ViewController: MLBusinessAnimatedButtonDelegate {
     func expandAnimationInProgress() {
-        
+        navigationController?.setNavigationBarHidden(true, animated: true)
     }
 
     func didFinishAnimation(_ animatedButton: MLBusinessAnimatedButton) {

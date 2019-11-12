@@ -10,5 +10,5 @@ import Foundation
 @objc public protocol MLBusinessAnimatedButtonDelegate: NSObjectProtocol {
     @objc func didFinishAnimation(_ animatedButton: MLBusinessAnimatedButton)
     @objc func progressButtonAnimationTimeOut()
-    @objc func expandAnimationInProgress()
+    @objc optional func expandAnimationInProgress()
 }
