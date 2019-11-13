@@ -116,7 +116,7 @@ public class MLBusinessAnimatedButton: UIButton {
                 }, completion: { [weak self] _ in
                     guard let self = self else { return }
                     self.superview?.layer.masksToBounds = false
-                    self.delegate?.expandAnimationInProgress()
+                    self.delegate?.expandAnimationInProgress?()
                     UIView.animate(withDuration: 0.5, animations: {
                         self.animatedView.transform = CGAffineTransform(scaleX: 50, y: 50)
                     }, completion: { [weak self] _ in
