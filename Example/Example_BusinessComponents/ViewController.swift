@@ -37,8 +37,9 @@ extension ViewController {
         let crossSellingBoxView = setupCrossSellingBoxView(bottomOf: downloadAppView)
         let loyaltyHeaderView = setupLoyaltyHeaderView(bottomOf: crossSellingBoxView)
         let itemDescriptionView = setupItemDescriptionView(bottomOf: loyaltyHeaderView)
+        let animatedButtonView = setupAnimatedButtonView(bottomOf: itemDescriptionView)
         
-        itemDescriptionView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -64).isActive = true
+        animatedButtonView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -64).isActive = true
     }
 
     private func setupRingView() -> MLBusinessLoyaltyRingView {
@@ -146,7 +147,29 @@ extension ViewController {
             ])
         return itemDescriptionView
     }
-    
+
+    private func setupAnimatedButtonView(bottomOf targetView: UIView) -> MLBusinessAnimatedButton {
+        let animatedButtonView = MLBusinessAnimatedButton(normalLabel: "Normal", loadingLabel: "Loading")
+        containerView.addSubview(animatedButtonView)
+        NSLayoutConstraint.activate([
+            animatedButtonView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16),
+            animatedButtonView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            animatedButtonView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16)
+        ])
+        animatedButtonView.addTarget(self, action: #selector(animatedButtonDidTap(_:)), for: .touchUpInside)
+        animatedButtonView.delegate = self
+
+        return animatedButtonView
+    }
+
+    @objc
+    private func animatedButtonDidTap(_ button: MLBusinessAnimatedButton) {
+        button.startLoading()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            button.finishLoading(color: .ml_meli_green(), image: nil)
+        }
+    }
+
 }
 
 extension ViewController {
@@ -154,4 +177,24 @@ extension ViewController {
         ringView?.fillPercentProgressWithAnimation()
         loyaltyHeaderView?.fillPercentProgressWithAnimation()
     }
+}
+
+extension ViewController: MLBusinessAnimatedButtonDelegate {
+    func expandAnimationInProgress() {
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+
+    func didFinishAnimation(_ animatedButton: MLBusinessAnimatedButton) {
+        guard let navigationController = navigationController else { return }
+
+        let newVC = UIViewController()
+        newVC.view.backgroundColor = .red
+
+        animatedButton.goToNextViewController(newVC, navigationController)
+    }
+
+    func progressButtonAnimationTimeOut() {
+        print("TimeOut")
+    }
+
 }
