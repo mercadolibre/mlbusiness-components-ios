@@ -1,6 +1,6 @@
-# Sin Publicar
-🚀 Sin Publicar 🚀
-- First version of Animated Button Component.
+# v1.5
+🚀 1.5 🚀
+- Animated Button Component with Transition.
 
 # v1.4.1
 - Modified font size of discount box.
