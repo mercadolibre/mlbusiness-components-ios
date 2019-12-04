@@ -80,7 +80,7 @@ private extension MLBusinessDiscountBoxView {
         titleLabel.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.M_FONT)
         titleLabel.applyBusinessLabelStyle()
         titleLabel.textAlignment = .center
-        titleLabel.numberOfLines = 1
+        titleLabel.numberOfLines = 2
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: self.topAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: UI.Margin.S_MARGIN),
@@ -128,7 +128,12 @@ private extension MLBusinessDiscountBoxView {
         if let _ = viewData?.getTitle?(), viewData?.getSubtitle?() == nil {
             tableViewTopConstraint.constant = UI.Margin.XM_MARGIN + UI.Margin.L_MARGIN
         } else if let _ = viewData?.getTitle?(), let _ = viewData?.getSubtitle?() {
-            tableViewTopConstraint.constant = UI.Margin.XM_MARGIN * 2 + UI.Margin.L_MARGIN
+            let numberOfLines = titleLabel.actualNumberOfLines(marginWidth: UI.Margin.S_MARGIN)
+            if numberOfLines > 0 {
+                tableViewTopConstraint.constant = UI.Margin.XM_MARGIN * 3 + UI.Margin.L_MARGIN
+            } else {
+                tableViewTopConstraint.constant = UI.Margin.XM_MARGIN * 2 + UI.Margin.L_MARGIN
+            }
         } else {
             tableViewTopConstraint.constant = 0
         }
