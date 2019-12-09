@@ -129,7 +129,7 @@ private extension MLBusinessDiscountBoxView {
             tableViewTopConstraint.constant = UI.Margin.XM_MARGIN + UI.Margin.L_MARGIN
         } else if let _ = viewData?.getTitle?(), let _ = viewData?.getSubtitle?() {
             let numberOfLines = titleLabel.actualNumberOfLines(marginWidth: UI.Margin.S_MARGIN)
-            if numberOfLines > 0 {
+            if numberOfLines > 1 {
                 tableViewTopConstraint.constant = UI.Margin.XM_MARGIN * 3 + UI.Margin.L_MARGIN
             } else {
                 tableViewTopConstraint.constant = UI.Margin.XM_MARGIN * 2 + UI.Margin.L_MARGIN
