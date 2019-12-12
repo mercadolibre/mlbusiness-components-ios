@@ -30,7 +30,7 @@ open class MLBusinessDownloadAppView: UIView {
     private let appIconImageHeight: CGFloat = 24
     private let appIconImageWidth: CGFloat = 34
     private let downloadButtonHeight: CGFloat = 34
-    private let downloadButtonWidth: CGFloat = 101
+    private let downloadButtonWidth: CGFloat = 95
     private let minWidthSizeConstraint: CGFloat = 320
 
     // Init
@@ -96,7 +96,7 @@ extension MLBusinessDownloadAppView {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(titleLabel)
         titleLabel.text = viewData.getTitle()
-        titleLabel.font = UIFont.ml_regularSystemFont(ofSize: UI.FontSize.XS_FONT)
+        titleLabel.font = UIFont.ml_lightSystemFont(ofSize: UI.FontSize.XXS_FONT)
         titleLabel.applyBusinessLabelStyle()
         titleLabel.numberOfLines = 2
         NSLayoutConstraint.activate([
@@ -112,8 +112,7 @@ extension MLBusinessDownloadAppView {
         self.addSubview(downloadButton)
         downloadButton.layer.cornerRadius = 6
         downloadButton.setTitle(viewData.getButtonTitle(), for: .normal)
-        downloadButton.titleLabel?.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.XS_FONT)
-        downloadButton.sizeToFit()
+        downloadButton.titleLabel?.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.XXS_FONT)
         NSLayoutConstraint.activate([
             downloadButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             downloadButton.leftAnchor.constraint(equalTo: targetView.rightAnchor, constant: UI.Margin.S_MARGIN),
