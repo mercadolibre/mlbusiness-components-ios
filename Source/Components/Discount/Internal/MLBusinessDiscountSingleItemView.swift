@@ -11,13 +11,14 @@ import UIKit
 import MLUI
 
 final class MLBusinessDiscountSingleItemView: UIView {
-    static let itemHeight: CGFloat = 104
+    static let itemHeight: CGFloat = 128
     static let iconImageSize: CGFloat = 56
     private let iconCornerRadius: CGFloat = 28
     private let discountSingleItem: MLBusinessSingleItemProtocol
     private var itemIndex: Int = 0
     private var itemSection: Int = 0
-
+    private var itemHeightMargin: CGFloat = 12
+    
     weak var delegate: MLBusinessUserInteractionProtocol?
 
     init(discountSingleItem: MLBusinessSingleItemProtocol, itemIndex: Int, itemSection: Int) {
@@ -42,6 +43,8 @@ extension MLBusinessDiscountSingleItemView {
 
     private func render() {
         self.backgroundColor = .white
+        self.layer.cornerRadius = 6
+        
         let icon: UIImageView = UIImageView()
         icon.prepareForAutolayout(.clear)
         icon.setRemoteImage(imageUrl: discountSingleItem.iconImageUrlForItem(), placeHolderRadius: iconCornerRadius, success: { [weak self] _ in
@@ -56,7 +59,7 @@ extension MLBusinessDiscountSingleItemView {
         NSLayoutConstraint.activate([
             icon.heightAnchor.constraint(equalToConstant: MLBusinessDiscountSingleItemView.iconImageSize),
             icon.widthAnchor.constraint(equalToConstant: MLBusinessDiscountSingleItemView.iconImageSize),
-            icon.topAnchor.constraint(equalTo: self.topAnchor),
+            icon.topAnchor.constraint(equalTo: self.topAnchor, constant: itemHeightMargin),
             icon.centerXAnchor.constraint(equalTo: self.centerXAnchor)
         ])
 
@@ -86,15 +89,23 @@ extension MLBusinessDiscountSingleItemView {
             itemSubtitle.topAnchor.constraint(equalTo: itemTitle.bottomAnchor),
             itemSubtitle.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             itemSubtitle.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            itemSubtitle.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            itemSubtitle.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -itemHeightMargin)
         ])
 
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.didTapOnButton))
+        let tapGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.didTapOnButton))
+        tapGesture.minimumPressDuration = 0
         self.addGestureRecognizer(tapGesture)
     }
 
     // MARK: Tap Selector
-    @objc private func didTapOnButton() {
-        delegate?.didTap(item: discountSingleItem, index: itemIndex, section: itemSection)
+    @objc private func didTapOnButton(gesture: UITapGestureRecognizer) {
+        if(gesture.state == UITapGestureRecognizer.State.began){
+            self.backgroundColor = UIColor(red:0.96, green:0.96, blue:0.96, alpha:1.0)
+            delegate?.didTap(item: discountSingleItem, index: itemIndex, section: itemSection)
+        } else if (gesture.state == UITapGestureRecognizer.State.ended){
+            self.backgroundColor = .white
+            delegate?.didTap(item: discountSingleItem, index: itemIndex, section: itemSection)
+        }
     }
+
 }

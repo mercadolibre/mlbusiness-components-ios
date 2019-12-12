@@ -13,7 +13,7 @@ import MLUI
 open class MLBusinessDiscountBoxView: UIView {
     // Constants
     private var itemsPerRow: Int = 3
-    internal let rowSeparationOffset: CGFloat = UI.Margin.L_MARGIN
+    internal let rowSeparationOffset: CGFloat = 2
 
     // Vars
     private var maxAllowedNumberOfItems = 6 {
