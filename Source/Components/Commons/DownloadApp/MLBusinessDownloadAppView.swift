@@ -100,7 +100,6 @@ extension MLBusinessDownloadAppView {
         titleLabel.applyBusinessLabelStyle()
         titleLabel.numberOfLines = 2
         NSLayoutConstraint.activate([
-            titleLabel.widthAnchor.constraint(equalToConstant: 260),
             titleLabel.centerYAnchor.constraint(equalTo: targetView.centerYAnchor)
         ])
         return titleLabel
