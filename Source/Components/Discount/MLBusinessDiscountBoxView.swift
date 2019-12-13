@@ -72,6 +72,7 @@ private extension MLBusinessDiscountBoxView {
 
         tableView.register(MLBusinessDiscountTableViewCell.self, forCellReuseIdentifier: MLBusinessDiscountTableViewCell.cellIdentifier)
         addSubview(tableView)
+        tableViewTopConstraint = tableView.topAnchor.constraint(equalTo: self.topAnchor)
         tableViewHeightConstraint = tableView.heightAnchor.constraint(equalToConstant: getTableViewHeight())
 
         titleLabel.prepareForAutolayout(.clear)
@@ -98,9 +99,9 @@ private extension MLBusinessDiscountBoxView {
             subtitleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -UI.Margin.S_MARGIN)
         ])
 
-        if viewData?.getTitle?() == nil && viewData?.getSubtitle?() == nil {
-            tableViewTopConstraint = tableView.topAnchor.constraint(equalTo: self.topAnchor)
-        } else {
+        if viewData?.getTitle?() != nil && viewData?.getSubtitle?() == nil {
+            tableViewTopConstraint = tableView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: UI.Margin.L_MARGIN)
+        } else if viewData?.getTitle?() != nil && viewData?.getSubtitle?() != nil {
             tableViewTopConstraint = tableView.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: UI.Margin.L_MARGIN)
         }
         
