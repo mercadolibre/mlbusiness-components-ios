@@ -19,6 +19,12 @@ public class MLBusinessAnimatedButton: UIButton {
 
     @objc public weak var delegate: MLBusinessAnimatedButtonDelegate?
 
+    public override var isEnabled: Bool {
+        didSet {
+            backgroundColor = self.isEnabled ? MLStyleSheetManager.styleSheet.secondaryColor : MLStyleSheetManager.styleSheet.lightGreyColor
+        }
+    }
+
     @objc
     public init(normalLabel: String, loadingLabel: String) {
         self.normalLabel = normalLabel
@@ -36,6 +42,8 @@ public class MLBusinessAnimatedButton: UIButton {
         translatesAutoresizingMaskIntoConstraints = false
         heightAnchor.constraint(equalToConstant: 48).isActive = true
         setTitle(normalLabel, for: .normal)
+        setTitleColor(MLStyleSheetManager.styleSheet.whiteColor, for: .normal)
+        setTitleColor(MLStyleSheetManager.styleSheet.greyColor, for: .disabled)
         layer.cornerRadius = 4
         backgroundColor = MLStyleSheetManager.styleSheet.secondaryColor
         layer.borderColor = MLStyleSheetManager.styleSheet.secondaryColor.cgColor
