@@ -80,7 +80,7 @@ private extension MLBusinessDiscountBoxView {
         titleLabel.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.M_FONT)
         titleLabel.applyBusinessLabelStyle()
         titleLabel.textAlignment = .center
-        titleLabel.numberOfLines = 1
+        titleLabel.numberOfLines = 2
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: self.topAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: UI.Margin.S_MARGIN),
@@ -99,6 +99,12 @@ private extension MLBusinessDiscountBoxView {
             subtitleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -UI.Margin.S_MARGIN)
         ])
 
+        if viewData?.getTitle?() != nil && viewData?.getSubtitle?() == nil {
+            tableViewTopConstraint = tableView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: UI.Margin.L_MARGIN)
+        } else if viewData?.getTitle?() != nil && viewData?.getSubtitle?() != nil {
+            tableViewTopConstraint = tableView.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: UI.Margin.L_MARGIN)
+        }
+        
         NSLayoutConstraint.activate([
             tableViewTopConstraint,
             tableView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -106,7 +112,6 @@ private extension MLBusinessDiscountBoxView {
             tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             tableViewHeightConstraint
         ])
-        updateBoxConstraints()
     }
 
     private func updateModels(_ newData: MLBusinessDiscountBoxData?) {
@@ -119,19 +124,7 @@ private extension MLBusinessDiscountBoxView {
     private func updateUI() {
         titleLabel.text = viewData?.getTitle?()
         subtitleLabel.text = titleLabel.text != nil ? viewData?.getSubtitle?() : nil
-        updateBoxConstraints()
         tableView.reloadData()
-    }
-
-    private func updateBoxConstraints() {
-        tableViewHeightConstraint.constant = getTableViewHeight()
-        if let _ = viewData?.getTitle?(), viewData?.getSubtitle?() == nil {
-            tableViewTopConstraint.constant = UI.Margin.XM_MARGIN + UI.Margin.L_MARGIN
-        } else if let _ = viewData?.getTitle?(), let _ = viewData?.getSubtitle?() {
-            tableViewTopConstraint.constant = UI.Margin.XM_MARGIN * 2 + UI.Margin.L_MARGIN
-        } else {
-            tableViewTopConstraint.constant = 0
-        }
     }
 }
 
