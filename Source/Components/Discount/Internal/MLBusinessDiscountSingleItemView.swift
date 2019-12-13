@@ -18,13 +18,15 @@ final class MLBusinessDiscountSingleItemView: UIView {
     private var itemIndex: Int = 0
     private var itemSection: Int = 0
     private var itemHeightMargin: CGFloat = 12
+    private var shouldShowAnimationOnTap: Bool = true
     
     weak var delegate: MLBusinessUserInteractionProtocol?
 
-    init(discountSingleItem: MLBusinessSingleItemProtocol, itemIndex: Int, itemSection: Int) {
+    init(discountSingleItem: MLBusinessSingleItemProtocol, itemIndex: Int, itemSection: Int, shouldShowAnimationOnTap: Bool? = true) {
         self.discountSingleItem = discountSingleItem
         self.itemIndex = itemIndex
         self.itemSection = itemSection
+        self.shouldShowAnimationOnTap = shouldShowAnimationOnTap ?? true
         super.init(frame: .zero)
         render()
     }
@@ -100,7 +102,9 @@ extension MLBusinessDiscountSingleItemView {
     // MARK: Tap Selector
     @objc private func didTapOnButton(gesture: UITapGestureRecognizer) {
         if(gesture.state == UITapGestureRecognizer.State.began){
-            self.backgroundColor = UIColor(red:0.96, green:0.96, blue:0.96, alpha:1.0)
+            if(self.shouldShowAnimationOnTap) {
+                self.backgroundColor = UIColor(red:0.96, green:0.96, blue:0.96, alpha:1.0)
+            }
             delegate?.didTap(item: discountSingleItem, index: itemIndex, section: itemSection)
         } else if (gesture.state == UITapGestureRecognizer.State.ended){
             self.backgroundColor = .white

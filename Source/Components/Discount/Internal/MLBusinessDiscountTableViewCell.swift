@@ -35,11 +35,11 @@ final class MLBusinessDiscountTableViewCell: UITableViewCell {
 
 // MARK: Setup Cell.
 extension MLBusinessDiscountTableViewCell {
-    func setupCell(discountItems: [MLBusinessSingleItemProtocol], interactionDelegate: MLBusinessUserInteractionProtocol? = nil, section: Int) {
+    func setupCell(discountItems: [MLBusinessSingleItemProtocol], interactionDelegate: MLBusinessUserInteractionProtocol? = nil, section: Int, shouldShowAnimationOnTaps: Bool) {
         clearStackView()
         self.section = section
         delegate = interactionDelegate
-        updateStackView(discountItems)
+        updateStackView(discountItems, shouldShowAnimationOnTap: shouldShowAnimationOnTaps)
     }
 }
 
@@ -62,11 +62,11 @@ extension MLBusinessDiscountTableViewCell {
         stackViewTrailingConstraint?.isActive = true
     }
 
-    private func updateStackView(_ items: [MLBusinessSingleItemProtocol]) {
+    private func updateStackView(_ items: [MLBusinessSingleItemProtocol], shouldShowAnimationOnTap: Bool) {
         updateStackViewConstraints(items)
         var currentIndex = 0
         for item in items {
-            let itemView = MLBusinessDiscountSingleItemView(discountSingleItem: item, itemIndex: currentIndex, itemSection: section)
+            let itemView = MLBusinessDiscountSingleItemView(discountSingleItem: item, itemIndex: currentIndex, itemSection: section, shouldShowAnimationOnTap: shouldShowAnimationOnTap)
             currentIndex = currentIndex + 1
             itemView.delegate = self
             stackView.addArrangedSubview(itemView)

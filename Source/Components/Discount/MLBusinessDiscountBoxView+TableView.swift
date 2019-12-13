@@ -20,7 +20,7 @@ extension MLBusinessDiscountBoxView: UITableViewDelegate, UITableViewDataSource 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let itemsData: [MLBusinessSingleItemProtocol] = getItems(indexPath.section)
         if let dequeueCell = tableView.dequeueReusableCell(withIdentifier: MLBusinessDiscountTableViewCell.cellIdentifier, for: indexPath) as? MLBusinessDiscountTableViewCell {
-            dequeueCell.setupCell(discountItems: itemsData, interactionDelegate: self, section: indexPath.section)
+            dequeueCell.setupCell(discountItems: itemsData, interactionDelegate: self, section: indexPath.section, shouldShowAnimationOnTaps: self.showAnimationWhenAnItemIsTapped)
             return dequeueCell
         }
         return UITableViewCell()
