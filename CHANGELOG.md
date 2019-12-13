@@ -1,3 +1,7 @@
+# v1.5.1
+🚀 1.5.1 🚀
+- Animated Button disabled state
+
 # v1.5
 🚀 1.5 🚀
 - Animated Button Component with Transition.

@@ -111,7 +111,7 @@ extension MLBusinessDownloadAppView {
         self.addSubview(downloadButton)
         downloadButton.layer.cornerRadius = 6
         downloadButton.setTitle(viewData.getButtonTitle(), for: .normal)
-        downloadButton.titleLabel?.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.XXS_FONT)
+        downloadButton.titleLabel?.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.XS_FONT)
         NSLayoutConstraint.activate([
             downloadButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             downloadButton.leftAnchor.constraint(equalTo: targetView.rightAnchor, constant: UI.Margin.S_MARGIN),
