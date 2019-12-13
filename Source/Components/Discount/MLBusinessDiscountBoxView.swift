@@ -28,7 +28,6 @@ open class MLBusinessDiscountBoxView: UIView {
             updateUI()
         }
     }
-    public var showAnimationWhenAnItemIsTapped: Bool = true
 
     // UI Elements
     private let tableView = UITableView()
@@ -178,10 +177,6 @@ extension MLBusinessDiscountBoxView {
     
     @objc open func addTapAction(_ action: ((_ index: Int, _ deepLink: String?, _ trackId: String?) -> Void)?) {
         self.tapAction = action
-    }
-    
-    @objc open func showAnimationOnTap(showAnimationWhenAnItemIsTapped: Bool) {
-        self.showAnimationWhenAnItemIsTapped = showAnimationWhenAnItemIsTapped
     }
     
 }
