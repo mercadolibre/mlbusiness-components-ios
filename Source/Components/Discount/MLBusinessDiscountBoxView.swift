@@ -14,7 +14,7 @@ open class MLBusinessDiscountBoxView: UIView {
     // Constants
     private var itemsPerRow: Int = 3
     internal let rowSeparationOffset: CGFloat = 2
-    
+
     // Vars
     private var maxAllowedNumberOfItems = 6 {
         didSet {
@@ -167,9 +167,7 @@ extension MLBusinessDiscountBoxView: MLBusinessUserInteractionProtocol {
 
 // MARK: Public Methods.
 extension MLBusinessDiscountBoxView {
-    
     @objc open func addTapAction(_ action: ((_ index: Int, _ deepLink: String?, _ trackId: String?) -> Void)?) {
         self.tapAction = action
     }
-    
 }
