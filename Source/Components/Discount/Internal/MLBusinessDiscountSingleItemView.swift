@@ -62,6 +62,22 @@ extension MLBusinessDiscountSingleItemView {
             icon.topAnchor.constraint(equalTo: self.topAnchor, constant: itemHeightMargin),
             icon.centerXAnchor.constraint(equalTo: self.centerXAnchor)
         ])
+        
+        
+        let iconDimmer: UIView = UIView()
+        iconDimmer.prepareForAutolayout(.clear)
+        iconDimmer.layer.cornerRadius = 28
+        iconDimmer.backgroundColor = UIColor(white: 0, alpha: 0.04)
+        
+        self.addSubview(iconDimmer)
+        iconDimmer.contentMode = .scaleAspectFill
+        NSLayoutConstraint.activate([
+            iconDimmer.heightAnchor.constraint(equalToConstant: MLBusinessDiscountSingleItemView.iconImageSize),
+            iconDimmer.widthAnchor.constraint(equalToConstant: MLBusinessDiscountSingleItemView.iconImageSize),
+            iconDimmer.topAnchor.constraint(equalTo: self.topAnchor, constant: itemHeightMargin),
+            iconDimmer.centerXAnchor.constraint(equalTo: self.centerXAnchor)
+            ])
+        
 
         let itemTitle = UILabel()
         itemTitle.prepareForAutolayout(.clear)
