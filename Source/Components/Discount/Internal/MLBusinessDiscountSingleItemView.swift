@@ -89,6 +89,18 @@ extension MLBusinessDiscountSingleItemView {
             itemSubtitle.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
 
+        let iconOverlay: UIView = UIView(frame: .zero)
+        iconOverlay.prepareForAutolayout(MLStyleSheetManager.styleSheet.blackColor.withAlphaComponent(0.04))
+        iconOverlay.layer.cornerRadius = iconCornerRadius
+        iconOverlay.layer.masksToBounds = true
+        self.addSubview(iconOverlay)
+        NSLayoutConstraint.activate([
+            iconOverlay.heightAnchor.constraint(equalToConstant: MLBusinessDiscountSingleItemView.iconImageSize),
+            iconOverlay.widthAnchor.constraint(equalToConstant: MLBusinessDiscountSingleItemView.iconImageSize),
+            iconOverlay.topAnchor.constraint(equalTo: self.topAnchor),
+            iconOverlay.centerXAnchor.constraint(equalTo: self.centerXAnchor)
+            ])
+
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.didTapOnButton))
         self.addGestureRecognizer(tapGesture)
     }
