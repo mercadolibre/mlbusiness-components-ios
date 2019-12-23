@@ -30,7 +30,8 @@ internal extension UIImageView {
                     #if DEBUG
                     print("Retrieve image from Network")
                     #endif
-                    DispatchQueue.main.async {
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else { return }
                         UIView.transition(with: self, duration: 0.3, options: .transitionCrossDissolve, animations: { [weak self] in
                             DispatchQueue.main.async { [weak self] in
                                 guard let self = self else { return }
