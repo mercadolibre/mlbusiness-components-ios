@@ -125,8 +125,10 @@ private extension MLBusinessDiscountBoxView {
         titleLabel.text = viewData?.getTitle?()
         subtitleLabel.text = titleLabel.text != nil ? viewData?.getSubtitle?() : nil
         tableView.reloadData()
-        tableView.layoutIfNeeded()
-        tableViewHeightConstraint.constant = self.tableView.contentSize.height
+        DispatchQueue.main.async(execute: {
+            self.tableView.layoutIfNeeded()
+            self.tableViewHeightConstraint.constant = self.tableView.contentSize.height
+        })
     }
 }
 
