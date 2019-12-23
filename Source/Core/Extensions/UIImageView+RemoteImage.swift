@@ -33,13 +33,12 @@ internal extension UIImageView {
                     DispatchQueue.main.async { [weak self] in
                         guard let self = self else { return }
                         UIView.transition(with: self, duration: 0.3, options: .transitionCrossDissolve, animations: { [weak self] in
-                            DispatchQueue.main.async { [weak self] in
-                                guard let self = self else { return }
-                                self.backgroundColor = .clear
-                                self.layer.cornerRadius = 0
-                                self.image = image
-                            }}, completion: { _ in
-                                success?(image)
+                            guard let self = self else { return }
+                            self.backgroundColor = .clear
+                            self.layer.cornerRadius = 0
+                            self.image = image
+                        }, completion: { _ in
+                            success?(image)
                         })
                     }
                 }
