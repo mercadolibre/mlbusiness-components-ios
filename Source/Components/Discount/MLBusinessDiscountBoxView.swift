@@ -125,9 +125,10 @@ private extension MLBusinessDiscountBoxView {
         titleLabel.text = viewData?.getTitle?()
         subtitleLabel.text = titleLabel.text != nil ? viewData?.getSubtitle?() : nil
         tableView.reloadData()
-        DispatchQueue.main.async(execute: {
-            self.tableView.layoutIfNeeded()
-            self.tableViewHeightConstraint.constant = self.tableView.contentSize.height
+        DispatchQueue.main.async(execute: { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.tableView.layoutIfNeeded()
+            strongSelf.tableViewHeightConstraint.constant = strongSelf.tableView.contentSize.height
         })
     }
 }
@@ -152,9 +153,8 @@ internal extension MLBusinessDiscountBoxView {
         let numberOfRows: Int = getNumbersOfRows(discountItems.count)
         if numberOfRows > 0 {
             return CGFloat(numberOfRows) * MLBusinessDiscountSingleItemView.itemHeight + CGFloat(numberOfRows - 1) * rowSeparationOffset
-        } else {
-            return 0
         }
+        return 0
     }
 
     class func getNumberOfItemsPerRow(_ discountItems: [MLBusinessSingleItemProtocol]) -> Int {
