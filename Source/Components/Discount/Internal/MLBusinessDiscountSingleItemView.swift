@@ -62,22 +62,6 @@ extension MLBusinessDiscountSingleItemView {
             icon.topAnchor.constraint(equalTo: self.topAnchor, constant: itemHeightMargin),
             icon.centerXAnchor.constraint(equalTo: self.centerXAnchor)
         ])
-        
-        
-        let iconDimmer: UIView = UIView()
-        iconDimmer.prepareForAutolayout(.clear)
-        iconDimmer.layer.cornerRadius = 28
-        iconDimmer.backgroundColor = UIColor(white: 0, alpha: 0.04)
-        
-        self.addSubview(iconDimmer)
-        iconDimmer.contentMode = .scaleAspectFill
-        NSLayoutConstraint.activate([
-            iconDimmer.heightAnchor.constraint(equalToConstant: MLBusinessDiscountSingleItemView.iconImageSize),
-            iconDimmer.widthAnchor.constraint(equalToConstant: MLBusinessDiscountSingleItemView.iconImageSize),
-            iconDimmer.topAnchor.constraint(equalTo: self.topAnchor, constant: itemHeightMargin),
-            iconDimmer.centerXAnchor.constraint(equalTo: self.centerXAnchor)
-            ])
-        
 
         let itemTitle = UILabel()
         itemTitle.prepareForAutolayout(.clear)
@@ -107,6 +91,18 @@ extension MLBusinessDiscountSingleItemView {
             itemSubtitle.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             itemSubtitle.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -itemHeightMargin)
         ])
+
+        let iconOverlay: UIView = UIView(frame: .zero)
+        iconOverlay.prepareForAutolayout(MLStyleSheetManager.styleSheet.blackColor.withAlphaComponent(0.04))
+        iconOverlay.layer.cornerRadius = iconCornerRadius
+        iconOverlay.layer.masksToBounds = true
+        self.addSubview(iconOverlay)
+        NSLayoutConstraint.activate([
+            iconOverlay.heightAnchor.constraint(equalToConstant: MLBusinessDiscountSingleItemView.iconImageSize),
+            iconOverlay.widthAnchor.constraint(equalToConstant: MLBusinessDiscountSingleItemView.iconImageSize),
+            iconOverlay.topAnchor.constraint(equalTo: self.topAnchor),
+            iconOverlay.centerXAnchor.constraint(equalTo: self.centerXAnchor)
+            ])
 
         let tapGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.didTapOnButton))
         tapGesture.minimumPressDuration = 0
