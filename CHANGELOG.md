@@ -1,5 +1,5 @@
-# v1.5.2
-🚀 1.5.2 🚀
+# v1.6
+🚀 1.6 🚀
 - Overlay discount single item
 
 # v1.5.1
