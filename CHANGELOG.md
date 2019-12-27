@@ -1,3 +1,7 @@
+# v1.5.2
+🚀 1.5.2 🚀
+- Overlay discount single item
+
 # v1.5.1
 🚀 1.5.1 🚀
 - Animated Button disabled state
