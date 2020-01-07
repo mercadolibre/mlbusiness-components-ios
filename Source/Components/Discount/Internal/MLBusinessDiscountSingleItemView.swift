@@ -93,14 +93,15 @@ extension MLBusinessDiscountSingleItemView {
         ])
 
         let iconOverlay: UIView = UIView(frame: .zero)
-        iconOverlay.prepareForAutolayout(MLStyleSheetManager.styleSheet.blackColor.withAlphaComponent(0.04))
+        iconOverlay.prepareForAutolayout(.clear)
         iconOverlay.layer.cornerRadius = iconCornerRadius
+        iconOverlay.layer.backgroundColor = UIColor(white: 0, alpha: 0.04).cgColor
         iconOverlay.layer.masksToBounds = true
         self.addSubview(iconOverlay)
         NSLayoutConstraint.activate([
             iconOverlay.heightAnchor.constraint(equalToConstant: MLBusinessDiscountSingleItemView.iconImageSize),
             iconOverlay.widthAnchor.constraint(equalToConstant: MLBusinessDiscountSingleItemView.iconImageSize),
-            iconOverlay.topAnchor.constraint(equalTo: self.topAnchor),
+            iconOverlay.topAnchor.constraint(equalTo: self.topAnchor, constant: itemHeightMargin),
             iconOverlay.centerXAnchor.constraint(equalTo: self.centerXAnchor)
             ])
 
@@ -111,14 +112,13 @@ extension MLBusinessDiscountSingleItemView {
 
     // MARK: Tap Selector
     @objc private func didTapOnButton(gesture: UITapGestureRecognizer) {
-        if(gesture.state == UITapGestureRecognizer.State.began){
-            if(self.discountSingleItem.deepLinkForItem() != nil) {
+        if gesture.state == UITapGestureRecognizer.State.began {
+            if self.discountSingleItem.deepLinkForItem() != nil {
                 self.backgroundColor = UIColor(red:0.96, green:0.96, blue:0.96, alpha:1.0)
             }
             delegate?.didTap(item: discountSingleItem, index: itemIndex, section: itemSection)
-        } else if (gesture.state == UITapGestureRecognizer.State.ended){
+        } else if gesture.state == UITapGestureRecognizer.State.ended {
             self.backgroundColor = .white
-            delegate?.didTap(item: discountSingleItem, index: itemIndex, section: itemSection)
         }
     }
 
