@@ -105,21 +105,29 @@ extension MLBusinessDiscountSingleItemView {
             iconOverlay.centerXAnchor.constraint(equalTo: self.centerXAnchor)
             ])
 
-        let tapGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.didTapOnButton))
-        tapGesture.minimumPressDuration = 0
+        let longTapGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.didTapOnButton))
+        longTapGesture.minimumPressDuration = 0.2
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.callTapAction))
+        
+        self.addGestureRecognizer(longTapGesture)
         self.addGestureRecognizer(tapGesture)
     }
-
+    
     // MARK: Tap Selector
     @objc private func didTapOnButton(gesture: UITapGestureRecognizer) {
         if gesture.state == UITapGestureRecognizer.State.began {
             if self.discountSingleItem.deepLinkForItem() != nil {
                 self.backgroundColor = UIColor(red:0.96, green:0.96, blue:0.96, alpha:1.0)
             }
-            delegate?.didTap(item: discountSingleItem, index: itemIndex, section: itemSection)
         } else if gesture.state == UITapGestureRecognizer.State.ended {
             self.backgroundColor = .white
-        }
+            delegate?.didTap(item: discountSingleItem, index: itemIndex, section: itemSection)
+        } 
+    }
+    
+    @objc private func callTapAction(gesture: UITapGestureRecognizer) {
+        delegate?.didTap(item: discountSingleItem, index: itemIndex, section: itemSection)
     }
 
 }
