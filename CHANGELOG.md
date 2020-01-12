@@ -1,3 +1,7 @@
+# v1.7
+🚀 1.7 🚀
+- Change background color and changes in tappable area.
+
 # v1.6
 🚀 1.6 🚀
 - Overlay discount single item
