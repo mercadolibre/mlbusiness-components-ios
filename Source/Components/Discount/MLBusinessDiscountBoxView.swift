@@ -119,13 +119,14 @@ private extension MLBusinessDiscountBoxView {
         viewData = data
         itemsPerRow = MLBusinessDiscountBoxView.getNumberOfItemsPerRow(discountItems)
         discountItems = data.getItems().count > maxAllowedNumberOfItems ? Array(data.getItems()[0...maxAllowedNumberOfItems - 1]) : data.getItems()
-        
-        if let trackingProvider = viewData?.getDiscountTracker?() {
-            trackingProvider.track(action: "show", eventData: getEventdataFrom(discountItems: discountItems))
+        let eventData = getEventDataFrom(discountItems: discountItems)
+
+        if let trackingProvider = viewData?.getDiscountTracker?(), eventData.count > 0 {
+            trackingProvider.track(action: "show", eventData: eventData)
         }
     }
     
-    private func getEventdataFrom(discountItems: [MLBusinessSingleItemProtocol]) -> [[String:Any]] {
+    private func getEventDataFrom(discountItems: [MLBusinessSingleItemProtocol]) -> [[String:Any]] {
         var eventData = [[String:Any]]()
         for discountItem in discountItems {
             if let eventDataForItem = discountItem.eventDataForItem() {
