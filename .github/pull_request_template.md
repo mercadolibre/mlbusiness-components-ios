@@ -17,10 +17,10 @@
 
 ### Checklist
 - [ ] Chequeado con el equipo de central de descuentos (Obligatorio)
-- [ ] Probé la biblioteca en PX
-- [ ] Probé la biblioteca en Mercado Pago
-- [ ] Probé la biblioteca en Mercado Libre
-- [ ] Modifiqué el [changelog](https://github.com/mercadolibre/mlbusiness-components-android/blob/master/CHANGELOG.md)
+- [ ] Probé la biblioteca en PX (Obligatorio)
+- [ ] Probé la biblioteca en Mercado Pago (Obligatorio)
+- [ ] Probé la biblioteca en Mercado Libre (Obligatorio)
+- [ ] Modifiqué el [changelog](https://github.com/mercadolibre/mlbusiness-components-ios/blob/master/CHANGELOG.md)
 
 ## Aclaraciones importantes
 **Quien crea el PR, es el responsable de regresionar los modulos afectados**
