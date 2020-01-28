@@ -16,6 +16,7 @@
 [Si aplica, adjuntar screenshots en un solo idioma donde se vea el flujo completo]
 
 ### Checklist
+- [ ] Chequeado con el equipo de central de descuentos (Obligatorio)
 - [ ] Probé la biblioteca en PX
 - [ ] Probé la biblioteca en Mercado Pago
 - [ ] Probé la biblioteca en Mercado Libre
