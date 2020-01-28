@@ -119,6 +119,20 @@ private extension MLBusinessDiscountBoxView {
         viewData = data
         itemsPerRow = MLBusinessDiscountBoxView.getNumberOfItemsPerRow(discountItems)
         discountItems = data.getItems().count > maxAllowedNumberOfItems ? Array(data.getItems()[0...maxAllowedNumberOfItems - 1]) : data.getItems()
+        
+        if let trackingProvider = viewData?.getDiscountTracker?() {
+            trackingProvider.track(action: "show", eventData: getEventdataFrom(discountItems: discountItems))
+        }
+    }
+    
+    private func getEventdataFrom(discountItems: [MLBusinessSingleItemProtocol]) -> [[String:Any]] {
+        var eventData = [[String:Any]]()
+        for discountItem in discountItems {
+            if let eventDataForItem = discountItem.eventDataForItem() {
+                eventData.append(eventDataForItem)
+            }
+        }
+        return eventData
     }
 
     private func updateUI() {
@@ -169,6 +183,10 @@ extension MLBusinessDiscountBoxView: MLBusinessUserInteractionProtocol {
             tapAction?(index, item.deepLinkForItem(), item.trackIdForItem())
         } else {
             tapAction?(itemsPerRow + index, item.deepLinkForItem(), item.trackIdForItem())
+        }
+        
+        if let trackingProvider = viewData?.getDiscountTracker?(), let eventDataForItem = item.eventDataForItem() {
+            trackingProvider.track(action: "tap", eventData: [eventDataForItem])
         }
     }
 }

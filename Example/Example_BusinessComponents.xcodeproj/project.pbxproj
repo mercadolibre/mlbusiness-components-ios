@@ -18,7 +18,8 @@
 		23EE407A2326BA33001322EC /* LoyaltyRingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE40782326BA33001322EC /* LoyaltyRingData.swift */; };
 		23EE407B2326BA33001322EC /* DiscountData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE40792326BA33001322EC /* DiscountData.swift */; };
 		23EE408023297CF8001322EC /* SingleItemData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE407F23297CF8001322EC /* SingleItemData.swift */; };
-		66D18E80EBDE544CA2CA4B9B /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		33765CDC23E0B60600909EC7 /* DiscountTrackerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33765CDB23E0B60600909EC7 /* DiscountTrackerData.swift */; };
+		66D18E80EBDE544CA2CA4B9B /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		CEE9F37C232FD72F0000C9CA /* DownloadAppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE9F37B232FD72F0000C9CA /* DownloadAppData.swift */; };
 		CEE9F390233062880000C9CA /* CrossSellingBoxData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE9F38F233062880000C9CA /* CrossSellingBoxData.swift */; };
 		F71E699B5871AF8878117D8F /* Pods_Example_BusinessComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70705FCCEC04254552DE2C7D /* Pods_Example_BusinessComponents.framework */; };
@@ -39,6 +40,7 @@
 		23EE40782326BA33001322EC /* LoyaltyRingData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoyaltyRingData.swift; sourceTree = "<group>"; };
 		23EE40792326BA33001322EC /* DiscountData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscountData.swift; sourceTree = "<group>"; };
 		23EE407F23297CF8001322EC /* SingleItemData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleItemData.swift; sourceTree = "<group>"; };
+		33765CDB23E0B60600909EC7 /* DiscountTrackerData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscountTrackerData.swift; sourceTree = "<group>"; };
 		70705FCCEC04254552DE2C7D /* Pods_Example_BusinessComponents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Example_BusinessComponents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76BAD5F6C0ABF02248DA22EC /* Pods-Example_BusinessComponents.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example_BusinessComponents.debug.xcconfig"; path = "Target Support Files/Pods-Example_BusinessComponents/Pods-Example_BusinessComponents.debug.xcconfig"; sourceTree = "<group>"; };
 		821827EE71846DD251C475A6 /* Pods-Example_BusinessComponents.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example_BusinessComponents.release.xcconfig"; path = "Pods/Target Support Files/Pods-Example_BusinessComponents/Pods-Example_BusinessComponents.release.xcconfig"; sourceTree = "<group>"; };
@@ -52,7 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				66D18E80EBDE544CA2CA4B9B /* BuildFile in Frameworks */,
+				66D18E80EBDE544CA2CA4B9B /* (null) in Frameworks */,
 				F71E699B5871AF8878117D8F /* Pods_Example_BusinessComponents.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -103,6 +105,7 @@
 				0F660AFA23305CA9001B52DA /* LoyaltyHeaderData.swift */,
 				CEE9F38F233062880000C9CA /* CrossSellingBoxData.swift */,
 				0F23688A2332A83F00941C09 /* ItemDescriptionData.swift */,
+				33765CDB23E0B60600909EC7 /* DiscountTrackerData.swift */,
 			);
 			path = MockData;
 			sourceTree = "<group>";
@@ -244,6 +247,7 @@
 				23EE407B2326BA33001322EC /* DiscountData.swift in Sources */,
 				23EE408023297CF8001322EC /* SingleItemData.swift in Sources */,
 				23EE40682326B50B001322EC /* ViewController.swift in Sources */,
+				33765CDC23E0B60600909EC7 /* DiscountTrackerData.swift in Sources */,
 				0F660AFB23305CA9001B52DA /* LoyaltyHeaderData.swift in Sources */,
 				23DECA26232D28E80083D01F /* DiscountDataForTestUpdate.swift in Sources */,
 				0F23688B2332A83F00941C09 /* ItemDescriptionData.swift in Sources */,

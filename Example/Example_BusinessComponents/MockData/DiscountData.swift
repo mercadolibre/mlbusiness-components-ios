@@ -28,4 +28,8 @@ class DiscountData: NSObject, MLBusinessDiscountBoxData {
         array.append(SingleItemData(title: "Hasta", subtitle: "$ 200", iconImageUrl: "https://pbs.twimg.com/profile_images/1124417403566395394/9Wuzg8pf.png"))
         return array
     }
+    
+    func getDiscountTracker() -> MLBusinessDiscountTrackerProtocol? {
+        return DiscountTrackerData(touchPointId: .PX)
+    }
 }
