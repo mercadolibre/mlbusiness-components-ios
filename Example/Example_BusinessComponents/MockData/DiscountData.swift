@@ -30,6 +30,6 @@ class DiscountData: NSObject, MLBusinessDiscountBoxData {
     }
     
     func getDiscountTracker() -> MLBusinessDiscountTrackerProtocol? {
-        return DiscountTrackerData(touchPointId: .PX)
+        return DiscountTrackerData(touchPointId: "PX")
     }
 }

@@ -12,16 +12,9 @@ import MLBusinessComponents
 class DiscountTrackerData: NSObject, MLBusinessDiscountTrackerProtocol {
     
     let basePath = "/discount_center/payers/touchpoint"
-    var touchPointId: TouchPointId
+    var touchPointId: String
     
-    enum TouchPointId: String {
-        case PX = "PX"
-        case MPHome = "MPHome"
-        case CheckOutOn = "ChekOutOn"
-        case MeliHome = "MeliHome"
-    }
-    
-    init(touchPointId: TouchPointId) {
+    init(touchPointId: String) {
         self.touchPointId = touchPointId
     }
     
