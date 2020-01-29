@@ -18,7 +18,7 @@ class DiscountTrackerData: NSObject, MLBusinessDiscountTrackerProtocol {
         self.touchPointId = touchPointId
     }
     
-    func track(action: String, eventData: [[String:Any]]) {
+    func track(action: String, eventData: [[String : Any]]) {
         //Melidata tracking
         print("Melidata track path: \(basePath)/\(touchPointId)/\(action) with event data: \(eventData)")
     }

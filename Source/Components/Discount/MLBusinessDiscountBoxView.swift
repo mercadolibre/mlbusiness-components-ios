@@ -126,8 +126,8 @@ private extension MLBusinessDiscountBoxView {
         }
     }
     
-    private func getEventDataFrom(discountItems: [MLBusinessSingleItemProtocol]) -> [[String:Any]] {
-        var eventData = [[String:Any]]()
+    private func getEventDataFrom(discountItems: [MLBusinessSingleItemProtocol]) -> [[String : Any]] {
+        var eventData = [[String : Any]]()
         for discountItem in discountItems {
             if let eventDataForItem = discountItem.eventDataForItem() {
                 eventData.append(eventDataForItem)

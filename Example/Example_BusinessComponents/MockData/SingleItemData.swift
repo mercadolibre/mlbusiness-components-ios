@@ -15,9 +15,9 @@ class SingleItemData: NSObject {
     let iconUrl: String
     let deepLink: String?
     let trackId: String?
-    let eventData: [String:Any]?
+    let eventData: [String : Any]?
 
-    init(title: String, subtitle: String, iconImageUrl: String, deepLink: String? = nil, trackId: String? = nil, eventData: [String:Any]? = nil) {
+    init(title: String, subtitle: String, iconImageUrl: String, deepLink: String? = nil, trackId: String? = nil, eventData: [String : Any]? = nil) {
         self.title = title
         self.subTitle = subtitle
         self.iconUrl = iconImageUrl
@@ -48,7 +48,7 @@ extension SingleItemData: MLBusinessSingleItemProtocol {
         return trackId
     }
     
-    func eventDataForItem() -> [String:Any]? {
+    func eventDataForItem() -> [String : Any]? {
         return eventData
     }
 }
