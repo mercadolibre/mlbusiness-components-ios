@@ -129,7 +129,7 @@ private extension MLBusinessDiscountBoxView {
     private func getEventDataFrom(discountItems: [MLBusinessSingleItemProtocol]) -> [[String : Any]] {
         var eventData = [[String : Any]]()
         for discountItem in discountItems {
-            if let eventDataForItem = discountItem.eventDataForItem() {
+            if let eventDataForItem = discountItem.eventDataForItem?() {
                 eventData.append(eventDataForItem)
             }
         }
@@ -186,7 +186,7 @@ extension MLBusinessDiscountBoxView: MLBusinessUserInteractionProtocol {
             tapAction?(itemsPerRow + index, item.deepLinkForItem(), item.trackIdForItem())
         }
         
-        if let trackingProvider = viewData?.getDiscountTracker?(), let eventDataForItem = item.eventDataForItem() {
+        if let viewData = viewData, let trackingProvider = viewData.getDiscountTracker?(), let eventDataForItem = item.eventDataForItem?() {
             trackingProvider.track(action: "tap", eventData: [eventDataForItem])
         }
     }
