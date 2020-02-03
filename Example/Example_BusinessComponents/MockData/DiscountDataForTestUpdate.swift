@@ -27,7 +27,7 @@ class DiscountDataForTestUpdate: NSObject, MLBusinessDiscountBoxData {
     }
     
     func getDiscountTracker() -> MLBusinessDiscountTrackerProtocol? {
-        return DiscountTrackerData(touchPointId: "PX")
+        return DiscountTrackerData(touchPointId: "BusinessComponents-Example")
     }
     
 }
