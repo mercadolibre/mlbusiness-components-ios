@@ -25,11 +25,11 @@ class DiscountData: NSObject, MLBusinessDiscountBoxData {
         array.append(SingleItemData(title: "Hasta", subtitle: "$ 200", iconImageUrl: "https://upload.wikimedia.org/wikipedia/commons/b/b3/Logo-freddo.jpg", eventData: ["trackingId":2]))
         array.append(SingleItemData(title: "Hasta", subtitle: "$ 200", iconImageUrl: "https://urbancomunicacion.com/wp-content/uploads/2017/04/Logotipos-famosos-Starbucks-Urban-comunicacion-1.png", deepLink: "meli://home", eventData: ["trackingId":3]))
         array.append(SingleItemData(title: "Hasta", subtitle: "$ 200", iconImageUrl: "https://i0.wp.com/larchmontla.com/ui/wp-content/uploads/2011/01/images_le-pain-quotidien.gif", deepLink: "meli://home", eventData: ["trackingId":4]))
-        array.append(SingleItemData(title: "Hasta", subtitle: "$ 200", iconImageUrl: "https://pbs.twimg.com/profile_images/1124417403566395394/9Wuzg8pf.png", eventData: ["trackingId":5]))
+        array.append(SingleItemData(title: "Hasta", subtitle: "$ 200", iconImageUrl: "https://pbs.twimg.com/profile_images/1124417403566395394/9Wuzg8pf.png", eventData: ["trackingId":"5"]))
         return array
     }
     
     func getDiscountTracker() -> MLBusinessDiscountTrackerProtocol? {
-        return DiscountTrackerData(touchPointId: "PX")
+        return DiscountTrackerData(touchPointId: "BusinessComponents-Example")
     }
 }
