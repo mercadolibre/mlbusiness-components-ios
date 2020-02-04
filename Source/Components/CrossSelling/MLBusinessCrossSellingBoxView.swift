@@ -49,7 +49,9 @@ extension MLBusinessCrossSellingBoxView {
 
     private func buildIconImage() -> UIImageView {
         let icon = UIImageView()
-        icon.setRemoteImage(imageUrl: viewData.getIconUrl(), placeHolderRadius: iconImageSize/2)
+        icon.layer.cornerRadius =  iconImageSize / 2
+        icon.layer.masksToBounds = true
+        icon.setRemoteImage(imageUrl: viewData.getIconUrl())
         icon.translatesAutoresizingMaskIntoConstraints = false
         icon.contentMode = .scaleAspectFit
         self.addSubview(icon)

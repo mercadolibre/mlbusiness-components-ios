@@ -1,6 +1,7 @@
 # v1.8
 🚀 1.8 🚀
 - Added discount tracker and tracking functionality.
+- Discount Box component refactor.
 
 # v1.7
 🚀 1.7 🚀
