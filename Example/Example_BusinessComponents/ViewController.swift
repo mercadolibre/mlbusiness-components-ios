@@ -32,7 +32,7 @@ extension ViewController {
         let newRingView = setupRingView()
         self.ringView = newRingView
         let dividingLineView = setupDividingLineView(bottomOf: newRingView)
-        let discountView = setupDiscountView(bottomOf: dividingLineView)
+        let discountView = discounts(top: dividingLineView)
         let downloadAppView = setupDownloadAppView(bottomOf: discountView)
         let crossSellingBoxView = setupCrossSellingBoxView(bottomOf: downloadAppView)
         let loyaltyHeaderView = setupLoyaltyHeaderView(bottomOf: crossSellingBoxView)
@@ -40,6 +40,14 @@ extension ViewController {
         let animatedButtonView = setupAnimatedButtonView(bottomOf: itemDescriptionView)
         
         animatedButtonView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -64).isActive = true
+    }
+    
+    private func discounts(top: UIView) -> UIView {
+        var v = top
+        for numberOfItems in 1...6 {
+            v = setupDiscountView(numberOfItems: numberOfItems, bottomOf: v)
+        }
+        return v
     }
 
     private func setupRingView() -> MLBusinessLoyaltyRingView {
@@ -68,26 +76,19 @@ extension ViewController {
             dividingLineView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -32),
             dividingLineView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 20)
         ])
-
         return dividingLineView
     }
 
-    private func setupDiscountView(bottomOf targetView: UIView) -> MLBusinessDiscountBoxView {
-        let discountView = MLBusinessDiscountBoxView(DiscountData())
+    private func setupDiscountView(numberOfItems: Int, bottomOf targetView: UIView) -> MLBusinessDiscountBoxView {
+        let discountView = MLBusinessDiscountBoxView(DiscountData(numberOfItems: numberOfItems))
         containerView.addSubview(discountView)
         NSLayoutConstraint.activate([
             discountView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
             discountView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
             discountView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16)
         ])
-
         discountView.addTapAction { (selectedIndex, deepLink, trackId) in
-            // To test update data feature.
-            if selectedIndex == 0 {
-                // discountView.update(DiscountDataForTestUpdate())
-            } else {
-                // discountView.update(DiscountData())
-            }
+            print("EBC: index \(selectedIndex), deeplink: \(deepLink ?? ""), trackId: \(trackId ?? "")")
         }
         return discountView
     }

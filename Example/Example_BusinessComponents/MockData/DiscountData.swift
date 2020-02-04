@@ -10,6 +10,13 @@ import UIKit
 import MLBusinessComponents
 
 class DiscountData: NSObject, MLBusinessDiscountBoxData {
+    
+    private let numberOfItems: Int
+    
+    init(numberOfItems: Int = 5) {
+        self.numberOfItems = 5 - (min(numberOfItems, 6) - 1)
+    }
+    
     func getTitle() -> String? {
         return "200 descuentos"
     }
@@ -26,6 +33,6 @@ class DiscountData: NSObject, MLBusinessDiscountBoxData {
         array.append(SingleItemData(title: "Hasta", subtitle: "$ 200", iconImageUrl: "https://urbancomunicacion.com/wp-content/uploads/2017/04/Logotipos-famosos-Starbucks-Urban-comunicacion-1.png", deepLink: "meli://home"))
         array.append(SingleItemData(title: "Hasta", subtitle: "$ 200", iconImageUrl: "https://i0.wp.com/larchmontla.com/ui/wp-content/uploads/2011/01/images_le-pain-quotidien.gif", deepLink: "meli://home"))
         array.append(SingleItemData(title: "Hasta", subtitle: "$ 200", iconImageUrl: "https://pbs.twimg.com/profile_images/1124417403566395394/9Wuzg8pf.png"))
-        return array
+        return Array(array.suffix(from: numberOfItems))
     }
 }

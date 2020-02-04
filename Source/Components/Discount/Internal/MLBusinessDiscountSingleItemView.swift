@@ -46,13 +46,10 @@ extension MLBusinessDiscountSingleItemView {
         self.layer.cornerRadius = 6
         
         let icon: UIImageView = UIImageView()
+        icon.layer.cornerRadius = iconCornerRadius
+        icon.layer.masksToBounds = true
         icon.prepareForAutolayout(.clear)
-        icon.setRemoteImage(imageUrl: discountSingleItem.iconImageUrlForItem(), placeHolderRadius: iconCornerRadius, success: { [weak self] _ in
-            if let weakSelf = self {
-                icon.layer.cornerRadius = weakSelf.iconCornerRadius
-                icon.layer.masksToBounds = true
-            }
-        })
+        icon.setRemoteImage(imageUrl: discountSingleItem.iconImageUrlForItem(), placeHolderRadius: iconCornerRadius)
 
         self.addSubview(icon)
         icon.contentMode = .scaleAspectFill
