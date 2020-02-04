@@ -34,20 +34,12 @@ extension ViewController {
         let dividingLineView = setupDividingLineView(bottomOf: newRingView)
         let itemDescriptionView = setupItemDescriptionView(bottomOf: dividingLineView)
         let crossSellingBoxView = setupCrossSellingBoxView(bottomOf: itemDescriptionView)
-        let discountView = discounts(top: crossSellingBoxView)
+        let discountView = setupDiscountView(numberOfItems: 6, bottomOf: crossSellingBoxView)
         let downloadAppView = setupDownloadAppView(bottomOf: discountView)
         let loyaltyHeaderView = setupLoyaltyHeaderView(bottomOf: downloadAppView)
         let animatedButtonView = setupAnimatedButtonView(bottomOf: loyaltyHeaderView)
         
         animatedButtonView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -64).isActive = true
-    }
-    
-    private func discounts(top: UIView) -> UIView {
-        var v = top
-        for numberOfItems in 1...6 {
-            v = setupDiscountView(numberOfItems: numberOfItems, bottomOf: v)
-        }
-        return v
     }
 
     private func setupRingView() -> MLBusinessLoyaltyRingView {
@@ -89,6 +81,7 @@ extension ViewController {
         ])
         discountView.addTapAction { (selectedIndex, deepLink, trackId) in
             print("EBC: index \(selectedIndex), deeplink: \(deepLink ?? ""), trackId: \(trackId ?? "")")
+            discountView.update(DiscountData(numberOfItems: Int.random(in: 1...6)))
         }
         return discountView
     }

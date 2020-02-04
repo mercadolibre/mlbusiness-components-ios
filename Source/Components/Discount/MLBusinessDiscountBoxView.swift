@@ -35,11 +35,12 @@ open class MLBusinessDiscountBoxView: UIView {
         stackView.prepareForAutolayout()
         stackView.axis = .vertical
         stackView.alignment = .fill
-        stackView.spacing = UI.Margin.L_MARGIN
         return stackView
     }()
+    
     private let titleLabel = UILabel()
     private let subtitleLabel = UILabel()
+    
     private let itemContainer: UIStackView = {
         let stackView = UIStackView(frame: .zero)
         stackView.prepareForAutolayout()
@@ -112,8 +113,9 @@ private extension MLBusinessDiscountBoxView {
     private func updateUI() {
         titleLabel.text = viewData?.getTitle?()
         subtitleLabel.text = titleLabel.text != nil ? viewData?.getSubtitle?() : nil
+        container.spacing = titleLabel.text == nil ? 0 : UI.Margin.L_MARGIN
         itemContainer.subviews.forEach { $0.removeFromSuperview() }
-        viewData?.getItems().chunked(into: itemsPerRow).enumerated().forEach({ index, row in
+        discountItems.chunked(into: itemsPerRow).enumerated().forEach({ index, row in
             itemContainer.addArrangedSubview(rowWithItems(items: row, startingIndex: itemsPerRow * index))
         })
     }
