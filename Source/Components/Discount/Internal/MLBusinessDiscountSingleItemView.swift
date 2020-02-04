@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import MLUI
 
-final class MLBusinessDiscountSingleItemView: UIView {
+final class MLBusinessDiscountSingleItemView: PressableView {
     static let itemHeight: CGFloat = 128
     static let iconImageSize: CGFloat = 56
     private let iconCornerRadius: CGFloat = 28
@@ -26,6 +26,8 @@ final class MLBusinessDiscountSingleItemView: UIView {
         self.itemIndex = itemIndex
         self.itemSection = itemSection
         super.init(frame: .zero)
+        self.pressableDelegate = self
+        self.pressableAnimator = HightlightViewAnimator()
         render()
     }
 
@@ -100,23 +102,29 @@ extension MLBusinessDiscountSingleItemView {
             iconOverlay.widthAnchor.constraint(equalToConstant: MLBusinessDiscountSingleItemView.iconImageSize),
             iconOverlay.topAnchor.constraint(equalTo: self.topAnchor, constant: itemHeightMargin),
             iconOverlay.centerXAnchor.constraint(equalTo: self.centerXAnchor)
-            ])
-
-        let tapGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.didTapOnButton))
-        tapGesture.minimumPressDuration = 0
-        self.addGestureRecognizer(tapGesture)
+        ])
     }
+}
 
-    // MARK: Tap Selector
-    @objc private func didTapOnButton(gesture: UITapGestureRecognizer) {
-        if gesture.state == UITapGestureRecognizer.State.began {
-            if self.discountSingleItem.deepLinkForItem() != nil {
-                self.backgroundColor = UIColor(red:0.96, green:0.96, blue:0.96, alpha:1.0)
-            }
+extension MLBusinessDiscountSingleItemView: PressableDelegate {
+    func didTap(view: PressableView) {
+        if let _ = discountSingleItem.deepLinkForItem() {
             delegate?.didTap(item: discountSingleItem, index: itemIndex, section: itemSection)
-        } else if gesture.state == UITapGestureRecognizer.State.ended {
-            self.backgroundColor = .white
         }
     }
+}
 
+private class HightlightViewAnimator: PressableAnimator {
+    var selectedColor: UIColor? = UIColor(white: 0, alpha: 0.04)
+    var unselectedColor: UIColor? = .clear
+    
+    func animate(view: PressableView, highlighted: Bool) {
+        if highlighted {
+            view.backgroundColor = selectedColor
+        } else {
+            UIView.animate(withDuration: 0.3, animations: {
+                view.backgroundColor = self.unselectedColor
+            })
+        }
+    }
 }
