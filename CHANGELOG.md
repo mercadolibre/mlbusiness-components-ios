@@ -1,3 +1,7 @@
+# v1.8
+🚀 1.8 🚀
+- Added discount tracker and tracking functionality.
+
 # v1.7
 🚀 1.7 🚀
 - Change background color and changes in tappable area.

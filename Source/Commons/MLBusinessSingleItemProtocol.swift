@@ -13,5 +13,6 @@ import Foundation
     @objc func iconImageUrlForItem() -> String
     @objc func deepLinkForItem() -> String?
     @objc func trackIdForItem() -> String?
+    @objc optional func eventDataForItem() -> [String : Any]?
 }
 
