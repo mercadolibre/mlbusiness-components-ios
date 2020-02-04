@@ -49,7 +49,7 @@ extension MLBusinessDiscountSingleItemView {
         icon.layer.cornerRadius = iconCornerRadius
         icon.layer.masksToBounds = true
         icon.prepareForAutolayout(.clear)
-        icon.setRemoteImage(imageUrl: discountSingleItem.iconImageUrlForItem(), placeHolderRadius: iconCornerRadius)
+        icon.setRemoteImage(imageUrl: discountSingleItem.iconImageUrlForItem())
 
         self.addSubview(icon)
         icon.contentMode = .scaleAspectFill

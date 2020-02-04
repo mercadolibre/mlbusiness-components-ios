@@ -32,12 +32,12 @@ extension ViewController {
         let newRingView = setupRingView()
         self.ringView = newRingView
         let dividingLineView = setupDividingLineView(bottomOf: newRingView)
-        let discountView = discounts(top: dividingLineView)
+        let itemDescriptionView = setupItemDescriptionView(bottomOf: dividingLineView)
+        let crossSellingBoxView = setupCrossSellingBoxView(bottomOf: itemDescriptionView)
+        let discountView = discounts(top: crossSellingBoxView)
         let downloadAppView = setupDownloadAppView(bottomOf: discountView)
-        let crossSellingBoxView = setupCrossSellingBoxView(bottomOf: downloadAppView)
-        let loyaltyHeaderView = setupLoyaltyHeaderView(bottomOf: crossSellingBoxView)
-        let itemDescriptionView = setupItemDescriptionView(bottomOf: loyaltyHeaderView)
-        let animatedButtonView = setupAnimatedButtonView(bottomOf: itemDescriptionView)
+        let loyaltyHeaderView = setupLoyaltyHeaderView(bottomOf: downloadAppView)
+        let animatedButtonView = setupAnimatedButtonView(bottomOf: loyaltyHeaderView)
         
         animatedButtonView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -64).isActive = true
     }

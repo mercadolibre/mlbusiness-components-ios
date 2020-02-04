@@ -41,7 +41,7 @@ private extension MLBusinessItemDescriptionView {
     private func update() {
         titleLabel?.text = viewData?.getTitle()
         if let url = viewData?.getIconImageURL() {
-            iconImageView?.setRemoteImage(imageUrl: url, placeHolderRadius: iconImageSize/2, success: { [weak self] loadedImage in
+            iconImageView?.setRemoteImage(imageUrl: url, success: { [weak self] loadedImage in
                 self?.setupImageView(image: loadedImage)
             })
         }
@@ -54,6 +54,8 @@ private extension MLBusinessItemDescriptionView {
         self.addSubview(titleLabel)
         
         let iconImageView = buildIconImageView()
+        iconImageView.layer.cornerRadius = iconImageSize / 2
+        iconImageView.layer.masksToBounds = true
         self.addSubview(iconImageView)
         
         makeConstraints(titleLabel, iconImageView)
@@ -97,6 +99,6 @@ private extension MLBusinessItemDescriptionView {
             iconImageView.trailingAnchor.constraint(equalTo: titleLabel.leadingAnchor, constant: -UI.Margin.S_MARGIN),
             titleLabel.centerYAnchor.constraint(equalTo: iconImageView.centerYAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -UI.Margin.S_MARGIN)
-            ])
+        ])
     }
 }
