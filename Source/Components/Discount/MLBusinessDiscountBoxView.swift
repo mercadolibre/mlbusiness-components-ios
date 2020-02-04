@@ -78,8 +78,8 @@ private extension MLBusinessDiscountBoxView {
         addSubview(container)
         NSLayoutConstraint.activate([
             container.topAnchor.constraint(equalTo: self.topAnchor),
-            container.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: UI.Margin.S_MARGIN),
-            container.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -UI.Margin.S_MARGIN),
+            container.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            container.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             container.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
         
