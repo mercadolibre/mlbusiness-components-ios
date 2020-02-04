@@ -50,4 +50,8 @@ private extension Array {
     mutating func shiftInPlace(withDistance distance: Int = 1) {
         self = shift(withDistance: distance)
     }
+    
+    func getDiscountTracker() -> MLBusinessDiscountTrackerProtocol? {
+        return DiscountTrackerData(touchPointId: "BusinessComponents-Example")
+    }
 }

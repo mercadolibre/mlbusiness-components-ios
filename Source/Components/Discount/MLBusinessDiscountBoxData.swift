@@ -12,4 +12,5 @@ import Foundation
     @objc optional func getTitle() -> String?
     @objc optional func getSubtitle() -> String?
     @objc func getItems() -> [MLBusinessSingleItemProtocol]
+    @objc optional func getDiscountTracker() -> MLBusinessDiscountTrackerProtocol?
 }
