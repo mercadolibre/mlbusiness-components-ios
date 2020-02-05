@@ -41,6 +41,7 @@ public class MLBusinessAnimatedButton: UIButton {
     private func setupView() {
         translatesAutoresizingMaskIntoConstraints = false
         heightAnchor.constraint(equalToConstant: 48).isActive = true
+        layer.zPosition = 0
         setTitle(normalLabel, for: .normal)
         setTitleColor(MLStyleSheetManager.styleSheet.whiteColor, for: .normal)
         setTitleColor(MLStyleSheetManager.styleSheet.greyColor, for: .disabled)
@@ -89,13 +90,19 @@ public class MLBusinessAnimatedButton: UIButton {
     @objc
     public func goToNextViewController(_ nextViewController: UIViewController,
                                        _ navController: UINavigationController,
-                                       transitionDuration: TimeInterval = 0.4) {
+                                       transitionDuration: TimeInterval = 0.4,
+                                       shouldPop: Bool = false) {
         let transition = CATransition()
         transition.duration = transitionDuration
         transition.type = .fade
-        
         navController.view.layer.add(transition, forKey: nil)
-        navController.pushViewController(nextViewController, animated: false)
+
+        var stack = navController.viewControllers
+
+        if shouldPop { stack.removeLast() }
+        
+        stack.append(nextViewController)
+        navController.setViewControllers(stack, animated: false)
     }
 
     private func explosion(newFrame: CGRect, color: UIColor, image: UIImage?) {

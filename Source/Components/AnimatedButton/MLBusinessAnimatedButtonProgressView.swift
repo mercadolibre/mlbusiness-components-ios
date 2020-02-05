@@ -10,7 +10,7 @@ import MLUI
 
 final class MLBusinessAnimatedButtonProgressView: UIView {
 
-    private var deltaIncrementFraction: CGFloat
+    private var deltaIncrementFraction: CGFloat = 6.0
     private let progressViewHeight: CGFloat
     private let progressViewWidth: CGFloat
     private let progressViewAlpha: CGFloat = 0.35
@@ -25,7 +25,6 @@ final class MLBusinessAnimatedButtonProgressView: UIView {
     init(view: UIView, timeOut: TimeInterval = 15) {
         progressViewHeight = view.frame.height
         progressViewWidth = view.frame.width
-        deltaIncrementFraction = CGFloat(timeOut * 0.4)
         self.timeOut = timeOut
 
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: progressViewHeight))
