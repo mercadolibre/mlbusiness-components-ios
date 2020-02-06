@@ -41,7 +41,6 @@ public class MLBusinessAnimatedButton: UIButton {
     private func setupView() {
         translatesAutoresizingMaskIntoConstraints = false
         heightAnchor.constraint(equalToConstant: 48).isActive = true
-        layer.zPosition = 0
         setTitle(normalLabel, for: .normal)
         setTitleColor(MLStyleSheetManager.styleSheet.whiteColor, for: .normal)
         setTitleColor(MLStyleSheetManager.styleSheet.greyColor, for: .disabled)
