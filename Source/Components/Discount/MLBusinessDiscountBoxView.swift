@@ -155,6 +155,10 @@ private extension MLBusinessDiscountBoxView {
 // MARK: MLBusinessUserInteractionProtocol.
 extension MLBusinessDiscountBoxView: MLBusinessUserInteractionProtocol {
     func didTap(item: MLBusinessSingleItemProtocol, index: Int, section: Int) {
+        if let viewData = viewData, let trackingProvider = viewData.getDiscountTracker?(), let eventDataForItem = item.eventDataForItem?() {
+            trackingProvider.track(action: "tap", eventData: [eventDataForItem])
+        }
+        
         tapAction?(index, item.deepLinkForItem(), item.trackIdForItem())
     }
 }
