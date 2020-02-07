@@ -1,3 +1,7 @@
+# v1.8.1
+🚀 1.8.1 🚀
+- Restored tap tracking on Discount Box component.
+
 # v1.8
 🚀 1.8 🚀
 - Added discount tracker and tracking functionality.
