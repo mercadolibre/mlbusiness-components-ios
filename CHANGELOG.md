@@ -1,3 +1,8 @@
+# No publicada
+🚀 No publicada 🚀
+- Animated button shouldPop param.
+- Animated button resetLoading function.
+
 # v1.8
 🚀 1.8 🚀
 - Added discount tracker and tracking functionality.
