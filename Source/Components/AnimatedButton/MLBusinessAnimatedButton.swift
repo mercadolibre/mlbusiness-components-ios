@@ -58,6 +58,11 @@ public class MLBusinessAnimatedButton: UIButton {
     }
 
     @objc
+    public func resetLoading() {
+        progressView?.reset()
+    }
+
+    @objc
     public func finishLoading(color: UIColor, image: UIImage?) {
         progressView?.finish { [weak self] in
             guard let self = self else { return }
