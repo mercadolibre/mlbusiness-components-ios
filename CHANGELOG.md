@@ -1,7 +1,12 @@
-# No publicada
-🚀 No publicada 🚀
+# v1.8.2
+🚀 1.8.2 🚀
 - Animated button shouldPop param.
 - Animated button resetLoading function.
+
+# v1.8.1
+🚀 1.8.1 🚀
+- Restored tap tracking on Discount Box component.
+- Modified MLBusinessDiscountTrackerProtocol.
 
 # v1.8
 🚀 1.8 🚀

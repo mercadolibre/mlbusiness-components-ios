@@ -8,5 +8,5 @@
 import Foundation
 
 @objc public protocol MLBusinessDiscountTrackerProtocol: NSObjectProtocol {
-    func track(action: String, eventData: [[String : Any]])
+    func track(action: String, eventData: [String : Any])
 }

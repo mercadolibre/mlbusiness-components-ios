@@ -115,14 +115,14 @@ private extension MLBusinessDiscountBoxView {
         }
     }
     
-    private func getEventDataFrom(discountItems: [MLBusinessSingleItemProtocol]) -> [[String : Any]] {
+    private func getEventDataFrom(discountItems: [MLBusinessSingleItemProtocol]) -> [String : Any] {
         var eventData = [[String : Any]]()
         for discountItem in discountItems {
             if let eventDataForItem = discountItem.eventDataForItem?() {
                 eventData.append(eventDataForItem)
             }
         }
-        return eventData
+        return ["items" : eventData]
     }
 
     private func updateUI() {
@@ -155,6 +155,10 @@ private extension MLBusinessDiscountBoxView {
 // MARK: MLBusinessUserInteractionProtocol.
 extension MLBusinessDiscountBoxView: MLBusinessUserInteractionProtocol {
     func didTap(item: MLBusinessSingleItemProtocol, index: Int, section: Int) {
+        if let viewData = viewData, let trackingProvider = viewData.getDiscountTracker?(), let eventDataForItem = item.eventDataForItem?() {
+            trackingProvider.track(action: "tap", eventData: eventDataForItem)
+        }
+        
         tapAction?(index, item.deepLinkForItem(), item.trackIdForItem())
     }
 }
