@@ -58,6 +58,11 @@ public class MLBusinessAnimatedButton: UIButton {
     }
 
     @objc
+    public func resetLoading() {
+        progressView?.reset()
+    }
+
+    @objc
     public func finishLoading(color: UIColor, image: UIImage?) {
         progressView?.finish { [weak self] in
             guard let self = self else { return }
@@ -89,13 +94,19 @@ public class MLBusinessAnimatedButton: UIButton {
     @objc
     public func goToNextViewController(_ nextViewController: UIViewController,
                                        _ navController: UINavigationController,
-                                       transitionDuration: TimeInterval = 0.4) {
+                                       transitionDuration: TimeInterval = 0.4,
+                                       shouldPop: Bool = false) {
         let transition = CATransition()
         transition.duration = transitionDuration
         transition.type = .fade
-        
         navController.view.layer.add(transition, forKey: nil)
-        navController.pushViewController(nextViewController, animated: false)
+
+        var stack = navController.viewControllers
+
+        if shouldPop { stack.removeLast() }
+        
+        stack.append(nextViewController)
+        navController.setViewControllers(stack, animated: false)
     }
 
     private func explosion(newFrame: CGRect, color: UIColor, image: UIImage?) {
