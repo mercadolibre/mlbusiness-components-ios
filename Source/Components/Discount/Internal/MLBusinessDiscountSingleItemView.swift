@@ -65,7 +65,7 @@ extension MLBusinessDiscountSingleItemView {
         let itemTitle = UILabel()
         itemTitle.prepareForAutolayout(.clear)
         self.addSubview(itemTitle)
-        itemTitle.font = UIFont.ml_lightSystemFont(ofSize: UI.FontSize.XXS_FONT)
+        itemTitle.font = UIFont.ml_regularSystemFont(ofSize: UI.FontSize.XXS_FONT)
         itemTitle.applyBusinessLabelStyle()
         itemTitle.text = discountSingleItem.titleForItem()
         itemTitle.textAlignment = .center
