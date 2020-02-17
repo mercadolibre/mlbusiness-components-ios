@@ -1,3 +1,8 @@
+# v1.8.3
+🚀 1.8.3 🚀
+- Ajustes en label de DiscountBox
+- Ajustes en labels de Loyaty Ring View
+
 # v1.8.2
 🚀 1.8.2 🚀
 - Animated button shouldPop param.
