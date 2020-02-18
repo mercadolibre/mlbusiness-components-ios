@@ -131,7 +131,7 @@ private extension MLBusinessDiscountBoxView {
         
         titleLabel.text = title
         subtitleLabel.text = title != nil ? subtitle : nil
-        container.spacing = title != nil ? 0 : UI.Margin.L_MARGIN
+        container.spacing = title == nil ? 0 : UI.Margin.L_MARGIN
         itemContainer.subviews.forEach { $0.removeFromSuperview() }
         discountItems.chunked(into: itemsPerRow).enumerated().forEach({ index, row in
             itemContainer.addArrangedSubview(rowWithItems(items: row, startingIndex: itemsPerRow * index))
