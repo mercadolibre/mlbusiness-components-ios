@@ -32,6 +32,7 @@ struct UI {
         static let XS_FONT: CGFloat = 14
         static let S_FONT: CGFloat = 16
         static let M_FONT: CGFloat = 18
+        static let ML_FONT: CGFloat = 20
         static let L_FONT: CGFloat = 22
     }
 
