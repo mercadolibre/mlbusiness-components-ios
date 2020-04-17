@@ -59,7 +59,7 @@ public class MLBusinessAnimatedButton: UIButton {
 
     @objc
     public func resetLoading() {
-        progressView?.reset()
+        progressView?.reset(view: self)
     }
 
     @objc
