@@ -1,7 +1,9 @@
-# v1.8.3
+# Sin Publicar (v1.8.4)
 🚀 1.8.3 🚀
-- Ajustes en label de DiscountBox
-- Ajustes en labels de Loyaty Ring View
+
+# v1.8.3
+🚀 Sin Publicar (1.8.4) 🚀
+- Fixing Animated button resetLoading function.
 
 # v1.8.2
 🚀 1.8.2 🚀
