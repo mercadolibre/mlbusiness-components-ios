@@ -1,4 +1,4 @@
-# Sin Publicar (v1.8.4)
+# v1.8.4
 🚀 Sin Publicar (1.8.4) 🚀
 - Fixing Animated button resetLoading function.
 
