@@ -79,8 +79,8 @@ final class MLBusinessAnimatedButtonProgressView: UIView {
         
     }
 
-    func reset() {
-        frame = CGRect(x: 0, y: 0, width: 0, height: frame.height)
+    func reset(view: UIView) {
+        if isDescendant(of: view) { removeFromSuperview() }
     }
 
     func finish(completion: @escaping () -> Void) {

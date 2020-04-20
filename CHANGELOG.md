@@ -1,3 +1,7 @@
+# Sin Publicar (v1.8.4)
+🚀 Sin Publicar (1.8.4) 🚀
+- Fixing Animated button resetLoading function.
+
 # v1.8.3
 🚀 1.8.3 🚀
 - Ajustes en label de DiscountBox
