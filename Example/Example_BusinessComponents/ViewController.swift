@@ -35,7 +35,8 @@ extension ViewController {
         let itemDescriptionView = setupItemDescriptionView(bottomOf: dividingLineView)
         let crossSellingBoxView = setupCrossSellingBoxView(bottomOf: itemDescriptionView)
         let discountView = setupDiscountView(numberOfItems: 6, bottomOf: crossSellingBoxView)
-        let downloadAppView = setupDownloadAppView(bottomOf: discountView)
+        let discountTouchpointView = setupDiscountTouchpointsView(numberOfItems: 6, bottomOf: discountView)
+        let downloadAppView = setupDownloadAppView(bottomOf: discountTouchpointView)
         let loyaltyHeaderView = setupLoyaltyHeaderView(bottomOf: downloadAppView)
         let animatedButtonView = setupAnimatedButtonView(bottomOf: loyaltyHeaderView)
         
@@ -85,7 +86,30 @@ extension ViewController {
         }
         return discountView
     }
-
+    
+    private func setupDiscountTouchpointsView(numberOfItems: Int, bottomOf targetView: UIView) -> UIView {
+        let items = [["image" : "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/McDonald%27s_Golden_Arches.svg/1200px-McDonald%27s_Golden_Arches.svg.png", "link" : "meli://home", "title" : "Hasta", "subtitle" : "$ 200"],
+        ["image" : "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/McDonald%27s_Golden_Arches.svg/1200px-McDonald%27s_Golden_Arches.svg.png", "link" : "meli://home", "title" : "Hasta", "subtitle" : "$ 200"],
+        ["image" : "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/McDonald%27s_Golden_Arches.svg/1200px-McDonald%27s_Golden_Arches.svg.png", "link" : "meli://home", "title" : "Hasta", "subtitle" : "$ 200"]]
+        let content: [String : Any] = ["title": "Nuevos", "subtitle": "Touchpoints", "items" : items]
+        let response = MLBusinessTouchpointsResponse(type: "GRID", content: content)
+        let coordinator = MLBusinessTouchpointsCoordinator(response: response)
+        if let discountTouchpointsView = coordinator.getView() {
+            containerView.addSubview(discountTouchpointsView)
+            NSLayoutConstraint.activate([
+                discountTouchpointsView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+                discountTouchpointsView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+                discountTouchpointsView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16)
+            ])
+//        discountTouchpointsView.addTapAction { (selectedIndex, deepLink, trackId) in
+//            print("EBC: index \(selectedIndex), deeplink: \(deepLink ?? ""), trackId: \(trackId ?? "")")
+//            discountTouchpointsView.update(DiscountData(numberOfItems: Int.random(in: 1...6)))
+//        }
+            return discountTouchpointsView
+        }
+        return UIView(frame: .zero)
+    }
+    
     private func setupDownloadAppView(bottomOf targetView: UIView) -> MLBusinessDownloadAppView {
         let downloadAppView = MLBusinessDownloadAppView(DownloadAppData())
         containerView.addSubview(downloadAppView)
