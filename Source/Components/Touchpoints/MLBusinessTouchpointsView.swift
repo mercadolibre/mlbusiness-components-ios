@@ -7,12 +7,8 @@
 
 import UIKit
 
-protocol MLBusinessTouchpointsViewTrackingHandler: class {
-    func track(id: String, data: [String: Any]?)
-}
-
 protocol MLBusinessTouchpointsViewInitializable {
-    init?(configuration: Codable?)
+    init?(configuration: Codable?, trackingProvider: MLBusinessDiscountTrackerProtocol?)
 }
 
 protocol MLBusinessTouchpointsViewUpdatable {
@@ -21,16 +17,19 @@ protocol MLBusinessTouchpointsViewUpdatable {
 
 class MLBusinessTouchpointsView: UIView & MLBusinessTouchpointsViewInitializable & MLBusinessTouchpointsViewUpdatable {
     weak var delegate: MLBusinessUserInteractionProtocol?
-    weak var trackingHandler: MLBusinessTouchpointsViewTrackingHandler?
+    let trackingProvider: MLBusinessDiscountTrackerProtocol?
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    required init?(configuration _: Codable?) {
+    required init?(configuration _: Codable?, trackingProvider: MLBusinessDiscountTrackerProtocol? = nil) {
+        self.trackingProvider = trackingProvider
         super.init(frame: .zero)
     }
 
     func update(with _: Codable?) {}
+    
+    func addTapAction(_ action: ((_ index: Int, _ deepLink: String?, _ trackId: String?) -> Void)?) {}
 }

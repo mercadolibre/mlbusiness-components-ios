@@ -28,7 +28,14 @@ class MLBusinessTouchpointsGridMapper<Model: Codable>: MLBusinessTouchpointsMapp
     }
     
     func mapGridItem(with item: [String : Any]) -> MLBusinessTouchpointsGridItemModel? {
-        guard let image = item["image"] as? String, let title = item["title"] as? String, let subtitle = item["subtitle"] as? String else { return nil }
-        return MLBusinessTouchpointsGridItemModel(image: image, link: item["link"] as? String, title: title, subtitle: subtitle, trackingId: item["trackingId"] as? String)
+        guard let iconImageUrl = item["iconImageUrl"] as? String,
+            let title = item["title"] as? String,
+            let subtitle = item["subtitle"] as? String
+            else { return nil }
+        return MLBusinessTouchpointsGridItemModel(title: title,
+                                                  subtitle: subtitle,
+                                                  iconImageUrl: iconImageUrl,
+                                                  deepLink: item["deepLink"] as? String,
+                                                  trackId: item["trackingId"] as? String)
     }
 }

@@ -41,7 +41,7 @@ class DiscountData: NSObject, MLBusinessDiscountBoxData {
     }
 }
 
-private extension Array {
+extension Array {
     func shift(withDistance distance: Int = 1) -> Array<Element> {
         let offsetIndex = distance >= 0 ?
             self.index(startIndex, offsetBy: distance, limitedBy: endIndex) :
