@@ -88,7 +88,7 @@ extension ViewController {
     }
     
     private func setupDiscountTouchpointsView(numberOfItems: Int, bottomOf targetView: UIView) -> UIView {
-        let coordinator = MLBusinessTouchpointsCoordinator(DiscountTouchpointsData(type: "GRID", numberOfItems: numberOfItems))
+        let coordinator = MLBusinessTouchpointsCoordinator(DiscountTouchpointsGridData(numberOfItems: numberOfItems))
         if let discountTouchpointsView = coordinator.getDiscountTouchpointsView() {
             containerView.addSubview(discountTouchpointsView)
             NSLayoutConstraint.activate([
@@ -98,7 +98,7 @@ extension ViewController {
             ])
             coordinator.addTapAction { (selectedIndex, deepLink, trackId) in
                 print("EBC: index \(selectedIndex), deeplink: \(deepLink ?? ""), trackId: \(trackId ?? "")")
-                coordinator.update(DiscountTouchpointsData(type: "GRID", numberOfItems: Int.random(in: 1...6)))
+                coordinator.update(DiscountTouchpointsGridData(numberOfItems: Int.random(in: 1...6)))
             }
             return discountTouchpointsView
         }

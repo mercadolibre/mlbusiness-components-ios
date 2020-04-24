@@ -19,7 +19,7 @@ class MLBusinessTouchpointsRegistry: MLBusinessTouchpointsRegistryProtocol {
     private var skeletons: [String: MLBusinessTouchpointsView.Type] = [:]
 
     init() {
-        register(type: "GRID", mapper: MLBusinessTouchpointsGridMapper<MLBusinessTouchpointsGridModel>(), view: MLBusinessTouchpointsGridView.self, skeleton: nil)
+        register(type: "GRID", mapper: MLBusinessTouchpointsMapper<MLBusinessTouchpointsGridModel>(), view: MLBusinessTouchpointsGridView.self, skeleton: nil)
     }
 
     func register(type: String, mapper: MLBusinessTouchpointsMapperProtocol, view: MLBusinessTouchpointsView.Type, skeleton: MLBusinessTouchpointsView.Type? = nil) {

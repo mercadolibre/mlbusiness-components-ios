@@ -8,34 +8,21 @@
 import Foundation
 
 protocol MLBusinessTouchpointsMapperProtocol {
-    func map(dictionary: [String : Any]) -> Codable?
+    func map(dictionary: MLBusinessCodableDictionary) -> Codable?
 }
 
-class MLBusinessTouchpointsGridMapper<Model: Codable>: MLBusinessTouchpointsMapperProtocol {
-    func map(dictionary: [String : Any]) -> Codable? {
-        let title = dictionary["title"] as? String
-        let subtitle = dictionary["subtitle"] as? String
-        if let items = dictionary["items"] as? [[String : Any]] {
-            var gridItems: [MLBusinessTouchpointsGridItemModel] = []
-            for item in items {
-                if let gridItem = mapGridItem(with: item) {
-                    gridItems.append(gridItem)
-                }
-            }
-            return MLBusinessTouchpointsGridModel(title: title, subtitle: subtitle, items: gridItems)
+class MLBusinessTouchpointsMapper<Model: Codable>: MLBusinessTouchpointsMapperProtocol {
+    func map(dictionary: MLBusinessCodableDictionary) -> Codable? {
+        do {
+            let encoder = JSONEncoder()
+            encoder.keyEncodingStrategy = .convertToSnakeCase
+            let encodedContent = try encoder.encode(dictionary)
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            return try decoder.decode(Model.self, from: encodedContent)
+        } catch {
+            // TODO: handle error
+            return nil
         }
-        return nil
-    }
-    
-    func mapGridItem(with item: [String : Any]) -> MLBusinessTouchpointsGridItemModel? {
-        guard let iconImageUrl = item["iconImageUrl"] as? String,
-            let title = item["title"] as? String,
-            let subtitle = item["subtitle"] as? String
-            else { return nil }
-        return MLBusinessTouchpointsGridItemModel(title: title,
-                                                  subtitle: subtitle,
-                                                  iconImageUrl: iconImageUrl,
-                                                  deepLink: item["deepLink"] as? String,
-                                                  trackId: item["trackingId"] as? String)
     }
 }

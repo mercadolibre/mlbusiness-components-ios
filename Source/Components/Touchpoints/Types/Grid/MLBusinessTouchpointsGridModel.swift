@@ -11,7 +11,7 @@ class MLBusinessTouchpointsGridModel: NSObject, Codable {
     private let title: String?
     private let subtitle: String?
     private let items: [MLBusinessTouchpointsGridItemModel]
-    
+
     init(title: String?, subtitle: String?, items: [MLBusinessTouchpointsGridItemModel]) {
         self.title = title
         self.subtitle = subtitle
@@ -23,11 +23,11 @@ extension MLBusinessTouchpointsGridModel: MLBusinessDiscountBoxData {
     func getTitle() -> String? {
         return title
     }
-    
+
     func getSubtitle() -> String? {
         return subtitle
     }
-    
+
     func getItems() -> [MLBusinessSingleItemProtocol] {
         return items
     }
@@ -35,17 +35,17 @@ extension MLBusinessTouchpointsGridModel: MLBusinessDiscountBoxData {
 
 class MLBusinessTouchpointsGridItemModel: NSObject, Codable {
     private let title: String
-    private let subTitle: String
-    private let iconImageUrl: String
-    private let deepLink: String?
-    private let trackId: String?
-    
-    init(title: String, subtitle: String, iconImageUrl: String, deepLink: String? = nil, trackId: String? = nil) {
+    private let subtitle: String
+    private let image: String
+    private let deeplink: String?
+    private let trackingId: String?
+
+    init(title: String, subtitle: String, image: String, deeplink: String? = nil, trackingId: String? = nil) {
         self.title = title
-        self.subTitle = subtitle
-        self.iconImageUrl = iconImageUrl
-        self.deepLink = deepLink
-        self.trackId = trackId
+        self.subtitle = subtitle
+        self.image = image
+        self.deeplink = deeplink
+        self.trackingId = trackingId
     }
 }
 
@@ -55,23 +55,23 @@ extension MLBusinessTouchpointsGridItemModel: MLBusinessSingleItemProtocol {
     }
     
     public func subtitleForItem() -> String {
-        return subTitle
+        return subtitle
     }
     
     public func iconImageUrlForItem() -> String {
-        return iconImageUrl
+        return image
     }
     
     public func deepLinkForItem() -> String? {
-        return deepLink
+        return deeplink
     }
     
     public func trackIdForItem() -> String? {
-        return trackId
+        return trackingId
     }
     
     public func eventDataForItem() -> [String : Any]? {
-        guard let trackId = trackId else { return nil }
-        return ["tracking_id" : trackId]
+        guard let trackingId = trackingId else { return nil }
+        return ["tracking_id" : trackingId]
     }
 }

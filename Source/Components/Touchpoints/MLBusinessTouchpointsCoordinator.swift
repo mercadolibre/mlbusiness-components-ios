@@ -19,9 +19,13 @@ open class MLBusinessTouchpointsCoordinator {
     }
     
     public func getDiscountTouchpointsView() -> UIView? {
-        touchpointViewType = registry.views(for: touchpointsData.getType())
-        let touchpointMapper = registry.mapper(for: touchpointsData.getType())
-        let codableContent = touchpointMapper?.map(dictionary: touchpointsData.getContent())
+        let touchpointResponse = touchpointsData.getResponse()
+        guard let touchpointType = touchpointResponse["type"] as? String,
+            let touchpointContent = touchpointResponse["content"] as? [String : Any]
+            else { return UIView(frame: .zero) }
+        touchpointViewType = registry.views(for: touchpointType)
+        let touchpointMapper = registry.mapper(for: touchpointType)
+        let codableContent = touchpointMapper?.map(dictionary: MLBusinessCodableDictionary(value: touchpointContent))
         touchpointView = touchpointViewType?.init(configuration: codableContent, trackingProvider: touchpointsData.getDiscountTracker?())
         return touchpointView
     }
@@ -32,10 +36,14 @@ open class MLBusinessTouchpointsCoordinator {
     
     public func update(_ data: MLBusinessTouchpointsData) {
         touchpointsData = data
+        let touchpointResponse = touchpointsData.getResponse()
+        guard let touchpointType = touchpointResponse["type"] as? String,
+            let touchpointContent = touchpointResponse["content"] as? [String : Any]
+            else { return }
         
-        if let viewType = registry.views(for: touchpointsData.getType()) {
-            let touchpointMapper = registry.mapper(for: touchpointsData.getType())
-            let codableContent = touchpointMapper?.map(dictionary: touchpointsData.getContent())
+        if let viewType = registry.views(for: touchpointType) {
+            let touchpointMapper = registry.mapper(for: touchpointType)
+            let codableContent = touchpointMapper?.map(dictionary: MLBusinessCodableDictionary(value: touchpointContent))
             
             if viewType != touchpointViewType {
                 touchpointView = touchpointViewType?.init(configuration: codableContent, trackingProvider: touchpointsData.getDiscountTracker?())
