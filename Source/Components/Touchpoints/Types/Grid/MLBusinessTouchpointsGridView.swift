@@ -7,7 +7,7 @@
 
 import Foundation
 
-class MLBusinessTouchpointsGridView: MLBusinessTouchpointsView {
+class MLBusinessTouchpointsGridView: MLBusinessTouchpointsBaseView {
     
     private var discountView = MLBusinessDiscountBoxView(MLBusinessTouchpointsGridData(items: []))
 
@@ -15,7 +15,7 @@ class MLBusinessTouchpointsGridView: MLBusinessTouchpointsView {
         super.init(configuration: configuration, trackingProvider: trackingProvider)
         setup()
         setupContraints()
-        update(with: configuration)
+        update(with: configuration, trackingProvider: trackingProvider)
     }
 
     private func setup() {
@@ -32,7 +32,7 @@ class MLBusinessTouchpointsGridView: MLBusinessTouchpointsView {
         ])
     }
     
-    override func update(with configuration: Codable?) {
+    override func update(with configuration: Codable?, trackingProvider: MLBusinessDiscountTrackerProtocol?) {
         guard let model = configuration as? MLBusinessTouchpointsGridModel else { return }
         discountView.update(MLBusinessTouchpointsGridData(title: model.getTitle(), subtitle: model.getSubtitle(), items: model.getItems(), trackingProvider: trackingProvider))
     }

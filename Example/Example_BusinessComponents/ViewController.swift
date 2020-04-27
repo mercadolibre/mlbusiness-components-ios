@@ -88,21 +88,18 @@ extension ViewController {
     }
     
     private func setupDiscountTouchpointsView(numberOfItems: Int, bottomOf targetView: UIView) -> UIView {
-        let coordinator = MLBusinessTouchpointsCoordinator(DiscountTouchpointsGridData(numberOfItems: numberOfItems))
-        if let discountTouchpointsView = coordinator.getDiscountTouchpointsView() {
-            containerView.addSubview(discountTouchpointsView)
-            NSLayoutConstraint.activate([
-                discountTouchpointsView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
-                discountTouchpointsView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
-                discountTouchpointsView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16)
-            ])
-            coordinator.addTapAction { (selectedIndex, deepLink, trackId) in
-                print("EBC: index \(selectedIndex), deeplink: \(deepLink ?? ""), trackId: \(trackId ?? "")")
-                coordinator.update(DiscountTouchpointsGridData(numberOfItems: Int.random(in: 1...6)))
-            }
-            return discountTouchpointsView
+        let discountTouchpointsView = MLBusinessTouchpointsView(DiscountTouchpointsGridData(numberOfItems: numberOfItems))
+        containerView.addSubview(discountTouchpointsView)
+        NSLayoutConstraint.activate([
+            discountTouchpointsView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            discountTouchpointsView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+            discountTouchpointsView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16)
+        ])
+        discountTouchpointsView.addTapAction { (selectedIndex, deepLink, trackId) in
+            print("EBC: index \(selectedIndex), deeplink: \(deepLink ?? ""), trackId: \(trackId ?? "")")
+            discountTouchpointsView.update(with: DiscountTouchpointsGridData(numberOfItems: Int.random(in: 1...6)))
         }
-        return UIView(frame: .zero)
+        return discountTouchpointsView
     }
     
     private func setupDownloadAppView(bottomOf targetView: UIView) -> MLBusinessDownloadAppView {
