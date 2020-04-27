@@ -7,20 +7,20 @@
 
 import Foundation
 
-public class MLBusinessCodableDictionary: Codable, CustomStringConvertible {
+class MLBusinessCodableDictionary: Codable, CustomStringConvertible {
     private var value: [String: Any]
 
-    public init(value: [String: Any]) {
+    init(value: [String: Any]) {
         self.value = value
     }
 
-    public var rawValue: [String: Any] {
+    var rawValue: [String: Any] {
         return value
     }
 
     // MARK: - subscripts
 
-    public subscript(key: String) -> Any? {
+    subscript(key: String) -> Any? {
         get {
             return value[key]
         }
@@ -31,42 +31,42 @@ public class MLBusinessCodableDictionary: Codable, CustomStringConvertible {
 
     // MARK: - Dictionary implementations
 
-    public var isEmpty: Bool {
+    var isEmpty: Bool {
         return value.isEmpty
     }
 
-    public var count: Int {
+    var count: Int {
         return value.count
     }
 
-    public var capacity: Int {
+    var capacity: Int {
         return value.capacity
     }
 
-    public func index(forKey key: String) -> Dictionary<String, Any>.Index? {
+    func index(forKey key: String) -> Dictionary<String, Any>.Index? {
         return value.index(forKey: key)
     }
 
-    public var first: (key: String, value: Any)? {
+    var first: (key: String, value: Any)? {
         return value.first
     }
 
-    public var keys: Dictionary<String, Any>.Keys {
+    var keys: Dictionary<String, Any>.Keys {
         return value.keys
     }
 
-    public var values: Dictionary<String, Any>.Values {
+    var values: Dictionary<String, Any>.Values {
         return value.values
     }
 
     // MARK: - Codable
 
-    public struct DynamicCodingKeys: CodingKey {
-        public var stringValue: String
-        public var intValue: Int?
+    struct DynamicCodingKeys: CodingKey {
+        var stringValue: String
+        var intValue: Int?
 
-        public init?(stringValue: String) { self.stringValue = stringValue }
-        public init?(intValue: Int) { self.intValue = intValue
+        init?(stringValue: String) { self.stringValue = stringValue }
+        init?(intValue: Int) { self.intValue = intValue
             stringValue = "\(intValue)"
         }
 
@@ -79,7 +79,7 @@ public class MLBusinessCodableDictionary: Codable, CustomStringConvertible {
         }
     }
 
-    public required init(from decoder: Decoder) throws {
+    required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: DynamicCodingKeys.self)
 
         var dict: [String: Any] = [:]
@@ -113,7 +113,7 @@ public class MLBusinessCodableDictionary: Codable, CustomStringConvertible {
         value = dict
     }
 
-    public func encode(to encoder: Encoder) throws {
+    func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: DynamicCodingKeys.self)
 
         for (key, value) in value {
@@ -174,13 +174,13 @@ public class MLBusinessCodableDictionary: Codable, CustomStringConvertible {
         }
     }
 
-    public var description: String {
+    var description: String {
         return "[".appending(keys.sorted().map { "\"\($0)\": \(toString(value: rawValue[$0] ?? ""))" }.joined(separator: ", ").appending("]"))
     }
 }
 
 extension MLBusinessCodableDictionary: Hashable {
-    public static func == (lhs: MLBusinessCodableDictionary, rhs: MLBusinessCodableDictionary) -> Bool {
+    static func == (lhs: MLBusinessCodableDictionary, rhs: MLBusinessCodableDictionary) -> Bool {
         guard let lhsh = lhs.rawValue as? [String: AnyHashable],
             let rhsh = rhs.rawValue as? [String: AnyHashable] else {
             return false
@@ -189,7 +189,7 @@ extension MLBusinessCodableDictionary: Hashable {
         return lhsh == rhsh
     }
 
-    public func hash(into hasher: inout Hasher) {
+    func hash(into hasher: inout Hasher) {
         if let hashable = self.rawValue as? [String: AnyHashable] {
             hasher.combine(hashable)
         } else {
