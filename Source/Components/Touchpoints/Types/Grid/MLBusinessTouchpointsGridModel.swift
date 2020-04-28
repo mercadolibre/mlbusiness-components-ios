@@ -37,14 +37,14 @@ class MLBusinessTouchpointsGridItemModel: NSObject, Codable {
     private let title: String
     private let subtitle: String
     private let image: String
-    private let deeplink: String?
+    private let link: String?
     private let trackingId: String?
 
-    init(title: String, subtitle: String, image: String, deeplink: String? = nil, trackingId: String? = nil) {
+    init(title: String, subtitle: String, image: String, link: String? = nil, trackingId: String? = nil) {
         self.title = title
         self.subtitle = subtitle
         self.image = image
-        self.deeplink = deeplink
+        self.link = link
         self.trackingId = trackingId
     }
 }
@@ -63,11 +63,11 @@ extension MLBusinessTouchpointsGridItemModel: MLBusinessSingleItemProtocol {
     }
     
     public func deepLinkForItem() -> String? {
-        return deeplink
+        return link
     }
     
     public func trackIdForItem() -> String? {
-        return trackingId
+        return link
     }
     
     public func eventDataForItem() -> [String : Any]? {

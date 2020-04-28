@@ -9,6 +9,6 @@ import Foundation
 
 @objc public protocol MLBusinessTouchpointsData: NSObjectProtocol {
     @objc func getResponse() -> [String : Any]
-    @objc optional func getDiscountTracker() -> MLBusinessDiscountTrackerProtocol?
-    //delegate para PRINTS
+    @objc optional func getTouchpointsTracker() -> MLBusinessDiscountTrackerProtocol?
+    @objc optional func getPrints() -> [String : Any]
 }
