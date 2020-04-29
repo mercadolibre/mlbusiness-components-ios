@@ -101,12 +101,11 @@ extension MLBusinessTouchpointsGridItemModel: MLBusinessSingleItemProtocol {
     }
     
     public func trackIdForItem() -> String? {
-        return link
+        return trackingId
     }
     
     public func eventDataForItem() -> [String : Any]? {
-        guard let tracking = tracking, let eventData = tracking.eventData else { return nil }
-        return ["event_data" : eventData]
+        return eventData?.rawValue
     }
 }
 

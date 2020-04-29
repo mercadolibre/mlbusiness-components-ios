@@ -7,12 +7,19 @@
 
 import Foundation
 
+@objc public protocol MLBusinessTouchpointsUserInteractionHandler: NSObjectProtocol {
+    func didTap(with selectedIndex: Int, deeplink: String, trackingId: String)
+}
+
 @objcMembers
 open class MLBusinessTouchpointsView: UIView {
     private let registry = MLBusinessTouchpointsRegistry()
     private var touchpointView: MLBusinessTouchpointsBaseView?
-    private var touchpointViewType: String?
     private var touchpointsData: MLBusinessTouchpointsData
+    private var touchpointTracker: MLBusinessTouchpointsTrackerProtocol?
+    private var componentTrackable: ComponentTrackable?
+    public weak var delegate: MLBusinessTouchpointsUserInteractionHandler?
+    private var trackingProvider: MLBusinessDiscountTrackerProtocol?
     
     public init(_ data: MLBusinessTouchpointsData) {
         touchpointsData = data
@@ -25,42 +32,55 @@ open class MLBusinessTouchpointsView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func addTapAction(_ action: ((_ index: Int, _ deepLink: String?, _ trackId: String?) -> Void)?) {
-        touchpointView?.addTapAction(action)
-    }
-    
     public func update(with data: MLBusinessTouchpointsData) {
-        touchpointsData = data
-        let touchpointResponse = data.getResponse()
-        let touchpointContent = touchpointResponse.getTouchpointContent()
-        let touchpointViewType = touchpointResponse.getTouchpointType()
-
-        if let viewType = registry.views(for: touchpointViewType) {
-            let touchpointMapper = registry.mapper(for: touchpointViewType)
+        let touchpointType = data.getResponse().getTouchpointType()
+        let touchpointContent = data.getResponse().getTouchpointContent()
+        
+        if let viewType = registry.views(for: touchpointType) {
+            let touchpointMapper = registry.mapper(for: touchpointType)
             let codableContent = touchpointMapper?.map(dictionary: MLBusinessCodableDictionary(value: touchpointContent))
             
-            if self.touchpointViewType != touchpointViewType {
-                self.touchpointViewType = touchpointViewType
-                touchpointView = viewType.init(configuration: codableContent, touchpointsData: data)
-                subviews.forEach{ $0.removeFromSuperview() }
-                setupTouchpointView()
+            touchpointTracker = MLBusinessTouchpointsTracker(with: data.getResponse(), trackingProvider:trackingProvider)
+            componentTrackable = codableContent as? ComponentTrackable
+            
+            if data.getResponse().getTouchpointType() == touchpointsData.getResponse().getTouchpointType() && touchpointView != nil{
+                touchpointView?.update(with: codableContent)
             } else {
-                touchpointView?.update(with: codableContent, touchpointsData: data)
+                touchpointsData = data
+                touchpointView = viewType.init(configuration: codableContent)
+                setupTouchpointView()
             }
+            
+            touchpointView?.delegate = self
+            trackShow()
         }
     }
     
+    public func setTouchpointsTracker(with trackingProvider: MLBusinessDiscountTrackerProtocol) {
+        self.trackingProvider = trackingProvider
+    }
+    
     public func trackVisiblePrints() {
-        touchpointView?.trackVisiblePrints()
+        guard let visibleItems = getVisibleItems() else { return }
+        touchpointTracker?.trackPrints(items: visibleItems)
     }
     
     public func resetTrackedPrints() {
-        touchpointView?.resetTrackedPrints()
+        touchpointTracker?.resetTrackedPrints()
+    }
+    
+    private func getVisibleItems() -> [Trackable]? {
+        return touchpointView?.getVisibleItems()
+    }
+    
+    private func trackShow() {
+        guard let items = componentTrackable?.getTrackables() else { return }
+        touchpointTracker?.trackShow(items: items)
     }
     
     private func setupTouchpointView() {
         guard let touchpointView = touchpointView else { return }
-        
+        subviews.forEach{ $0.removeFromSuperview() }
         touchpointView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(touchpointView)
         
@@ -70,5 +90,20 @@ open class MLBusinessTouchpointsView: UIView {
             touchpointView.rightAnchor.constraint(equalTo: rightAnchor),
             touchpointView.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
+    }
+}
+
+extension MLBusinessTouchpointsView: MLBusinessTouchpointsViewProtocol {
+    func trackTap(with selectedIndex: Int?, deeplink: String?, trackingId: String?) {
+        if let selectedIndex = selectedIndex, let deeplink = deeplink, let trackingId = trackingId  {
+            delegate?.didTap(with: selectedIndex, deeplink: deeplink, trackingId: trackingId)
+            guard let items = componentTrackable?.getTrackables() else { return }
+            items.forEach { item in
+                if item.trackingId == trackingId {
+                    touchpointTracker?.trackTap(item: item)
+                    return
+                }
+            }
+        }
     }
 }

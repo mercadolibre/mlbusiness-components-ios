@@ -9,7 +9,6 @@ import Foundation
 
 @objc public protocol MLBusinessTouchpointsData: NSObjectProtocol {
     @objc func getResponse() -> MLBusinessTouchpointsDataResponse
-    @objc optional func getTouchpointsTracker() -> MLBusinessDiscountTrackerProtocol?
 }
 
 @objc public protocol MLBusinessTouchpointsDataResponse: NSObjectProtocol {

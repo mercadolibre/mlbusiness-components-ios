@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     
     private weak var ringView: MLBusinessLoyaltyRingView?
     private weak var loyaltyHeaderView: MLBusinessLoyaltyHeaderView?
+    private var discountTouchpointsView: MLBusinessTouchpointsView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,17 +89,16 @@ extension ViewController {
     }
     
     private func setupDiscountTouchpointsView(numberOfItems: Int, bottomOf targetView: UIView) -> UIView {
-        let discountTouchpointsView = MLBusinessTouchpointsView(DiscountTouchpointsGridData(numberOfItems: numberOfItems))
+        discountTouchpointsView = MLBusinessTouchpointsView(DiscountTouchpointsGridData(numberOfItems: numberOfItems))
+        guard let discountTouchpointsView = discountTouchpointsView else { return UIView(frame: .zero) }
+        discountTouchpointsView.delegate = self
+        discountTouchpointsView.setTouchpointsTracker(with: DiscountTrackerData(touchPointId: "BusinessComponents-Example"))
         containerView.addSubview(discountTouchpointsView)
         NSLayoutConstraint.activate([
             discountTouchpointsView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
             discountTouchpointsView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
             discountTouchpointsView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16)
         ])
-        discountTouchpointsView.addTapAction { (selectedIndex, deepLink, trackId) in
-            print("EBC: index \(selectedIndex), deeplink: \(deepLink ?? ""), trackId: \(trackId ?? "")")
-            discountTouchpointsView.update(with: DiscountTouchpointsGridData(numberOfItems: Int.random(in: 1...6)))
-        }
         return discountTouchpointsView
     }
     
@@ -207,4 +207,12 @@ extension ViewController: MLBusinessAnimatedButtonDelegate {
         print("TimeOut")
     }
 
+}
+
+extension ViewController: MLBusinessTouchpointsUserInteractionHandler {
+    func didTap(with selectedIndex: Int, deeplink: String, trackingId: String) {
+        print("EBC: index \(selectedIndex), deeplink: \(deeplink), trackId: \(trackingId)")
+        guard let discountTouchpointsView = discountTouchpointsView else { return }
+        discountTouchpointsView.update(with: DiscountTouchpointsGridData(numberOfItems: Int.random(in: 1...6)))
+    }
 }

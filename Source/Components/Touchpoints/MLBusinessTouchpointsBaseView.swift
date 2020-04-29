@@ -8,36 +8,30 @@
 import UIKit
 
 protocol MLBusinessTouchpointsViewInitializable {
-    init?(configuration: Codable?, touchpointsData: MLBusinessTouchpointsData)
+    init?(configuration: Codable?)
 }
 
 protocol MLBusinessTouchpointsViewUpdatable {
-    func update(with: Codable?, touchpointsData: MLBusinessTouchpointsData)
+    func update(with: Codable?)
+}
+
+protocol MLBusinessTouchpointsViewProtocol: class {
+    func trackTap(with selectedIndex: Int?, deeplink: String?, trackingId: String?)
 }
 
 class MLBusinessTouchpointsBaseView: UIView & MLBusinessTouchpointsViewInitializable & MLBusinessTouchpointsViewUpdatable {
-    weak var delegate: MLBusinessUserInteractionProtocol?
-    let touchpointsData: MLBusinessTouchpointsData
+    weak var delegate: MLBusinessTouchpointsViewProtocol?
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    required init?(configuration: Codable?, touchpointsData: MLBusinessTouchpointsData) {
-        self.touchpointsData = touchpointsData
+        
+    required init?(configuration: Codable?) {
         super.init(frame: .zero)
     }
 
-    func update(with _: Codable?, touchpointsData: MLBusinessTouchpointsData) {}
+    func update(with _: Codable?) {}
     
-    func addTapAction(_ action: ((_ index: Int, _ deepLink: String?, _ trackId: String?) -> Void)?) {}
-    
-    func trackVisiblePrints() { }
-    
-    func resetTrackedPrints() { }
-    
-    func getTrackables() -> [Trackable]? {
-        return nil
-    }
+    func getVisibleItems() -> [Trackable]? { return nil }
 }
