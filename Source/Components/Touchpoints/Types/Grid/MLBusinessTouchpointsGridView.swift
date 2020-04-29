@@ -53,7 +53,7 @@ class MLBusinessTouchpointsGridView: MLBusinessTouchpointsBaseView {
     }
     
     override func resetTrackedPrints() {
-        //llamar al metodo de reset prints de la clase MLBusinessTouchpointsPrintsTracker
+        touchpointTracker?.resetTrackedPrints()
     }
     
     override func getTrackables() -> [Trackable]? {
