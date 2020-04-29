@@ -16,7 +16,37 @@ class DiscountTouchpointsGridData: NSObject, MLBusinessTouchpointsData {
         self.numberOfItems = 5 - (min(numberOfItems, 6) - 1)
     }
     
-    func getResponse() -> [String : Any] {
+    func getResponse() -> MLBusinessTouchpointsDataResponse {
+        
+        return DiscountTouchpointsGridDataResponse(numberOfItems: numberOfItems)
+    }
+    
+    func getTouchpointsTracker() -> MLBusinessDiscountTrackerProtocol? {
+        return DiscountTrackerData(touchPointId: "BusinessComponents-Example")
+    }
+}
+
+func createItem(title: String, subtitle: String, image: String, link: String, eventData: [String : Any]) -> [String : Any] {
+    return ["title" : title, "subtitle" : subtitle, "image" : image, "link" : link, "eventData" : eventData]
+}
+
+private class DiscountTouchpointsGridDataResponse: NSObject, MLBusinessTouchpointsDataResponse {
+    
+    private let numberOfItems: Int
+    
+    init(numberOfItems: Int) {
+        self.numberOfItems = numberOfItems
+    }
+    
+    func getTouchpointId() -> String {
+        return "BusinessComponents-Example"
+    }
+    
+    func getTouchpointType() -> String {
+        return "GRID"
+    }
+    
+    func getTouchpointContent() -> [String : Any] {
         var items: [[String : Any]] = []
         
         items.append(createItem(title: "Hasta", subtitle: "$ 200", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/McDonald%27s_Golden_Arches.svg/1200px-McDonald%27s_Golden_Arches.svg.png", link: "meli://home", eventData: ["tracking_id":"0"]))
@@ -27,16 +57,8 @@ class DiscountTouchpointsGridData: NSObject, MLBusinessTouchpointsData {
         items.append(createItem(title: "Hasta", subtitle: "$ 200", image: "https://pbs.twimg.com/profile_images/1124417403566395394/9Wuzg8pf.png", link: "meli://home", eventData: ["tracking_id":"5"]))
         
         let shiftedItems = Array(items.suffix(from: numberOfItems)).shift(withDistance: Int.random(in: 1...5))
-        let content = ["title": "Nuevos", "subtitle": "Touchpoints", "items" : shiftedItems] as [String : Any]
-        return ["type": "GRID", "content": content]
+        
+        return ["title": "Nuevos", "subtitle": "Touchpoints", "items" : shiftedItems] as [String : Any]
     }
-    
-    func getTouchpointsTracker() -> MLBusinessDiscountTrackerProtocol? {
-        return DiscountTrackerData(touchPointId: "BusinessComponents-Example")
-    }
-}
-
-func createItem(title: String, subtitle: String, image: String, link: String, eventData: [String : Any]) -> [String : Any] {
-    return ["title" : title, "subtitle" : subtitle, "image" : image, "link" : link, "eventData" : eventData]
 }
 

@@ -9,13 +9,15 @@ import Foundation
 
 class MLBusinessTouchpointsGridView: MLBusinessTouchpointsBaseView {
     
-    private var discountView = MLBusinessDiscountBoxView(MLBusinessTouchpointsGridData(items: []))
+    private var discountView = MLBusinessDiscountBoxView(MLBusinessTouchpointsGridModel())
+    private var model: MLBusinessTouchpointsGridModel?
+    private var touchpointTracker: MLBusinessTouchpointsPrintsTrackerProtocol?
 
-    required init?(configuration: Codable?, trackingProvider: MLBusinessDiscountTrackerProtocol?) {
-        super.init(configuration: configuration, trackingProvider: trackingProvider)
+    required init?(configuration: Codable?, touchpointsData: MLBusinessTouchpointsData) {
+        super.init(configuration: configuration, touchpointsData: touchpointsData)
         setup()
         setupContraints()
-        update(with: configuration, trackingProvider: trackingProvider)
+        update(with: configuration, touchpointsData: touchpointsData)
     }
 
     private func setup() {
@@ -32,12 +34,31 @@ class MLBusinessTouchpointsGridView: MLBusinessTouchpointsBaseView {
         ])
     }
     
-    override func update(with configuration: Codable?, trackingProvider: MLBusinessDiscountTrackerProtocol?) {
+    override func update(with configuration: Codable?, touchpointsData: MLBusinessTouchpointsData) {
         guard let model = configuration as? MLBusinessTouchpointsGridModel else { return }
-        discountView.update(MLBusinessTouchpointsGridData(title: model.getTitle(), subtitle: model.getSubtitle(), items: model.getItems(), trackingProvider: trackingProvider))
+        self.model = model
+        touchpointTracker = MLBusinessTouchpointsPrintsTracker(with: touchpointsData)
+        discountView.update(model)
     }
     
     override func addTapAction(_ action: ((Int, String?, String?) -> Void)?) {
         discountView.addTapAction(action)
     }
+    
+    override func trackVisiblePrints() {
+        guard let trackables = getTrackables() else { return }
+        
+        touchpointTracker?.append(trackables: trackables)
+        touchpointTracker?.trackPendingPrints()
+    }
+    
+    override func resetTrackedPrints() {
+        //llamar al metodo de reset prints de la clase MLBusinessTouchpointsPrintsTracker
+    }
+    
+    override func getTrackables() -> [Trackable]? {
+        guard let model = model else { return nil }
+        return model.getTrackables()
+    }
+    
 }

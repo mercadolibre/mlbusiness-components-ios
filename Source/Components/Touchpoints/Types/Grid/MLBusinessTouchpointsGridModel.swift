@@ -7,15 +7,33 @@
 
 import Foundation
 
+protocol ComponentTrackable {
+    func getTrackables() -> [Trackable]?
+}
+
+protocol Trackable {
+    var trackingId: String? { get }
+    var eventData: MLBusinessCodableDictionary? { get }
+}
+
 class MLBusinessTouchpointsGridModel: NSObject, Codable {
     private let title: String?
     private let subtitle: String?
     private let items: [MLBusinessTouchpointsGridItemModel]
+    private let tracking: TouchpointsTrackingInfo?
 
-    init(title: String?, subtitle: String?, items: [MLBusinessTouchpointsGridItemModel]) {
+    init(title: String?, subtitle: String?, items: [MLBusinessTouchpointsGridItemModel], tracking: TouchpointsTrackingInfo? = nil) {
         self.title = title
         self.subtitle = subtitle
         self.items = items
+        self.tracking = tracking
+    }
+    
+    override init() {
+        self.title = ""
+        self.subtitle = ""
+        self.items = []
+        self.tracking = nil
     }
 }
 
@@ -33,19 +51,35 @@ extension MLBusinessTouchpointsGridModel: MLBusinessDiscountBoxData {
     }
 }
 
+extension MLBusinessTouchpointsGridModel: Trackable {
+    var trackingId: String? {
+        return tracking?.trackingId
+    }
+
+    var eventData: MLBusinessCodableDictionary? {
+        return tracking?.eventData
+    }
+}
+
+extension MLBusinessTouchpointsGridModel: ComponentTrackable {
+    func getTrackables() -> [Trackable]? {
+        return items
+    }
+}
+
 class MLBusinessTouchpointsGridItemModel: NSObject, Codable {
     private let title: String
     private let subtitle: String
     private let image: String
     private let link: String?
-    private let trackingId: String?
+    private let tracking: TouchpointsTrackingInfo?
 
-    init(title: String, subtitle: String, image: String, link: String? = nil, trackingId: String? = nil) {
+    init(title: String, subtitle: String, image: String, link: String? = nil, tracking: TouchpointsTrackingInfo? = nil) {
         self.title = title
         self.subtitle = subtitle
         self.image = image
         self.link = link
-        self.trackingId = trackingId
+        self.tracking = tracking
     }
 }
 
@@ -71,7 +105,22 @@ extension MLBusinessTouchpointsGridItemModel: MLBusinessSingleItemProtocol {
     }
     
     public func eventDataForItem() -> [String : Any]? {
-        guard let trackingId = trackingId else { return nil }
-        return ["tracking_id" : trackingId]
+        guard let tracking = tracking, let eventData = tracking.eventData else { return nil }
+        return ["event_data" : eventData]
     }
+}
+
+extension MLBusinessTouchpointsGridItemModel: Trackable {
+    var trackingId: String? {
+        return tracking?.trackingId
+    }
+
+    var eventData: MLBusinessCodableDictionary? {
+        return tracking?.eventData
+    }
+}
+
+struct TouchpointsTrackingInfo: Codable & Trackable {
+    let trackingId: String?
+    let eventData: MLBusinessCodableDictionary?
 }
