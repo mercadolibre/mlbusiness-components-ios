@@ -20,20 +20,17 @@ class MLBusinessTouchpointsGridModel: NSObject, Codable {
     private let title: String?
     private let subtitle: String?
     private let items: [MLBusinessTouchpointsGridItemModel]
-    private let tracking: TouchpointsTrackingInfo?
 
-    init(title: String?, subtitle: String?, items: [MLBusinessTouchpointsGridItemModel], tracking: TouchpointsTrackingInfo? = nil) {
+    init(title: String?, subtitle: String?, items: [MLBusinessTouchpointsGridItemModel]) {
         self.title = title
         self.subtitle = subtitle
         self.items = items
-        self.tracking = tracking
     }
     
     override init() {
         self.title = ""
         self.subtitle = ""
         self.items = []
-        self.tracking = nil
     }
 }
 
@@ -48,16 +45,6 @@ extension MLBusinessTouchpointsGridModel: MLBusinessDiscountBoxData {
 
     func getItems() -> [MLBusinessSingleItemProtocol] {
         return items
-    }
-}
-
-extension MLBusinessTouchpointsGridModel: Trackable {
-    var trackingId: String? {
-        return tracking?.trackingId
-    }
-
-    var eventData: MLBusinessCodableDictionary? {
-        return tracking?.eventData
     }
 }
 
