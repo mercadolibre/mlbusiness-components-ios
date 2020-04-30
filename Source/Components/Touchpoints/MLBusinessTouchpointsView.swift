@@ -33,17 +33,17 @@ open class MLBusinessTouchpointsView: UIView {
     }
     
     public func update(with data: MLBusinessTouchpointsData) {
-        let touchpointType = data.getResponse().getTouchpointType()
-        let touchpointContent = data.getResponse().getTouchpointContent()
+        let touchpointType = data.getTouchpointType()
+        let touchpointContent = data.getTouchpointContent()
         
         if let viewType = registry.views(for: touchpointType) {
             let touchpointMapper = registry.mapper(for: touchpointType)
             let codableContent = touchpointMapper?.map(dictionary: MLBusinessCodableDictionary(value: touchpointContent))
             
-            touchpointTracker = MLBusinessTouchpointsTracker(with: data.getResponse(), trackingProvider:trackingProvider)
+            touchpointTracker = MLBusinessTouchpointsTracker(with: data, trackingProvider:trackingProvider)
             componentTrackable = codableContent as? ComponentTrackable
             
-            if data.getResponse().getTouchpointType() == touchpointsData.getResponse().getTouchpointType() && touchpointView != nil{
+            if data.getTouchpointType() == touchpointsData.getTouchpointType() && touchpointView != nil{
                 touchpointView?.update(with: codableContent)
             } else {
                 touchpointsData = data

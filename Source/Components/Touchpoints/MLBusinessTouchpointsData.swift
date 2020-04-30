@@ -8,10 +8,6 @@
 import Foundation
 
 @objc public protocol MLBusinessTouchpointsData: NSObjectProtocol {
-    @objc func getResponse() -> MLBusinessTouchpointsDataResponse
-}
-
-@objc public protocol MLBusinessTouchpointsDataResponse: NSObjectProtocol {
     @objc func getTouchpointId() -> String
     @objc func getTouchpointType() -> String
     @objc func getTouchpointContent() -> [String : Any]

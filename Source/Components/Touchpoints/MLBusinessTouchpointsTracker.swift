@@ -15,12 +15,12 @@ protocol MLBusinessTouchpointsTrackerProtocol {
 }
 
 class MLBusinessTouchpointsTracker: MLBusinessTouchpointsTrackerProtocol {
-    private let touchpointsDataResponse: MLBusinessTouchpointsDataResponse
+    private let touchpointsData: MLBusinessTouchpointsData
     private let trackingProvider: MLBusinessDiscountTrackerProtocol?
     private var tracked = Set<String>()
 
-    init(with touchpointsDataResponse: MLBusinessTouchpointsDataResponse, trackingProvider: MLBusinessDiscountTrackerProtocol?) {
-        self.touchpointsDataResponse = touchpointsDataResponse
+    init(with touchpointsData: MLBusinessTouchpointsData, trackingProvider: MLBusinessDiscountTrackerProtocol?) {
+        self.touchpointsData = touchpointsData
         self.trackingProvider = trackingProvider
     }
     
@@ -59,7 +59,7 @@ class MLBusinessTouchpointsTracker: MLBusinessTouchpointsTrackerProtocol {
     private func track(items: [Trackable], action: String) {
         var eventData = [String : Any]()
         var touchpointTypeData = [String : Any]()
-        let touchpointsType = touchpointsDataResponse.getTouchpointType()
+        let touchpointsType = touchpointsData.getTouchpointType()
         var itemsToTrack = [[String: Any]]()
         var itemToTrack = [String: Any]()
         
@@ -69,7 +69,7 @@ class MLBusinessTouchpointsTracker: MLBusinessTouchpointsTrackerProtocol {
         }
         touchpointTypeData["items"] = itemsToTrack
         
-        if let touchpointTracking = touchpointsDataResponse.getTouchpointTracking?() {
+        if let touchpointTracking = touchpointsData.getTouchpointTracking?() {
             touchpointTracking.forEach { item in
                 eventData[item.key] = item.value
             }

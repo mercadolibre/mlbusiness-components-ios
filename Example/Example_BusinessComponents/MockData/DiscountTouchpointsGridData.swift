@@ -16,20 +16,6 @@ class DiscountTouchpointsGridData: NSObject, MLBusinessTouchpointsData {
         self.numberOfItems = 5 - (min(numberOfItems, 6) - 1)
     }
     
-    func getResponse() -> MLBusinessTouchpointsDataResponse {
-        
-        return DiscountTouchpointsGridDataResponse(numberOfItems: numberOfItems)
-    }
-}
-
-private class DiscountTouchpointsGridDataResponse: NSObject, MLBusinessTouchpointsDataResponse {
-    
-    private let numberOfItems: Int
-    
-    init(numberOfItems: Int) {
-        self.numberOfItems = numberOfItems
-    }
-    
     func getTouchpointId() -> String {
         return "BusinessComponents-Example"
     }
