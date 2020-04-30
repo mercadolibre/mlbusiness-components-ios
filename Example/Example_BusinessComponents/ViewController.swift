@@ -89,10 +89,11 @@ extension ViewController {
     }
     
     private func setupDiscountTouchpointsView(numberOfItems: Int, bottomOf targetView: UIView) -> UIView {
-        discountTouchpointsView = MLBusinessTouchpointsView(DiscountTouchpointsGridData(numberOfItems: numberOfItems))
+        discountTouchpointsView = MLBusinessTouchpointsView()
         guard let discountTouchpointsView = discountTouchpointsView else { return UIView(frame: .zero) }
         discountTouchpointsView.delegate = self
         discountTouchpointsView.setTouchpointsTracker(with: DiscountTrackerData(touchPointId: "BusinessComponents-Example"))
+        discountTouchpointsView.update(with: DiscountTouchpointsGridData(numberOfItems: numberOfItems))
         containerView.addSubview(discountTouchpointsView)
         NSLayoutConstraint.activate([
             discountTouchpointsView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),

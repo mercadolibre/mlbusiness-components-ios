@@ -15,17 +15,15 @@ import Foundation
 open class MLBusinessTouchpointsView: UIView {
     private let registry = MLBusinessTouchpointsRegistry()
     private var touchpointView: MLBusinessTouchpointsBaseView?
-    private var touchpointsData: MLBusinessTouchpointsData
+    private var touchpointsData: MLBusinessTouchpointsData?
     private var touchpointTracker: MLBusinessTouchpointsTrackerProtocol?
     private var componentTrackable: ComponentTrackable?
     public weak var delegate: MLBusinessTouchpointsUserInteractionHandler?
     private var trackingProvider: MLBusinessDiscountTrackerProtocol?
     
-    public init(_ data: MLBusinessTouchpointsData) {
-        touchpointsData = data
+    public init() {
         super.init(frame: .zero)
         prepareForAutolayout()
-        update(with: data)
     }
     
     public required init?(coder: NSCoder) {
@@ -43,7 +41,7 @@ open class MLBusinessTouchpointsView: UIView {
             touchpointTracker = MLBusinessTouchpointsTracker(with: data, trackingProvider:trackingProvider)
             componentTrackable = codableContent as? ComponentTrackable
             
-            if data.getTouchpointType() == touchpointsData.getTouchpointType() && touchpointView != nil{
+            if data.getTouchpointType() == touchpointsData?.getTouchpointType() && touchpointView != nil{
                 touchpointView?.update(with: codableContent)
             } else {
                 touchpointsData = data
