@@ -17,6 +17,16 @@ protocol MLBusinessTouchpointsViewUpdatable {
 
 protocol MLBusinessTouchpointsViewProtocol: class {
     func trackTap(with selectedIndex: Int?, deeplink: String?, trackingId: String?)
+    func trackPrints(prints: [Trackable]?)
+}
+
+protocol ComponentTrackable {
+    func getTrackables() -> [Trackable]?
+}
+
+protocol Trackable {
+    var trackingId: String? { get }
+    var eventData: MLBusinessCodableDictionary? { get }
 }
 
 class MLBusinessTouchpointsBaseView: UIView & MLBusinessTouchpointsViewInitializable & MLBusinessTouchpointsViewUpdatable {
