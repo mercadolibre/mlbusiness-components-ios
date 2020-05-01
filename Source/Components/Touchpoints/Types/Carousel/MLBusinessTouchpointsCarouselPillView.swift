@@ -1,5 +1,5 @@
 //
-//  PillView.swift
+//  MLBusinessTouchpointsCarouselPillView.swift
 //  MLBusinessComponents
 //
 //  Created by Vicente Veltri on 30/04/2020.
@@ -8,7 +8,7 @@
 import Foundation
 import MLUI
 
-class PillView: UIView {
+class MLBusinessTouchpointsCarouselPillView: UIView {
     override var tintColor: UIColor! {
         didSet {
             textLabel.textColor = tintColor
@@ -65,7 +65,6 @@ class PillView: UIView {
         return iconImageView
     }()
 
-    // private var imageZeroWidth: NSLayoutConstraint?
     private var imageWidth, imageLeft: NSLayoutConstraint?
     private var pillHeight: CGFloat
 

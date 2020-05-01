@@ -1,5 +1,5 @@
 //
-//  CardCarouselCollectionViewCell.swift
+//  MLBusinessTouchpointsCarouselCollectionViewCell.swift
 //  MLBusinessComponents
 //
 //  Created by Vicente Veltri on 30/04/2020.
@@ -7,14 +7,14 @@
 
 import Foundation
 
-class CardCarouselCollectionViewCell: UICollectionViewCell {
+class MLBusinessTouchpointsCarouselCollectionViewCell: UICollectionViewCell {
     override var isHighlighted: Bool {
         didSet {
             itemView.isHighlighted = isHighlighted
         }
     }
 
-    let itemView = CardItemView()
+    let itemView = MLBusinessTouchpointsCarouselCollectionItemView()
 
     static var reuseIdentifier: String {
         return "\(String(describing: self))ReuseIdentifier"
@@ -31,7 +31,7 @@ class CardCarouselCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func update(with content: CardItemModel) {
+    func update(with content: MLBusinessTouchpointsCarouselItemModel) {
         itemView.update(with: content)
     }
 

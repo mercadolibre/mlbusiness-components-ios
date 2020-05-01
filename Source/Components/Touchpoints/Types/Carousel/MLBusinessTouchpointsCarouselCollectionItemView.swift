@@ -1,5 +1,5 @@
 //
-//  CardItemView.swift
+//  MLBusinessTouchpointsCarouselCollectionItemView.swift
 //  MLBusinessComponents
 //
 //  Created by Vicente Veltri on 30/04/2020.
@@ -8,7 +8,7 @@
 import Foundation
 import MLUI
 
-public class CardItemView: UIView {
+public class MLBusinessTouchpointsCarouselCollectionItemView: UIView {
     open var isHighlighted: Bool = false {
         didSet {
             setHighlighted(with: isHighlighted)
@@ -117,8 +117,8 @@ public class CardItemView: UIView {
         return subtitleLabel
     }()
 
-    private let pillView: PillView = {
-        let pillView = PillView(with: 16)
+    private let pillView: MLBusinessTouchpointsCarouselPillView = {
+        let pillView = MLBusinessTouchpointsCarouselPillView(with: 16)
         pillView.translatesAutoresizingMaskIntoConstraints = false
         return pillView
     }()
@@ -126,7 +126,6 @@ public class CardItemView: UIView {
     private var logoImageViewTopConstraint: NSLayoutConstraint?
     private var discountValueVerticalStackViewTopConstraint: NSLayoutConstraint?
     private var brandNameLabelTopConstraint: NSLayoutConstraint?
-    private var card: CardItemModel?
     private var containerViewBackgroundColor = UIColor.white
 
     public required init() {
@@ -211,35 +210,33 @@ public class CardItemView: UIView {
         ])
     }
 
-    func update(with discount: CardItemModel) {
-        card = discount
-
+    func update(with item: MLBusinessTouchpointsCarouselItemModel) {
         discountValueHorizontalStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         discountValueVerticalStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
 
-        if let topLabel = discount.topLabel {
+        if let topLabel = item.topLabel {
             discountValueVerticalStackView.addArrangedSubview(discountTopLabel)
             discountTopLabel.text = topLabel
         }
 
-        discountMainLabel.text = discount.mainLabel
+        discountMainLabel.text = item.mainLabel
         discountValueHorizontalStackView.addArrangedSubview(discountMainLabel)
 
-        if let rightLabel = discount.rightLabel {
+        if let rightLabel = item.rightLabel {
             discountRightLabel.text = rightLabel
             discountValueHorizontalStackView.addArrangedSubview(discountRightLabel)
         }
 
-        brandNameLabel.text = discount.title
-        subtitleLabel.text = discount.subtitle
+        brandNameLabel.text = item.title
+        subtitleLabel.text = item.subtitle
 
-        if discount.title == nil, discount.subtitle == nil {
+        if item.title == nil, item.subtitle == nil {
             brandNameLabelTopConstraint?.constant = 0
         } else {
             brandNameLabelTopConstraint?.constant = 8
         }
 
-        if let textColorString = discount.textColor {
+        if let textColorString = item.textColor {
             let textColor = textColorString.hexaToUIColor()
             discountTopLabel.textColor = textColor
             discountMainLabel.textColor = textColor
@@ -250,11 +247,11 @@ public class CardItemView: UIView {
 
         discountValueVerticalStackView.addArrangedSubview(discountValueHorizontalStackView)
 
-        if let logo = discount.image {
+        if let logo = item.image {
             logoImageView.setRemoteImage(imageUrl: logo)
         }
 
-        if let pill = discount.pill {
+        if let pill = item.pill {
             pillView.isHidden = false
             pillView.backgroundColor = pill.format.backgroundColor.hexaToUIColor()
             pillView.tintColor = pill.format.textColor.hexaToUIColor()
@@ -275,7 +272,7 @@ public class CardItemView: UIView {
             logoImageViewTopConstraint?.constant = 16
         }
 
-        if let backgroundColorString = discount.backgroundColor {
+        if let backgroundColorString = item.backgroundColor {
             containerViewBackgroundColor = backgroundColorString.hexaToUIColor()
         }
         containerView.backgroundColor = containerViewBackgroundColor

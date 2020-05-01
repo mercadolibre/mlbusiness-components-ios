@@ -1,5 +1,5 @@
 //
-//  CardCarouselCollectionItemView.swift
+//  MLBusinessTouchpointsCarouselCollectionView.swift
 //  MLBusinessComponents
 //
 //  Created by Vicente Veltri on 30/04/2020.
@@ -7,13 +7,13 @@
 
 import Foundation
 
-protocol CardCarouselCollectionItemViewProtocol: class {
+protocol MLBusinessTouchpointsCarouselCollectionViewProtocol: class {
     func trackPrints(prints: [Trackable]?)
     func trackTap(with selectedIndex: Int?, deeplink: String?, trackingId: String?)
 }
 
-class CardCarouselCollectionItemView: UIView {
-    weak var delegate: CardCarouselCollectionItemViewProtocol?
+class MLBusinessTouchpointsCarouselCollectionView: UIView {
+    weak var delegate: MLBusinessTouchpointsCarouselCollectionViewProtocol?
     var segmentId: String?
     var typeId: String?
 
@@ -24,7 +24,8 @@ class CardCarouselCollectionItemView: UIView {
         layout.minimumLineSpacing = 0
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.register(CardCarouselCollectionViewCell.self, forCellWithReuseIdentifier: CardCarouselCollectionViewCell.reuseIdentifier)
+        collectionView.register(MLBusinessTouchpointsCarouselCollectionViewCell.self,
+                                forCellWithReuseIdentifier: MLBusinessTouchpointsCarouselCollectionViewCell.reuseIdentifier)
         collectionView.backgroundColor = .clear
         collectionView.alwaysBounceHorizontal = true
         collectionView.clipsToBounds = false
@@ -34,7 +35,7 @@ class CardCarouselCollectionItemView: UIView {
         return collectionView
     }()
 
-    var cards: [CardItemModel] = []
+    var items: [MLBusinessTouchpointsCarouselItemModel] = []
     var maxItemHeight = 0.0
     var collectionViewHeightConstraint: NSLayoutConstraint?
 
@@ -69,13 +70,13 @@ class CardCarouselCollectionItemView: UIView {
 
     func clear() {}
 
-    func update(with items: [CardItemModel]) {
-        cards = items
+    func update(with items: [MLBusinessTouchpointsCarouselItemModel]) {
+        self.items = items
         setMaxItemHeight(with: items)
         collectionView.reloadData()
     }
 
-    func setMaxItemHeight(with items: [CardItemModel]) {
+    func setMaxItemHeight(with items: [MLBusinessTouchpointsCarouselItemModel]) {
         var hasTopLabel = false, hasMainLabel = false, hasTitle = false, hasSubtitle = false
         let spaceToMainLabel = 100.0, topLabelHeight = 14.0, mainLabelHeight = 28.0, titleHeight = 23.0, subtitleHeight = 13.0, spaceToBottom = 12.0
         for item in items {
@@ -102,36 +103,37 @@ class CardCarouselCollectionItemView: UIView {
     }
 }
 
-extension CardCarouselCollectionItemView: UICollectionViewDelegateFlowLayout {
+extension MLBusinessTouchpointsCarouselCollectionView: UICollectionViewDelegateFlowLayout {
     func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt _: IndexPath) -> CGSize {
         return CGSize(width: 128.0, height: maxItemHeight)
     }
 }
 
-extension CardCarouselCollectionItemView: UICollectionViewDataSource {
+extension MLBusinessTouchpointsCarouselCollectionView: UICollectionViewDataSource {
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
-        return cards.count
+        return items.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView
-            .dequeueReusableCell(withReuseIdentifier: CardCarouselCollectionViewCell.reuseIdentifier,
-                                 for: indexPath) as? CardCarouselCollectionViewCell else { return CardCarouselCollectionViewCell() }
-        let card = cards[indexPath.row]
-        cell.update(with: card)
+            .dequeueReusableCell(withReuseIdentifier: MLBusinessTouchpointsCarouselCollectionViewCell.reuseIdentifier,
+                                 for: indexPath) as? MLBusinessTouchpointsCarouselCollectionViewCell else {
+                                    return MLBusinessTouchpointsCarouselCollectionViewCell() }
+        let item = items[indexPath.row]
+        cell.update(with: item)
         return cell
     }
 }
 
-extension CardCarouselCollectionItemView: UICollectionViewDelegate {
+extension MLBusinessTouchpointsCarouselCollectionView: UICollectionViewDelegate {
     func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let link = cards[indexPath.row].link, let trackingId = cards[indexPath.row].tracking?.trackingId else { return }
+        guard let link = items[indexPath.row].link, let trackingId = items[indexPath.row].tracking?.trackingId else { return }
 
         delegate?.trackTap(with: indexPath.row, deeplink: link, trackingId: trackingId)
     }
 }
 
-extension CardCarouselCollectionItemView: UIScrollViewDelegate {
+extension MLBusinessTouchpointsCarouselCollectionView: UIScrollViewDelegate {
     public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if !decelerate {
             scrollViewDidEndDecelerating(scrollView)
@@ -147,13 +149,11 @@ extension CardCarouselCollectionItemView: UIScrollViewDelegate {
     }
 }
 
-extension CardCarouselCollectionItemView: ComponentTrackable {
+extension MLBusinessTouchpointsCarouselCollectionView: ComponentTrackable {
     func getTrackables() -> [Trackable]? {
         var trackables = [Trackable]()
         collectionView.indexPathsForVisibleItems.forEach { indexPath in
-            if cards[indexPath.row] != nil {
-                trackables.append(cards[indexPath.row])
-            }
+            trackables.append(items[indexPath.row])
         }
         return trackables.count > 0 ? trackables : nil
     }

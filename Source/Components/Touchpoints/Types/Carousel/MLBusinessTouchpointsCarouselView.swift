@@ -9,10 +9,10 @@ import Foundation
 
 class MLBusinessTouchpointsCarouselView: MLBusinessTouchpointsBaseView {
 
-    private let cardCarouselCollectionItemView: CardCarouselCollectionItemView = {
-        let cardCarouselCollectionItemView = CardCarouselCollectionItemView()
-        cardCarouselCollectionItemView.translatesAutoresizingMaskIntoConstraints = false
-        return cardCarouselCollectionItemView
+    private let collectionView: MLBusinessTouchpointsCarouselCollectionView = {
+        let collectionView = MLBusinessTouchpointsCarouselCollectionView()
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        return collectionView
     }()
 
     private var model: MLBusinessTouchpointsCarouselModel?
@@ -25,31 +25,31 @@ class MLBusinessTouchpointsCarouselView: MLBusinessTouchpointsBaseView {
     }
 
     private func setup() {
-        addSubview(cardCarouselCollectionItemView)
-        cardCarouselCollectionItemView.delegate = self
+        addSubview(collectionView)
+        collectionView.delegate = self
     }
 
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            cardCarouselCollectionItemView.leftAnchor.constraint(equalTo: leftAnchor),
-            cardCarouselCollectionItemView.rightAnchor.constraint(equalTo: rightAnchor),
-            cardCarouselCollectionItemView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            cardCarouselCollectionItemView.topAnchor.constraint(equalTo: topAnchor),
+            collectionView.leftAnchor.constraint(equalTo: leftAnchor),
+            collectionView.rightAnchor.constraint(equalTo: rightAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            collectionView.topAnchor.constraint(equalTo: topAnchor),
         ])
     }
 
     override func update(with configuration: Codable?) {
         guard let model = configuration as? MLBusinessTouchpointsCarouselModel else { return }
         self.model = model
-        cardCarouselCollectionItemView.update(with: model.getItems())
+        collectionView.update(with: model.getItems())
     }
     
     override func getVisibleItems() -> [Trackable]? {
-        return cardCarouselCollectionItemView.getTrackables()
+        return collectionView.getTrackables()
     }
 }
 
-extension MLBusinessTouchpointsCarouselView: CardCarouselCollectionItemViewProtocol {
+extension MLBusinessTouchpointsCarouselView: MLBusinessTouchpointsCarouselCollectionViewProtocol {
     func trackPrints(prints: [Trackable]?) {
         delegate?.trackPrints(prints: prints)
     }

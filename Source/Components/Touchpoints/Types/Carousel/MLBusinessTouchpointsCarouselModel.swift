@@ -10,9 +10,9 @@ import Foundation
 class MLBusinessTouchpointsCarouselModel: NSObject, Codable, ComponentTrackable {
     private let title: String?
     private let subtitle: String?
-    private let items: [CardItemModel]
+    private let items: [MLBusinessTouchpointsCarouselItemModel]
 
-    init(title: String?, subtitle: String?, items: [CardItemModel]) {
+    init(title: String?, subtitle: String?, items: [MLBusinessTouchpointsCarouselItemModel]) {
         self.title = title
         self.subtitle = subtitle
         self.items = items
@@ -28,12 +28,12 @@ class MLBusinessTouchpointsCarouselModel: NSObject, Codable, ComponentTrackable 
         return items
     }
     
-    func getItems() -> [CardItemModel] {
+    func getItems() -> [MLBusinessTouchpointsCarouselItemModel] {
         return items
     }
 }
 
-struct CardItemModel: Codable, Trackable {
+struct MLBusinessTouchpointsCarouselItemModel: Codable, Trackable {
     let title: String?
     let topLabel: String?
     let mainLabel: String?
