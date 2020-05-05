@@ -76,6 +76,8 @@ class MLBusinessTouchpointsTracker: MLBusinessTouchpointsTrackerProtocol {
         }
         
         eventData[touchpointsType] = touchpointTypeData
+        
+        print("TRACKING EVENT - ACTION: \(action) - EVENTDATA: \(eventData)")
         trackingProvider?.track(action: action, eventData: eventData)
     }
 }

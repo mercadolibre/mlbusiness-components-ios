@@ -105,4 +105,9 @@ extension MLBusinessTouchpointsView: MLBusinessTouchpointsViewProtocol {
             }
         }
     }
+    
+    func trackPrints(prints: [Trackable]?) {
+        guard let prints = prints else { return }
+        touchpointTracker?.trackPrints(items: prints)
+    }
 }

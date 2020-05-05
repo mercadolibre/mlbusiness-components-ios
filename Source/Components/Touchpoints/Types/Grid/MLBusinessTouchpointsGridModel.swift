@@ -7,15 +7,6 @@
 
 import Foundation
 
-protocol ComponentTrackable {
-    func getTrackables() -> [Trackable]?
-}
-
-protocol Trackable {
-    var trackingId: String? { get }
-    var eventData: MLBusinessCodableDictionary? { get }
-}
-
 class MLBusinessTouchpointsGridModel: NSObject, Codable {
     private let title: String?
     private let subtitle: String?
