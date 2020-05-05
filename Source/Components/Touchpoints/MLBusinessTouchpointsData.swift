@@ -12,4 +12,5 @@ import Foundation
     @objc func getTouchpointType() -> String
     @objc func getTouchpointContent() -> [String : Any]
     @objc optional func getTouchpointTracking() -> [String : Any]
+    @objc optional func getAdditionalEdgeInsets() -> [String : Any]
 }

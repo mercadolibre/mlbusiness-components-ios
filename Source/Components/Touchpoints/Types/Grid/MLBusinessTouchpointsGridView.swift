@@ -16,22 +16,24 @@ class MLBusinessTouchpointsGridView: MLBusinessTouchpointsBaseView {
     required init?(configuration: Codable?) {
         super.init(configuration: configuration)
         setup()
-        setupContraints()
+        setupConstraints()
         update(with: configuration)
     }
 
     private func setup() {
-        prepareForAutolayout()
+        translatesAutoresizingMaskIntoConstraints = false
         addSubview(discountView)
     }
     
-    private func setupContraints() {
-        NSLayoutConstraint.activate([
-            discountView.topAnchor.constraint(equalTo: topAnchor),
-            discountView.leftAnchor.constraint(equalTo: leftAnchor),
-            discountView.rightAnchor.constraint(equalTo: rightAnchor),
-            discountView.bottomAnchor.constraint(equalTo: bottomAnchor),
-        ])
+    private func setupConstraints() {
+        topConstraint = discountView.topAnchor.constraint(equalTo: topAnchor)
+        topConstraint?.isActive = true
+        leftConstraint = discountView.leftAnchor.constraint(equalTo: leftAnchor)
+        leftConstraint?.isActive = true
+        bottomConstraint = discountView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        bottomConstraint?.isActive = true
+        rightConstraint = discountView.rightAnchor.constraint(equalTo: rightAnchor)
+        rightConstraint?.isActive = true
     }
     
     override func update(with configuration: Codable?) {

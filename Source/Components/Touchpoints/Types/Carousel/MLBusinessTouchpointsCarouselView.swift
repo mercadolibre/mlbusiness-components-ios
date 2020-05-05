@@ -28,14 +28,16 @@ class MLBusinessTouchpointsCarouselView: MLBusinessTouchpointsBaseView {
         addSubview(collectionView)
         collectionView.delegate = self
     }
-
+    
     private func setupConstraints() {
-        NSLayoutConstraint.activate([
-            collectionView.leftAnchor.constraint(equalTo: leftAnchor),
-            collectionView.rightAnchor.constraint(equalTo: rightAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            collectionView.topAnchor.constraint(equalTo: topAnchor),
-        ])
+        topConstraint = collectionView.topAnchor.constraint(equalTo: topAnchor)
+        topConstraint?.isActive = true
+        leftConstraint = collectionView.leftAnchor.constraint(equalTo: leftAnchor)
+        leftConstraint?.isActive = true
+        bottomConstraint = collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        bottomConstraint?.isActive = true
+        rightConstraint = collectionView.rightAnchor.constraint(equalTo: rightAnchor)
+        rightConstraint?.isActive = true
     }
 
     override func update(with configuration: Codable?) {

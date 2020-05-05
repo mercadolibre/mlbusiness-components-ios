@@ -23,7 +23,7 @@ open class MLBusinessTouchpointsView: UIView {
     
     public init() {
         super.init(frame: .zero)
-        prepareForAutolayout()
+        translatesAutoresizingMaskIntoConstraints = false
     }
     
     public required init?(coder: NSCoder) {
@@ -49,6 +49,7 @@ open class MLBusinessTouchpointsView: UIView {
                 setupTouchpointView()
             }
             
+            touchpointView?.setAdditionalEdgeInsets(with: touchpointsData?.getAdditionalEdgeInsets?())
             touchpointView?.delegate = self
             trackShow()
         }
