@@ -9,4 +9,5 @@ import Foundation
 
 @objc public protocol MLBusinessDiscountTrackerProtocol: NSObjectProtocol {
     func track(action: String, eventData: [String : Any])
+    @objc optional func setTouchpointId(with touchPointId: String)
 }
