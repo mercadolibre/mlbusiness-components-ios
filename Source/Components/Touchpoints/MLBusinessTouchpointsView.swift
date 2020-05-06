@@ -38,6 +38,7 @@ open class MLBusinessTouchpointsView: UIView {
             let touchpointMapper = registry.mapper(for: touchpointType)
             let codableContent = touchpointMapper?.map(dictionary: MLBusinessCodableDictionary(value: touchpointContent))
             
+            trackingProvider?.setTouchpointId?(with: data.getTouchpointId())
             touchpointTracker = MLBusinessTouchpointsTracker(with: data, trackingProvider:trackingProvider)
             componentTrackable = codableContent as? ComponentTrackable
             

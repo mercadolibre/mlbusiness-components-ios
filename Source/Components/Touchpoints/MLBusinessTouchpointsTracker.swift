@@ -53,13 +53,38 @@ class MLBusinessTouchpointsTracker: MLBusinessTouchpointsTrackerProtocol {
     
     //TAP
     func trackTap(item: Trackable) {
-        track(items: [item], action: "tap")
+//        track(items: [item], action: "tap")
+        guard let eventData = item.eventData else { return }
+        track(eventData: eventData.rawValue, action: "tap")
     }
+    
+//    private func track(items: [Trackable], action: String) {
+//        var eventData = [String : Any]()
+//        var touchpointTypeData = [String : Any]()
+//        let touchpointsType = touchpointsData.getTouchpointType()
+//        var itemsToTrack = [[String: Any]]()
+//        var itemToTrack = [String: Any]()
+//
+//        items.forEach { item in
+//            item.eventData?.keys.forEach { itemToTrack[$0] = item.eventData?[$0] }
+//            itemsToTrack.append(itemToTrack)
+//        }
+//        touchpointTypeData["items"] = itemsToTrack
+//
+//        if let touchpointTracking = touchpointsData.getTouchpointTracking?() {
+//            touchpointTracking.forEach { item in
+//                eventData[item.key] = item.value
+//            }
+//        }
+//
+//        eventData[touchpointsType] = touchpointTypeData
+//
+//        print("TRACKING EVENT - ACTION: \(action) - EVENTDATA: \(eventData)")
+//        trackingProvider?.track(action: action, eventData: eventData)
+//    }
     
     private func track(items: [Trackable], action: String) {
         var eventData = [String : Any]()
-        var touchpointTypeData = [String : Any]()
-        let touchpointsType = touchpointsData.getTouchpointType()
         var itemsToTrack = [[String: Any]]()
         var itemToTrack = [String: Any]()
         
@@ -67,16 +92,12 @@ class MLBusinessTouchpointsTracker: MLBusinessTouchpointsTrackerProtocol {
             item.eventData?.keys.forEach { itemToTrack[$0] = item.eventData?[$0] }
             itemsToTrack.append(itemToTrack)
         }
-        touchpointTypeData["items"] = itemsToTrack
-        
-        if let touchpointTracking = touchpointsData.getTouchpointTracking?() {
-            touchpointTracking.forEach { item in
-                eventData[item.key] = item.value
-            }
-        }
-        
-        eventData[touchpointsType] = touchpointTypeData
-        
+        eventData["items"] = itemsToTrack
+
+        track(eventData: eventData, action: action)
+    }
+    
+    private func track(eventData: [String : Any], action: String) {
         print("TRACKING EVENT - ACTION: \(action) - EVENTDATA: \(eventData)")
         trackingProvider?.track(action: action, eventData: eventData)
     }
