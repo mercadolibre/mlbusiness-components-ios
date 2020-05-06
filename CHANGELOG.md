@@ -1,3 +1,7 @@
+# v1.9.0
+🚀 Sin Publicar (1.9.0) 🚀
+- Discount Touchpoints Component added.
+
 # v1.8.4
 🚀 Sin Publicar (1.8.4) 🚀
 - Fixing Animated button resetLoading function.
