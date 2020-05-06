@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     
     private weak var ringView: MLBusinessLoyaltyRingView?
     private weak var loyaltyHeaderView: MLBusinessLoyaltyHeaderView?
+    private var discountTouchpointsView: MLBusinessTouchpointsView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +36,8 @@ extension ViewController {
         let itemDescriptionView = setupItemDescriptionView(bottomOf: dividingLineView)
         let crossSellingBoxView = setupCrossSellingBoxView(bottomOf: itemDescriptionView)
         let discountView = setupDiscountView(numberOfItems: 6, bottomOf: crossSellingBoxView)
-        let downloadAppView = setupDownloadAppView(bottomOf: discountView)
+        let discountTouchpointView = setupDiscountTouchpointsView(numberOfItems: 6, bottomOf: discountView)
+        let downloadAppView = setupDownloadAppView(bottomOf: discountTouchpointView)
         let loyaltyHeaderView = setupLoyaltyHeaderView(bottomOf: downloadAppView)
         let animatedButtonView = setupAnimatedButtonView(bottomOf: loyaltyHeaderView)
         
@@ -85,7 +87,22 @@ extension ViewController {
         }
         return discountView
     }
-
+    
+    private func setupDiscountTouchpointsView(numberOfItems: Int, bottomOf targetView: UIView) -> UIView {
+        discountTouchpointsView = MLBusinessTouchpointsView()
+        guard let discountTouchpointsView = discountTouchpointsView else { return UIView(frame: .zero) }
+        discountTouchpointsView.delegate = self
+        discountTouchpointsView.setTouchpointsTracker(with: DiscountTrackerData(touchPointId: "BusinessComponents-Example"))
+        discountTouchpointsView.update(with: DiscountTouchpointsGridData(numberOfItems: numberOfItems))
+        containerView.addSubview(discountTouchpointsView)
+        NSLayoutConstraint.activate([
+            discountTouchpointsView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            discountTouchpointsView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+            discountTouchpointsView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16)
+        ])
+        return discountTouchpointsView
+    }
+    
     private func setupDownloadAppView(bottomOf targetView: UIView) -> MLBusinessDownloadAppView {
         let downloadAppView = MLBusinessDownloadAppView(DownloadAppData())
         containerView.addSubview(downloadAppView)
@@ -191,4 +208,12 @@ extension ViewController: MLBusinessAnimatedButtonDelegate {
         print("TimeOut")
     }
 
+}
+
+extension ViewController: MLBusinessTouchpointsUserInteractionHandler {
+    func didTap(with selectedIndex: Int, deeplink: String, trackingId: String) {
+        print("EBC: index \(selectedIndex), deeplink: \(deeplink), trackId: \(trackingId)")
+        guard let discountTouchpointsView = discountTouchpointsView else { return }
+        discountTouchpointsView.update(with: DiscountTouchpointsGridData(numberOfItems: Int.random(in: 1...6)))
+    }
 }
