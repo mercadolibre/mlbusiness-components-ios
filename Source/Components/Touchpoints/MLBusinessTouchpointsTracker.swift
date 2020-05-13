@@ -43,7 +43,9 @@ class MLBusinessTouchpointsTracker: MLBusinessTouchpointsTrackerProtocol {
             tracked.insert("\(trackingId)")
         }
         
-        track(items: pendingPrints, action: "print")
+        if pendingPrints.count > 0 {
+            track(items: pendingPrints, action: "print")
+        }
         pendingPrints = [Trackable]()
     }
 
