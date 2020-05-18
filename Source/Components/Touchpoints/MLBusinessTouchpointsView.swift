@@ -20,6 +20,7 @@ open class MLBusinessTouchpointsView: UIView {
     private var componentTrackable: ComponentTrackable?
     public weak var delegate: MLBusinessTouchpointsUserInteractionHandler?
     private var trackingProvider: MLBusinessDiscountTrackerProtocol?
+    private var canOpenMercadoPagoApp: Bool?
     
     public init() {
         super.init(frame: .zero)
@@ -50,6 +51,7 @@ open class MLBusinessTouchpointsView: UIView {
                 setupTouchpointView()
             }
             
+            touchpointView?.canOpenMercadoPagoApp = canOpenMercadoPagoApp
             touchpointView?.setAdditionalEdgeInsets(with: touchpointsData?.getAdditionalEdgeInsets?())
             touchpointView?.delegate = self
             trackShow()
@@ -67,6 +69,10 @@ open class MLBusinessTouchpointsView: UIView {
     
     public func resetTrackedPrints() {
         touchpointTracker?.resetTrackedPrints()
+    }
+    
+    public func setCanOpenMercadoPagoApp(_ value: Bool) {
+        canOpenMercadoPagoApp = value
     }
     
     private func getVisibleItems() -> [Trackable]? {

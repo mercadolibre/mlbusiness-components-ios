@@ -8,6 +8,12 @@
 import Foundation
 
 class MLBusinessTouchpointsCarouselView: MLBusinessTouchpointsBaseView {
+    
+    override var canOpenMercadoPagoApp: Bool? {
+        didSet {
+            collectionView.canOpenMercadoPagoApp = canOpenMercadoPagoApp
+        }
+    }
 
     private let collectionView: MLBusinessTouchpointsCarouselCollectionView = {
         let collectionView = MLBusinessTouchpointsCarouselCollectionView()

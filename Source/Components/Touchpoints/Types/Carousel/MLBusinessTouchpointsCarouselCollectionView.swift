@@ -16,6 +16,7 @@ class MLBusinessTouchpointsCarouselCollectionView: UIView {
     weak var delegate: MLBusinessTouchpointsCarouselCollectionViewProtocol?
     var segmentId: String?
     var typeId: String?
+    var canOpenMercadoPagoApp: Bool?
 
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -130,6 +131,10 @@ extension MLBusinessTouchpointsCarouselCollectionView: UICollectionViewDelegate 
         guard let link = items[indexPath.row].link, let trackingId = items[indexPath.row].tracking?.trackingId else { return }
 
         delegate?.trackTap(with: indexPath.row, deeplink: link, trackingId: trackingId)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
+        return canOpenMercadoPagoApp ?? true
     }
 }
 
