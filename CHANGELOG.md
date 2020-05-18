@@ -1,3 +1,7 @@
+# v1.10.0
+🚀 1.10.0 🚀
+- Added setCanOpenMercadoPagoApp for Discount Touchpoints Component.
+
 # v1.9.1
 🚀 1.9.1 🚀
 - Updated print logic for Discount Touchpoints Component.
