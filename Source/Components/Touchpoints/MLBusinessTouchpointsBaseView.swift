@@ -32,6 +32,7 @@ protocol Trackable {
 class MLBusinessTouchpointsBaseView: UIView & MLBusinessTouchpointsViewInitializable & MLBusinessTouchpointsViewUpdatable {
     weak var delegate: MLBusinessTouchpointsViewProtocol?
     var topConstraint, leftConstraint, bottomConstraint, rightConstraint: NSLayoutConstraint?
+    var canOpenMercadoPagoApp: Bool?
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
