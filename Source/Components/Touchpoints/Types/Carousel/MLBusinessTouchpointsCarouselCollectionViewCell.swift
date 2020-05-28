@@ -10,11 +10,14 @@ import Foundation
 class MLBusinessTouchpointsCarouselCollectionViewCell: UICollectionViewCell {
     override var isHighlighted: Bool {
         didSet {
-            itemView.isHighlighted = isHighlighted
+           setHighlighted(isHighlighted)
         }
     }
 
+    private var height: NSLayoutConstraint? = nil
     let itemView = MLBusinessTouchpointsCarouselCollectionItemView()
+    
+    private var currentBackgroundColor: UIColor?
 
     static var reuseIdentifier: String {
         return "\(String(describing: self))ReuseIdentifier"
@@ -32,28 +35,52 @@ class MLBusinessTouchpointsCarouselCollectionViewCell: UICollectionViewCell {
     }
 
     func update(with content: MLBusinessTouchpointsCarouselItemModel) {
+        if let colorString = content.backgroundColor {
+            currentBackgroundColor = colorString.hexaToUIColor()
+            backgroundColor = currentBackgroundColor ?? .white
+        }
+        
         itemView.update(with: content)
+    }
+    
+    func update(height: CGFloat) {
+        self.height?.constant = height
+        self.height?.isActive = true
     }
 
     private func setup() {
         backgroundColor = .clear
+        
+        layer.borderColor = "ececec".hexaToUIColor().cgColor
+        layer.borderWidth = 1.0
+        layer.cornerRadius = 6.0
+        layer.applyShadow(alpha: 0.1, x: 0, y: 2, blur: 4)
+        
         contentView.addSubview(itemView)
     }
 
     private func setupConstraints() {
         itemView.translatesAutoresizingMaskIntoConstraints = false
 
+        let top = UILayoutGuide()
         let bottom = UILayoutGuide()
 
+        contentView.addLayoutGuide(top)
         contentView.addLayoutGuide(bottom)
 
         NSLayoutConstraint.activate([
-            itemView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            top.heightAnchor.constraint(equalTo: bottom.heightAnchor),
+            top.topAnchor.constraint(equalTo: contentView.topAnchor),
+            itemView.topAnchor.constraint(equalTo: top.bottomAnchor),
             itemView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
             itemView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
             itemView.bottomAnchor.constraint(equalTo: bottom.topAnchor),
             bottom.bottomAnchor.constraint(greaterThanOrEqualTo: contentView.bottomAnchor, constant: 0),
         ])
+    }
+    
+    private func setHighlighted(_ highlighted: Bool) {
+        backgroundColor = highlighted ? "f8f8f8".hexaToUIColor() : currentBackgroundColor
     }
 
     override func prepareForReuse() {

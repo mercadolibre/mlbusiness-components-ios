@@ -52,6 +52,21 @@ class MLBusinessTouchpointsCarouselView: MLBusinessTouchpointsBaseView {
         collectionView.update(with: model.getItems())
     }
     
+    override func setAdditionalEdgeInsets(with insets: [String : Any]?) {
+        guard var additionalInsets = insets else { return }
+        let insets = UIEdgeInsets(top: 0,
+                                  left: CGFloat(additionalInsets["left"] as? NSNumber ?? 0),
+                                  bottom: 0,
+                                  right: CGFloat(additionalInsets["right"] as? NSNumber ?? 0) + 12.0)
+        
+        additionalInsets["left"] = 0.0
+        additionalInsets["right"] = 0.0
+        
+        super.setAdditionalEdgeInsets(with: additionalInsets)
+
+        collectionView.contentInset = insets
+    }
+    
     override func getVisibleItems() -> [Trackable]? {
         return collectionView.getTrackables()
     }

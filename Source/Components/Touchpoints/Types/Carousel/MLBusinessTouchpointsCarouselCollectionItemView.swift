@@ -9,16 +9,11 @@ import Foundation
 import MLUI
 
 public class MLBusinessTouchpointsCarouselCollectionItemView: UIView {
-    open var isHighlighted: Bool = false {
-        didSet {
-            setHighlighted(with: isHighlighted)
-        }
-    }
 
     private let containerView: UIView = {
         let containerView = UIView(frame: .zero)
         containerView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.backgroundColor = .white
+        containerView.backgroundColor = .clear
         return containerView
     }()
 
@@ -126,7 +121,6 @@ public class MLBusinessTouchpointsCarouselCollectionItemView: UIView {
     private var logoImageViewTopConstraint: NSLayoutConstraint?
     private var discountValueVerticalStackViewTopConstraint: NSLayoutConstraint?
     private var brandNameLabelTopConstraint: NSLayoutConstraint?
-    private var containerViewBackgroundColor = UIColor.white
 
     public required init() {
         super.init(frame: .zero)
@@ -149,18 +143,13 @@ public class MLBusinessTouchpointsCarouselCollectionItemView: UIView {
         containerView.addSubview(subtitleLabel)
 
         addSubview(pillView)
-
-        containerView.layer.borderColor = "ececec".hexaToUIColor().cgColor
-        containerView.layer.borderWidth = 1.0
-        containerView.layer.cornerRadius = 6.0
-        containerView.layer.applyShadow(alpha: 0.1, x: 0, y: 2, blur: 4)                 
     }
 
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             containerView.topAnchor.constraint(equalTo: topAnchor),
             containerView.leftAnchor.constraint(equalTo: leftAnchor),
-            containerView.rightAnchor.constraint(equalTo: rightAnchor, constant: -12),
+            containerView.rightAnchor.constraint(equalTo: rightAnchor),
             containerView.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
 
@@ -271,19 +260,10 @@ public class MLBusinessTouchpointsCarouselCollectionItemView: UIView {
             discountValueVerticalStackViewTopConstraint?.constant = 12
             logoImageViewTopConstraint?.constant = 16
         }
-
-        if let backgroundColorString = item.backgroundColor {
-            containerViewBackgroundColor = backgroundColorString.hexaToUIColor()
-        }
-        containerView.backgroundColor = containerViewBackgroundColor
     }
 
     public func clear() {
         logoImageView.image = nil
         pillView.icon = nil
-    }
-
-    private func setHighlighted(with highlightedStatus: Bool) {
-        containerView.backgroundColor = highlightedStatus ? "f8f8f8".hexaToUIColor() : containerViewBackgroundColor
     }
 }
