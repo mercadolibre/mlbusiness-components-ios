@@ -21,8 +21,8 @@ class MLBusinessTouchpointsCarouselCollectionView: UIView {
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 12
+        layout.minimumLineSpacing = 12
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(MLBusinessTouchpointsCarouselCollectionViewCell.self,
@@ -39,6 +39,12 @@ class MLBusinessTouchpointsCarouselCollectionView: UIView {
     var items: [MLBusinessTouchpointsCarouselItemModel] = []
     var maxItemHeight = 0.0
     var collectionViewHeightConstraint: NSLayoutConstraint?
+    
+    var contentInset: UIEdgeInsets = .zero {
+        didSet {
+            collectionView.contentInset = contentInset
+        }
+    }
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
@@ -79,7 +85,7 @@ class MLBusinessTouchpointsCarouselCollectionView: UIView {
 
     func setMaxItemHeight(with items: [MLBusinessTouchpointsCarouselItemModel]) {
         var hasTopLabel = false, hasMainLabel = false, hasTitle = false, hasSubtitle = false
-        let spaceToMainLabel = 100.0, topLabelHeight = 14.0, mainLabelHeight = 28.0, titleHeight = 23.0, subtitleHeight = 13.0, spaceToBottom = 12.0
+        let spaceToMainLabel = 100.0, topLabelHeight = 14.0, mainLabelHeight = 28.0, titleHeight = 23.0, subtitleHeight = 15.0, spaceToBottom = 12.0
         for item in items {
             if item.topLabel != nil, !hasTopLabel {
                 hasTopLabel = true
@@ -106,7 +112,7 @@ class MLBusinessTouchpointsCarouselCollectionView: UIView {
 
 extension MLBusinessTouchpointsCarouselCollectionView: UICollectionViewDelegateFlowLayout {
     func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt _: IndexPath) -> CGSize {
-        return CGSize(width: 128.0, height: maxItemHeight)
+        return CGSize(width: 116.0, height: maxItemHeight)
     }
 }
 
@@ -122,6 +128,9 @@ extension MLBusinessTouchpointsCarouselCollectionView: UICollectionViewDataSourc
                                     return MLBusinessTouchpointsCarouselCollectionViewCell() }
         let item = items[indexPath.row]
         cell.update(with: item)
+        
+        if let height = collectionViewHeightConstraint { cell.update(height: height.constant) }
+        
         return cell
     }
 }

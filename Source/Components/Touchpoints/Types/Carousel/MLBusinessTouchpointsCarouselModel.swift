@@ -39,13 +39,16 @@ struct MLBusinessTouchpointsCarouselItemModel: Codable, Trackable {
     let mainLabel: String?
     let rightLabel: String?
     let pill: DiscountItemDiscountPill?
-    let format: DiscountItemFormat?
     let image: String?
     let subtitle: String?
     let link: String?
     let textColor: String?
     let backgroundColor: String?
     let tracking: TouchpointsTrackingInfo?
+    
+    let titleFormat: DiscountItemTextFormat?
+    let subtitleFormat: DiscountItemTextFormat?
+    let imageFormat: DiscountItemImageFormat?
     
     var trackingId: String? {
         return tracking?.trackingId
@@ -67,12 +70,12 @@ public struct DiscountItemDiscountFeatureFormat: Codable {
     public let textColor: String
 }
 
-public struct DiscountItemFormat: Codable {
-    public let overlay: DiscountItemOverlay?
-    public let shadow: Bool
+struct DiscountItemTextFormat: Codable {
+    let size: Double
+    let color: String
+    let weight: String
 }
 
-public struct DiscountItemOverlay: Codable {
-    public let color: String
-    public let alpha: Double
+struct DiscountItemImageFormat: Codable {
+    let overlay: Bool
 }
