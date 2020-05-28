@@ -80,7 +80,7 @@ class MLBusinessTouchpointsCarouselCollectionViewCell: UICollectionViewCell {
     }
     
     private func setHighlighted(_ highlighted: Bool) {
-        backgroundColor = highlighted ? "f8f8f8".hexaToUIColor() : currentBackgroundColor
+        backgroundColor = highlighted ? currentBackgroundColor?.darker() : currentBackgroundColor
     }
 
     override func prepareForReuse() {

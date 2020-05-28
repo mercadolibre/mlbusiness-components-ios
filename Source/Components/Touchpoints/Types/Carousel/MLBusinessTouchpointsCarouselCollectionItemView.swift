@@ -22,7 +22,6 @@ public class MLBusinessTouchpointsCarouselCollectionItemView: UIView {
         overlayLogoView.translatesAutoresizingMaskIntoConstraints = false
         overlayLogoView.layer.cornerRadius = 36
         overlayLogoView.clipsToBounds = true
-        overlayLogoView.backgroundColor = MLStyleSheetManager.styleSheet.blackColor.withAlphaComponent(0.04)
         return overlayLogoView
     }()
 
@@ -32,7 +31,6 @@ public class MLBusinessTouchpointsCarouselCollectionItemView: UIView {
         logoImageView.layer.cornerRadius = 36
         logoImageView.clipsToBounds = true
         logoImageView.contentMode = .scaleAspectFill
-        logoImageView.backgroundColor = MLStyleSheetManager.styleSheet.lightGreyColor
         return logoImageView
     }()
 
@@ -95,9 +93,7 @@ public class MLBusinessTouchpointsCarouselCollectionItemView: UIView {
     private let brandNameLabel: UILabel = {
         let brandNameLabel = UILabel(frame: .zero)
         brandNameLabel.numberOfLines = 1
-        brandNameLabel.font = MLStyleSheetManager.styleSheet.semiboldSystemFont(ofSize: CGFloat(kMLFontsSizeXSmall))
         brandNameLabel.textAlignment = .center
-        brandNameLabel.textColor = MLStyleSheetManager.styleSheet.blackColor
         brandNameLabel.translatesAutoresizingMaskIntoConstraints = false
         return brandNameLabel
     }()
@@ -106,9 +102,7 @@ public class MLBusinessTouchpointsCarouselCollectionItemView: UIView {
         let subtitleLabel = UILabel(frame: .zero)
         subtitleLabel.numberOfLines = 1
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        subtitleLabel.font = MLStyleSheetManager.styleSheet.regularSystemFont(ofSize: CGFloat(kMLFontsSizeXXSmall))
         subtitleLabel.textAlignment = .center
-        subtitleLabel.textColor = MLStyleSheetManager.styleSheet.blackColor
         return subtitleLabel
     }()
 
@@ -189,7 +183,7 @@ public class MLBusinessTouchpointsCarouselCollectionItemView: UIView {
         NSLayoutConstraint.activate([
             subtitleLabel.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 8),
             subtitleLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -8),
-            subtitleLabel.topAnchor.constraint(equalTo: brandNameLabel.bottomAnchor),
+            subtitleLabel.topAnchor.constraint(equalTo: brandNameLabel.bottomAnchor, constant: 2),
             subtitleLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -12),
         ])
 
@@ -260,10 +254,47 @@ public class MLBusinessTouchpointsCarouselCollectionItemView: UIView {
             discountValueVerticalStackViewTopConstraint?.constant = 12
             logoImageViewTopConstraint?.constant = 16
         }
+
+        applyFormats(to: item)
     }
 
     public func clear() {
         logoImageView.image = nil
         pillView.icon = nil
+    }
+    
+    private func applyFormats(to item: MLBusinessTouchpointsCarouselItemModel) {
+        if let titleFormat = item.titleFormat {
+            applyFormat(format: titleFormat, label: brandNameLabel)
+        } else {
+            brandNameLabel.font = MLStyleSheetManager.styleSheet.semiboldSystemFont(ofSize: CGFloat(kMLFontsSizeXSmall))
+            brandNameLabel.textColor = item.textColor?.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.blackColor
+        }
+        
+        if let subtitleFormat = item.subtitleFormat {
+            applyFormat(format: subtitleFormat, label: subtitleLabel)
+        } else {
+            subtitleLabel.font = MLStyleSheetManager.styleSheet.regularSystemFont(ofSize: CGFloat(kMLFontsSizeXSmall))
+            subtitleLabel.textColor = item.textColor?.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.blackColor
+        }
+        
+        if let imageFormat = item.imageFormat, imageFormat.overlay == false {
+            logoImageView.backgroundColor = .clear
+            overlayLogoView.backgroundColor = .clear
+        } else {
+            logoImageView.backgroundColor = MLStyleSheetManager.styleSheet.lightGreyColor
+            overlayLogoView.backgroundColor = MLStyleSheetManager.styleSheet.blackColor.withAlphaComponent(0.04)
+        }
+    }
+    
+    private func applyFormat(format: DiscountItemTextFormat, label: UILabel) {
+        label.textColor = format.color.hexaToUIColor()
+        let size: CGFloat = CGFloat(format.size)
+        
+        if format.weight == "semibold" {
+            label.font = MLStyleSheetManager.styleSheet.semiboldSystemFont(ofSize: size)
+        } else {
+            label.font = MLStyleSheetManager.styleSheet.regularSystemFont(ofSize: size)
+        }
     }
 }

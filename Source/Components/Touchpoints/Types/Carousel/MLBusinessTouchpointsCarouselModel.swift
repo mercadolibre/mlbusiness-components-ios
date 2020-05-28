@@ -46,6 +46,10 @@ struct MLBusinessTouchpointsCarouselItemModel: Codable, Trackable {
     let backgroundColor: String?
     let tracking: TouchpointsTrackingInfo?
     
+    let titleFormat: DiscountItemTextFormat?
+    let subtitleFormat: DiscountItemTextFormat?
+    let imageFormat: DiscountItemImageFormat?
+    
     var trackingId: String? {
         return tracking?.trackingId
     }
@@ -64,4 +68,14 @@ public struct DiscountItemDiscountPill: Codable {
 public struct DiscountItemDiscountFeatureFormat: Codable {
     public let backgroundColor: String
     public let textColor: String
+}
+
+struct DiscountItemTextFormat: Codable {
+    let size: Double
+    let color: String
+    let weight: String
+}
+
+struct DiscountItemImageFormat: Codable {
+    let overlay: Bool
 }

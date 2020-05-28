@@ -85,7 +85,7 @@ class MLBusinessTouchpointsCarouselCollectionView: UIView {
 
     func setMaxItemHeight(with items: [MLBusinessTouchpointsCarouselItemModel]) {
         var hasTopLabel = false, hasMainLabel = false, hasTitle = false, hasSubtitle = false
-        let spaceToMainLabel = 100.0, topLabelHeight = 14.0, mainLabelHeight = 28.0, titleHeight = 23.0, subtitleHeight = 13.0, spaceToBottom = 12.0
+        let spaceToMainLabel = 100.0, topLabelHeight = 14.0, mainLabelHeight = 28.0, titleHeight = 23.0, subtitleHeight = 15.0, spaceToBottom = 12.0
         for item in items {
             if item.topLabel != nil, !hasTopLabel {
                 hasTopLabel = true
