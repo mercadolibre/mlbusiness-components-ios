@@ -1,3 +1,7 @@
+# v1.11.1
+🚀 1.11.1 🚀
+- Minor fixes
+
 # v1.11.0
 🚀 1.11.0 🚀
 - Added categories card to carousel
