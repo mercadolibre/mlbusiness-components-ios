@@ -1,3 +1,7 @@
+# v1.11.0
+🚀 1.11.0 🚀
+- Added categories card to carousel
+
 # v1.10.0
 🚀 1.10.0 🚀
 - Added setCanOpenMercadoPagoApp for Discount Touchpoints Component.
