@@ -83,25 +83,15 @@ private extension MLBusinessDiscountBoxView {
             container.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
         
-        let header = UIStackView(frame: .zero)
-        header.prepareForAutolayout()
-        header.axis = .vertical
-        header.alignment = .fill
-        
-        header.addArrangedSubview(titleLabel)
         titleLabel.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.ML_FONT)
         titleLabel.applyBusinessLabelStyle()
         titleLabel.textAlignment = .center
         titleLabel.numberOfLines = 2
         
-        header.addArrangedSubview(subtitleLabel)
         subtitleLabel.font = UIFont.ml_lightSystemFont(ofSize: UI.FontSize.XS_FONT)
         subtitleLabel.applyBusinessLabelStyle()
         subtitleLabel.textAlignment = .center
         subtitleLabel.numberOfLines = 1
-        
-        container.addArrangedSubview(header)
-        container.addArrangedSubview(itemContainer)
     }
 
     private func updateModels(_ newData: MLBusinessDiscountBoxData?) {
@@ -126,16 +116,30 @@ private extension MLBusinessDiscountBoxView {
     }
 
     private func updateUI() {
-        let title = viewData?.getTitle?()
-        let subtitle = viewData?.getSubtitle?()
+        let header = UIStackView(frame: .zero)
+        header.prepareForAutolayout()
+        header.axis = .vertical
+        header.alignment = .fill
         
-        titleLabel.text = title
-        subtitleLabel.text = title != nil ? subtitle : nil
-        container.spacing = title == nil ? 0 : UI.Margin.L_MARGIN
+        container.subviews.forEach { $0.removeFromSuperview() }
+
+        if let title = viewData?.getTitle?() {
+            titleLabel.text = title
+            header.addArrangedSubview(titleLabel)
+            container.spacing = UI.Margin.L_MARGIN
+            if let subtitle = viewData?.getSubtitle?() {
+                subtitleLabel.text = subtitle
+                header.addArrangedSubview(subtitleLabel)
+            }
+            container.addArrangedSubview(header)
+        }
+        
         itemContainer.subviews.forEach { $0.removeFromSuperview() }
         discountItems.chunked(into: itemsPerRow).enumerated().forEach({ index, row in
             itemContainer.addArrangedSubview(rowWithItems(items: row, startingIndex: itemsPerRow * index))
         })
+        
+        container.addArrangedSubview(itemContainer)
     }
     
     private func rowWithItems(items: [MLBusinessSingleItemProtocol], startingIndex: Int = 0) -> UIView {
