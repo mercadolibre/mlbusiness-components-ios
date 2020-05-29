@@ -33,6 +33,7 @@ class MLBusinessTouchpointsBaseView: UIView & MLBusinessTouchpointsViewInitializ
     weak var delegate: MLBusinessTouchpointsViewProtocol?
     var topConstraint, leftConstraint, bottomConstraint, rightConstraint: NSLayoutConstraint?
     var canOpenMercadoPagoApp: Bool?
+    let defaultComponentHeight = CGFloat(272)
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
@@ -57,6 +58,6 @@ class MLBusinessTouchpointsBaseView: UIView & MLBusinessTouchpointsViewInitializ
     func getVisibleItems() -> [Trackable]? { return nil }
     
     func getTouchpointViewHeight(with data: Codable?, topInset: CGFloat, bottomInset: CGFloat) -> CGFloat {
-        return 0
+        return defaultComponentHeight
     }
 }
