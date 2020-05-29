@@ -14,6 +14,7 @@ open class MLBusinessDiscountBoxView: UIView {
     
     // Constants
     private var itemsPerRow: Int = 3
+    var itemHeight: CGFloat = 128
 
     // Vars
     private var maxAllowedNumberOfItems = 6 {
@@ -150,7 +151,7 @@ private extension MLBusinessDiscountBoxView {
         row.distribution = .fillEqually
         
         for (index, item) in items.enumerated() {
-            let itemView = MLBusinessDiscountSingleItemView(discountSingleItem: item, itemIndex: startingIndex + index, itemSection: 0)
+            let itemView = MLBusinessDiscountSingleItemView(discountSingleItem: item, itemIndex: startingIndex + index, itemSection: 0, itemHeight: itemHeight)
             itemView.delegate = self
             row.addArrangedSubview(itemView)
         }

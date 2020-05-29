@@ -55,4 +55,8 @@ class MLBusinessTouchpointsBaseView: UIView & MLBusinessTouchpointsViewInitializ
     }
     
     func getVisibleItems() -> [Trackable]? { return nil }
+    
+    func getTouchpointViewHeight(with data: Codable?, topInset: CGFloat, bottomInset: CGFloat) -> CGFloat {
+        return 0
+    }
 }

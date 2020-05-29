@@ -70,6 +70,12 @@ class MLBusinessTouchpointsCarouselView: MLBusinessTouchpointsBaseView {
     override func getVisibleItems() -> [Trackable]? {
         return collectionView.getTrackables()
     }
+    
+    override func getTouchpointViewHeight(with data: Codable?, topInset: CGFloat, bottomInset: CGFloat) -> CGFloat {
+        guard let model = data as? MLBusinessTouchpointsCarouselModel else { return 0 }
+        
+        return CGFloat(collectionView.getMaxItemHeight(with: model.getItems()))
+    }
 }
 
 extension MLBusinessTouchpointsCarouselView: MLBusinessTouchpointsCarouselCollectionViewProtocol {
