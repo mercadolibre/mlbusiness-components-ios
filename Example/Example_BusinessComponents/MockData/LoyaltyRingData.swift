@@ -26,6 +26,10 @@ class LoyaltyRingData: NSObject, MLBusinessLoyaltyRingData {
     func getTitle() -> String {
         return "Sumaste 20 Mercado Puntos"
     }
+    
+    func getSubtitle() -> String? {
+        return "Una vez que se acredite tu pago, ganarás 20 puntos."
+    }
 
     func getButtonTitle() -> String {
         return "Ver mis beneficios"

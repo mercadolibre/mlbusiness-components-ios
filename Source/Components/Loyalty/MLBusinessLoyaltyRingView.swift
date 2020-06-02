@@ -17,6 +17,7 @@ open class MLBusinessLoyaltyRingView: UIView {
     private let ringSize: CGFloat = 46
     private let buttonHeight: CGFloat = 20
     private let titleNumberOfLines: Int = 2
+    private let subtitleNumberOfLines: Int = 0
     private let fillPercentProgress: Bool
     private weak var ringView: UICircularProgressRing?
     private var tapAction: ((_ deepLink: String) -> Void)?
@@ -40,6 +41,9 @@ extension MLBusinessLoyaltyRingView {
 
         let titleLabel = buildTitle()
         self.addSubview(titleLabel)
+        
+        let subtitleLabel = buildSubtitle()
+        self.addSubview(subtitleLabel)
 
         let button = buildButton()
         self.addSubview(button)
@@ -48,7 +52,7 @@ extension MLBusinessLoyaltyRingView {
         self.addSubview(ring)
         self.ringView = ring
         
-        makeConstraints(titleLabel, button, ring)
+        makeConstraints(titleLabel, subtitleLabel, button, ring)
     }
 
     // MARK: Builders.
@@ -60,6 +64,16 @@ extension MLBusinessLoyaltyRingView {
         titleLabel.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.S_FONT)
         titleLabel.applyBusinessLabelStyle()
         return titleLabel
+    }
+    
+    private func buildSubtitle() -> UILabel {
+        let subtitleLabel = UILabel()
+        subtitleLabel.prepareForAutolayout(.clear)
+        subtitleLabel.numberOfLines = subtitleNumberOfLines
+        subtitleLabel.text = viewData.getSubtitle()
+        subtitleLabel.font = UIFont.ml_regularSystemFont(ofSize: UI.FontSize.XS_FONT)
+        subtitleLabel.textColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.45)
+        return subtitleLabel
     }
 
     private func buildButton() -> UIButton {
@@ -73,19 +87,22 @@ extension MLBusinessLoyaltyRingView {
     }
 
     // MARK: Constraints.
-    func makeConstraints(_ titleLabel: UILabel, _ button: UIButton, _ ring: UICircularProgressRing) {
+    func makeConstraints(_ titleLabel: UILabel, _ subtitleLabel: UILabel, _ button: UIButton, _ ring: UICircularProgressRing) {
         NSLayoutConstraint.activate([
-            ring.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            ring.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            ring.heightAnchor.constraint(equalToConstant: ringSize),
+            ring.topAnchor.constraint(equalTo: topAnchor),
+            ring.leadingAnchor.constraint(equalTo: leadingAnchor),
             ring.widthAnchor.constraint(equalToConstant: ringSize),
-            titleLabel.leftAnchor.constraint(equalTo: ring.rightAnchor, constant: UI.Margin.M_MARGIN),
-            titleLabel.centerYAnchor.constraint(equalTo: ring.centerYAnchor, constant: -UI.Margin.XXS_MARGIN),
-            titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            button.heightAnchor.constraint(equalToConstant: buttonHeight),
+            ring.heightAnchor.constraint(equalToConstant: ringSize),
+            titleLabel.topAnchor.constraint(equalTo: ring.topAnchor),
+            titleLabel.leadingAnchor.constraint(equalTo: ring.trailingAnchor, constant: UI.Margin.M_MARGIN),
+            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: UI.Margin.XXXS_MARGIN),
+            subtitleLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            subtitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            button.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor),
             button.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            button.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
-            self.heightAnchor.constraint(equalToConstant: viewHeight)
+            button.heightAnchor.constraint(equalToConstant: buttonHeight),
+            button.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
 
