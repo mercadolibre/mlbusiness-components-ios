@@ -52,7 +52,7 @@ extension ViewController {
         NSLayoutConstraint.activate([
             ringView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
             ringView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
-            ringView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 6)
+            ringView.topAnchor.constraint(equalTo: containerView.topAnchor)
         ])
 
         ringView.addTapAction { deepLink in
