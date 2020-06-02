@@ -11,20 +11,21 @@ import UIKit
 import MLUI
 
 final class MLBusinessDiscountSingleItemView: PressableView {
-    static let itemHeight: CGFloat = 128
     static let iconImageSize: CGFloat = 56
     private let iconCornerRadius: CGFloat = 28
     private let discountSingleItem: MLBusinessSingleItemProtocol
     private var itemIndex: Int = 0
     private var itemSection: Int = 0
     private var itemHeightMargin: CGFloat = 12
+    private var itemHeight: CGFloat
     
     weak var delegate: MLBusinessUserInteractionProtocol?
 
-    init(discountSingleItem: MLBusinessSingleItemProtocol, itemIndex: Int, itemSection: Int) {
+    init(discountSingleItem: MLBusinessSingleItemProtocol, itemIndex: Int, itemSection: Int, itemHeight: CGFloat = 128) {
         self.discountSingleItem = discountSingleItem
         self.itemIndex = itemIndex
         self.itemSection = itemSection
+        self.itemHeight = itemHeight
         super.init(frame: .zero)
         self.pressableDelegate = self
         self.pressableAnimator = HightlightViewAnimator()
@@ -44,6 +45,14 @@ final class MLBusinessDiscountSingleItemView: PressableView {
 extension MLBusinessDiscountSingleItemView {
 
     private func render() {
+        let top = UILayoutGuide()
+        let bottom = UILayoutGuide()
+        
+        addLayoutGuide(top)
+        addLayoutGuide(bottom)
+        
+        top.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        
         self.backgroundColor = .white
         self.layer.cornerRadius = 6
         
@@ -58,7 +67,7 @@ extension MLBusinessDiscountSingleItemView {
         NSLayoutConstraint.activate([
             icon.heightAnchor.constraint(equalToConstant: MLBusinessDiscountSingleItemView.iconImageSize),
             icon.widthAnchor.constraint(equalToConstant: MLBusinessDiscountSingleItemView.iconImageSize),
-            icon.topAnchor.constraint(equalTo: self.topAnchor, constant: itemHeightMargin),
+            icon.topAnchor.constraint(equalTo: top.bottomAnchor, constant: itemHeightMargin),
             icon.centerXAnchor.constraint(equalTo: self.centerXAnchor)
         ])
 
@@ -88,7 +97,7 @@ extension MLBusinessDiscountSingleItemView {
             itemSubtitle.topAnchor.constraint(equalTo: itemTitle.bottomAnchor),
             itemSubtitle.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             itemSubtitle.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            itemSubtitle.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -itemHeightMargin)
+            itemSubtitle.bottomAnchor.constraint(equalTo: bottom.topAnchor, constant: -itemHeightMargin)
         ])
 
         let iconOverlay: UIView = UIView(frame: .zero)
@@ -103,6 +112,10 @@ extension MLBusinessDiscountSingleItemView {
             iconOverlay.topAnchor.constraint(equalTo: self.topAnchor, constant: itemHeightMargin),
             iconOverlay.centerXAnchor.constraint(equalTo: self.centerXAnchor)
         ])
+        
+        bottom.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        top.heightAnchor.constraint(equalTo: bottom.heightAnchor).isActive = true
+        heightAnchor.constraint(equalToConstant: itemHeight).isActive = true
     }
 }
 
