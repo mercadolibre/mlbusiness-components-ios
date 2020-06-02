@@ -1,3 +1,7 @@
+# v1.12.0
+🚀 1.12.0 🚀
+- Added getTouchpointViewHeight for Discount Touchpoints Component.
+
 # v1.11.0
 🚀 1.11.0 🚀
 - Added categories card to carousel
