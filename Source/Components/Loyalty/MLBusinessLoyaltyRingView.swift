@@ -13,7 +13,7 @@ import MLUI
 open class MLBusinessLoyaltyRingView: UIView {
     let viewData: MLBusinessLoyaltyRingData
 
-    private let ringViewTop: CGFloat = 4
+    private let verticalMargin: CGFloat = 4
     private let ringSize: CGFloat = 46
     private let buttonHeight: CGFloat = 20
     private let titleNumberOfLines: Int = 2
@@ -89,7 +89,7 @@ extension MLBusinessLoyaltyRingView {
     // MARK: Constraints.
     func makeConstraints(_ titleLabel: UILabel, _ subtitleLabel: UILabel, _ button: UIButton, _ ring: UICircularProgressRing) {
         NSLayoutConstraint.activate([
-            ring.topAnchor.constraint(equalTo: topAnchor, constant: ringViewTop),
+            ring.topAnchor.constraint(equalTo: topAnchor, constant: verticalMargin),
             ring.leadingAnchor.constraint(equalTo: leadingAnchor),
             ring.widthAnchor.constraint(equalToConstant: ringSize),
             ring.heightAnchor.constraint(equalToConstant: ringSize),
@@ -102,7 +102,7 @@ extension MLBusinessLoyaltyRingView {
             button.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor),
             button.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             button.heightAnchor.constraint(equalToConstant: buttonHeight),
-            button.bottomAnchor.constraint(equalTo: bottomAnchor)
+            button.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -verticalMargin)
         ])
     }
 
