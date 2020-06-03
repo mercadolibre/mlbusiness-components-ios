@@ -37,7 +37,7 @@ class MLBusinessTouchpointsCarouselCollectionView: UIView {
     }()
 
     var items: [MLBusinessTouchpointsCarouselItemModel] = []
-    var maxItemHeight = 0.0
+    var maxItemHeight = CGFloat(0)
     var collectionViewHeightConstraint: NSLayoutConstraint?
     
     var contentInset: UIEdgeInsets = .zero {
@@ -82,8 +82,8 @@ class MLBusinessTouchpointsCarouselCollectionView: UIView {
         setMaxItemHeight(with: items)
         collectionView.reloadData()
     }
-
-    func setMaxItemHeight(with items: [MLBusinessTouchpointsCarouselItemModel]) {
+    
+    func getMaxItemHeight(with items: [MLBusinessTouchpointsCarouselItemModel]) -> CGFloat {
         var hasTopLabel = false, hasMainLabel = false, hasTitle = false, hasSubtitle = false
         let spaceToMainLabel = 100.0, topLabelHeight = 14.0, mainLabelHeight = 28.0, titleHeight = 23.0, subtitleHeight = 15.0, spaceToBottom = 12.0
         for item in items {
@@ -100,13 +100,19 @@ class MLBusinessTouchpointsCarouselCollectionView: UIView {
                 hasSubtitle = true
             }
         }
-        maxItemHeight = spaceToMainLabel
+        let collectionViewHeight = spaceToMainLabel
             + (hasTopLabel ? topLabelHeight: 0.0)
             + (hasMainLabel ? mainLabelHeight : 0.0)
             + (hasTitle ? titleHeight : 0.0)
             + (hasSubtitle ? subtitleHeight : 0.0)
             + spaceToBottom
-        collectionViewHeightConstraint?.constant = CGFloat(maxItemHeight)
+        
+        return CGFloat(collectionViewHeight)
+    }
+
+    private func setMaxItemHeight(with items: [MLBusinessTouchpointsCarouselItemModel]) {
+        maxItemHeight = getMaxItemHeight(with: items)
+        collectionViewHeightConstraint?.constant = maxItemHeight
     }
 }
 

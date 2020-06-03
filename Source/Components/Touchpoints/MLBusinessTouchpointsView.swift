@@ -58,6 +58,17 @@ open class MLBusinessTouchpointsView: UIView {
         }
     }
     
+    public func getTouchpointViewHeight(with data: MLBusinessTouchpointsData) -> CGFloat {
+        let touchpointType = data.getTouchpointType()
+        let touchpointMapper = registry.mapper(for: touchpointType)
+        let codableContent = touchpointMapper?.map(dictionary: MLBusinessCodableDictionary(value: data.getTouchpointContent()))
+        let touchpointView = registry.views(for: touchpointType)?.init(configuration: codableContent)
+        let additionalEdgeInsets = data.getAdditionalEdgeInsets?()
+        let topInset = CGFloat(additionalEdgeInsets?["top"] as? NSNumber ?? 0)
+        let bottomInset = CGFloat(additionalEdgeInsets?["bottom"] as? NSNumber ?? 0)
+        return touchpointView?.getTouchpointViewHeight(with: codableContent, topInset: topInset, bottomInset: bottomInset) ?? 0
+    }
+    
     public func setTouchpointsTracker(with trackingProvider: MLBusinessDiscountTrackerProtocol) {
         self.trackingProvider = trackingProvider
     }
