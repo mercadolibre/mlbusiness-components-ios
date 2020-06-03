@@ -1,4 +1,6 @@
-# Sin publicar
+# v1.12.0
+🚀 1.12.0 🚀
+- Added getTouchpointViewHeight for Discount Touchpoints Component.
 - Added subtitle support to MLBusinessLoyaltyRingView.
 
 # v1.11.0

@@ -48,4 +48,10 @@ class MLBusinessTouchpointsGridView: MLBusinessTouchpointsBaseView {
     override func getVisibleItems() -> [Trackable]? {
         return model?.getTrackables()
     }
+    
+    override func getTouchpointViewHeight(with data: Codable?, topInset: CGFloat, bottomInset: CGFloat) -> CGFloat {
+        guard let model = data as? MLBusinessTouchpointsGridModel else { return 0 }
+        
+        return discountView.itemHeight * (model.getItems().count > 3 ? 2 : 1) + topInset + bottomInset + 16.0
+    }
 }
