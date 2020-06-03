@@ -1,3 +1,6 @@
+# Sin publicar
+- Added subtitle support to MLBusinessLoyaltyRingView.
+
 # v1.11.0
 🚀 1.11.0 🚀
 - Added categories card to carousel
