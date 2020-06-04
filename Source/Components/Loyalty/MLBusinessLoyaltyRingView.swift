@@ -83,7 +83,14 @@ extension MLBusinessLoyaltyRingView {
         button.titleLabel?.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.XS_FONT)
         button.setTitleColor(MLStyleSheetManager.styleSheet.secondaryColor, for: .normal)
         button.addTarget(self, action:  #selector(self.didTapOnButton), for: .touchUpInside)
+        if isButtonAvailable() {
+            button.isHidden = true
+        }
         return button
+    }
+    
+    private func isButtonAvailable() -> Bool {
+        return viewData.getButtonTitle() == nil || viewData.getButtonDeepLink() == nil
     }
 
     // MARK: Constraints.
@@ -102,13 +109,15 @@ extension MLBusinessLoyaltyRingView {
             button.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor),
             button.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             button.heightAnchor.constraint(equalToConstant: buttonHeight),
-            button.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -verticalMargin)
+            button.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -200)
         ])
     }
 
     // MARK: Tap Selector.
     @objc private func didTapOnButton() {
-        tapAction?(viewData.getButtonDeepLink())
+        if let deepLink = viewData.getButtonDeepLink() {
+            tapAction?(deepLink)
+        }
     }
 }
 

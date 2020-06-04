@@ -14,6 +14,6 @@ import UIKit
     @objc func getRingPercentage() -> Float
     @objc func getTitle() -> String
     @objc func getSubtitle() -> String?
-    @objc func getButtonTitle() -> String
-    @objc func getButtonDeepLink() -> String
+    @objc func getButtonTitle() -> String?
+    @objc func getButtonDeepLink() -> String?
 }
