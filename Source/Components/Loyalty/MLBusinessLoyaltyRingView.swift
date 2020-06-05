@@ -70,7 +70,7 @@ extension MLBusinessLoyaltyRingView {
         let subtitleLabel = UILabel()
         subtitleLabel.prepareForAutolayout(.clear)
         subtitleLabel.numberOfLines = subtitleNumberOfLines
-        subtitleLabel.text = viewData.getSubtitle()
+        subtitleLabel.text = viewData.getSubtitle?() ?? nil
         subtitleLabel.font = UIFont.ml_regularSystemFont(ofSize: UI.FontSize.XS_FONT)
         subtitleLabel.textColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.45)
         return subtitleLabel
@@ -90,7 +90,7 @@ extension MLBusinessLoyaltyRingView {
     }
     
     private func isButtonAvailable() -> Bool {
-        return viewData.getButtonTitle() == nil || viewData.getButtonDeepLink() == nil
+        return viewData.getButtonTitle() == "" || viewData.getButtonDeepLink() == ""
     }
 
     // MARK: Constraints.
@@ -109,15 +109,13 @@ extension MLBusinessLoyaltyRingView {
             button.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor),
             button.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             button.heightAnchor.constraint(equalToConstant: buttonHeight),
-            button.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -200)
+            button.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -verticalMargin)
         ])
     }
 
     // MARK: Tap Selector.
     @objc private func didTapOnButton() {
-        if let deepLink = viewData.getButtonDeepLink() {
-            tapAction?(deepLink)
-        }
+        tapAction?(viewData.getButtonDeepLink())
     }
 }
 
