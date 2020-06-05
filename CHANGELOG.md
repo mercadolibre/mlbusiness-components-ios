@@ -1,5 +1,5 @@
 # Sin publicar
-- Added subtitle support to MLBusinessLoyaltyRingView.
+- Added optionals subtitle and button support to MLBusinessLoyaltyRingView.
 
 # v1.12.0
 🚀 1.12.0 🚀
@@ -84,7 +84,7 @@
 # v1.0.9
 🚀 1.0.9 🚀
 - Change target version to iOS 10	- DownloadView improvements for small devices.
-- Fix an issue in MLBusinessDiscountBoxView in iOS 10	
+- Fix an issue in MLBusinessDiscountBoxView in iOS 10
 - L&F fixes
 
 # v1.0.8
