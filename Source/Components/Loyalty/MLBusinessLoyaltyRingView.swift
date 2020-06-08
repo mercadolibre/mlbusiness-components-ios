@@ -83,14 +83,8 @@ extension MLBusinessLoyaltyRingView {
         button.titleLabel?.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.XS_FONT)
         button.setTitleColor(MLStyleSheetManager.styleSheet.secondaryColor, for: .normal)
         button.addTarget(self, action:  #selector(self.didTapOnButton), for: .touchUpInside)
-        if isButtonAvailable() {
-            button.isHidden = true
-        }
+        button.isHidden = viewData.getButtonTitle() == "" || viewData.getButtonDeepLink() == ""
         return button
-    }
-    
-    private func isButtonAvailable() -> Bool {
-        return viewData.getButtonTitle() == "" || viewData.getButtonDeepLink() == ""
     }
 
     // MARK: Constraints.
