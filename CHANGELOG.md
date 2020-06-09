@@ -1,5 +1,6 @@
 # Sin publicar
 - Added optionals subtitle and button support to MLBusinessLoyaltyRingView.
+- Fixed tracker on MLBusinessTouchpointView
 
 # v1.12.0
 🚀 1.12.0 🚀
