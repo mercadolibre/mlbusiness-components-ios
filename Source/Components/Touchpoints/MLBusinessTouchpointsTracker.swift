@@ -101,7 +101,6 @@ class MLBusinessTouchpointsTracker: MLBusinessTouchpointsTrackerProtocol {
     
     private func track(eventData: [String : Any], action: String) {
         let formattedEventData = convertToSnakeCase(MLBusinessCodableDictionary(value: eventData)).rawValue
-        print("TRACKING EVENT - ACTION: \(action) - EVENTDATA: \(formattedEventData)")
         trackingProvider?.track(action: action, eventData: formattedEventData)
     }
     
