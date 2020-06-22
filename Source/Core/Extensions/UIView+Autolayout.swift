@@ -10,7 +10,7 @@ import UIKit
 
 internal extension UIView {
     func prepareForAutolayout(_ background: UIColor? = nil) {
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.backgroundColor = background == nil ? .white : background
+        translatesAutoresizingMaskIntoConstraints = false
+        backgroundColor = background == nil ? .white : background
     }
 }
