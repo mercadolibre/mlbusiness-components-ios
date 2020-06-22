@@ -36,7 +36,8 @@ extension ViewController {
         let itemDescriptionView = setupItemDescriptionView(bottomOf: dividingLineView)
         let crossSellingBoxView = setupCrossSellingBoxView(bottomOf: itemDescriptionView)
         let discountView = setupDiscountView(numberOfItems: 6, bottomOf: crossSellingBoxView)
-        let discountTouchpointView = setupDiscountTouchpointsView(numberOfItems: 6, bottomOf: discountView)
+        let splitPaymentView = setupSplitPaymentView(bottomOf: discountView)
+        let discountTouchpointView = setupDiscountTouchpointsView(numberOfItems: 6, bottomOf: splitPaymentView)
         let downloadAppView = setupDownloadAppView(bottomOf: discountTouchpointView)
         let loyaltyHeaderView = setupLoyaltyHeaderView(bottomOf: downloadAppView)
         let animatedButtonView = setupAnimatedButtonView(bottomOf: loyaltyHeaderView)
@@ -86,6 +87,17 @@ extension ViewController {
             discountView.update(DiscountData(numberOfItems: Int.random(in: 1...6)))
         }
         return discountView
+    }
+
+    private func setupSplitPaymentView(bottomOf targetView: UIView) -> MLBusinessSplitPaymentView {
+        let splitPaymentView = MLBusinessSplitPaymentView(SplitPaymentData())
+        containerView.addSubview(splitPaymentView)
+        NSLayoutConstraint.activate([
+            splitPaymentView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            splitPaymentView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+            splitPaymentView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16)
+        ])
+        return splitPaymentView
     }
     
     private func setupDiscountTouchpointsView(numberOfItems: Int, bottomOf targetView: UIView) -> UIView {
