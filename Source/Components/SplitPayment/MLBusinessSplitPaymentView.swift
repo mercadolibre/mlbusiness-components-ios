@@ -12,6 +12,7 @@ import MLUI
 open class MLBusinessSplitPaymentView: UIView {
 
     private var viewData: MLBusinessSplitPaymentData
+    private var tapAction: ((_ deeplink: String) -> Void)?
 
     public init(_ viewData: MLBusinessSplitPaymentData) {
         self.viewData = viewData
@@ -21,11 +22,6 @@ open class MLBusinessSplitPaymentView: UIView {
 
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    // Change component default background color.
-    public func setCustomBackgroundColor(_ color: UIColor) {
-        backgroundColor = color
     }
 }
 
@@ -54,6 +50,9 @@ private extension MLBusinessSplitPaymentView {
         ])
 
         let buttonTitle = buildLabel(viewData.getButtonTitle(), UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.XS_FONT), UIColor(red: 0, green: 158, blue: 227, alpha: 1), .clear, .left, 2)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapOnButton))
+        buttonTitle.addGestureRecognizer(tapGesture)
+        buttonTitle.isUserInteractionEnabled = true
         addSubview(buttonTitle)
         NSLayoutConstraint.activate([
             buttonTitle.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: UI.Margin.XL_MARGIN),
@@ -96,5 +95,22 @@ private extension MLBusinessSplitPaymentView {
             font = UIFont.ml_regularSystemFont(ofSize: size)
         }
         return font
+    }
+
+    // MARK: Tap Selector
+    @objc func didTapOnButton() {
+        tapAction?(viewData.getButtonDeepLink())
+    }
+}
+
+// MARK: Publics
+extension MLBusinessSplitPaymentView {
+    @objc open func addTapAction(_ action: ((_ deeplink: String) -> Void)?) {
+        self.tapAction = action
+    }
+
+    // Change component default background color.
+    @objc public func setCustomBackgroundColor(_ color: UIColor) {
+        backgroundColor = color
     }
 }

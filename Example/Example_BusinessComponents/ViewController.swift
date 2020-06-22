@@ -97,6 +97,9 @@ extension ViewController {
             splitPaymentView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
             splitPaymentView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16)
         ])
+        splitPaymentView.addTapAction { deeplink in
+            print(deeplink)
+        }
         return splitPaymentView
     }
     
