@@ -49,16 +49,15 @@ private extension MLBusinessSplitPaymentView {
             titleLabel.rightAnchor.constraint(equalTo: icon.leftAnchor)
         ])
 
-        let buttonTitle = buildLabel(viewData.getButtonTitle(), UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.XS_FONT), UIColor(red: 0, green: 158, blue: 227, alpha: 1), .clear, .left, 2)
+        let button = buildButton(viewData.getButtonTitle(), UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.XS_FONT), MLStyleSheetManager.styleSheet.secondaryColor, 2)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapOnButton))
-        buttonTitle.addGestureRecognizer(tapGesture)
-        buttonTitle.isUserInteractionEnabled = true
-        addSubview(buttonTitle)
+        button.addGestureRecognizer(tapGesture)
+        addSubview(button)
         NSLayoutConstraint.activate([
-            buttonTitle.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: UI.Margin.XL_MARGIN),
-            buttonTitle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: UI.Margin.S_MARGIN),
-            buttonTitle.rightAnchor.constraint(equalTo: icon.leftAnchor),
-            buttonTitle.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -UI.Margin.S_MARGIN)
+            button.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: UI.Margin.XL_MARGIN),
+            button.leadingAnchor.constraint(equalTo: leadingAnchor, constant: UI.Margin.S_MARGIN),
+            button.rightAnchor.constraint(equalTo: icon.leftAnchor),
+            button.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -UI.Margin.S_MARGIN)
         ])
     }
 
@@ -80,6 +79,18 @@ private extension MLBusinessSplitPaymentView {
         label.textAlignment = textAlignment
         label.numberOfLines = numberOfLines
         return label
+    }
+
+    func buildButton(_ title: String, _ font: UIFont, _ titleColor: UIColor, _ numberOfLines: Int, _ backgroundColor: UIColor = .clear, _ horizontalAlignment: UIControl.ContentHorizontalAlignment = .left, _ lineBreakMode: NSLineBreakMode = .byTruncatingTail) -> UIButton {
+        let button = UIButton()
+        button.prepareForAutolayout(backgroundColor)
+        button.setTitle(title, for: .normal)
+        button.titleLabel?.font = font
+        button.setTitleColor(titleColor, for: .normal)
+        button.contentHorizontalAlignment = horizontalAlignment
+        button.titleLabel?.lineBreakMode = lineBreakMode
+        button.titleLabel?.numberOfLines = numberOfLines
+        return button
     }
 
     func getFont(_ weight: String, _ size: CGFloat) -> UIFont {
