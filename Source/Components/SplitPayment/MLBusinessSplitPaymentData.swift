@@ -14,5 +14,4 @@ import Foundation
     @objc func getTitleWeight() -> String
     @objc func getImageUrl() -> String
     @objc func getAffordanceText() -> String
-    @objc func getButtonDeepLink() -> String
 }

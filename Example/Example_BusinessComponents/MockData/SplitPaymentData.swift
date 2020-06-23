@@ -33,8 +33,4 @@ class SplitPaymentData: NSObject, MLBusinessSplitPaymentData {
     func getAffordanceText() -> String {
         return "Dividir gasto"
     }
-
-    func getButtonDeepLink() -> String {
-        return "http://mercadopago:split-payment"
-    }
 }
