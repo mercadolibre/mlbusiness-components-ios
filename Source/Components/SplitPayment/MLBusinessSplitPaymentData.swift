@@ -13,6 +13,6 @@ import Foundation
     @objc func getTitleBackgroundColor() -> String
     @objc func getTitleWeight() -> String
     @objc func getImageUrl() -> String
-    @objc func getButtonTitle() -> String
+    @objc func getAffordanceText() -> String
     @objc func getButtonDeepLink() -> String
 }

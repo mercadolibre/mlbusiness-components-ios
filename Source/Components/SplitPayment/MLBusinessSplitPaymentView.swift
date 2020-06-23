@@ -12,7 +12,7 @@ import MLUI
 open class MLBusinessSplitPaymentView: UIView {
 
     private var viewData: MLBusinessSplitPaymentData
-    private var tapAction: ((_ deeplink: String) -> Void)?
+    private var tapAction: (() -> Void)?
 
     public init(_ viewData: MLBusinessSplitPaymentData) {
         self.viewData = viewData
@@ -30,7 +30,7 @@ private extension MLBusinessSplitPaymentView {
     func render() {
         prepareForAutolayout()
         layer.cornerRadius = 6
-        layer.applyShadow(alpha: 0.25, x: 0.3, y: 0.3, blur: 4)
+        layer.applyShadow(alpha: 0.25, x: 0.2, y: 0.2, blur: 4)
 
         let icon = buildIcon()
         addSubview(icon)
@@ -41,7 +41,7 @@ private extension MLBusinessSplitPaymentView {
             icon.widthAnchor.constraint(equalToConstant: 151),
         ])
 
-        let titleLabel = buildLabel(viewData.getTitle(), getFont(viewData.getTitleWeight(), UI.FontSize.S_FONT), viewData.getTitleColor().hexaToUIColor(), viewData.getTitleBackgroundColor().hexaToUIColor())
+        let titleLabel = buildLabel(viewData.getTitle().uppercased(), getFont(viewData.getTitleWeight(), UI.FontSize.S_FONT), viewData.getTitleColor().hexaToUIColor(), viewData.getTitleBackgroundColor().hexaToUIColor())
         addSubview(titleLabel)
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: UI.Margin.S_MARGIN),
@@ -49,15 +49,24 @@ private extension MLBusinessSplitPaymentView {
             titleLabel.rightAnchor.constraint(equalTo: icon.leftAnchor)
         ])
 
-        let button = buildButton(viewData.getButtonTitle(), UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.XS_FONT), MLStyleSheetManager.styleSheet.secondaryColor, 2)
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapOnButton))
-        button.addGestureRecognizer(tapGesture)
+        let affordanceLabel = buildLabel(viewData.getAffordanceText(), UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.XS_FONT), MLStyleSheetManager.styleSheet.secondaryColor, .clear, .left, 2)
+        addSubview(affordanceLabel)
+        NSLayoutConstraint.activate([
+            affordanceLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: UI.Margin.L_MARGIN),
+            affordanceLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: UI.Margin.S_MARGIN),
+            affordanceLabel.rightAnchor.constraint(equalTo: icon.leftAnchor),
+            affordanceLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -UI.Margin.S_MARGIN)
+        ])
+
+        let button = UIButton()
+        button.prepareForAutolayout(.clear)
+        button.addTarget(self, action: #selector(didTapOnButton), for: .touchUpInside)
         addSubview(button)
         NSLayoutConstraint.activate([
-            button.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: UI.Margin.XL_MARGIN),
-            button.leadingAnchor.constraint(equalTo: leadingAnchor, constant: UI.Margin.S_MARGIN),
-            button.rightAnchor.constraint(equalTo: icon.leftAnchor),
-            button.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -UI.Margin.S_MARGIN)
+            button.topAnchor.constraint(equalTo: topAnchor),
+            button.leadingAnchor.constraint(equalTo: leadingAnchor),
+            button.trailingAnchor.constraint(equalTo: trailingAnchor),
+            button.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
 
@@ -81,18 +90,6 @@ private extension MLBusinessSplitPaymentView {
         return label
     }
 
-    func buildButton(_ title: String, _ font: UIFont, _ titleColor: UIColor, _ numberOfLines: Int, _ backgroundColor: UIColor = .clear, _ horizontalAlignment: UIControl.ContentHorizontalAlignment = .left, _ lineBreakMode: NSLineBreakMode = .byTruncatingTail) -> UIButton {
-        let button = UIButton()
-        button.prepareForAutolayout(backgroundColor)
-        button.setTitle(title, for: .normal)
-        button.titleLabel?.font = font
-        button.setTitleColor(titleColor, for: .normal)
-        button.contentHorizontalAlignment = horizontalAlignment
-        button.titleLabel?.lineBreakMode = lineBreakMode
-        button.titleLabel?.numberOfLines = numberOfLines
-        return button
-    }
-
     func getFont(_ weight: String, _ size: CGFloat) -> UIFont {
         let font: UIFont
         switch weight {
@@ -110,13 +107,13 @@ private extension MLBusinessSplitPaymentView {
 
     // MARK: Tap Selector
     @objc func didTapOnButton() {
-        tapAction?(viewData.getButtonDeepLink())
+        tapAction?()
     }
 }
 
 // MARK: Publics
 extension MLBusinessSplitPaymentView {
-    @objc open func addTapAction(_ action: ((_ deeplink: String) -> Void)?) {
+    @objc open func addTapAction(_ action: (() -> Void)?) {
         self.tapAction = action
     }
 

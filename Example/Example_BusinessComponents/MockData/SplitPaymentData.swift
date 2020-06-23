@@ -11,7 +11,7 @@ import MLBusinessComponents
 
 class SplitPaymentData: NSObject, MLBusinessSplitPaymentData {
     func getTitle() -> String {
-        return "PODÉS DIVIDIR ESTE GASTO CON TUS CONTACTOS"
+        return "Podés dividir este gasto con tus contactos"
     }
 
     func getTitleColor() -> String {
@@ -30,7 +30,7 @@ class SplitPaymentData: NSObject, MLBusinessSplitPaymentData {
         return "https://mobile.mercadolibre.com/remote_resources/image/px_congrats_money_split_mp?density=xxxhdpi&locale=es_AR"
     }
 
-    func getButtonTitle() -> String {
+    func getAffordanceText() -> String {
         return "Dividir gasto"
     }
 
