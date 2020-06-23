@@ -17,7 +17,6 @@ class MLBusinessTouchpointsGridView: MLBusinessTouchpointsBaseView {
         super.init(configuration: configuration)
         setup()
         setupConstraints()
-        update(with: configuration)
     }
 
     private func setup() {
