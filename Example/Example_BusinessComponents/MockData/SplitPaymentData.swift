@@ -15,7 +15,7 @@ class SplitPaymentData: NSObject, MLBusinessSplitPaymentData {
     }
 
     func getTitleColor() -> String {
-        return "#000000"
+        return "#cc000000"
     }
 
     func getTitleBackgroundColor() -> String {
@@ -27,7 +27,7 @@ class SplitPaymentData: NSObject, MLBusinessSplitPaymentData {
     }
 
     func getImageUrl() -> String {
-        return "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/McDonald%27s_Golden_Arches.svg/1200px-McDonald%27s_Golden_Arches.svg.png"
+        return "https://mobile.mercadolibre.com/remote_resources/image/px_congrats_money_split_mp?density=xxxhdpi&locale=es_AR"
     }
 
     func getButtonTitle() -> String {
