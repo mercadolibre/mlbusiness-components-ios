@@ -1,5 +1,5 @@
 //
-//  MLBusinessSplitPaymentView.swift
+//  MLBusinessActionCardView.swift
 //  MLBusinessComponents
 //
 //  Created by Esteban Adrian Boffa on 19/06/2020.
@@ -9,7 +9,7 @@ import Foundation
 import MLUI
 
 @objcMembers
-open class MLBusinessSplitPaymentView: UIView {
+open class MLBusinessActionCardView: UIView {
 
     private var viewData: MLBusinessActionCardViewData
     private var tapAction: (() -> Void)?
@@ -26,7 +26,7 @@ open class MLBusinessSplitPaymentView: UIView {
 }
 
 // MARK: Privates
-private extension MLBusinessSplitPaymentView {
+private extension MLBusinessActionCardView {
     func render() {
         prepareForAutolayout()
         layer.cornerRadius = 6
@@ -114,7 +114,7 @@ private extension MLBusinessSplitPaymentView {
 }
 
 // MARK: Publics
-extension MLBusinessSplitPaymentView {
+extension MLBusinessActionCardView {
     @objc open func addTapAction(_ action: (() -> Void)?) {
         self.tapAction = action
     }

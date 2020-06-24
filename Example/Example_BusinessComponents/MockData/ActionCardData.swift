@@ -1,5 +1,5 @@
 //
-//  SplitPaymentData.swift
+//  ActionCardData.swift
 //  Example_BusinessComponents
 //
 //  Created by Esteban Adrian Boffa on 19/06/2020.
@@ -9,7 +9,7 @@
 import Foundation
 import MLBusinessComponents
 
-class SplitPaymentData: NSObject, MLBusinessActionCardViewData {
+class ActionCardData: NSObject, MLBusinessActionCardViewData {
     func getTitle() -> String {
         return "Podés dividir este gasto con tus contactos"
     }

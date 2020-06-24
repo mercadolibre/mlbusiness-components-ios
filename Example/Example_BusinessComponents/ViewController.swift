@@ -89,8 +89,8 @@ extension ViewController {
         return discountView
     }
 
-    private func setupSplitPaymentView(bottomOf targetView: UIView) -> MLBusinessSplitPaymentView {
-        let splitPaymentView = MLBusinessSplitPaymentView(SplitPaymentData())
+    private func setupSplitPaymentView(bottomOf targetView: UIView) -> MLBusinessActionCardView {
+        let splitPaymentView = MLBusinessActionCardView(ActionCardData())
         containerView.addSubview(splitPaymentView)
         NSLayoutConstraint.activate([
             splitPaymentView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
