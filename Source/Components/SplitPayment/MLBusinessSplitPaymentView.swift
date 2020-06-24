@@ -36,6 +36,8 @@ private extension MLBusinessSplitPaymentView {
         addSubview(icon)
         NSLayoutConstraint.activate([
             icon.centerYAnchor.constraint(equalTo: centerYAnchor),
+            icon.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: UI.Margin.S_MARGIN),
+            icon.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -UI.Margin.S_MARGIN),
             icon.trailingAnchor.constraint(equalTo: trailingAnchor),
             icon.heightAnchor.constraint(equalToConstant: 94),
             icon.widthAnchor.constraint(equalToConstant: 151),
@@ -52,7 +54,7 @@ private extension MLBusinessSplitPaymentView {
         let affordanceLabel = buildLabel(viewData.getAffordanceText(), UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.XS_FONT), MLStyleSheetManager.styleSheet.secondaryColor, .clear, .left, 2)
         addSubview(affordanceLabel)
         NSLayoutConstraint.activate([
-            affordanceLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: UI.Margin.L_MARGIN),
+            affordanceLabel.topAnchor.constraint(greaterThanOrEqualTo: titleLabel.bottomAnchor, constant: UI.Margin.L_MARGIN),
             affordanceLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: UI.Margin.S_MARGIN),
             affordanceLabel.rightAnchor.constraint(equalTo: icon.leftAnchor),
             affordanceLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -UI.Margin.S_MARGIN)
