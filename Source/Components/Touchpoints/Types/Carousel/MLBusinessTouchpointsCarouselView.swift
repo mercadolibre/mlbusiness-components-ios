@@ -48,7 +48,7 @@ class MLBusinessTouchpointsCarouselView: MLBusinessTouchpointsBaseView {
     override func update(with configuration: Codable?) {
         guard let model = configuration as? MLBusinessTouchpointsCarouselModel else { return }
         self.model = model
-        collectionView.leftMargin = CGFloat(additionalEdgeInsets?["left"] as? NSNumber ?? 0)
+        collectionView.leftMargin = collectionView.contentInset.left
         collectionView.update(with: model.getItems())
     }
     
