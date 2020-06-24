@@ -120,7 +120,7 @@ class MLBusinessTouchpointsCarouselCollectionView: UIView {
 
 extension MLBusinessTouchpointsCarouselCollectionView: UICollectionViewDelegateFlowLayout {
     func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt _: IndexPath) -> CGSize {
-        let width = ((UIScreen.main.bounds.width - (leftMargin ?? 0)) / 2.9) - MLBusinessTouchpointsCarouselCollectionView.minimumInteritemSpacing
+        let width = ((UIScreen.main.bounds.width - (leftMargin ?? 0)) / 2.8) - MLBusinessTouchpointsCarouselCollectionView.minimumInteritemSpacing
         let minimumWidth = CGFloat(116.0)
         return CGSize(width: max(minimumWidth, width) , height: CGFloat(maxItemHeight))
     }
