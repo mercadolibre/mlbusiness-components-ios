@@ -21,6 +21,7 @@
 		33765CDC23E0B60600909EC7 /* DiscountTrackerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33765CDB23E0B60600909EC7 /* DiscountTrackerData.swift */; };
 		33CE31E52451EC60005B94A5 /* DiscountTouchpointsGridData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33CE31E42451EC60005B94A5 /* DiscountTouchpointsGridData.swift */; };
 		66D18E80EBDE544CA2CA4B9B /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		CE20251324A418FE0071323E /* ActionCardData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE20251224A418FE0071323E /* ActionCardData.swift */; };
 		CEE9F37C232FD72F0000C9CA /* DownloadAppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE9F37B232FD72F0000C9CA /* DownloadAppData.swift */; };
 		CEE9F390233062880000C9CA /* CrossSellingBoxData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE9F38F233062880000C9CA /* CrossSellingBoxData.swift */; };
 		F71E699B5871AF8878117D8F /* Pods_Example_BusinessComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70705FCCEC04254552DE2C7D /* Pods_Example_BusinessComponents.framework */; };
@@ -47,6 +48,7 @@
 		76BAD5F6C0ABF02248DA22EC /* Pods-Example_BusinessComponents.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example_BusinessComponents.debug.xcconfig"; path = "Target Support Files/Pods-Example_BusinessComponents/Pods-Example_BusinessComponents.debug.xcconfig"; sourceTree = "<group>"; };
 		821827EE71846DD251C475A6 /* Pods-Example_BusinessComponents.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example_BusinessComponents.release.xcconfig"; path = "Pods/Target Support Files/Pods-Example_BusinessComponents/Pods-Example_BusinessComponents.release.xcconfig"; sourceTree = "<group>"; };
 		83422D9498E92A1A94AAAABD /* Pods-Example_BusinessComponents.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example_BusinessComponents.release.xcconfig"; path = "Target Support Files/Pods-Example_BusinessComponents/Pods-Example_BusinessComponents.release.xcconfig"; sourceTree = "<group>"; };
+		CE20251224A418FE0071323E /* ActionCardData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionCardData.swift; sourceTree = "<group>"; };
 		CEE9F37B232FD72F0000C9CA /* DownloadAppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadAppData.swift; sourceTree = "<group>"; };
 		CEE9F38F233062880000C9CA /* CrossSellingBoxData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossSellingBoxData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -109,6 +111,7 @@
 				0F660AFA23305CA9001B52DA /* LoyaltyHeaderData.swift */,
 				23EE40782326BA33001322EC /* LoyaltyRingData.swift */,
 				23EE407F23297CF8001322EC /* SingleItemData.swift */,
+				CE20251224A418FE0071323E /* ActionCardData.swift */,
 			);
 			path = MockData;
 			sourceTree = "<group>";
@@ -247,6 +250,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE20251324A418FE0071323E /* ActionCardData.swift in Sources */,
 				23EE407B2326BA33001322EC /* DiscountData.swift in Sources */,
 				23EE408023297CF8001322EC /* SingleItemData.swift in Sources */,
 				23EE40682326B50B001322EC /* ViewController.swift in Sources */,
