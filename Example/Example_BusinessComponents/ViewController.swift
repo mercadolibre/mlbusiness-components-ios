@@ -36,8 +36,8 @@ extension ViewController {
         let itemDescriptionView = setupItemDescriptionView(bottomOf: dividingLineView)
         let crossSellingBoxView = setupCrossSellingBoxView(bottomOf: itemDescriptionView)
         let discountView = setupDiscountView(numberOfItems: 6, bottomOf: crossSellingBoxView)
-        let splitPaymentView = setupSplitPaymentView(bottomOf: discountView)
-        let discountTouchpointView = setupDiscountTouchpointsView(numberOfItems: 6, bottomOf: splitPaymentView)
+        let actionCardView = setupActionCardView(bottomOf: discountView)
+        let discountTouchpointView = setupDiscountTouchpointsView(numberOfItems: 6, bottomOf: actionCardView)
         let downloadAppView = setupDownloadAppView(bottomOf: discountTouchpointView)
         let loyaltyHeaderView = setupLoyaltyHeaderView(bottomOf: downloadAppView)
         let animatedButtonView = setupAnimatedButtonView(bottomOf: loyaltyHeaderView)
@@ -89,18 +89,18 @@ extension ViewController {
         return discountView
     }
 
-    private func setupSplitPaymentView(bottomOf targetView: UIView) -> MLBusinessActionCardView {
-        let splitPaymentView = MLBusinessActionCardView(ActionCardData())
-        containerView.addSubview(splitPaymentView)
+    private func setupActionCardView(bottomOf targetView: UIView) -> MLBusinessActionCardView {
+        let actionCardView = MLBusinessActionCardView(ActionCardData())
+        containerView.addSubview(actionCardView)
         NSLayoutConstraint.activate([
-            splitPaymentView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
-            splitPaymentView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
-            splitPaymentView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16)
+            actionCardView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            actionCardView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+            actionCardView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16)
         ])
-        splitPaymentView.addTapAction {
+        actionCardView.addTapAction {
             print("Button tapped")
         }
-        return splitPaymentView
+        return actionCardView
     }
     
     private func setupDiscountTouchpointsView(numberOfItems: Int, bottomOf targetView: UIView) -> UIView {
