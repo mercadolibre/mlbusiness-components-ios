@@ -11,10 +11,10 @@ import MLUI
 @objcMembers
 open class MLBusinessSplitPaymentView: UIView {
 
-    private var viewData: MLBusinessSplitPaymentData
+    private var viewData: MLBusinessActionCardViewData
     private var tapAction: (() -> Void)?
 
-    public init(_ viewData: MLBusinessSplitPaymentData) {
+    public init(_ viewData: MLBusinessActionCardViewData) {
         self.viewData = viewData
         super.init(frame: .zero)
         render()

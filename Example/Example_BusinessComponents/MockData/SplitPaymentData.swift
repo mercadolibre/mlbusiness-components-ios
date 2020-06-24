@@ -9,7 +9,7 @@
 import Foundation
 import MLBusinessComponents
 
-class SplitPaymentData: NSObject, MLBusinessSplitPaymentData {
+class SplitPaymentData: NSObject, MLBusinessActionCardViewData {
     func getTitle() -> String {
         return "Podés dividir este gasto con tus contactos"
     }
