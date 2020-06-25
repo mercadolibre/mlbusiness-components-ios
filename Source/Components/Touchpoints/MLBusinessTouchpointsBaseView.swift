@@ -34,7 +34,6 @@ class MLBusinessTouchpointsBaseView: UIView & MLBusinessTouchpointsViewInitializ
     var topConstraint, leftConstraint, bottomConstraint, rightConstraint: NSLayoutConstraint?
     var canOpenMercadoPagoApp: Bool?
     let defaultComponentHeight = CGFloat(272)
-    var additionalEdgeInsets: [String : Any]?
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
@@ -50,8 +49,6 @@ class MLBusinessTouchpointsBaseView: UIView & MLBusinessTouchpointsViewInitializ
     func setAdditionalEdgeInsets(with insets: [String : Any]?) {
         guard let additionalEdgeInsets = insets else { return }
         
-        self.additionalEdgeInsets = additionalEdgeInsets
-
         topConstraint?.constant = CGFloat(additionalEdgeInsets["top"] as? NSNumber ?? 0)
         leftConstraint?.constant = CGFloat(additionalEdgeInsets["left"] as? NSNumber ?? 0)
         bottomConstraint?.constant = -CGFloat(additionalEdgeInsets["bottom"] as? NSNumber ?? 0)
