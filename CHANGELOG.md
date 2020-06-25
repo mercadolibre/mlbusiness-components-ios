@@ -1,5 +1,7 @@
-# Sin publicar
+# v1.14.0
+🚀 1.14.0 🚀
 - New dynamic carousel card width in MLBusinessTouchpointView.
+- MLBusinessActionCardView added
 
 # v1.13.0
 🚀 1.13.0 🚀
