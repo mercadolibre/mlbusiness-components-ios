@@ -1,3 +1,6 @@
+# Sin publicar
+- New dynamic carousel card width in MLBusinessTouchpointView.
+
 # v1.13.0
 🚀 1.13.0 🚀
 - Added optionals subtitle and button support to MLBusinessLoyaltyRingView.
