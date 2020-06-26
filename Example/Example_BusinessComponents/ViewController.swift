@@ -36,7 +36,8 @@ extension ViewController {
         let itemDescriptionView = setupItemDescriptionView(bottomOf: dividingLineView)
         let crossSellingBoxView = setupCrossSellingBoxView(bottomOf: itemDescriptionView)
         let discountView = setupDiscountView(numberOfItems: 6, bottomOf: crossSellingBoxView)
-        let discountTouchpointView = setupDiscountTouchpointsView(numberOfItems: 6, bottomOf: discountView)
+        let actionCardView = setupActionCardView(bottomOf: discountView)
+        let discountTouchpointView = setupDiscountTouchpointsView(numberOfItems: 6, bottomOf: actionCardView)
         let downloadAppView = setupDownloadAppView(bottomOf: discountTouchpointView)
         let loyaltyHeaderView = setupLoyaltyHeaderView(bottomOf: downloadAppView)
         let animatedButtonView = setupAnimatedButtonView(bottomOf: loyaltyHeaderView)
@@ -86,6 +87,20 @@ extension ViewController {
             discountView.update(DiscountData(numberOfItems: Int.random(in: 1...6)))
         }
         return discountView
+    }
+
+    private func setupActionCardView(bottomOf targetView: UIView) -> MLBusinessActionCardView {
+        let actionCardView = MLBusinessActionCardView(ActionCardData())
+        containerView.addSubview(actionCardView)
+        NSLayoutConstraint.activate([
+            actionCardView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            actionCardView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+            actionCardView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16)
+        ])
+        actionCardView.addTapAction {
+            print("Button tapped")
+        }
+        return actionCardView
     }
     
     private func setupDiscountTouchpointsView(numberOfItems: Int, bottomOf targetView: UIView) -> UIView {

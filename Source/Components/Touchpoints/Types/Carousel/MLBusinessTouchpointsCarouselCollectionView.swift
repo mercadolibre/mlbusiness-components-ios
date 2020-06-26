@@ -17,11 +17,13 @@ class MLBusinessTouchpointsCarouselCollectionView: UIView {
     var segmentId: String?
     var typeId: String?
     var canOpenMercadoPagoApp: Bool?
+    var leftMargin: CGFloat?
+    static let minimumInteritemSpacing = CGFloat(12.0)
 
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.minimumInteritemSpacing = 12
+        layout.minimumInteritemSpacing = MLBusinessTouchpointsCarouselCollectionView.minimumInteritemSpacing
         layout.minimumLineSpacing = 12
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -118,7 +120,9 @@ class MLBusinessTouchpointsCarouselCollectionView: UIView {
 
 extension MLBusinessTouchpointsCarouselCollectionView: UICollectionViewDelegateFlowLayout {
     func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt _: IndexPath) -> CGSize {
-        return CGSize(width: 116.0, height: maxItemHeight)
+        let width = ((UIScreen.main.bounds.width - (leftMargin ?? 0)) / 2.8) - MLBusinessTouchpointsCarouselCollectionView.minimumInteritemSpacing
+        let minimumWidth = CGFloat(116.0)
+        return CGSize(width: max(minimumWidth, width) , height: CGFloat(maxItemHeight))
     }
 }
 

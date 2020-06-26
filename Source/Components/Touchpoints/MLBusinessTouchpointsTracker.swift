@@ -100,7 +100,19 @@ class MLBusinessTouchpointsTracker: MLBusinessTouchpointsTrackerProtocol {
     }
     
     private func track(eventData: [String : Any], action: String) {
-        print("TRACKING EVENT - ACTION: \(action) - EVENTDATA: \(eventData)")
-        trackingProvider?.track(action: action, eventData: eventData)
+        let formattedEventData = convertToSnakeCase(MLBusinessCodableDictionary(value: eventData)).rawValue
+        trackingProvider?.track(action: action, eventData: formattedEventData)
+    }
+    
+    private func convertToSnakeCase<T>(_ value: T) -> T where T: Codable {
+        do {
+            let encoder = JSONEncoder()
+            encoder.keyEncodingStrategy = .convertToSnakeCase
+            let encodedContent = try encoder.encode(value)
+            let converted = try JSONDecoder().decode(T.self, from: encodedContent)
+            return converted
+        } catch {
+            return value
+        }
     }
 }

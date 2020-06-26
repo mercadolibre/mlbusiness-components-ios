@@ -43,16 +43,15 @@ open class MLBusinessTouchpointsView: UIView {
             touchpointTracker = MLBusinessTouchpointsTracker(with: data, trackingProvider:trackingProvider)
             componentTrackable = codableContent as? ComponentTrackable
             
-            if data.getTouchpointType() == touchpointsData?.getTouchpointType() && touchpointView != nil{
-                touchpointView?.update(with: codableContent)
-            } else {
+            if data.getTouchpointType() != touchpointsData?.getTouchpointType() || touchpointView == nil{
                 touchpointsData = data
                 touchpointView = viewType.init(configuration: codableContent)
                 setupTouchpointView()
             }
             
-            touchpointView?.canOpenMercadoPagoApp = canOpenMercadoPagoApp
             touchpointView?.setAdditionalEdgeInsets(with: touchpointsData?.getAdditionalEdgeInsets?())
+            touchpointView?.update(with: codableContent)
+            touchpointView?.canOpenMercadoPagoApp = canOpenMercadoPagoApp
             touchpointView?.delegate = self
             trackShow()
         }
