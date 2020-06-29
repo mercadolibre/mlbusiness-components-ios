@@ -9,7 +9,8 @@
 import UIKit
 import MLBusinessComponents
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, MLBusinessLoyaltyBroadcastReceiver {
+    
     @IBOutlet private weak var containerView: UIView!
     
     private weak var ringView: MLBusinessLoyaltyRingView?
@@ -18,19 +19,25 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupView()
+        setupView(self)
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         animateRing()
     }
+    
+    func receiveLoyaltyBroadcastInfo(_ notification: Notification) {
+        let loyaltyBroadcastData = notification.object as! MLBusinessLoyaltyBroadcastData
+        NSLog("Received info from broadcast: Level %i - Percentage %f - Color %@", loyaltyBroadcastData.level, loyaltyBroadcastData.percentage, loyaltyBroadcastData.primaryColor)
+     }
+    
 }
 
 // MARK: Setups
 extension ViewController {
-    private func setupView() {
-        let newRingView = setupRingView()
+    private func setupView(_ receiver: MLBusinessLoyaltyBroadcastReceiver) {
+        let newRingView = setupRingView(receiver)
         self.ringView = newRingView
         let dividingLineView = setupDividingLineView(bottomOf: newRingView)
         let itemDescriptionView = setupItemDescriptionView(bottomOf: dividingLineView)
@@ -45,7 +52,7 @@ extension ViewController {
         animatedButtonView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -64).isActive = true
     }
 
-    private func setupRingView() -> MLBusinessLoyaltyRingView {
+    private func setupRingView(_ receiver: MLBusinessLoyaltyBroadcastReceiver) -> MLBusinessLoyaltyRingView {
         let ringView = MLBusinessLoyaltyRingView(LoyaltyRingData(), fillPercentProgress: false)
 
         containerView.addSubview(ringView)
@@ -59,7 +66,15 @@ extension ViewController {
         ringView.addTapAction { deepLink in
             print(deepLink)
         }
-
+        
+        let broadcaster = MLBusinessLoyaltyBroadcaster.instance as MLBusinessLoyaltyBroadcaster
+        
+        broadcaster.register(receiver)
+        let level = LoyaltyRingData().getRingNumber()
+        broadcaster.updateInfo(MLBusinessLoyaltyBroadcastData(level:3,
+                                                              percentage: LoyaltyRingData().getRingPercentage(),
+                                                              primaryColor: LoyaltyRingData().getRingHexaColor()))
+        
         return ringView
     }
 

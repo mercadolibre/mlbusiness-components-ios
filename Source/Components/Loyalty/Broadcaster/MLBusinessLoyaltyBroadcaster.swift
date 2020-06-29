@@ -10,27 +10,24 @@ import Foundation
 @objcMembers
 open class MLBusinessLoyaltyBroadcaster : NSObject {
 
-    private static let instance = MLBusinessLoyaltyBroadcaster();
+    public static let instance = MLBusinessLoyaltyBroadcaster();
+    private let notificationName = "LoyaltyBroadcaster";
     
-    public static func getInstance() -> MLBusinessLoyaltyBroadcaster {
-        return instance;
+    public func register(_ receiver: MLBusinessLoyaltyBroadcastReceiver) {
+        NotificationCenter.default.addObserver(receiver,
+                                               selector: #selector(receiver.receiveLoyaltyBroadcastInfo(_:)),
+                                               name: Notification.Name(rawValue: notificationName),
+                                               object: nil)
     }
     
-    public static func register(_ receiver: MLBusinessLoyaltyBroadcastReceiver) {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(receiver.receiveInfo(_:)),
-                                               name: Notification.Name("NotificationIdentifier"),
-                                               object: receiver)
+    public func unregister(_ receiver: MLBusinessLoyaltyBroadcastReceiver) {
+        NotificationCenter.default.removeObserver(receiver,
+                                                  name: Notification.Name(rawValue: notificationName),
+                                                  object: nil)
     }
     
-    public static func unregister(_ receiver: MLBusinessLoyaltyBroadcastReceiver) {
-        NotificationCenter.default.removeObserver(self,
-                                                  name: Notification.Name("NotificationIdentifier"),
-                                                  object: receiver)
-    }
-    
-    public static func updateInfo(_ loyaltyBroadcastData: MLBusinessLoyaltyBroadcastData){
-        NotificationCenter.default.post(name: Notification.Name("NotificationIdentifier"), object: nil)
+    public func updateInfo(_ loyaltyBroadcastData: MLBusinessLoyaltyBroadcastData){
+        NotificationCenter.default.post(Notification(name: Notification.Name(notificationName), object: loyaltyBroadcastData))
     }
     
     

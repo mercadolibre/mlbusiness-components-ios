@@ -8,5 +8,5 @@
 import UIKit
 
 @objc public protocol MLBusinessLoyaltyBroadcastReceiver {
-    func receiveInfo(_ loyaltyBroadcastData: MLBusinessLoyaltyBroadcastData) -> Bool
+    func receiveLoyaltyBroadcastInfo(_ notification: Notification)
 }
