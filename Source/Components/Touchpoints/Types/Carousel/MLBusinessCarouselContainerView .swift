@@ -1,5 +1,5 @@
 //
-//  MLBusinessTouchpointsCarouselCollectionView.swift
+//  MLBusinessCarouselContainerView.swift
 //  MLBusinessComponents
 //
 //  Created by Vicente Veltri on 30/04/2020.
@@ -7,13 +7,13 @@
 
 import Foundation
 
-protocol MLBusinessTouchpointsCarouselCollectionViewProtocol: class {
+protocol MLBusinessCarouselContainerViewProtocol: class {
     func trackPrints(prints: [Trackable]?)
     func trackTap(with selectedIndex: Int?, deeplink: String?, trackingId: String?)
 }
 
-class MLBusinessTouchpointsCarouselCollectionView: UIView {
-    weak var delegate: MLBusinessTouchpointsCarouselCollectionViewProtocol?
+public class MLBusinessCarouselContainerView: UIView {
+    weak var delegate: MLBusinessCarouselContainerViewProtocol?
     var segmentId: String?
     var typeId: String?
     var canOpenMercadoPagoApp: Bool?
@@ -23,12 +23,12 @@ class MLBusinessTouchpointsCarouselCollectionView: UIView {
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.minimumInteritemSpacing = MLBusinessTouchpointsCarouselCollectionView.minimumInteritemSpacing
+        layout.minimumInteritemSpacing = MLBusinessCarouselContainerView.minimumInteritemSpacing
         layout.minimumLineSpacing = 12
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.register(MLBusinessTouchpointsCarouselCollectionViewCell.self,
-                                forCellWithReuseIdentifier: MLBusinessTouchpointsCarouselCollectionViewCell.reuseIdentifier)
+        collectionView.register(MLBusinessCarouselContainerViewCell.self,
+                                forCellWithReuseIdentifier: MLBusinessCarouselContainerViewCell.reuseIdentifier)
         collectionView.backgroundColor = .clear
         collectionView.alwaysBounceHorizontal = true
         collectionView.clipsToBounds = false
@@ -118,24 +118,24 @@ class MLBusinessTouchpointsCarouselCollectionView: UIView {
     }
 }
 
-extension MLBusinessTouchpointsCarouselCollectionView: UICollectionViewDelegateFlowLayout {
+extension MLBusinessCarouselContainerView: UICollectionViewDelegateFlowLayout {
     func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt _: IndexPath) -> CGSize {
-        let width = ((UIScreen.main.bounds.width - (leftMargin ?? 0)) / 2.8) - MLBusinessTouchpointsCarouselCollectionView.minimumInteritemSpacing
+        let width = ((UIScreen.main.bounds.width - (leftMargin ?? 0)) / 2.8) - MLBusinessCarouselContainerView.minimumInteritemSpacing
         let minimumWidth = CGFloat(116.0)
         return CGSize(width: max(minimumWidth, width) , height: CGFloat(maxItemHeight))
     }
 }
 
-extension MLBusinessTouchpointsCarouselCollectionView: UICollectionViewDataSource {
-    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
+extension MLBusinessCarouselContainerView: UICollectionViewDataSource {
+    public func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         return items.count
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView
-            .dequeueReusableCell(withReuseIdentifier: MLBusinessTouchpointsCarouselCollectionViewCell.reuseIdentifier,
-                                 for: indexPath) as? MLBusinessTouchpointsCarouselCollectionViewCell else {
-                                    return MLBusinessTouchpointsCarouselCollectionViewCell() }
+            .dequeueReusableCell(withReuseIdentifier: MLBusinessCarouselContainerViewCell.reuseIdentifier,
+                                 for: indexPath) as? MLBusinessCarouselContainerViewCell else {
+                                    return MLBusinessCarouselContainerViewCell() }
         let item = items[indexPath.row]
         cell.update(with: item)
         
@@ -145,7 +145,7 @@ extension MLBusinessTouchpointsCarouselCollectionView: UICollectionViewDataSourc
     }
 }
 
-extension MLBusinessTouchpointsCarouselCollectionView: UICollectionViewDelegate {
+extension MLBusinessCarouselContainerView: UICollectionViewDelegate {
     func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let link = items[indexPath.row].link, let trackingId = items[indexPath.row].tracking?.trackingId else { return }
 
@@ -157,7 +157,7 @@ extension MLBusinessTouchpointsCarouselCollectionView: UICollectionViewDelegate 
     }
 }
 
-extension MLBusinessTouchpointsCarouselCollectionView: UIScrollViewDelegate {
+extension MLBusinessCarouselContainerView: UIScrollViewDelegate {
     public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if !decelerate {
             scrollViewDidEndDecelerating(scrollView)
@@ -173,7 +173,7 @@ extension MLBusinessTouchpointsCarouselCollectionView: UIScrollViewDelegate {
     }
 }
 
-extension MLBusinessTouchpointsCarouselCollectionView: ComponentTrackable {
+extension MLBusinessCarouselContainerView: ComponentTrackable {
     func getTrackables() -> [Trackable]? {
         var trackables = [Trackable]()
         collectionView.indexPathsForVisibleItems.forEach { indexPath in

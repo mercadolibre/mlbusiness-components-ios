@@ -1,5 +1,5 @@
 //
-//  MLBusinessTouchpointsCarouselView.swift
+//  MLBusinessCarouselView.swift
 //  MLBusinessComponents
 //
 //  Created by Vicente Veltri on 30/04/2020.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class MLBusinessTouchpointsCarouselView: MLBusinessTouchpointsBaseView {
+class MLBusinessCarouselView: MLBusinessTouchpointsBaseView {
     
     override var canOpenMercadoPagoApp: Bool? {
         didSet {
@@ -15,13 +15,13 @@ class MLBusinessTouchpointsCarouselView: MLBusinessTouchpointsBaseView {
         }
     }
 
-    private let collectionView: MLBusinessTouchpointsCarouselCollectionView = {
-        let collectionView = MLBusinessTouchpointsCarouselCollectionView()
+    private let collectionView: MLBusinessCarouselContainerView = {
+        let collectionView = MLBusinessCarouselContainerView()
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
 
-    private var model: MLBusinessTouchpointsCarouselModel?
+    private var model: MLBusinessCarouselModel?
 
     required init?(configuration: Codable?) {
         super.init(configuration: configuration)
@@ -46,7 +46,7 @@ class MLBusinessTouchpointsCarouselView: MLBusinessTouchpointsBaseView {
     }
 
     override func update(with configuration: Codable?) {
-        guard let model = configuration as? MLBusinessTouchpointsCarouselModel else { return }
+        guard let model = configuration as? MLBusinessCarouselModel else { return }
         self.model = model
         collectionView.leftMargin = collectionView.contentInset.left
         collectionView.update(with: model.getItems())
@@ -72,13 +72,13 @@ class MLBusinessTouchpointsCarouselView: MLBusinessTouchpointsBaseView {
     }
     
     override func getTouchpointViewHeight(with data: Codable?, topInset: CGFloat, bottomInset: CGFloat) -> CGFloat {
-        guard let model = data as? MLBusinessTouchpointsCarouselModel else { return 0 }
+        guard let model = data as? MLBusinessCarouselModel else { return 0 }
         
         return CGFloat(collectionView.getMaxItemHeight(with: model.getItems())) + topInset + bottomInset
     }
 }
 
-extension MLBusinessTouchpointsCarouselView: MLBusinessTouchpointsCarouselCollectionViewProtocol {
+extension MLBusinessCarouselView: MLBusinessCarouselContainerViewProtocol {
     func trackPrints(prints: [Trackable]?) {
         delegate?.trackPrints(prints: prints)
     }

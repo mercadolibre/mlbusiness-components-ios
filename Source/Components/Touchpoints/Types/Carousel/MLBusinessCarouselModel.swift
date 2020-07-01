@@ -1,5 +1,5 @@
 //
-//  MLBusinessTouchpointsCarouselModel.swift
+//  MLBusinessCarouselModel.swift
 //  MLBusinessComponents
 //
 //  Created by Vicente Veltri on 30/04/2020.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class MLBusinessTouchpointsCarouselModel: NSObject, Codable, ComponentTrackable {
+class MLBusinessCarouselModel: NSObject, Codable, ComponentTrackable {
     private let title: String?
     private let subtitle: String?
     private let items: [MLBusinessTouchpointsCarouselItemModel]

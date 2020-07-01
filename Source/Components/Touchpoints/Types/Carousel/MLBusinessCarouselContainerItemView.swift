@@ -1,5 +1,5 @@
 //
-//  MLBusinessTouchpointsCarouselCollectionItemView.swift
+//  MLBusinessCarouselContainerItemView.swift
 //  MLBusinessComponents
 //
 //  Created by Vicente Veltri on 30/04/2020.
@@ -8,7 +8,7 @@
 import Foundation
 import MLUI
 
-public class MLBusinessTouchpointsCarouselCollectionItemView: UIView {
+public class MLBusinessCarouselContainerItemView: UIView {
 
     private let containerView: UIView = {
         let containerView = UIView(frame: .zero)
@@ -106,8 +106,8 @@ public class MLBusinessTouchpointsCarouselCollectionItemView: UIView {
         return subtitleLabel
     }()
 
-    private let pillView: MLBusinessTouchpointsCarouselPillView = {
-        let pillView = MLBusinessTouchpointsCarouselPillView(with: 16)
+    private let pillView: MLBusinessCarouselPillView = {
+        let pillView = MLBusinessCarouselPillView(with: 16)
         pillView.translatesAutoresizingMaskIntoConstraints = false
         return pillView
     }()
