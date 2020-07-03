@@ -10,9 +10,9 @@ import Foundation
 class MLBusinessCarouselModel: NSObject, Codable, ComponentTrackable {
     private let title: String?
     private let subtitle: String?
-    private let items: [MLBusinessTouchpointsCarouselItemModel]
+    private let items: [MLBusinessCarouselItemModel]
 
-    init(title: String?, subtitle: String?, items: [MLBusinessTouchpointsCarouselItemModel]) {
+    init(title: String?, subtitle: String?, items: [MLBusinessCarouselItemModel]) {
         self.title = title
         self.subtitle = subtitle
         self.items = items
@@ -28,12 +28,12 @@ class MLBusinessCarouselModel: NSObject, Codable, ComponentTrackable {
         return items
     }
     
-    func getItems() -> [MLBusinessTouchpointsCarouselItemModel] {
+    func getItems() -> [MLBusinessCarouselItemModel] {
         return items
     }
 }
 
-struct MLBusinessTouchpointsCarouselItemModel: Codable, Trackable {
+public struct MLBusinessCarouselItemModel: Codable {
     let title: String?
     let topLabel: String?
     let mainLabel: String?
@@ -49,7 +49,38 @@ struct MLBusinessTouchpointsCarouselItemModel: Codable, Trackable {
     let titleFormat: DiscountItemTextFormat?
     let subtitleFormat: DiscountItemTextFormat?
     let imageFormat: DiscountItemImageFormat?
+
+    public func getLink() -> String? {
+        return link
+    }
     
+    public func getTrackingId() -> String? {
+        return trackingId
+    }
+    
+    public func getEventData() -> [String : Any]? {
+        return eventData?.rawValue
+    }
+    
+    public init (title: String?, topLabel: String?, mainLabel: String?, rightLabel: String?, pill: DiscountItemDiscountPill?, image: String?, subtitle: String?, link: String?, textColor: String?, backgroundColor: String?, tracking: TouchpointsTrackingInfo?, titleFormat: DiscountItemTextFormat?, subtitleFormat: DiscountItemTextFormat?, imageFormat: DiscountItemImageFormat?) {
+        self.title = title
+        self.topLabel = topLabel
+        self.mainLabel = mainLabel
+        self.rightLabel = rightLabel
+        self.pill = pill
+        self.image = image
+        self.subtitle = subtitle
+        self.link = link
+        self.textColor = textColor
+        self.backgroundColor = backgroundColor
+        self.tracking = tracking
+        self.titleFormat = titleFormat
+        self.subtitleFormat = subtitleFormat
+        self.imageFormat = imageFormat
+    }
+}
+
+extension MLBusinessCarouselItemModel: Trackable {
     var trackingId: String? {
         return tracking?.trackingId
     }
@@ -60,22 +91,43 @@ struct MLBusinessTouchpointsCarouselItemModel: Codable, Trackable {
 }
 
 public struct DiscountItemDiscountPill: Codable {
-    public let label: String
-    public let icon: String?
-    public let format: DiscountItemDiscountFeatureFormat
+    let label: String
+    let icon: String?
+    let format: DiscountItemDiscountFeatureFormat
+    
+    public init(label: String, icon: String?, format: DiscountItemDiscountFeatureFormat) {
+        self.label = label
+        self.icon = icon
+        self.format = format
+    }
 }
 
 public struct DiscountItemDiscountFeatureFormat: Codable {
-    public let backgroundColor: String
-    public let textColor: String
+    let backgroundColor: String
+    let textColor: String
+    
+    public init(backgroundColor: String, textColor: String) {
+        self.backgroundColor = backgroundColor
+        self.textColor = textColor
+    }
 }
 
-struct DiscountItemTextFormat: Codable {
+public struct DiscountItemTextFormat: Codable {
     let size: Double
     let color: String
     let weight: String
+
+    public init(size: Double, color: String, weight: String) {
+        self.size = size
+        self.color = color
+        self.weight = weight
+    }
 }
 
-struct DiscountItemImageFormat: Codable {
+public struct DiscountItemImageFormat: Codable {
     let overlay: Bool
+    
+    public init(overlay: Bool) {
+        self.overlay = overlay
+    }
 }

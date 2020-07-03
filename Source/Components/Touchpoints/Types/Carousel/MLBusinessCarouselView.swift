@@ -11,7 +11,7 @@ class MLBusinessCarouselView: MLBusinessTouchpointsBaseView {
     
     override var canOpenMercadoPagoApp: Bool? {
         didSet {
-            collectionView.canOpenMercadoPagoApp = canOpenMercadoPagoApp
+            collectionView.shouldHighlightItem = canOpenMercadoPagoApp ?? true
         }
     }
 
@@ -68,7 +68,7 @@ class MLBusinessCarouselView: MLBusinessTouchpointsBaseView {
     }
     
     override func getVisibleItems() -> [Trackable]? {
-        return collectionView.getTrackables()
+        return collectionView.getVisibleItems()
     }
     
     override func getTouchpointViewHeight(with data: Codable?, topInset: CGFloat, bottomInset: CGFloat) -> CGFloat {
@@ -78,12 +78,14 @@ class MLBusinessCarouselView: MLBusinessTouchpointsBaseView {
     }
 }
 
-extension MLBusinessCarouselView: MLBusinessCarouselContainerViewProtocol {
-    func trackPrints(prints: [Trackable]?) {
-        delegate?.trackPrints(prints: prints)
+extension MLBusinessCarouselView: MLBusinessCarouselContainerViewDelegate {
+    func carouselContainerView(_: MLBusinessCarouselContainerView, didSelect item: MLBusinessCarouselItemModel, at index: Int) {
+        guard let link = item.link, let trackingId = item.tracking?.trackingId else { return }
+
+        delegate?.trackTap(with: index, deeplink: link, trackingId: trackingId)
     }
     
-    func trackTap(with selectedIndex: Int?, deeplink: String?, trackingId: String?) {
-        delegate?.trackTap(with: selectedIndex, deeplink: deeplink, trackingId: trackingId)
+    func carouselContainerView(_: MLBusinessCarouselContainerView, didFinishScrolling visibleItems: [MLBusinessCarouselItemModel]?) {
+        delegate?.trackPrints(prints: visibleItems)
     }
 }

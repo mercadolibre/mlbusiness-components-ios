@@ -97,7 +97,16 @@ extension MLBusinessTouchpointsGridItemModel: Trackable {
     }
 }
 
-struct TouchpointsTrackingInfo: Codable & Trackable {
+public struct TouchpointsTrackingInfo: Codable & Trackable {
     let trackingId: String?
     let eventData: MLBusinessCodableDictionary?
+    
+    public init(trackingId: String?, eventData: [String: Any]?) {
+        self.trackingId = trackingId
+        if let eventData = eventData {
+            self.eventData = MLBusinessCodableDictionary(value: eventData)
+        } else {
+            self.eventData = nil
+        }
+    }
 }

@@ -193,7 +193,7 @@ public class MLBusinessCarouselContainerItemView: UIView {
         ])
     }
 
-    func update(with item: MLBusinessTouchpointsCarouselItemModel) {
+    func update(with item: MLBusinessCarouselItemModel) {
         discountValueHorizontalStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         discountValueVerticalStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
 
@@ -263,7 +263,7 @@ public class MLBusinessCarouselContainerItemView: UIView {
         pillView.icon = nil
     }
     
-    private func applyFormats(to item: MLBusinessTouchpointsCarouselItemModel) {
+    private func applyFormats(to item: MLBusinessCarouselItemModel) {
         if let titleFormat = item.titleFormat {
             applyFormat(format: titleFormat, label: brandNameLabel)
         } else {

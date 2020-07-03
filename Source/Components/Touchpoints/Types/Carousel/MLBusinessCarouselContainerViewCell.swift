@@ -34,7 +34,7 @@ class MLBusinessCarouselContainerViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func update(with content: MLBusinessTouchpointsCarouselItemModel) {
+    func update(with content: MLBusinessCarouselItemModel) {
         if let colorString = content.backgroundColor {
             currentBackgroundColor = colorString.hexaToUIColor()
             backgroundColor = currentBackgroundColor ?? .white
