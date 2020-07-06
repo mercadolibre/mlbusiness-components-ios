@@ -1,5 +1,5 @@
 //
-//  MLBusinessCarouselPillView.swift
+//  MLBusinessTouchpointsCarouselPillView.swift
 //  MLBusinessComponents
 //
 //  Created by Vicente Veltri on 30/04/2020.
@@ -8,7 +8,7 @@
 import Foundation
 import MLUI
 
-class MLBusinessCarouselPillView: UIView {
+class MLBusinessTouchpointsCarouselPillView: UIView {
     override var tintColor: UIColor! {
         didSet {
             textLabel.textColor = tintColor

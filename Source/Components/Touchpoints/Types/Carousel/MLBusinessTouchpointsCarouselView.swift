@@ -1,5 +1,5 @@
 //
-//  MLBusinessCarouselView.swift
+//  MLBusinessTouchpointsCarouselView.swift
 //  MLBusinessComponents
 //
 //  Created by Vicente Veltri on 30/04/2020.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class MLBusinessCarouselView: MLBusinessTouchpointsBaseView {
+class MLBusinessTouchpointsCarouselView: MLBusinessTouchpointsBaseView {
     
     override var canOpenMercadoPagoApp: Bool? {
         didSet {
@@ -21,7 +21,7 @@ class MLBusinessCarouselView: MLBusinessTouchpointsBaseView {
         return collectionView
     }()
 
-    private var model: MLBusinessCarouselModel?
+    private var model: MLBusinessTouchpointsCarouselModel?
 
     required init?(configuration: Codable?) {
         super.init(configuration: configuration)
@@ -46,7 +46,7 @@ class MLBusinessCarouselView: MLBusinessTouchpointsBaseView {
     }
 
     override func update(with configuration: Codable?) {
-        guard let model = configuration as? MLBusinessCarouselModel else { return }
+        guard let model = configuration as? MLBusinessTouchpointsCarouselModel else { return }
         self.model = model
         collectionView.leftMargin = collectionView.contentInset.left
         collectionView.update(with: model.getItems())
@@ -72,13 +72,13 @@ class MLBusinessCarouselView: MLBusinessTouchpointsBaseView {
     }
     
     override func getTouchpointViewHeight(with data: Codable?, topInset: CGFloat, bottomInset: CGFloat) -> CGFloat {
-        guard let model = data as? MLBusinessCarouselModel else { return 0 }
+        guard let model = data as? MLBusinessTouchpointsCarouselModel else { return 0 }
         
         return CGFloat(collectionView.getMaxItemHeight(with: model.getItems())) + topInset + bottomInset
     }
 }
 
-extension MLBusinessCarouselView: MLBusinessCarouselContainerViewDelegate {
+extension MLBusinessTouchpointsCarouselView: MLBusinessCarouselContainerViewDelegate {
     func carouselContainerView(_: MLBusinessCarouselContainerView, didSelect item: MLBusinessCarouselItemModel, at index: Int) {
         guard let link = item.link, let trackingId = item.tracking?.trackingId else { return }
 

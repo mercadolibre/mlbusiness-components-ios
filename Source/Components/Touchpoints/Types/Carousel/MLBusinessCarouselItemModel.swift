@@ -1,37 +1,11 @@
 //
-//  MLBusinessCarouselModel.swift
+//  MLBusinessCarouselItemModel.swift
 //  MLBusinessComponents
 //
-//  Created by Vicente Veltri on 30/04/2020.
+//  Created by Vicente Veltri on 06/07/2020.
 //
 
 import Foundation
-
-class MLBusinessCarouselModel: NSObject, Codable, ComponentTrackable {
-    private let title: String?
-    private let subtitle: String?
-    private let items: [MLBusinessCarouselItemModel]
-
-    init(title: String?, subtitle: String?, items: [MLBusinessCarouselItemModel]) {
-        self.title = title
-        self.subtitle = subtitle
-        self.items = items
-    }
-    
-    override init() {
-        self.title = ""
-        self.subtitle = ""
-        self.items = []
-    }
-    
-    func getTrackables() -> [Trackable]? {
-        return items
-    }
-    
-    func getItems() -> [MLBusinessCarouselItemModel] {
-        return items
-    }
-}
 
 public class MLBusinessCarouselItemModel: NSObject, Codable {
     let title: String?
@@ -44,7 +18,7 @@ public class MLBusinessCarouselItemModel: NSObject, Codable {
     let link: String?
     let textColor: String?
     let backgroundColor: String?
-    let tracking: TrackingInfo?
+    let tracking: MLBusinessItemModelTracking?
     
     let titleFormat: DiscountItemTextFormat?
     let subtitleFormat: DiscountItemTextFormat?
@@ -62,7 +36,7 @@ public class MLBusinessCarouselItemModel: NSObject, Codable {
         return eventData?.rawValue
     }
     
-    public init (title: String?, topLabel: String?, mainLabel: String?, rightLabel: String?, pill: DiscountItemDiscountPill?, image: String?, subtitle: String?, link: String?, textColor: String?, backgroundColor: String?, tracking: TrackingInfo?, titleFormat: DiscountItemTextFormat?, subtitleFormat: DiscountItemTextFormat?, imageFormat: DiscountItemImageFormat?) {
+    public init (title: String?, topLabel: String?, mainLabel: String?, rightLabel: String?, pill: DiscountItemDiscountPill?, image: String?, subtitle: String?, link: String?, textColor: String?, backgroundColor: String?, tracking: MLBusinessItemModelTracking?, titleFormat: DiscountItemTextFormat?, subtitleFormat: DiscountItemTextFormat?, imageFormat: DiscountItemImageFormat?) {
         self.title = title
         self.topLabel = topLabel
         self.mainLabel = mainLabel
@@ -131,3 +105,19 @@ public class DiscountItemImageFormat: NSObject, Codable {
         self.overlay = overlay
     }
 }
+
+public class MLBusinessItemModelTracking: NSObject, Codable {
+    let trackingId: String?
+    let eventData: MLBusinessCodableDictionary?
+    
+    public init(trackingId: String?, eventData: [String: Any]?) {
+        self.trackingId = trackingId
+        if let eventData = eventData {
+            self.eventData = MLBusinessCodableDictionary(value: eventData)
+        } else {
+            self.eventData = nil
+        }
+    }
+}
+
+extension MLBusinessItemModelTracking: Trackable { }

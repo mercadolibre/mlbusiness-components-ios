@@ -1,5 +1,5 @@
 //
-//  MLBusinessCarouselContainerViewCell.swift
+//  MLBusinessTouchpointsCarouselContainerViewCell.swift
 //  MLBusinessComponents
 //
 //  Created by Vicente Veltri on 30/04/2020.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class MLBusinessCarouselContainerViewCell: UICollectionViewCell {
+class MLBusinessTouchpointsCarouselContainerViewCell: UICollectionViewCell {
     override var isHighlighted: Bool {
         didSet {
            setHighlighted(isHighlighted)
@@ -15,7 +15,7 @@ class MLBusinessCarouselContainerViewCell: UICollectionViewCell {
     }
 
     private var height: NSLayoutConstraint? = nil
-    let itemView = MLBusinessCarouselContainerItemView()
+    let itemView = MLBusinessTouchpointsCarouselContainerItemView()
     
     private var currentBackgroundColor: UIColor?
 
