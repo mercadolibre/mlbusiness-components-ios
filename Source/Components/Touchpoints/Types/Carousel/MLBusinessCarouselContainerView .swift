@@ -15,7 +15,8 @@ public protocol MLBusinessCarouselContainerViewDelegate: class {
 public class MLBusinessCarouselContainerView: UIView {
     public weak var delegate: MLBusinessCarouselContainerViewDelegate?
     public var shouldHighlightItem = true
-    public var leftMargin = CGFloat(0.0)
+    public var shouldCalculateItemWidht = true
+    var leftMargin = CGFloat(0.0)
     static let minimumInteritemSpacing = CGFloat(12.0)
 
     public let collectionView: UICollectionView = {
@@ -126,12 +127,16 @@ public class MLBusinessCarouselContainerView: UIView {
 
 extension MLBusinessCarouselContainerView: UICollectionViewDelegateFlowLayout {
     public func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt _: IndexPath) -> CGSize {
-        let visibleCollectionWidth = UIScreen.main.bounds.width - leftMargin
-        let minimumWidth = CGFloat(116.0)
-        let coeficient = CGFloat(2.8)
-        let calculatedWidth = (visibleCollectionWidth / coeficient) - MLBusinessCarouselContainerView.minimumInteritemSpacing
-        let width = visibleCollectionWidth / (minimumWidth + MLBusinessCarouselContainerView.minimumInteritemSpacing) > coeficient ? minimumWidth : max(minimumWidth, calculatedWidth)
-        return CGSize(width: width , height: CGFloat(maxItemHeight))
+        let defaultWidth = CGFloat(116.0)
+        if shouldCalculateItemWidht {
+            let visibleCollectionWidth = UIScreen.main.bounds.width - leftMargin
+            let coeficient = CGFloat(2.8)
+            let calculatedWidth = (visibleCollectionWidth / coeficient) - MLBusinessCarouselContainerView.minimumInteritemSpacing
+            let width = visibleCollectionWidth / (defaultWidth + MLBusinessCarouselContainerView.minimumInteritemSpacing) > coeficient ? defaultWidth : max(defaultWidth, calculatedWidth)
+            return CGSize(width: width , height: CGFloat(maxItemHeight))
+        } else {
+            return CGSize(width: defaultWidth , height: CGFloat(maxItemHeight))
+        }
     }
 }
 

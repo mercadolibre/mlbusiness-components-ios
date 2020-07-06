@@ -8,7 +8,7 @@
 import Foundation
 import MLUI
 
-public class MLBusinessCarouselContainerItemView: UIView {
+class MLBusinessCarouselContainerItemView: UIView {
 
     private let containerView: UIView = {
         let containerView = UIView(frame: .zero)

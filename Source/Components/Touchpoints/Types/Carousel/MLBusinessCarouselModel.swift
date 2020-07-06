@@ -33,7 +33,7 @@ class MLBusinessCarouselModel: NSObject, Codable, ComponentTrackable {
     }
 }
 
-public struct MLBusinessCarouselItemModel: Codable {
+public class MLBusinessCarouselItemModel: NSObject, Codable {
     let title: String?
     let topLabel: String?
     let mainLabel: String?
@@ -44,7 +44,7 @@ public struct MLBusinessCarouselItemModel: Codable {
     let link: String?
     let textColor: String?
     let backgroundColor: String?
-    let tracking: TouchpointsTrackingInfo?
+    let tracking: TrackingInfo?
     
     let titleFormat: DiscountItemTextFormat?
     let subtitleFormat: DiscountItemTextFormat?
@@ -62,7 +62,7 @@ public struct MLBusinessCarouselItemModel: Codable {
         return eventData?.rawValue
     }
     
-    public init (title: String?, topLabel: String?, mainLabel: String?, rightLabel: String?, pill: DiscountItemDiscountPill?, image: String?, subtitle: String?, link: String?, textColor: String?, backgroundColor: String?, tracking: TouchpointsTrackingInfo?, titleFormat: DiscountItemTextFormat?, subtitleFormat: DiscountItemTextFormat?, imageFormat: DiscountItemImageFormat?) {
+    public init (title: String?, topLabel: String?, mainLabel: String?, rightLabel: String?, pill: DiscountItemDiscountPill?, image: String?, subtitle: String?, link: String?, textColor: String?, backgroundColor: String?, tracking: TrackingInfo?, titleFormat: DiscountItemTextFormat?, subtitleFormat: DiscountItemTextFormat?, imageFormat: DiscountItemImageFormat?) {
         self.title = title
         self.topLabel = topLabel
         self.mainLabel = mainLabel
@@ -90,7 +90,7 @@ extension MLBusinessCarouselItemModel: Trackable {
     }
 }
 
-public struct DiscountItemDiscountPill: Codable {
+public class DiscountItemDiscountPill: NSObject, Codable {
     let label: String
     let icon: String?
     let format: DiscountItemDiscountFeatureFormat
@@ -102,7 +102,7 @@ public struct DiscountItemDiscountPill: Codable {
     }
 }
 
-public struct DiscountItemDiscountFeatureFormat: Codable {
+public class DiscountItemDiscountFeatureFormat: NSObject, Codable {
     let backgroundColor: String
     let textColor: String
     
@@ -112,7 +112,7 @@ public struct DiscountItemDiscountFeatureFormat: Codable {
     }
 }
 
-public struct DiscountItemTextFormat: Codable {
+public class DiscountItemTextFormat: NSObject, Codable {
     let size: Double
     let color: String
     let weight: String
@@ -124,7 +124,7 @@ public struct DiscountItemTextFormat: Codable {
     }
 }
 
-public struct DiscountItemImageFormat: Codable {
+public class DiscountItemImageFormat: NSObject, Codable {
     let overlay: Bool
     
     public init(overlay: Bool) {

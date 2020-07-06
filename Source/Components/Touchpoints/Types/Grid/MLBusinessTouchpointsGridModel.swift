@@ -50,9 +50,9 @@ class MLBusinessTouchpointsGridItemModel: NSObject, Codable {
     private let subtitle: String
     private let image: String
     private let link: String?
-    private let tracking: TouchpointsTrackingInfo?
+    private let tracking: TrackingInfo?
 
-    init(title: String, subtitle: String, image: String, link: String? = nil, tracking: TouchpointsTrackingInfo? = nil) {
+    init(title: String, subtitle: String, image: String, link: String? = nil, tracking: TrackingInfo? = nil) {
         self.title = title
         self.subtitle = subtitle
         self.image = image
@@ -97,7 +97,7 @@ extension MLBusinessTouchpointsGridItemModel: Trackable {
     }
 }
 
-public struct TouchpointsTrackingInfo: Codable & Trackable {
+public struct TrackingInfo: Codable {
     let trackingId: String?
     let eventData: MLBusinessCodableDictionary?
     
@@ -110,3 +110,5 @@ public struct TouchpointsTrackingInfo: Codable & Trackable {
         }
     }
 }
+
+extension TrackingInfo: Trackable { }
