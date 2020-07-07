@@ -20,6 +20,7 @@ public class MLBusinessCarouselContainerView: UIView {
     static let minimumInteritemSpacing = CGFloat(12.0)
     private var items: [MLBusinessCarouselItemModel] = []
     private var dataHandler: MLBusinessTouchpointsCollectionViewDataHandler
+    private var imageProvider: MLBusinessImageProvider?
 
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -50,7 +51,8 @@ public class MLBusinessCarouselContainerView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public init() {
+    public init(with imageProvider: MLBusinessImageProvider? = nil) {
+        self.imageProvider = imageProvider
         dataHandler = MLBusinessTouchpointsCollectionViewDataHandler()
         super.init(frame: .zero)
         setup()
@@ -69,6 +71,7 @@ public class MLBusinessCarouselContainerView: UIView {
         dataHandler.leftMargin = leftMargin
         dataHandler.shouldHighlightItem = shouldHighlightItem
         dataHandler.shouldCalculateItemWidth = shouldCalculateItemWidth
+        dataHandler.imageProvider = imageProvider
     }
 
     private func setupConstraints() {

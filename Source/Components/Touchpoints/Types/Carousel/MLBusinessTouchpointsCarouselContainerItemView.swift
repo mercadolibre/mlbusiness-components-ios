@@ -115,6 +115,7 @@ class MLBusinessTouchpointsCarouselContainerItemView: UIView {
     private var logoImageViewTopConstraint: NSLayoutConstraint?
     private var discountValueVerticalStackViewTopConstraint: NSLayoutConstraint?
     private var brandNameLabelTopConstraint: NSLayoutConstraint?
+    var imageProvider: MLBusinessImageProvider = MLBusinessURLImageProvider()
 
     public required init() {
         super.init(frame: .zero)
@@ -231,7 +232,9 @@ class MLBusinessTouchpointsCarouselContainerItemView: UIView {
         discountValueVerticalStackView.addArrangedSubview(discountValueHorizontalStackView)
 
         if let logo = item.image {
-            logoImageView.setRemoteImage(imageUrl: logo)
+            imageProvider.getImage(key: logo) { image in
+                self.logoImageView.image = image
+            }
         }
 
         if let pill = item.pill {
@@ -241,8 +244,8 @@ class MLBusinessTouchpointsCarouselContainerItemView: UIView {
             pillView.text = pill.label
             if let icon = pill.icon {
                 let imageView = UIImageView()
-                imageView.setRemoteImage(imageUrl: icon, customCache: nil) { iconImage in
-                    self.pillView.icon = iconImage
+                imageProvider.getImage(key: icon) { image in
+                    self.pillView.icon = image
                 }
             } else {
                 pillView.icon = nil

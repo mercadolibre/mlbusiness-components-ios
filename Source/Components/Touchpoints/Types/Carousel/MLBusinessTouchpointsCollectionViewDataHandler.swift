@@ -20,8 +20,9 @@ class MLBusinessTouchpointsCollectionViewDataHandler: NSObject {
     var items: [MLBusinessCarouselItemModel] = []
     var maxItemHeight = CGFloat(0)
     var collectionViewHeightConstraint: NSLayoutConstraint?
+    var imageProvider: MLBusinessImageProvider?
     
-    public func update(with items: [MLBusinessCarouselItemModel]) {
+    func update(with items: [MLBusinessCarouselItemModel]) {
         self.items = items
         setMaxItemHeight(with: items)
     }
@@ -84,6 +85,7 @@ extension MLBusinessTouchpointsCollectionViewDataHandler: UICollectionViewDataSo
                                  for: indexPath) as? MLBusinessTouchpointsCarouselContainerViewCell else {
                                     return MLBusinessTouchpointsCarouselContainerViewCell() }
         let item = items[indexPath.row]
+        cell.imageProvider = imageProvider
         cell.update(with: item)
         
         if let height = collectionViewHeightConstraint {
