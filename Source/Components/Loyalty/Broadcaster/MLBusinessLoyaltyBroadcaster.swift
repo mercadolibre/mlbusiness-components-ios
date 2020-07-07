@@ -4,7 +4,6 @@
 //
 //  Created by Guido Maceira on 6/26/20.
 //
-
 import Foundation
 
 @objcMembers
@@ -15,7 +14,7 @@ open class MLBusinessLoyaltyBroadcaster : NSObject {
     
     public func register(_ receiver: MLBusinessLoyaltyBroadcastReceiver) {
         NotificationCenter.default.addObserver(receiver,
-                                               selector: #selector(receiver.receiveLoyaltyBroadcastInfo(_:)),
+                                               selector: #selector(receiver.receiveInfo(_:)),
                                                name: Notification.Name(rawValue: notificationName),
                                                object: nil)
     }

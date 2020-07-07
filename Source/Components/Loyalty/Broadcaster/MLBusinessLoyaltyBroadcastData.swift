@@ -2,17 +2,16 @@
 //  MLBusinessLoyaltyBroadcastData.swift
 //  MLBusinessComponents
 //
-//  Created by contingencia on 6/26/20.
 //
 
 @objcMembers
 public class MLBusinessLoyaltyBroadcastData: NSObject {
 
     public let level: Int
-    public let percentage: Float
+    public let percentage: Double
     public let primaryColor: String
 
-    public init(level: Int, percentage: Float, primaryColor: String) {
+    public init(level: Int, percentage: Double, primaryColor: String) {
         self.level = level
         self.percentage = percentage
         self.primaryColor = primaryColor

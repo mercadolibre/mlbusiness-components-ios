@@ -27,9 +27,10 @@ class ViewController: UIViewController, MLBusinessLoyaltyBroadcastReceiver {
         animateRing()
     }
     
-    func receiveLoyaltyBroadcastInfo(_ notification: Notification) {
-        let loyaltyBroadcastData = notification.object as! MLBusinessLoyaltyBroadcastData
-        NSLog("Received info from broadcast: Level %i - Percentage %f - Color %@", loyaltyBroadcastData.level, loyaltyBroadcastData.percentage, loyaltyBroadcastData.primaryColor)
+    func receiveInfo(_ notification: Notification) {
+        if let loyaltyBroadcastData = notification.object as? MLBusinessLoyaltyBroadcastData {
+            NSLog("Received info from broadcast: Level %i - Percentage %d - Color %@", loyaltyBroadcastData.level, loyaltyBroadcastData.percentage, loyaltyBroadcastData.primaryColor)
+        }
      }
     
 }
@@ -68,10 +69,8 @@ extension ViewController {
         }
         
         let broadcaster = MLBusinessLoyaltyBroadcaster.instance as MLBusinessLoyaltyBroadcaster
-        
         broadcaster.register(receiver)
-        let level = LoyaltyRingData().getRingNumber()
-        broadcaster.updateInfo(MLBusinessLoyaltyBroadcastData(level:3,
+        broadcaster.updateInfo(MLBusinessLoyaltyBroadcastData(level:LoyaltyRingData().getRingNumber(),
                                                               percentage: LoyaltyRingData().getRingPercentage(),
                                                               primaryColor: LoyaltyRingData().getRingHexaColor()))
         
