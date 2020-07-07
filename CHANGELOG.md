@@ -1,6 +1,7 @@
 # v1.15.0
 🚀 1.15.0 🚀
 - Loyalty Broadcast
+- Reduce image sizes
 
 # v1.14.0
 🚀 1.14.0 🚀
