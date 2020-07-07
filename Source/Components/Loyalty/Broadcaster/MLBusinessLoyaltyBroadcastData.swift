@@ -2,6 +2,7 @@
 //  MLBusinessLoyaltyBroadcastData.swift
 //  MLBusinessComponents
 //
+//  Created by Guido Maceira on 6/26/20.
 //
 
 @objcMembers

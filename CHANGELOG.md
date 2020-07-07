@@ -1,3 +1,7 @@
+# v1.15.0
+🚀 1.15.0 🚀
+- Loyalty Broadcast
+
 # v1.14.0
 🚀 1.14.0 🚀
 - New dynamic carousel card width in MLBusinessTouchpointView.
