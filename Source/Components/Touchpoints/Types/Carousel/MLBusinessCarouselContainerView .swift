@@ -14,12 +14,26 @@ public protocol MLBusinessCarouselContainerViewDelegate: class {
 
 public class MLBusinessCarouselContainerView: UIView {
     public weak var delegate: MLBusinessCarouselContainerViewDelegate?
-    public var shouldHighlightItem = true
-    public var shouldCalculateItemWidth = true
-    var leftMargin = CGFloat(0.0)
+    public var shouldHighlightItem = true {
+        didSet {
+            dataHandler.shouldHighlightItem = shouldHighlightItem
+        }
+    }
+    public var shouldCalculateItemWidth = true {
+        didSet {
+            dataHandler.shouldCalculateItemWidth = shouldCalculateItemWidth
+        }
+    }
+    
+    var leftMargin = CGFloat(0.0) {
+        didSet {
+            dataHandler.leftMargin = leftMargin
+        }
+    }
+    
     static let minimumInteritemSpacing = CGFloat(12.0)
     private var items: [MLBusinessCarouselItemModel] = []
-    private var dataHandler: MLBusinessTouchpointsCollectionViewDataHandler
+    private var dataHandler: MLBusinessTouchpointsCollectionViewDataHandler = MLBusinessTouchpointsCollectionViewDataHandler()
     private var imageProvider: MLBusinessImageProvider?
 
     let collectionView: UICollectionView = {
@@ -53,7 +67,6 @@ public class MLBusinessCarouselContainerView: UIView {
 
     public init(with imageProvider: MLBusinessImageProvider? = nil) {
         self.imageProvider = imageProvider
-        dataHandler = MLBusinessTouchpointsCollectionViewDataHandler()
         super.init(frame: .zero)
         setup()
         setupDataHandler()
@@ -68,9 +81,6 @@ public class MLBusinessCarouselContainerView: UIView {
     
     private func setupDataHandler() {
         dataHandler.delegate = self
-        dataHandler.leftMargin = leftMargin
-        dataHandler.shouldHighlightItem = shouldHighlightItem
-        dataHandler.shouldCalculateItemWidth = shouldCalculateItemWidth
         dataHandler.imageProvider = imageProvider
     }
 

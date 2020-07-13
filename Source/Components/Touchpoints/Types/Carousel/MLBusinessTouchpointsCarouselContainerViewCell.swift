@@ -23,7 +23,13 @@ class MLBusinessTouchpointsCarouselContainerViewCell: UICollectionViewCell {
         return "\(String(describing: self))ReuseIdentifier"
     }
     
-    var imageProvider: MLBusinessImageProvider?
+    var imageProvider: MLBusinessImageProvider? {
+        didSet {
+            if let imageProvider = imageProvider {
+                itemView.imageProvider = imageProvider
+            }
+        }
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -40,10 +46,6 @@ class MLBusinessTouchpointsCarouselContainerViewCell: UICollectionViewCell {
         if let colorString = content.backgroundColor {
             currentBackgroundColor =  UIColor(hexString: colorString)
             backgroundColor = currentBackgroundColor ?? .white
-        }
-        
-        if let imageProvider = imageProvider {
-            itemView.imageProvider = imageProvider
         }
         itemView.update(with: content)
     }
