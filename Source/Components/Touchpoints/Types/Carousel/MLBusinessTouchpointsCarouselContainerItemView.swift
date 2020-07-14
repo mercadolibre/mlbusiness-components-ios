@@ -221,7 +221,7 @@ class MLBusinessTouchpointsCarouselContainerItemView: UIView {
         }
 
         if let textColorString = item.textColor {
-            let textColor = UIColor(hexString: textColorString)
+            let textColor = textColorString.hexaToUIColor()
             discountTopLabel.textColor = textColor
             discountMainLabel.textColor = textColor
             discountRightLabel.textColor = textColor
@@ -239,11 +239,10 @@ class MLBusinessTouchpointsCarouselContainerItemView: UIView {
 
         if let pill = item.pill {
             pillView.isHidden = false
-            pillView.backgroundColor = UIColor(hexString: pill.format.backgroundColor)
-            pillView.tintColor = UIColor(hexString: pill.format.textColor)
+            pillView.backgroundColor = pill.format.backgroundColor.hexaToUIColor()
+            pillView.tintColor = pill.format.textColor.hexaToUIColor()
             pillView.text = pill.label
             if let icon = pill.icon {
-                let imageView = UIImageView()
                 imageProvider.getImage(key: icon) { image in
                     self.pillView.icon = image
                 }
@@ -271,14 +270,14 @@ class MLBusinessTouchpointsCarouselContainerItemView: UIView {
             applyFormat(format: titleFormat, label: brandNameLabel)
         } else {
             brandNameLabel.font = MLStyleSheetManager.styleSheet.semiboldSystemFont(ofSize: CGFloat(kMLFontsSizeXSmall))
-            brandNameLabel.textColor = UIColor(hexString: item.textColor) ?? MLStyleSheetManager.styleSheet.blackColor
+            brandNameLabel.textColor = item.textColor?.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.blackColor
         }
         
         if let subtitleFormat = item.subtitleFormat {
             applyFormat(format: subtitleFormat, label: subtitleLabel)
         } else {
             subtitleLabel.font = MLStyleSheetManager.styleSheet.regularSystemFont(ofSize: CGFloat(kMLFontsSizeXSmall))
-            subtitleLabel.textColor = UIColor(hexString: item.textColor) ?? MLStyleSheetManager.styleSheet.blackColor
+            subtitleLabel.textColor = item.textColor?.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.blackColor
         }
         
         if let imageFormat = item.imageFormat, imageFormat.overlay == false {
@@ -291,7 +290,7 @@ class MLBusinessTouchpointsCarouselContainerItemView: UIView {
     }
     
     private func applyFormat(format: DiscountItemTextFormat, label: UILabel) {
-        label.textColor =  UIColor(hexString: format.color)
+        label.textColor = format.color.hexaToUIColor()
         let size: CGFloat = CGFloat(format.size)
         
         if format.weight == "semibold" {

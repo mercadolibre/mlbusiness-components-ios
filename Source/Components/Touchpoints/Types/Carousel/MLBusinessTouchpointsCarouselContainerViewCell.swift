@@ -44,7 +44,7 @@ class MLBusinessTouchpointsCarouselContainerViewCell: UICollectionViewCell {
 
     func update(with content: MLBusinessCarouselItemModel) {
         if let colorString = content.backgroundColor {
-            currentBackgroundColor =  UIColor(hexString: colorString)
+            currentBackgroundColor =  colorString.hexaToUIColor()
             backgroundColor = currentBackgroundColor ?? .white
         }
         itemView.update(with: content)
@@ -58,7 +58,7 @@ class MLBusinessTouchpointsCarouselContainerViewCell: UICollectionViewCell {
     private func setup() {
         backgroundColor = .clear
         
-        layer.borderColor = UIColor(hexString: "ececec")?.cgColor
+        layer.borderColor =  "ececec".hexaToUIColor().cgColor
         layer.borderWidth = 1.0
         layer.cornerRadius = 6.0
         layer.applyShadow(alpha: 0.1, x: 0, y: 2, blur: 4)
