@@ -1,4 +1,5 @@
 ## Sin Publicar
+- Changed Dividing Line View stroke color (darker)
 - Make MLBusinessTouchpointView Carousel public
 
 # v1.15.0
