@@ -1,6 +1,10 @@
 # Sin publicar
 - Changed Dividing Line View stroke color (darker)
 
+# v1.15.0
+🚀 1.15.0 🚀
+- Reduce image sizes
+
 # v1.14.0
 🚀 1.14.0 🚀
 - New dynamic carousel card width in MLBusinessTouchpointView.
