@@ -10,24 +10,25 @@ import UIKit
 
 internal extension String {
     func hexaToUIColor() -> UIColor {
-        var cString: String = self.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+        let cString: String = self.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
 
-        if (cString.hasPrefix("#")) {
-            cString.remove(at: cString.startIndex)
-        }
-
-        if ((cString.count) != 6) {
+        var chars = Array(cString.hasPrefix("#") ? cString.dropFirst() : cString[...])
+        let red, green, blue, alpha: CGFloat
+        switch chars.count {
+        case 3:
+            chars = chars.flatMap { [$0, $0] }
+            fallthrough
+        case 6:
+            chars = ["F", "F"] + chars
+            fallthrough
+        case 8:
+            alpha = CGFloat(strtoul(String(chars[0 ... 1]), nil, 16)) / 255
+            red = CGFloat(strtoul(String(chars[2 ... 3]), nil, 16)) / 255
+            green = CGFloat(strtoul(String(chars[4 ... 5]), nil, 16)) / 255
+            blue = CGFloat(strtoul(String(chars[6 ... 7]), nil, 16)) / 255
+        default:
             return UIColor.gray
         }
-
-        var rgbValue: UInt32 = 0
-        Scanner(string: cString).scanHexInt32(&rgbValue)
-
-        return UIColor(
-            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
-            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
-            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
-            alpha: CGFloat(1.0)
-        )
+        return UIColor(red: red, green: green, blue: blue, alpha: alpha)
     }
 }

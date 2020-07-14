@@ -11,12 +11,12 @@ class MLBusinessTouchpointsCarouselView: MLBusinessTouchpointsBaseView {
     
     override var canOpenMercadoPagoApp: Bool? {
         didSet {
-            collectionView.canOpenMercadoPagoApp = canOpenMercadoPagoApp
+            collectionView.shouldHighlightItem = canOpenMercadoPagoApp ?? true
         }
     }
 
-    private let collectionView: MLBusinessTouchpointsCarouselCollectionView = {
-        let collectionView = MLBusinessTouchpointsCarouselCollectionView()
+    private let collectionView: MLBusinessCarouselContainerView = {
+        let collectionView = MLBusinessCarouselContainerView()
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
@@ -68,7 +68,7 @@ class MLBusinessTouchpointsCarouselView: MLBusinessTouchpointsBaseView {
     }
     
     override func getVisibleItems() -> [Trackable]? {
-        return collectionView.getTrackables()
+        return collectionView.getVisibleItems()
     }
     
     override func getTouchpointViewHeight(with data: Codable?, topInset: CGFloat, bottomInset: CGFloat) -> CGFloat {
@@ -78,12 +78,14 @@ class MLBusinessTouchpointsCarouselView: MLBusinessTouchpointsBaseView {
     }
 }
 
-extension MLBusinessTouchpointsCarouselView: MLBusinessTouchpointsCarouselCollectionViewProtocol {
-    func trackPrints(prints: [Trackable]?) {
-        delegate?.trackPrints(prints: prints)
+extension MLBusinessTouchpointsCarouselView: MLBusinessCarouselContainerViewDelegate {
+    func carouselContainerView(_: MLBusinessCarouselContainerView, didSelect item: MLBusinessCarouselItemModel, at index: Int) {
+        guard let link = item.link, let trackingId = item.tracking?.trackingId else { return }
+
+        delegate?.trackTap(with: index, deeplink: link, trackingId: trackingId)
     }
     
-    func trackTap(with selectedIndex: Int?, deeplink: String?, trackingId: String?) {
-        delegate?.trackTap(with: selectedIndex, deeplink: deeplink, trackingId: trackingId)
+    func carouselContainerView(_: MLBusinessCarouselContainerView, didFinishScrolling visibleItems: [MLBusinessCarouselItemModel]?) {
+        delegate?.trackPrints(prints: visibleItems)
     }
 }

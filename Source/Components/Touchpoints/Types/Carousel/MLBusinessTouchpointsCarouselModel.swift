@@ -7,75 +7,22 @@
 
 import Foundation
 
-class MLBusinessTouchpointsCarouselModel: NSObject, Codable, ComponentTrackable {
+struct MLBusinessTouchpointsCarouselModel: Codable, ComponentTrackable {
     private let title: String?
     private let subtitle: String?
-    private let items: [MLBusinessTouchpointsCarouselItemModel]
+    private let items: [MLBusinessCarouselItemModel]
 
-    init(title: String?, subtitle: String?, items: [MLBusinessTouchpointsCarouselItemModel]) {
+    init(title: String?, subtitle: String?, items: [MLBusinessCarouselItemModel]) {
         self.title = title
         self.subtitle = subtitle
         self.items = items
-    }
-    
-    override init() {
-        self.title = ""
-        self.subtitle = ""
-        self.items = []
     }
     
     func getTrackables() -> [Trackable]? {
         return items
     }
     
-    func getItems() -> [MLBusinessTouchpointsCarouselItemModel] {
+    func getItems() -> [MLBusinessCarouselItemModel] {
         return items
     }
-}
-
-struct MLBusinessTouchpointsCarouselItemModel: Codable, Trackable {
-    let title: String?
-    let topLabel: String?
-    let mainLabel: String?
-    let rightLabel: String?
-    let pill: DiscountItemDiscountPill?
-    let image: String?
-    let subtitle: String?
-    let link: String?
-    let textColor: String?
-    let backgroundColor: String?
-    let tracking: TouchpointsTrackingInfo?
-    
-    let titleFormat: DiscountItemTextFormat?
-    let subtitleFormat: DiscountItemTextFormat?
-    let imageFormat: DiscountItemImageFormat?
-    
-    var trackingId: String? {
-        return tracking?.trackingId
-    }
-
-    var eventData: MLBusinessCodableDictionary? {
-        return tracking?.eventData
-    }
-}
-
-public struct DiscountItemDiscountPill: Codable {
-    public let label: String
-    public let icon: String?
-    public let format: DiscountItemDiscountFeatureFormat
-}
-
-public struct DiscountItemDiscountFeatureFormat: Codable {
-    public let backgroundColor: String
-    public let textColor: String
-}
-
-struct DiscountItemTextFormat: Codable {
-    let size: Double
-    let color: String
-    let weight: String
-}
-
-struct DiscountItemImageFormat: Codable {
-    let overlay: Bool
 }
