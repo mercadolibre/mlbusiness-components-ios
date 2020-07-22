@@ -27,11 +27,11 @@ class RowData: NSObject, MLBusinessRowData {
     }
     
     func getMainDescription() -> [MLBusinessRowMainDescriptionData]? {
-        return [RowMainDescriptionData(type: "image", content: "location_icon"),
-                RowMainDescriptionData(type: "text", content: "598m"),
-                RowMainDescriptionData(type: "text", content: " · "),
-                RowMainDescriptionData(type: "image", content: "star_icon"),
-                RowMainDescriptionData(type: "text", content: "4.3 (24)"),]
+        return [RowMainDescriptionData(type: "image", content: "https://urbancomunicacion.com/wp-content/uploads/2017/04/Logotipos-famosos-Starbucks-Urban-comunicacion-1.png"),
+                RowMainDescriptionData(type: "text", content: "598m", color: "#8C8C8C"),
+                RowMainDescriptionData(type: "text", content: " · ", color: "#8C8C8C"),
+                RowMainDescriptionData(type: "image", content: "https://urbancomunicacion.com/wp-content/uploads/2017/04/Logotipos-famosos-Starbucks-Urban-comunicacion-1.png"),
+                RowMainDescriptionData(type: "text", content: "4.3 (24)", color: "#8C8C8C"),]
     }
     
     func getRightPrimaryLabel() -> String? {
@@ -90,11 +90,11 @@ class RowMainDescriptionData: NSObject, MLBusinessRowMainDescriptionData {
 
 class RowRightBottomInfoData: NSObject, MLBusinessRowRightBottomInfoData {
     func getIcon() -> String? {
-        return "clock_icon"
+        return "https://urbancomunicacion.com/wp-content/uploads/2017/04/Logotipos-famosos-Starbucks-Urban-comunicacion-1.png"
     }
     
     func getLabel() -> String? {
-        return "¡ÚLTIMOS!"
+        return "QUEDA 1 DÍA"
     }
     
     func getFormat() -> MLBusinessRowRightBottomInfoFormatData? {
@@ -104,7 +104,7 @@ class RowRightBottomInfoData: NSObject, MLBusinessRowRightBottomInfoData {
 
 class RowRightBottomInfoFormatData: NSObject, MLBusinessRowRightBottomInfoFormatData {
     func getTextColor() -> String {
-        return "#FF0000"
+        return "#FF7733"
     }
     
     func getBackgroundColor() -> String {

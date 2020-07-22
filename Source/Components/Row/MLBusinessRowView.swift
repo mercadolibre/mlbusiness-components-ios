@@ -69,7 +69,7 @@ public class MLBusinessRowView: UIView {
         let stackView = UIStackView(frame: .zero)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.distribution = .equalSpacing
-        stackView.spacing = 0
+        stackView.spacing = 1
         stackView.axis = .horizontal
         return stackView
     }()
@@ -79,7 +79,7 @@ public class MLBusinessRowView: UIView {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.alignment = .trailing
         stackView.distribution = .equalSpacing
-        stackView.spacing = 0
+        stackView.spacing = 2
         stackView.axis = .vertical
         return stackView
     }()
@@ -134,7 +134,7 @@ public class MLBusinessRowView: UIView {
     }()
 
     private let rightBottomInfoPill: MLBusinessPillView = {
-        let rightBottomInfo = MLBusinessPillView(with: 16.0)
+        let rightBottomInfo = MLBusinessPillView(with: 10.0)
         rightBottomInfo.translatesAutoresizingMaskIntoConstraints = false
         return rightBottomInfo
     }()
@@ -197,7 +197,8 @@ public class MLBusinessRowView: UIView {
         NSLayoutConstraint.activate([
             leftImageImageView.heightAnchor.constraint(equalToConstant: 64.0),
             leftImageImageView.widthAnchor.constraint(equalTo: leftImageImageView.heightAnchor),
-            leftImageImageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 16.0),
+            leftImageImageView.topAnchor.constraint(greaterThanOrEqualTo: containerView.topAnchor, constant: 16.0),
+            leftImageImageView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
             leftImageImageView.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 16.0),
         ])
         
@@ -217,7 +218,7 @@ public class MLBusinessRowView: UIView {
         ])
 
         NSLayoutConstraint.activate([
-            rightStackView.topAnchor.constraint(greaterThanOrEqualTo: containerView.topAnchor, constant: 28.0),
+            rightStackView.topAnchor.constraint(greaterThanOrEqualTo: containerView.topAnchor, constant: 18.0),
             rightStackView.widthAnchor.constraint(greaterThanOrEqualToConstant: 80),
             rightStackView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
             rightStackView.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -16),
@@ -260,13 +261,21 @@ public class MLBusinessRowView: UIView {
                 switch item.getType().lowercased() {
                 case "image":
                     let imageView = UIImageView()
+                    imageView.translatesAutoresizingMaskIntoConstraints = false
+                    imageView.contentMode = .scaleAspectFill
+                    imageView.backgroundColor = .clear
                     imageProvider.getImage(key: itemContent) { image in
                         imageView.image = image
                     }
                     imageView.tintColor = itemColor
                     mainDescriptionStackView.addArrangedSubview(imageView)
+                    imageView.heightAnchor.constraint(equalToConstant: 10).isActive = true
+                    imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor).isActive = true
                 case "text":
-                    let label = UILabel()
+                    let label = UILabel(frame: .zero)
+                    label.numberOfLines = 1
+                    label.font = MLStyleSheetManager.styleSheet.regularSystemFont(ofSize: CGFloat(kMLFontsSizeXXSmall))
+                    label.textAlignment = .left
                     label.text = itemContent
                     label.textColor = itemColor
                     mainDescriptionStackView.addArrangedSubview(label)

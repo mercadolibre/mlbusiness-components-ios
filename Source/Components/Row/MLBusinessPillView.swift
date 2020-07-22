@@ -49,8 +49,8 @@ public class MLBusinessPillView: UIView {
     private let textLabel: UILabel = {
         let textLabel = UILabel(frame: .zero)
         textLabel.translatesAutoresizingMaskIntoConstraints = false
-        textLabel.textAlignment = .center
-        textLabel.font = MLStyleSheetManager.styleSheet.semiboldSystemFont(ofSize: CGFloat(kMLFontsSizeXXSmall))
+        textLabel.textAlignment = .right
+        textLabel.font = MLStyleSheetManager.styleSheet.boldSystemFont(ofSize: CGFloat(9.0))
         textLabel.numberOfLines = 1
         textLabel.adjustsFontSizeToFitWidth = true
         textLabel.minimumScaleFactor = 0.70
@@ -65,11 +65,10 @@ public class MLBusinessPillView: UIView {
         return iconImageView
     }()
 
-    // private var imageZeroWidth: NSLayoutConstraint?
     private var imageWidth, imageLeft: NSLayoutConstraint?
     private var pillHeight: CGFloat
 
-    init(with pillHeight: CGFloat = 24) {
+    init(with pillHeight: CGFloat = 10) {
         self.pillHeight = pillHeight
         super.init(frame: .zero)
         setup()
@@ -95,14 +94,14 @@ public class MLBusinessPillView: UIView {
 
         NSLayoutConstraint.activate([
             left,
-            iconImageView.heightAnchor.constraint(equalTo: textLabel.heightAnchor, multiplier: 0.9),
+            iconImageView.heightAnchor.constraint(equalTo: textLabel.heightAnchor, multiplier: 0.8),
             width,
             iconImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
         ])
 
         NSLayoutConstraint.activate([
             textLabel.leftAnchor.constraint(equalTo: iconImageView.rightAnchor, constant: 3),
-            textLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -8),
+            textLabel.rightAnchor.constraint(equalTo: rightAnchor),
             textLabel.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 0),
             textLabel.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: 0),
             textLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
@@ -116,17 +115,12 @@ public class MLBusinessPillView: UIView {
         textLabel.setContentHuggingPriority(.required, for: .horizontal)
     }
 
-    public override func layoutSubviews() {
-        super.layoutSubviews()
-        layer.cornerRadius = frame.size.height / 2
-    }
-
     private func toggleSizeChange() {
         if iconImageView.image == nil {
             imageWidth?.constant = 0
             imageLeft?.constant = 5
         } else {
-            imageWidth?.constant = 10
+            imageWidth?.constant = 8
             imageLeft?.constant = 8
         }
     }
