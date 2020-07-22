@@ -41,8 +41,9 @@ extension ViewController {
         let downloadAppView = setupDownloadAppView(bottomOf: discountTouchpointView)
         let loyaltyHeaderView = setupLoyaltyHeaderView(bottomOf: downloadAppView)
         let animatedButtonView = setupAnimatedButtonView(bottomOf: loyaltyHeaderView)
+        let rowView = setupRowView(bottomOf: animatedButtonView)
         
-        animatedButtonView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -64).isActive = true
+        rowView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -64).isActive = true
     }
 
     private func setupRingView() -> MLBusinessLoyaltyRingView {
@@ -186,6 +187,18 @@ extension ViewController {
         animatedButtonView.delegate = self
 
         return animatedButtonView
+    }
+    
+    private func setupRowView(bottomOf targetView: UIView) -> MLBusinessRowView {
+        let rowView = MLBusinessRowView()
+        rowView.update(with: RowData())
+        containerView.addSubview(rowView)
+        NSLayoutConstraint.activate([
+            rowView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16),
+            rowView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            rowView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16)
+        ])
+        return rowView
     }
 
     @objc
