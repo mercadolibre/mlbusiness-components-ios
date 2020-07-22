@@ -26,13 +26,22 @@ public class MLBusinessRowView: UIView {
         return imageView
     }()
     
+    private let overlayLeftImageImageView: UIView = {
+        let imageView = UIView(frame: .zero)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.layer.cornerRadius = 32
+        imageView.clipsToBounds = true
+        imageView.backgroundColor = MLStyleSheetManager.styleSheet.blackColor.withAlphaComponent(0.04)
+        return imageView
+    }()
+    
     private let leftImageAccessoryImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = 10
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
-        imageView.backgroundColor = MLStyleSheetManager.styleSheet.lightGreyColor
+        imageView.backgroundColor = .clear
         return imageView
     }()
 
@@ -175,6 +184,7 @@ public class MLBusinessRowView: UIView {
         addSubview(containerView)
         
         containerView.addSubview(leftImageImageView)
+        containerView.addSubview(overlayLeftImageImageView)
         containerView.addSubview(leftImageAccessoryImageView)
 
         mainStackView.addArrangedSubview(mainTitleLabel)
@@ -200,6 +210,14 @@ public class MLBusinessRowView: UIView {
             leftImageImageView.topAnchor.constraint(greaterThanOrEqualTo: containerView.topAnchor, constant: 16.0),
             leftImageImageView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
             leftImageImageView.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 16.0),
+        ])
+        
+        NSLayoutConstraint.activate([
+            overlayLeftImageImageView.heightAnchor.constraint(equalToConstant: 64.0),
+            overlayLeftImageImageView.widthAnchor.constraint(equalTo: overlayLeftImageImageView.heightAnchor),
+            overlayLeftImageImageView.topAnchor.constraint(greaterThanOrEqualTo: containerView.topAnchor, constant: 16.0),
+            overlayLeftImageImageView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
+            overlayLeftImageImageView.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 16.0),
         ])
         
         NSLayoutConstraint.activate([
