@@ -9,13 +9,6 @@ import Foundation
 import MLUI
 
 public class MLBusinessRowView: UIView {
-    private let containerView: UIView = {
-        let view = UIView(frame: .zero)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .clear
-        return view
-    }()
-
     private let leftImageImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -148,23 +141,7 @@ public class MLBusinessRowView: UIView {
         return rightBottomInfo
     }()
 
-    private let lineView: UIView = {
-        let view = UIView(frame: .zero)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = MLStyleSheetManager.styleSheet.primaryBackgroundColor ?? MLStyleSheetManager.styleSheet.lightGreyColor
-        return view
-    }()
-
     private var imageProvider: MLBusinessImageProvider
-
-    public var hideBottomLine: Bool {
-        get {
-            return lineView.isHidden
-        }
-        set {
-            lineView.isHidden = newValue
-        }
-    }
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
@@ -180,44 +157,34 @@ public class MLBusinessRowView: UIView {
     
     private func setup() {
         translatesAutoresizingMaskIntoConstraints = false
-
-        addSubview(containerView)
         
-        containerView.addSubview(leftImageImageView)
-        containerView.addSubview(overlayLeftImageImageView)
-        containerView.addSubview(leftImageAccessoryImageView)
+        addSubview(leftImageImageView)
+        addSubview(overlayLeftImageImageView)
+        addSubview(leftImageAccessoryImageView)
 
         mainStackView.addArrangedSubview(mainTitleLabel)
         mainStackView.addArrangedSubview(mainSubtitleLabel)
         mainStackView.addArrangedSubview(mainDescriptionStackView)
-        containerView.addSubview(mainStackView)
+        addSubview(mainStackView)
 
-        containerView.addSubview(rightStackView)
-        containerView.addSubview(lineView)
+        addSubview(rightStackView)
     }
 
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            containerView.topAnchor.constraint(equalTo: topAnchor),
-            containerView.leftAnchor.constraint(equalTo: leftAnchor),
-            containerView.rightAnchor.constraint(equalTo: rightAnchor),
-            containerView.bottomAnchor.constraint(equalTo: lineView.topAnchor),
-        ])
-
-        NSLayoutConstraint.activate([
             leftImageImageView.heightAnchor.constraint(equalToConstant: 64.0),
             leftImageImageView.widthAnchor.constraint(equalTo: leftImageImageView.heightAnchor),
-            leftImageImageView.topAnchor.constraint(greaterThanOrEqualTo: containerView.topAnchor, constant: 16.0),
-            leftImageImageView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
-            leftImageImageView.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 16.0),
+            leftImageImageView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 16.0),
+            leftImageImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            leftImageImageView.leftAnchor.constraint(equalTo: leftAnchor, constant: 16.0),
         ])
         
         NSLayoutConstraint.activate([
             overlayLeftImageImageView.heightAnchor.constraint(equalToConstant: 64.0),
             overlayLeftImageImageView.widthAnchor.constraint(equalTo: overlayLeftImageImageView.heightAnchor),
-            overlayLeftImageImageView.topAnchor.constraint(greaterThanOrEqualTo: containerView.topAnchor, constant: 16.0),
-            overlayLeftImageImageView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
-            overlayLeftImageImageView.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 16.0),
+            overlayLeftImageImageView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 16.0),
+            overlayLeftImageImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            overlayLeftImageImageView.leftAnchor.constraint(equalTo: leftAnchor, constant: 16.0),
         ])
         
         NSLayoutConstraint.activate([
@@ -228,92 +195,114 @@ public class MLBusinessRowView: UIView {
         ])
 
         NSLayoutConstraint.activate([
-            mainStackView.topAnchor.constraint(greaterThanOrEqualTo: containerView.topAnchor, constant: 16.0),
-            mainStackView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
-            mainStackView.bottomAnchor.constraint(lessThanOrEqualTo: containerView.bottomAnchor, constant: -16.0),
+            mainStackView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 16.0),
+            mainStackView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            mainStackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -16.0),
             mainStackView.leftAnchor.constraint(equalTo: leftImageImageView.rightAnchor, constant: 14),
             mainStackView.rightAnchor.constraint(lessThanOrEqualTo: rightStackView.leftAnchor, constant: -14),
         ])
 
         NSLayoutConstraint.activate([
-            rightStackView.topAnchor.constraint(greaterThanOrEqualTo: containerView.topAnchor, constant: 18.0),
+            rightStackView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 18.0),
             rightStackView.widthAnchor.constraint(greaterThanOrEqualToConstant: 80),
-            rightStackView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
-            rightStackView.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -16),
-        ])
-
-        NSLayoutConstraint.activate([
-            lineView.heightAnchor.constraint(equalToConstant: 1.0),
-            lineView.leftAnchor.constraint(equalTo: leftAnchor),
-            lineView.rightAnchor.constraint(equalTo: rightAnchor),
-            lineView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            rightStackView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            rightStackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
         ])
     }
 
     public func update(with content: MLBusinessRowData) {
-        //CLEAN
-        rightStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
-        rightPrimarySecondaryStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
-        mainDescriptionStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
-
+        prepareForReuse()
+        
         //LEFT
-        if let leftImageKey = content.getLeftImage() {
-            imageProvider.getImage(key: leftImageKey) { image in
-                self.leftImageImageView.image = image
-            }
-        }
-        if let logoImageImageViewKey = content.getLeftImageAccessory() {
-            imageProvider.getImage(key: logoImageImageViewKey) { image in
-                self.leftImageAccessoryImageView.image = image
-            }
-        }
+        createLeftImage(with: content.getLeftImage())
+        createLeftImageAccessory(with: content.getLeftImageAccessory())
         
         //MAIN
         mainTitleLabel.text = content.getMainTitle()
         mainSubtitleLabel.text = content.getMainSubtitle()
-        
-        if let mainDescription = content.getMainDescription(), mainDescription.count > 0 {
+        createMainDescription(with: content.getMainDescription())
+
+        //RIGHT
+        createRightTopLabel(with: content.getRightTopLabel())
+        createRightPrimaryLabel(with: content.getRightPrimaryLabel())
+        createRightSecondaryLabel(with: content.getRightSecondaryLabel())
+        createRightMiddleLabel(with: content.getRightMiddleLabel())
+        createRightBottomInfo(with: content.getRightBottomInfo())
+        setRightLabelStatus(with: content.getRightLabelStatus())
+    }
+    
+    private func prepareForReuse() {
+        rightStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        rightPrimarySecondaryStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        mainDescriptionStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        leftImageImageView.image = nil
+        leftImageAccessoryImageView.image = nil
+    }
+    
+    private func createLeftImage(with key: String?) {
+        guard let leftImageKey = key else { return }
+        imageProvider.getImage(key: leftImageKey) { image in self.leftImageImageView.image = image }
+    }
+    
+    private func createLeftImageAccessory(with key: String?) {
+        guard let leftImageAccessoryKey = key else { return }
+        imageProvider.getImage(key: leftImageAccessoryKey) { image in self.leftImageAccessoryImageView.image = image }
+    }
+    
+    private func createMainDescription(with mainDescriptionData: [MLBusinessRowMainDescriptionData]?) {
+        if let mainDescription = mainDescriptionData, mainDescription.count > 0 {
             for item in mainDescription {
                 let itemContent = item.getContent()
                 let itemColor = item.getColor()?.hexaToUIColor()
                 switch item.getType().lowercased() {
                 case "image":
-                    let imageView = UIImageView()
-                    imageView.translatesAutoresizingMaskIntoConstraints = false
-                    imageView.contentMode = .scaleAspectFill
-                    imageView.backgroundColor = .clear
-                    imageProvider.getImage(key: itemContent) { image in
-                        imageView.image = image
-                    }
-                    imageView.tintColor = itemColor
-                    mainDescriptionStackView.addArrangedSubview(imageView)
-                    imageView.heightAnchor.constraint(equalToConstant: 10).isActive = true
-                    imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor).isActive = true
+                    createMainDescriptionImage(with: itemContent, imageColor: itemColor)
                 case "text":
-                    let label = UILabel(frame: .zero)
-                    label.numberOfLines = 1
-                    label.font = MLStyleSheetManager.styleSheet.regularSystemFont(ofSize: CGFloat(kMLFontsSizeXXSmall))
-                    label.textAlignment = .left
-                    label.text = itemContent
-                    label.textColor = itemColor
-                    mainDescriptionStackView.addArrangedSubview(label)
+                    createMainDescriptionLabel(with: itemContent, textColor: itemColor)
                 default:
                     break
                 }
             }
         }
-
-
-        //RIGHT
-        if let rightTopLabelText = content.getRightTopLabel() {
-            rightTopLabel.text = rightTopLabelText
-            rightStackView.addArrangedSubview(rightTopLabel)
-        }
-
-        rightPrimaryLabel.text = content.getRightPrimaryLabel()
+    }
+    
+    private func createMainDescriptionImage(with imageKey: String, imageColor: UIColor?) {
+        let imageView = UIImageView()
+        
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFill
+        imageView.backgroundColor = .clear
+        imageView.tintColor = imageColor
+        imageProvider.getImage(key: imageKey) { image in imageView.image = image }
+        mainDescriptionStackView.addArrangedSubview(imageView)
+        imageView.heightAnchor.constraint(equalToConstant: 10).isActive = true
+        imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor).isActive = true
+    }
+    
+    private func createMainDescriptionLabel(with text: String, textColor: UIColor?) {
+        let label = UILabel(frame: .zero)
+        
+        label.numberOfLines = 1
+        label.font = MLStyleSheetManager.styleSheet.regularSystemFont(ofSize: CGFloat(kMLFontsSizeXXSmall))
+        label.textAlignment = .left
+        label.text = text
+        label.textColor = textColor
+        mainDescriptionStackView.addArrangedSubview(label)
+    }
+    
+    private func createRightTopLabel(with rightTopLabelText: String?) {
+        guard let text = rightTopLabelText else { return }
+        rightTopLabel.text = text
+        rightStackView.addArrangedSubview(rightTopLabel)
+    }
+    
+    private func createRightPrimaryLabel(with text: String?) {
+        rightPrimaryLabel.text = text
         rightPrimarySecondaryStackView.addArrangedSubview(rightPrimaryLabel)
-
-        if let rightLabel = content.getRightSecondaryLabel() {
+    }
+    
+    private func createRightSecondaryLabel(with text: String?) {
+        if let rightLabel = text {
             let rightSecondaryLabelView = UIView(frame: .zero)
             rightSecondaryLabelView.translatesAutoresizingMaskIntoConstraints = false
             rightSecondaryLabelView.addSubview(rightSecondaryLabel)
@@ -330,27 +319,31 @@ public class MLBusinessRowView: UIView {
         }
 
         rightStackView.addArrangedSubview(rightPrimarySecondaryStackView)
-
-        if let rightMiddleLabelText = content.getRightMiddleLabel() {
-            rightMiddleLabel.text = rightMiddleLabelText
-            rightStackView.addArrangedSubview(rightMiddleLabel)
-        }
-                
-        if let rightBottomInfo = content.getRightBottomInfo() {
-            rightBottomInfoPill.backgroundColor = rightBottomInfo.getFormat()?.getBackgroundColor().hexaToUIColor() ?? .clear
-            rightBottomInfoPill.tintColor = rightBottomInfo.getFormat()?.getTextColor().hexaToUIColor() ?? .black
-            rightBottomInfoPill.text = rightBottomInfo.getLabel()
-            if let icon = rightBottomInfo.getIcon() {
-                imageProvider.getImage(key: icon) { image in
-                    self.rightBottomInfoPill.icon = image
-                }
-            } else {
-                rightBottomInfoPill.icon = nil
+    }
+    
+    private func createRightMiddleLabel(with text: String?) {
+        guard let rightMiddleLabelText = text else { return }
+        rightMiddleLabel.text = rightMiddleLabelText
+        rightStackView.addArrangedSubview(rightMiddleLabel)
+    }
+    
+    private func createRightBottomInfo(with rightBottomInfo: MLBusinessRowRightBottomInfoData?) {
+        guard let rightBottomInfo = rightBottomInfo else { return }
+        rightBottomInfoPill.backgroundColor = rightBottomInfo.getFormat()?.getBackgroundColor().hexaToUIColor() ?? .clear
+        rightBottomInfoPill.tintColor = rightBottomInfo.getFormat()?.getTextColor().hexaToUIColor() ?? .black
+        rightBottomInfoPill.text = rightBottomInfo.getLabel()
+        if let icon = rightBottomInfo.getIcon() {
+            imageProvider.getImage(key: icon) { image in
+                self.rightBottomInfoPill.icon = image
             }
-            rightStackView.addArrangedSubview(rightBottomInfoPill)
+        } else {
+            rightBottomInfoPill.icon = nil
         }
-        
-        if let rightLabelStatus = content.getRightLabelStatus(), rightLabelStatus.lowercased() == "blocked" {
+        rightStackView.addArrangedSubview(rightBottomInfoPill)
+    }
+    
+    private func setRightLabelStatus(with rightLabelStatus: String?) {
+        if let rightLabelStatus = rightLabelStatus, rightLabelStatus.lowercased() == "blocked" {
             let blockedColor = MLStyleSheetManager.styleSheet.blackColor.withAlphaComponent(0.40)
             rightPrimaryLabel.textColor = blockedColor
             rightSecondaryLabel.textColor = blockedColor
@@ -359,13 +352,6 @@ public class MLBusinessRowView: UIView {
             rightPrimaryLabel.textColor = blackColor
             rightSecondaryLabel.textColor = blackColor
         }
-    }
-    
-    public func prepareForReuse() {
-        rightStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
-        rightPrimarySecondaryStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
-        leftImageImageView.image = nil
-        leftImageAccessoryImageView.image = nil
     }
 }
 
