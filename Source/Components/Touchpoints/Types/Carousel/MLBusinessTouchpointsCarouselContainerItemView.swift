@@ -62,12 +62,6 @@ class MLBusinessTouchpointsCarouselContainerItemView: UIView {
         return stackView
     }()
 
-    private let discountRightValueView: UIView = {
-        let view = UIView(frame: .zero)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-
     private let discountMainLabel: UILabel = {
         let discountMainLabel = UILabel(frame: .zero)
         discountMainLabel.numberOfLines = 1
@@ -293,7 +287,7 @@ class MLBusinessTouchpointsCarouselContainerItemView: UIView {
         label.textColor = format.color.hexaToUIColor()
         let size: CGFloat = CGFloat(format.size)
         
-        if format.weight == "semibold" {
+        if format.weight.lowercased() == "semibold" {
             label.font = MLStyleSheetManager.styleSheet.semiboldSystemFont(ofSize: size)
         } else {
             label.font = MLStyleSheetManager.styleSheet.regularSystemFont(ofSize: size)

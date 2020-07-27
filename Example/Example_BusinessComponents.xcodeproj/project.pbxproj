@@ -19,6 +19,7 @@
 		23EE407B2326BA33001322EC /* DiscountData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE40792326BA33001322EC /* DiscountData.swift */; };
 		23EE408023297CF8001322EC /* SingleItemData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EE407F23297CF8001322EC /* SingleItemData.swift */; };
 		33765CDC23E0B60600909EC7 /* DiscountTrackerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33765CDB23E0B60600909EC7 /* DiscountTrackerData.swift */; };
+		33C98A8224CF827C0049D04C /* HybridCarouselCardData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C98A8124CF827C0049D04C /* HybridCarouselCardData.swift */; };
 		33CE31E52451EC60005B94A5 /* DiscountTouchpointsGridData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33CE31E42451EC60005B94A5 /* DiscountTouchpointsGridData.swift */; };
 		66D18E80EBDE544CA2CA4B9B /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		CE20251324A418FE0071323E /* ActionCardData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE20251224A418FE0071323E /* ActionCardData.swift */; };
@@ -43,6 +44,7 @@
 		23EE40792326BA33001322EC /* DiscountData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscountData.swift; sourceTree = "<group>"; };
 		23EE407F23297CF8001322EC /* SingleItemData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleItemData.swift; sourceTree = "<group>"; };
 		33765CDB23E0B60600909EC7 /* DiscountTrackerData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscountTrackerData.swift; sourceTree = "<group>"; };
+		33C98A8124CF827C0049D04C /* HybridCarouselCardData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HybridCarouselCardData.swift; sourceTree = "<group>"; };
 		33CE31E42451EC60005B94A5 /* DiscountTouchpointsGridData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscountTouchpointsGridData.swift; sourceTree = "<group>"; };
 		70705FCCEC04254552DE2C7D /* Pods_Example_BusinessComponents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Example_BusinessComponents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76BAD5F6C0ABF02248DA22EC /* Pods-Example_BusinessComponents.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example_BusinessComponents.debug.xcconfig"; path = "Target Support Files/Pods-Example_BusinessComponents/Pods-Example_BusinessComponents.debug.xcconfig"; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 				23EE40782326BA33001322EC /* LoyaltyRingData.swift */,
 				23EE407F23297CF8001322EC /* SingleItemData.swift */,
 				CE20251224A418FE0071323E /* ActionCardData.swift */,
+				33C98A8124CF827C0049D04C /* HybridCarouselCardData.swift */,
 			);
 			path = MockData;
 			sourceTree = "<group>";
@@ -255,6 +258,7 @@
 				23EE408023297CF8001322EC /* SingleItemData.swift in Sources */,
 				23EE40682326B50B001322EC /* ViewController.swift in Sources */,
 				33765CDC23E0B60600909EC7 /* DiscountTrackerData.swift in Sources */,
+				33C98A8224CF827C0049D04C /* HybridCarouselCardData.swift in Sources */,
 				0F660AFB23305CA9001B52DA /* LoyaltyHeaderData.swift in Sources */,
 				23DECA26232D28E80083D01F /* DiscountDataForTestUpdate.swift in Sources */,
 				33CE31E52451EC60005B94A5 /* DiscountTouchpointsGridData.swift in Sources */,
