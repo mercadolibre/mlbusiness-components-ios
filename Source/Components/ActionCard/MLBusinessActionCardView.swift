@@ -30,7 +30,7 @@ private extension MLBusinessActionCardView {
     func render() {
         prepareForAutolayout()
         layer.cornerRadius = 6
-        layer.applyShadow(alpha: 0.25, x: 0.2, y: 0.2, blur: 4)
+        layer.applyShadow(alpha: 0.12, x: 0, y: 4, blur: 16)
 
         let icon = buildIcon()
         addSubview(icon)
