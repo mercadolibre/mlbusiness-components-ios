@@ -20,12 +20,12 @@ public class MLBusinessRowView: UIView {
     }()
     
     private let overlayLeftImageImageView: UIView = {
-        let imageView = UIView(frame: .zero)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.layer.cornerRadius = 32
-        imageView.clipsToBounds = true
-        imageView.backgroundColor = MLStyleSheetManager.styleSheet.blackColor.withAlphaComponent(0.04)
-        return imageView
+        let view = UIView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = 32
+        view.clipsToBounds = true
+        view.backgroundColor = MLStyleSheetManager.styleSheet.blackColor.withAlphaComponent(0.04)
+        return view
     }()
     
     private let leftImageAccessoryImageView: UIImageView = {
@@ -42,7 +42,7 @@ public class MLBusinessRowView: UIView {
         let stackView = UIStackView(frame: .zero)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.distribution = .equalSpacing
-        stackView.spacing = 4
+        stackView.spacing = 5
         stackView.axis = .vertical
         return stackView
     }()
@@ -55,6 +55,13 @@ public class MLBusinessRowView: UIView {
         label.textColor = MLStyleSheetManager.styleSheet.blackColor
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
+    }()
+    
+    private let mainSubtitleView: UIView = {
+        let view = UIView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .clear
+        return view
     }()
 
     private let mainSubtitleLabel: UILabel = {
@@ -81,7 +88,7 @@ public class MLBusinessRowView: UIView {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.alignment = .trailing
         stackView.distribution = .equalSpacing
-        stackView.spacing = 2
+        stackView.spacing = 0
         stackView.axis = .vertical
         return stackView
     }()
@@ -135,6 +142,13 @@ public class MLBusinessRowView: UIView {
         return label
     }()
 
+    private let rightBottomInfoPillView: UIView = {
+        let view = UIView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .clear
+        return view
+    }()
+    
     private let rightBottomInfoPill: MLBusinessPillView = {
         let rightBottomInfo = MLBusinessPillView(with: 10.0)
         rightBottomInfo.translatesAutoresizingMaskIntoConstraints = false
@@ -161,13 +175,10 @@ public class MLBusinessRowView: UIView {
         addSubview(leftImageImageView)
         addSubview(overlayLeftImageImageView)
         addSubview(leftImageAccessoryImageView)
-
-        mainStackView.addArrangedSubview(mainTitleLabel)
-        mainStackView.addArrangedSubview(mainSubtitleLabel)
-        mainStackView.addArrangedSubview(mainDescriptionStackView)
+        mainSubtitleView.addSubview(mainSubtitleLabel)
         addSubview(mainStackView)
-
         addSubview(rightStackView)
+        rightBottomInfoPillView.addSubview(rightBottomInfoPill)
     }
 
     private func setupConstraints() {
@@ -193,6 +204,13 @@ public class MLBusinessRowView: UIView {
             leftImageAccessoryImageView.bottomAnchor.constraint(equalTo: leftImageImageView.bottomAnchor),
             leftImageAccessoryImageView.rightAnchor.constraint(equalTo: leftImageImageView.rightAnchor),
         ])
+        
+         NSLayoutConstraint.activate([
+            mainSubtitleLabel.topAnchor.constraint(equalTo: mainSubtitleView.topAnchor, constant: 2.0),
+            mainSubtitleLabel.bottomAnchor.constraint(equalTo: mainSubtitleView.bottomAnchor),
+            mainSubtitleLabel.leftAnchor.constraint(equalTo: mainSubtitleView.leftAnchor),
+            mainSubtitleLabel.rightAnchor.constraint(equalTo: mainSubtitleView.rightAnchor),
+        ])
 
         NSLayoutConstraint.activate([
             mainStackView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 16.0),
@@ -208,27 +226,20 @@ public class MLBusinessRowView: UIView {
             rightStackView.centerYAnchor.constraint(equalTo: centerYAnchor),
             rightStackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
         ])
+        
+        NSLayoutConstraint.activate([
+            rightBottomInfoPill.topAnchor.constraint(equalTo: rightBottomInfoPillView.topAnchor, constant: 4.0),
+            rightBottomInfoPill.bottomAnchor.constraint(equalTo: rightBottomInfoPillView.bottomAnchor),
+            rightBottomInfoPill.leftAnchor.constraint(equalTo: rightBottomInfoPillView.leftAnchor),
+            rightBottomInfoPill.rightAnchor.constraint(equalTo: rightBottomInfoPillView.rightAnchor),
+        ])
     }
 
     public func update(with content: MLBusinessRowData) {
         prepareForReuse()
-        
-        //LEFT
-        createLeftImage(with: content.getLeftImage())
-        createLeftImageAccessory(with: content.getLeftImageAccessory())
-        
-        //MAIN
-        mainTitleLabel.text = content.getMainTitle()
-        mainSubtitleLabel.text = content.getMainSubtitle()
-        createMainDescription(with: content.getMainDescription())
-
-        //RIGHT
-        createRightTopLabel(with: content.getRightTopLabel())
-        createRightPrimaryLabel(with: content.getRightPrimaryLabel())
-        createRightSecondaryLabel(with: content.getRightSecondaryLabel())
-        createRightMiddleLabel(with: content.getRightMiddleLabel())
-        createRightBottomInfo(with: content.getRightBottomInfo())
-        setRightLabelStatus(with: content.getRightLabelStatus())
+        createLeftSection(with: content)
+        createMainSection(with: content)
+        createRightSection(with: content)
     }
     
     private func prepareForReuse() {
@@ -239,6 +250,26 @@ public class MLBusinessRowView: UIView {
         leftImageAccessoryImageView.image = nil
     }
     
+    private func createLeftSection(with content: MLBusinessRowData) {
+        createLeftImage(with: content.getLeftImage())
+        createLeftImageAccessory(with: content.getLeftImageAccessory())
+    }
+    
+    private func createMainSection(with content: MLBusinessRowData) {
+        createMainTitle(with: content.getMainTitle())
+        createMainSubtitle(with: content.getMainSubtitle())
+        createMainDescription(with: content.getMainDescription())
+    }
+    
+    private func createRightSection(with content: MLBusinessRowData) {
+        createRightTopLabel(with: content.getRightTopLabel())
+        createRightPrimaryLabel(with: content.getRightPrimaryLabel())
+        createRightSecondaryLabel(with: content.getRightSecondaryLabel())
+        createRightMiddleLabel(with: content.getRightMiddleLabel())
+        createRightBottomInfo(with: content.getRightBottomInfo())
+        setRightLabelStatus(with: content.getRightLabelStatus())
+    }
+    
     private func createLeftImage(with key: String?) {
         guard let leftImageKey = key else { return }
         imageProvider.getImage(key: leftImageKey) { image in self.leftImageImageView.image = image }
@@ -247,6 +278,18 @@ public class MLBusinessRowView: UIView {
     private func createLeftImageAccessory(with key: String?) {
         guard let leftImageAccessoryKey = key else { return }
         imageProvider.getImage(key: leftImageAccessoryKey) { image in self.leftImageAccessoryImageView.image = image }
+    }
+    
+    private func createMainTitle(with text: String?) {
+        guard let mainTitleText = text else { return }
+        mainTitleLabel.text = mainTitleText
+        mainStackView.addArrangedSubview(mainTitleLabel)
+    }
+    
+    private func createMainSubtitle(with text: String?) {
+        guard let mainSubtitleText = text else { return }
+        mainSubtitleLabel.text = mainSubtitleText
+        mainStackView.addArrangedSubview(mainSubtitleView)
     }
     
     private func createMainDescription(with mainDescriptionData: [MLBusinessRowMainDescriptionData]?) {
@@ -263,6 +306,7 @@ public class MLBusinessRowView: UIView {
                     break
                 }
             }
+            mainStackView.addArrangedSubview(mainDescriptionStackView)
         }
     }
     
@@ -290,19 +334,20 @@ public class MLBusinessRowView: UIView {
         mainDescriptionStackView.addArrangedSubview(label)
     }
     
-    private func createRightTopLabel(with rightTopLabelText: String?) {
-        guard let text = rightTopLabelText else { return }
-        rightTopLabel.text = text
+    private func createRightTopLabel(with text: String?) {
+        guard let rightTopLabelText = text else { return }
+        rightTopLabel.text = rightTopLabelText
         rightStackView.addArrangedSubview(rightTopLabel)
     }
     
     private func createRightPrimaryLabel(with text: String?) {
-        rightPrimaryLabel.text = text
+        guard let rightPrimaryLabelText = text else { return }
+        rightPrimaryLabel.text = rightPrimaryLabelText
         rightPrimarySecondaryStackView.addArrangedSubview(rightPrimaryLabel)
     }
     
     private func createRightSecondaryLabel(with text: String?) {
-        if let rightLabel = text {
+        if let rightSecondaryLabelText = text {
             let rightSecondaryLabelView = UIView(frame: .zero)
             rightSecondaryLabelView.translatesAutoresizingMaskIntoConstraints = false
             rightSecondaryLabelView.addSubview(rightSecondaryLabel)
@@ -314,7 +359,7 @@ public class MLBusinessRowView: UIView {
                 rightSecondaryLabel.bottomAnchor.constraint(equalTo: rightSecondaryLabelView.bottomAnchor, constant: -1),
             ])
 
-            rightSecondaryLabel.text = rightLabel
+            rightSecondaryLabel.text = rightSecondaryLabelText
             rightPrimarySecondaryStackView.addArrangedSubview(rightSecondaryLabelView)
         }
 
@@ -339,7 +384,7 @@ public class MLBusinessRowView: UIView {
         } else {
             rightBottomInfoPill.icon = nil
         }
-        rightStackView.addArrangedSubview(rightBottomInfoPill)
+        rightStackView.addArrangedSubview(rightBottomInfoPillView)
     }
     
     private func setRightLabelStatus(with rightLabelStatus: String?) {
