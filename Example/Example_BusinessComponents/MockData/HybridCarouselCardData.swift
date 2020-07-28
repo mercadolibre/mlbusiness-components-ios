@@ -10,20 +10,43 @@ import Foundation
 import MLBusinessComponents
 
 class HybridCarouselCardData: NSObject, MLBusinessHybridCarouselCardData {
+    
+    private static let imageAccesoryURL = "https://urbancomunicacion.com/wp-content/uploads/2017/04/Logotipos-famosos-Starbucks-Urban-comunicacion-1.png"
+    private let topImageAccessory: String?
+    private let middleTitle: String
+    private let middleSubtitle: String?
+    private let bottomTopLabel: String?
+    private let bottomPrimaryLabel: String?
+    private let bottomSecondaryLabel: String?
+    private let bottomLabelStatus: String?
+    private let bottomInfoData: HybridCarouselCardBottomInfoData?
+    
+    
+    init(with topImageAccesory: String? = imageAccesoryURL, middleTitle: String = "Starbucks", middleSubtitle: String? = "Cafeteria", bottomTopLabel: String? = nil, bottomPrimaryLabel: String? = "15%", bottomSecondaryLabel: String? = "OFF", bottomLabelStatus: String? = "BLOCKED", bottomInfoData: HybridCarouselCardBottomInfoData? = HybridCarouselCardBottomInfoData()) {
+        self.topImageAccessory = topImageAccesory
+        self.middleTitle = middleTitle
+        self.middleSubtitle = middleSubtitle
+        self.bottomTopLabel = bottomTopLabel
+        self.bottomPrimaryLabel = bottomPrimaryLabel
+        self.bottomSecondaryLabel = bottomSecondaryLabel
+        self.bottomLabelStatus = bottomLabelStatus
+        self.bottomInfoData = bottomInfoData
+    }
+    
     func getTopImage() -> String? {
         return "https://urbancomunicacion.com/wp-content/uploads/2017/04/Logotipos-famosos-Starbucks-Urban-comunicacion-1.png"
     }
     
     func getTopImageAccessory() -> String? {
-        return "https://urbancomunicacion.com/wp-content/uploads/2017/04/Logotipos-famosos-Starbucks-Urban-comunicacion-1.png"
+        return topImageAccessory
     }
     
     func getMiddleTitle() -> String {
-        return "Starbucks"
+        return middleTitle
     }
     
     func getMiddleSubtitle() -> String? {
-        return "Cafetería"
+        return middleSubtitle
     }
     
     func getBottomTopLabel() -> String? {
@@ -31,23 +54,19 @@ class HybridCarouselCardData: NSObject, MLBusinessHybridCarouselCardData {
     }
     
     func getBottomPrimaryLabel() -> String? {
-        return "15%"
+        return bottomPrimaryLabel
     }
     
     func getBottomSecondaryLabel() -> String? {
-        return "OFF"
-    }
-    
-    func getBottomMiddleLabel() -> String? {
-        return "Tope de $100"
+        return bottomSecondaryLabel
     }
     
     func getBottomLabelStatus() -> String? {
-        return "BLOCKED"
+        return bottomLabelStatus
     }
     
     func getBottomInfo() -> MLBusinessHybridCarouselCardBottomInfoData? {
-        return HybridCarouselCardBottomInfoData()
+        return bottomInfoData
     }
     
     func getLink() -> String? {

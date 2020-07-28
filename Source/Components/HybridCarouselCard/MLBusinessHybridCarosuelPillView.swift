@@ -49,7 +49,7 @@ public class MLBusinessHybridCarosuelPillView: UIView {
     private let textLabel: UILabel = {
         let textLabel = UILabel(frame: .zero)
         textLabel.translatesAutoresizingMaskIntoConstraints = false
-        textLabel.textAlignment = .right
+        textLabel.textAlignment = .left
         textLabel.font = MLStyleSheetManager.styleSheet.boldSystemFont(ofSize: CGFloat(9.0))
         textLabel.numberOfLines = 1
         textLabel.adjustsFontSizeToFitWidth = true
@@ -87,23 +87,23 @@ public class MLBusinessHybridCarosuelPillView: UIView {
 
     private func setupConstraints() {
         let width = iconImageView.widthAnchor.constraint(equalToConstant: 0)
-        let left = iconImageView.leftAnchor.constraint(equalTo: leftAnchor, constant: 5)
+        let left = textLabel.leftAnchor.constraint(equalTo: iconImageView.rightAnchor)
 
         imageWidth = width
         imageLeft = left
 
         NSLayoutConstraint.activate([
-            left,
+            iconImageView.leftAnchor.constraint(equalTo: leftAnchor),
             iconImageView.heightAnchor.constraint(equalTo: textLabel.heightAnchor, multiplier: 0.8),
             width,
             iconImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
         ])
 
         NSLayoutConstraint.activate([
-            textLabel.leftAnchor.constraint(equalTo: iconImageView.rightAnchor, constant: 3),
             textLabel.rightAnchor.constraint(equalTo: rightAnchor),
-            textLabel.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 0),
-            textLabel.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: 0),
+            left,
+            textLabel.topAnchor.constraint(equalTo: topAnchor),
+            textLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
             textLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
         ])
 
@@ -117,11 +117,11 @@ public class MLBusinessHybridCarosuelPillView: UIView {
 
     private func toggleSizeChange() {
         if iconImageView.image == nil {
-            imageWidth?.constant = 0
-            imageLeft?.constant = 5
+            imageWidth?.constant = 0.0
+            imageLeft?.constant = 0.0
         } else {
-            imageWidth?.constant = 8
-            imageLeft?.constant = 8
+            imageWidth?.constant = 8.0
+            imageLeft?.constant = 3.0
         }
     }
 }

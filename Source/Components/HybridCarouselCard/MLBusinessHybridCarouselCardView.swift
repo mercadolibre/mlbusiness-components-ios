@@ -8,7 +8,7 @@
 import Foundation
 import MLUI
 
-class MLBusinessHybridCarouselCardView: UIView {
+public class MLBusinessHybridCarouselCardView: UIView {
 
     private let containerView: UIView = {
         let view = UIView(frame: .zero)
@@ -70,7 +70,7 @@ class MLBusinessHybridCarouselCardView: UIView {
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
-        label.font = MLStyleSheetManager.styleSheet.regularSystemFont(ofSize: CGFloat(kMLFontsSizeXSmall))
+        label.font = MLStyleSheetManager.styleSheet.regularSystemFont(ofSize: CGFloat(kMLFontsSizeXXSmall))
         label.textColor = MLStyleSheetManager.styleSheet.blackColor
         return label
     }()
@@ -126,7 +126,7 @@ class MLBusinessHybridCarouselCardView: UIView {
     }()
 
     private let pillView: MLBusinessHybridCarosuelPillView = {
-        let pillView = MLBusinessHybridCarosuelPillView(with: 16)
+        let pillView = MLBusinessHybridCarosuelPillView()
         pillView.translatesAutoresizingMaskIntoConstraints = false
         return pillView
     }()
@@ -148,6 +148,8 @@ class MLBusinessHybridCarouselCardView: UIView {
     }
 
     private func setup() {
+        translatesAutoresizingMaskIntoConstraints = false
+
         addSubview(containerView)
 
         containerView.addSubview(topImageImageView)
@@ -166,13 +168,14 @@ class MLBusinessHybridCarouselCardView: UIView {
         ])
 
         NSLayoutConstraint.activate([
+            topImageImageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 12.0),
             topImageImageView.heightAnchor.constraint(equalToConstant: 72.0),
             topImageImageView.widthAnchor.constraint(equalTo: topImageImageView.heightAnchor),
             topImageImageView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
         ])
 
         NSLayoutConstraint.activate([
-            topImageOverlayImageView.heightAnchor.constraint(equalToConstant: 72.0),
+            topImageOverlayImageView.heightAnchor.constraint(equalToConstant: 20.0),
             topImageOverlayImageView.widthAnchor.constraint(equalTo: topImageOverlayImageView.heightAnchor),
             topImageOverlayImageView.topAnchor.constraint(equalTo: topImageImageView.topAnchor),
             topImageOverlayImageView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
@@ -194,19 +197,35 @@ class MLBusinessHybridCarouselCardView: UIView {
         bottomVerticalStackViewTopAnchorConstraint = bottomVerticalStackView.topAnchor.constraint(equalTo: middleVerticalStackView.bottomAnchor, constant: 18.0)
         bottomVerticalStackViewTopAnchorConstraint?.isActive = true
         
-        bottomVerticalStackViewBottomAnchorConstraint = bottomVerticalStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: 18.0)
+        bottomVerticalStackViewBottomAnchorConstraint = bottomVerticalStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -18.0)
         bottomVerticalStackViewBottomAnchorConstraint?.isActive = true
 
         NSLayoutConstraint.activate([
             bottomVerticalStackView.leftAnchor.constraint(greaterThanOrEqualTo: containerView.leftAnchor, constant: 8.0),
             bottomVerticalStackView.rightAnchor.constraint(lessThanOrEqualTo: containerView.rightAnchor, constant: -8.0),
+            bottomVerticalStackView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
         ])
     }
 
-    func update(with item: MLBusinessHybridCarouselCardData) {
-        bottomHorizontalStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
-        bottomVerticalStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
-
+    public func update(with item: MLBusinessHybridCarouselCardData) {
+        prepareForReuse()
+        
+        if let topImageKey = item.getTopImage() {
+             imageProvider.getImage(key: topImageKey) { image in self.topImageImageView.image = image }
+         }
+         
+         if let topImageAccessoryKey = item.getTopImageAccessory() {
+            imageProvider.getImage(key: topImageAccessoryKey) { image in self.topImageAccessoryImageView.image = image }
+        }
+        
+        middleTitleLabel.text = item.getMiddleTitle()
+        middleVerticalStackView.addArrangedSubview(middleTitleLabel)
+        
+        if let middleSubtitleLabelText = item.getMiddleSubtitle() {
+            middleSubtitleLabel.text = middleSubtitleLabelText
+            middleVerticalStackView.addArrangedSubview(middleSubtitleLabel)
+        }
+        
         if let bottomTopLabelText = item.getBottomTopLabel() {
             bottomVerticalStackView.addArrangedSubview(bottomTopLabel)
             bottomTopLabel.text = bottomTopLabelText
@@ -220,9 +239,6 @@ class MLBusinessHybridCarouselCardView: UIView {
             bottomHorizontalStackView.addArrangedSubview(bottomSecondaryLabel)
         }
 
-        middleTitleLabel.text = item.getMiddleTitle()
-        middleSubtitleLabel.text = item.getMiddleSubtitle()
-
         if let bottomLabelStatus = item.getBottomLabelStatus(), bottomLabelStatus.lowercased() == "blocked" {
             bottomTopLabel.textColor = MLStyleSheetManager.styleSheet.blackColor.withAlphaComponent(0.4)
             bottomPrimaryLabel.textColor = MLStyleSheetManager.styleSheet.blackColor.withAlphaComponent(0.4)
@@ -230,17 +246,11 @@ class MLBusinessHybridCarouselCardView: UIView {
         }
 
         bottomVerticalStackView.addArrangedSubview(bottomHorizontalStackView)
-
-        if let topImageKey = item.getTopImage() {
-            imageProvider.getImage(key: topImageKey) { image in self.topImageImageView.image = image }
-        }
         
-        if let topImageAccessoryKey = item.getTopImageAccessory() {
-           imageProvider.getImage(key: topImageAccessoryKey) { image in self.topImageAccessoryImageView.image = image }
-       }
-
         if let bottomInfo = item.getBottomInfo() {
-            pillView.isHidden = false
+            let pillContainerView = UIView(frame: .zero)
+            pillContainerView.translatesAutoresizingMaskIntoConstraints = false
+            
             pillView.backgroundColor = bottomInfo.getFormat()?.getBackgroundColor().hexaToUIColor()
             pillView.tintColor = bottomInfo.getFormat()?.getTextColor().hexaToUIColor()
             pillView.text = bottomInfo.getLabel()
@@ -251,22 +261,29 @@ class MLBusinessHybridCarouselCardView: UIView {
             } else {
                 pillView.icon = nil
             }
-            bottomVerticalStackView.addArrangedSubview(pillView)
+            pillContainerView.addSubview(pillView)
+            pillView.centerXAnchor.constraint(equalTo: pillContainerView.centerXAnchor).isActive = true
+            pillView.topAnchor.constraint(equalTo: pillContainerView.topAnchor).isActive = true
+            pillView.bottomAnchor.constraint(equalTo: pillContainerView.bottomAnchor).isActive = true
+            bottomVerticalStackView.addArrangedSubview(pillContainerView)
             bottomVerticalStackViewTopAnchorConstraint?.constant = 10.0
-            bottomVerticalStackViewBottomAnchorConstraint?.constant = 10.0
+            bottomVerticalStackViewBottomAnchorConstraint?.constant = -10.0
         } else {
-            if let middleSubtitle = item.getMiddleSubtitle(), !middleSubtitle.isEmpty {
-                bottomVerticalStackViewTopAnchorConstraint?.constant = 12.0
-                bottomVerticalStackViewBottomAnchorConstraint?.constant = 12.0
-            } else {
+            if let bottomPrimaryLabel = item.getBottomPrimaryLabel(), !bottomPrimaryLabel.isEmpty {
                 bottomVerticalStackViewTopAnchorConstraint?.constant = 18.0
-                bottomVerticalStackViewBottomAnchorConstraint?.constant = 18.0
+                bottomVerticalStackViewBottomAnchorConstraint?.constant = -18.0
+            } else {
+                bottomVerticalStackViewTopAnchorConstraint?.constant = 0
+                bottomVerticalStackViewBottomAnchorConstraint?.constant = -12.0
             }
         }
     }
 
-    public func clear() {
+    private func prepareForReuse() {
         topImageImageView.image = nil
         pillView.icon = nil
+        middleVerticalStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        bottomHorizontalStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        bottomVerticalStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
     }
 }

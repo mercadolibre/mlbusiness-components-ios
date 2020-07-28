@@ -14,7 +14,6 @@ import Foundation
     @objc func getBottomTopLabel() -> String?
     @objc func getBottomPrimaryLabel() -> String?
     @objc func getBottomSecondaryLabel() -> String?
-    @objc func getBottomMiddleLabel() -> String?
     @objc func getBottomLabelStatus() -> String?
     @objc func getBottomInfo() -> MLBusinessHybridCarouselCardBottomInfoData?
     @objc func getLink() -> String?
