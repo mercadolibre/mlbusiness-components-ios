@@ -248,6 +248,7 @@ public class MLBusinessRowView: UIView {
         mainDescriptionStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         leftImageImageView.image = nil
         leftImageAccessoryImageView.image = nil
+        rightBottomInfoPill.icon = nil
     }
     
     private func createLeftSection(with content: MLBusinessRowData) {
@@ -317,6 +318,7 @@ public class MLBusinessRowView: UIView {
         imageView.contentMode = .scaleAspectFill
         imageView.backgroundColor = .clear
         imageView.tintColor = imageColor
+        imageView.image = nil
         imageProvider.getImage(key: imageKey) { image in imageView.image = image }
         mainDescriptionStackView.addArrangedSubview(imageView)
         imageView.heightAnchor.constraint(equalToConstant: 10).isActive = true
@@ -381,8 +383,6 @@ public class MLBusinessRowView: UIView {
             imageProvider.getImage(key: icon) { image in
                 self.rightBottomInfoPill.icon = image
             }
-        } else {
-            rightBottomInfoPill.icon = nil
         }
         rightStackView.addArrangedSubview(rightBottomInfoPillView)
     }
