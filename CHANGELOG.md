@@ -1,3 +1,7 @@
+# v1.17.0
+🚀 1.17.0 🚀
+- Fix MLBusinessActionCardView shadow
+
 # v1.16.0
 🚀 1.16.0 🚀
 - Changed Dividing Line View stroke color (darker)
