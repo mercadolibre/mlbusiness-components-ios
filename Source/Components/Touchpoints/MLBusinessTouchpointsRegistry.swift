@@ -19,6 +19,7 @@ class MLBusinessTouchpointsRegistry: MLBusinessTouchpointsRegistryProtocol {
     init() {
         register(type: "GRID", mapper: MLBusinessTouchpointsMapper<MLBusinessTouchpointsGridModel>(), view: MLBusinessTouchpointsGridView.self)
         register(type: "CAROUSEL", mapper: MLBusinessTouchpointsMapper<MLBusinessTouchpointsCarouselModel>(), view: MLBusinessTouchpointsCarouselView.self)
+        register(type: "HYBRID_CAROUSEL", mapper: MLBusinessTouchpointsMapper<MLBusinessHybridCarouselModel>(), view: MLBusinessHybridCarouselView.self)
     }
 
     func register(type: String, mapper: MLBusinessTouchpointsMapperProtocol, view: MLBusinessTouchpointsBaseView.Type) {

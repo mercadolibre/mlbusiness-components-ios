@@ -202,20 +202,17 @@ extension ViewController {
         return rowView
     }
     
-    private func setupHybridRowView(bottomOf targetView: UIView) -> MLBusinessHybridCarouselCardView {
-        let hybridCarouselCard = MLBusinessHybridCarouselCardView()
-        hybridCarouselCard.update(with: HybridCarouselCardData(bottomLabelStatus: nil))
-        containerView.addSubview(hybridCarouselCard)
+    private func setupHybridRowView(bottomOf targetView: UIView) -> UIView {
+        let discountTouchpointsView = MLBusinessTouchpointsView()
+        discountTouchpointsView.setTouchpointsTracker(with: DiscountTrackerData(touchPointId: "BusinessComponents-Example"))
+        discountTouchpointsView.update(with: HybridCarouselData())
+        containerView.addSubview(discountTouchpointsView)
         NSLayoutConstraint.activate([
-            hybridCarouselCard.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16.0),
-            hybridCarouselCard.widthAnchor.constraint(equalToConstant: 116.0),
-            hybridCarouselCard.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+            discountTouchpointsView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            discountTouchpointsView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            discountTouchpointsView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16)
         ])
-        hybridCarouselCard.layer.borderColor = UIColor.black.withAlphaComponent(0.1).cgColor
-        hybridCarouselCard.layer.borderWidth = 1.0
-        hybridCarouselCard.layer.cornerRadius = 6.0
-        hybridCarouselCard.clipsToBounds = true
-        return hybridCarouselCard
+        return discountTouchpointsView
     }
 
     @objc

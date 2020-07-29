@@ -8,7 +8,7 @@
 import Foundation
 import MLUI
 
-public class MLBusinessHybridCarosuelPillView: UIView {
+class MLBusinessHybridCarosuelPillView: UIView {
     public override var tintColor: UIColor! {
         didSet {
             textLabel.textColor = tintColor

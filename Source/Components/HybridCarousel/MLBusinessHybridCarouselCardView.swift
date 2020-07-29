@@ -8,7 +8,7 @@
 import Foundation
 import MLUI
 
-public class MLBusinessHybridCarouselCardView: UIView {
+class MLBusinessHybridCarouselCardView: UIView {
 
     private let containerView: UIView = {
         let view = UIView(frame: .zero)
@@ -136,7 +136,7 @@ public class MLBusinessHybridCarouselCardView: UIView {
 
     var imageProvider: MLBusinessImageProvider = MLBusinessURLImageProvider()
 
-    public required init() {
+    required init() {
         super.init(frame: .zero)
         setup()
         setupConstraints()
@@ -175,7 +175,7 @@ public class MLBusinessHybridCarouselCardView: UIView {
         ])
 
         NSLayoutConstraint.activate([
-            topImageOverlayImageView.heightAnchor.constraint(equalToConstant: 20.0),
+            topImageOverlayImageView.heightAnchor.constraint(equalToConstant: 72.0),
             topImageOverlayImageView.widthAnchor.constraint(equalTo: topImageOverlayImageView.heightAnchor),
             topImageOverlayImageView.topAnchor.constraint(equalTo: topImageImageView.topAnchor),
             topImageOverlayImageView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
@@ -183,7 +183,7 @@ public class MLBusinessHybridCarouselCardView: UIView {
         
         NSLayoutConstraint.activate([
             topImageAccessoryImageView.heightAnchor.constraint(equalToConstant: 20.0),
-            topImageAccessoryImageView.widthAnchor.constraint(equalTo: topImageOverlayImageView.heightAnchor),
+            topImageAccessoryImageView.widthAnchor.constraint(equalTo: topImageAccessoryImageView.heightAnchor),
             topImageAccessoryImageView.bottomAnchor.constraint(equalTo: topImageImageView.bottomAnchor),
             topImageAccessoryImageView.rightAnchor.constraint(equalTo: topImageImageView.rightAnchor),
         ])
@@ -207,39 +207,39 @@ public class MLBusinessHybridCarouselCardView: UIView {
         ])
     }
 
-    public func update(with item: MLBusinessHybridCarouselCardData) {
+    func update(with item: MLBusinessHybridCarouselCardModel) {
         prepareForReuse()
         
-        if let topImageKey = item.getTopImage() {
+        if let topImageKey = item.topImage {
              imageProvider.getImage(key: topImageKey) { image in self.topImageImageView.image = image }
          }
          
-         if let topImageAccessoryKey = item.getTopImageAccessory() {
+         if let topImageAccessoryKey = item.topImageAccessory {
             imageProvider.getImage(key: topImageAccessoryKey) { image in self.topImageAccessoryImageView.image = image }
         }
         
-        middleTitleLabel.text = item.getMiddleTitle()
+        middleTitleLabel.text = item.middleTitle
         middleVerticalStackView.addArrangedSubview(middleTitleLabel)
         
-        if let middleSubtitleLabelText = item.getMiddleSubtitle() {
+        if let middleSubtitleLabelText = item.middleSubtitle {
             middleSubtitleLabel.text = middleSubtitleLabelText
             middleVerticalStackView.addArrangedSubview(middleSubtitleLabel)
         }
         
-        if let bottomTopLabelText = item.getBottomTopLabel() {
+        if let bottomTopLabelText = item.bottomTopLabel {
             bottomVerticalStackView.addArrangedSubview(bottomTopLabel)
             bottomTopLabel.text = bottomTopLabelText
         }
 
-        bottomPrimaryLabel.text = item.getBottomPrimaryLabel()
+        bottomPrimaryLabel.text = item.bottomPrimaryLabel
         bottomHorizontalStackView.addArrangedSubview(bottomPrimaryLabel)
 
-        if let bottomSecondaryLabelText = item.getBottomSecondaryLabel() {
+        if let bottomSecondaryLabelText = item.bottomSecondaryLabel {
             bottomSecondaryLabel.text = bottomSecondaryLabelText
             bottomHorizontalStackView.addArrangedSubview(bottomSecondaryLabel)
         }
 
-        if let bottomLabelStatus = item.getBottomLabelStatus(), bottomLabelStatus.lowercased() == "blocked" {
+        if let bottomLabelStatus = item.bottomLabelStatus, bottomLabelStatus.lowercased() == "blocked" {
             bottomTopLabel.textColor = MLStyleSheetManager.styleSheet.blackColor.withAlphaComponent(0.4)
             bottomPrimaryLabel.textColor = MLStyleSheetManager.styleSheet.blackColor.withAlphaComponent(0.4)
             bottomSecondaryLabel.textColor = MLStyleSheetManager.styleSheet.blackColor.withAlphaComponent(0.4)
@@ -247,14 +247,14 @@ public class MLBusinessHybridCarouselCardView: UIView {
 
         bottomVerticalStackView.addArrangedSubview(bottomHorizontalStackView)
         
-        if let bottomInfo = item.getBottomInfo() {
+        if let bottomInfo = item.bottomInfo {
             let pillContainerView = UIView(frame: .zero)
             pillContainerView.translatesAutoresizingMaskIntoConstraints = false
             
-            pillView.backgroundColor = bottomInfo.getFormat()?.getBackgroundColor().hexaToUIColor()
-            pillView.tintColor = bottomInfo.getFormat()?.getTextColor().hexaToUIColor()
-            pillView.text = bottomInfo.getLabel()
-            if let icon = bottomInfo.getIcon() {
+            pillView.backgroundColor = bottomInfo.format.backgroundColor.hexaToUIColor()
+            pillView.tintColor = bottomInfo.format.textColor.hexaToUIColor()
+            pillView.text = bottomInfo.label
+            if let icon = bottomInfo.icon {
                 imageProvider.getImage(key: icon) { image in
                     self.pillView.icon = image
                 }
@@ -269,7 +269,7 @@ public class MLBusinessHybridCarouselCardView: UIView {
             bottomVerticalStackViewTopAnchorConstraint?.constant = 10.0
             bottomVerticalStackViewBottomAnchorConstraint?.constant = -10.0
         } else {
-            if let bottomPrimaryLabel = item.getBottomPrimaryLabel(), !bottomPrimaryLabel.isEmpty {
+            if let bottomPrimaryLabel = item.bottomPrimaryLabel, !bottomPrimaryLabel.isEmpty {
                 bottomVerticalStackViewTopAnchorConstraint?.constant = 18.0
                 bottomVerticalStackViewBottomAnchorConstraint?.constant = -18.0
             } else {
