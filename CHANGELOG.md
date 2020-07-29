@@ -1,5 +1,4 @@
-# v1.17.0
-🚀 1.17.0 🚀
+# Sin publicar
 - Fix MLBusinessActionCardView shadow
 
 # v1.16.0
