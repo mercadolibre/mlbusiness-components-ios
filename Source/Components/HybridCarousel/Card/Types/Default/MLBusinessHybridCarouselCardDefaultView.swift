@@ -153,11 +153,22 @@ class MLBusinessHybridCarouselCardDefaultView: MLBusinessHybridCarouselCardBaseV
     }
 
     private func setupConstraints() {
+        let top = UILayoutGuide()
+        let bottom = UILayoutGuide()
+
+        addLayoutGuide(top)
+        addLayoutGuide(bottom)
+        
         NSLayoutConstraint.activate([
-            containerView.topAnchor.constraint(equalTo: topAnchor),
+            top.heightAnchor.constraint(equalTo: bottom.heightAnchor),
+            top.topAnchor.constraint(equalTo: topAnchor),
+            top.bottomAnchor.constraint(equalTo: containerView.topAnchor),
+//            containerView.topAnchor.constraint(equalTo: topAnchor),
             containerView.leftAnchor.constraint(equalTo: leftAnchor),
             containerView.rightAnchor.constraint(equalTo: rightAnchor),
-            containerView.bottomAnchor.constraint(equalTo: bottomAnchor),
+//            containerView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            bottom.topAnchor.constraint(equalTo: containerView.bottomAnchor),
+            bottom.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
 
         NSLayoutConstraint.activate([

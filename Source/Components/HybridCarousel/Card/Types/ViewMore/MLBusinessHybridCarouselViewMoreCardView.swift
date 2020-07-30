@@ -54,8 +54,8 @@ class MLBusinessHybridCarouselViewMoreCardView: MLBusinessHybridCarouselCardBase
 
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            verticalStackView.topAnchor.constraint(equalTo: topAnchor, constant: 44.0),
-            verticalStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -44.0),
+            verticalStackView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 12.0),
+            verticalStackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -12.0),
             verticalStackView.centerYAnchor.constraint(equalTo: centerYAnchor),
             verticalStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
         ])

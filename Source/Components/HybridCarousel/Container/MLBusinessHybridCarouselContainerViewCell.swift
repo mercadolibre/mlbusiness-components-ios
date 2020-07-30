@@ -68,9 +68,10 @@ class MLBusinessHybridCarouselContainerViewCell: UICollectionViewCell {
         itemView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            itemView.topAnchor.constraint(equalTo: topAnchor),
+            itemView.topAnchor.constraint(equalTo: contentView.topAnchor),
             itemView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
             itemView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+            itemView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
         ])
     }
     
