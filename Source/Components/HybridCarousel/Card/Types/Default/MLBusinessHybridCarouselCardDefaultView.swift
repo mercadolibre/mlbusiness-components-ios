@@ -1,5 +1,5 @@
 //
-//  MLBusinessHybridCarouselCardView.swift
+//  MLBusinessHybridCarouselCardDefaultView.swift
 //  MLBusinessComponents
 //
 //  Created by Vicente Veltri on 27/07/2020.
@@ -8,7 +8,7 @@
 import Foundation
 import MLUI
 
-class MLBusinessHybridCarouselCardView: UIView {
+class MLBusinessHybridCarouselCardDefaultView: MLBusinessHybridCarouselCardBaseView {
 
     private let containerView: UIView = {
         let view = UIView(frame: .zero)
@@ -134,17 +134,10 @@ class MLBusinessHybridCarouselCardView: UIView {
     private var bottomVerticalStackViewTopAnchorConstraint: NSLayoutConstraint?
     private var bottomVerticalStackViewBottomAnchorConstraint: NSLayoutConstraint?
 
-    var imageProvider: MLBusinessImageProvider = MLBusinessURLImageProvider()
-
     required init() {
-        super.init(frame: .zero)
+        super.init()
         setup()
         setupConstraints()
-    }
-
-    @available(*, unavailable)
-    required init?(coder _: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 
     private func setup() {
@@ -207,7 +200,8 @@ class MLBusinessHybridCarouselCardView: UIView {
         ])
     }
 
-    func update(with item: MLBusinessHybridCarouselCardModel) {
+    override func update(with item: Codable?) {
+        guard let item = item as? MLBusinessHybridCarouselCardDefaultModel else { return }
         prepareForReuse()
         
         if let topImageKey = item.topImage {

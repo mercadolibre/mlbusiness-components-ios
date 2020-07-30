@@ -1,5 +1,5 @@
 //
-//  MLBusinessHybridCarouselCardModel.swift
+//  MLBusinessHybridCarouselCardDefaultModel.swift
 //  MLBusinessComponents
 //
 //  Created by Vicente Veltri on 29/07/2020.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class MLBusinessHybridCarouselCardModel: NSObject, Codable {
+public class MLBusinessHybridCarouselCardDefaultModel: NSObject, Codable {
     let topImage: String?
     let topImageAccessory: String?
     let middleTitle: String?
@@ -16,11 +16,11 @@ public class MLBusinessHybridCarouselCardModel: NSObject, Codable {
     let bottomPrimaryLabel: String?
     let bottomSecondaryLabel: String?
     let bottomLabelStatus: String?
-    let bottomInfo: HybridCarouselBottomInfo?
+    let bottomInfo: MLBusinessHybridCarouselBottomInfoModel?
     let link: String?
     let tracking: MLBusinessHybridCarouselCardModelTracking?
     
-    public init (topImage: String?, topImageAccessory: String?, middleTitle: String?, middleSubtitle: String?, bottomTopLabel: String?, bottomPrimaryLabel: String?, bottomSecondaryLabel: String?, bottomLabelStatus: String?, bottomInfo: HybridCarouselBottomInfo?, link: String?, tracking: MLBusinessHybridCarouselCardModelTracking?) {
+    public init (topImage: String?, topImageAccessory: String?, middleTitle: String?, middleSubtitle: String?, bottomTopLabel: String?, bottomPrimaryLabel: String?, bottomSecondaryLabel: String?, bottomLabelStatus: String?, bottomInfo: MLBusinessHybridCarouselBottomInfoModel?, link: String?, tracking: MLBusinessHybridCarouselCardModelTracking?) {
         self.topImage = topImage
         self.topImageAccessory = topImageAccessory
         self.middleTitle = middleTitle
@@ -35,7 +35,7 @@ public class MLBusinessHybridCarouselCardModel: NSObject, Codable {
     }
 }
 
-extension MLBusinessHybridCarouselCardModel: Trackable {
+extension MLBusinessHybridCarouselCardDefaultModel: Trackable {
     var trackingId: String? {
         return tracking?.trackingId
     }
@@ -45,19 +45,19 @@ extension MLBusinessHybridCarouselCardModel: Trackable {
     }
 }
 
-public class HybridCarouselBottomInfo: NSObject, Codable {
+public class MLBusinessHybridCarouselBottomInfoModel: NSObject, Codable {
     let label: String
     let icon: String?
-    let format: HybridCarouselBottomInfoFormat
+    let format: MLBusinessHybridCarouselBottomInfoFormatModel
     
-    public init(label: String, icon: String?, format: HybridCarouselBottomInfoFormat) {
+    public init(label: String, icon: String?, format: MLBusinessHybridCarouselBottomInfoFormatModel) {
         self.label = label
         self.icon = icon
         self.format = format
     }
 }
 
-public class HybridCarouselBottomInfoFormat: NSObject, Codable {
+public class MLBusinessHybridCarouselBottomInfoFormatModel: NSObject, Codable {
     let backgroundColor: String
     let textColor: String
     
@@ -66,19 +66,3 @@ public class HybridCarouselBottomInfoFormat: NSObject, Codable {
         self.textColor = textColor
     }
 }
-
-public class MLBusinessHybridCarouselCardModelTracking: NSObject, Codable {
-    let trackingId: String?
-    let eventData: MLBusinessCodableDictionary?
-    
-    public init(trackingId: String?, eventData: [String: Any]?) {
-        self.trackingId = trackingId
-        if let eventData = eventData {
-            self.eventData = MLBusinessCodableDictionary(value: eventData)
-        } else {
-            self.eventData = nil
-        }
-    }
-}
-
-extension MLBusinessHybridCarouselCardModelTracking: Trackable { }

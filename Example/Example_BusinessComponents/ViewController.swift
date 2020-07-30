@@ -209,7 +209,7 @@ extension ViewController {
         containerView.addSubview(discountTouchpointsView)
         NSLayoutConstraint.activate([
             discountTouchpointsView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
-            discountTouchpointsView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            discountTouchpointsView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
             discountTouchpointsView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16)
         ])
         return discountTouchpointsView

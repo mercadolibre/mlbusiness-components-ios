@@ -28,32 +28,47 @@ class MLBusinessHybridCarouselDataHandler: NSObject {
     }
     
     func getMaxItemHeight(with items: [MLBusinessHybridCarouselCardModel]) -> CGFloat {
+        let registry = MLBusinessHybridCarouselCardRegistry()
         var hasTopImage = false, hasMiddleTitle = false, hasMiddleSubtitle = false, hasBottomTopLabel = false,
         hasBottomPrimaryLabel = false, hasBottomInfo = false
         let topSpaceHeight = 12.0, middleSpaceHeight = 12.0, topImageHeight = 72.0, middleTitleLabelHeight = 18.0, middleSubtitleLabelHeight = 15.0,
         bottomSectionHeightWithSubtitle = 49.0, bottomSectionHeightWithoutSubtitle = 53.0, spaceToBottom = 12.0
+        var collectionViewHeight = 0.0
         
         for item in items {
-            if item.topImage != nil, !hasTopImage {
-                hasTopImage = true
-            }
-            if item.middleTitle != nil, !hasMiddleTitle {
-                hasMiddleTitle = true
-            }
-            if item.middleSubtitle != nil, !hasMiddleSubtitle {
-                hasMiddleSubtitle = true
-            }
-            if item.bottomTopLabel != nil, !hasBottomTopLabel {
-                hasBottomTopLabel = true
-            }
-            if item.bottomPrimaryLabel != nil, !hasBottomPrimaryLabel {
-                hasBottomPrimaryLabel = true
-            }
-            if item.bottomInfo != nil, !hasBottomInfo {
-                hasBottomInfo = true
+            
+            let hybridCarouselCardType = item.cardType.lowercased()
+            let hybridCarouselCardContent = item.cardContent
+            
+            if hybridCarouselCardType == "default_card" {
+                
+                let hybridCarouselCardMapper = registry.mapper(for: hybridCarouselCardType)
+                let codableContent = hybridCarouselCardMapper?.map(dictionary: hybridCarouselCardContent)
+                
+                if let card = codableContent as? MLBusinessHybridCarouselCardDefaultModel {
+                    if card.topImage != nil, !hasTopImage {
+                        hasTopImage = true
+                    }
+                    if card.middleTitle != nil, !hasMiddleTitle {
+                        hasMiddleTitle = true
+                    }
+                    if card.middleSubtitle != nil, !hasMiddleSubtitle {
+                        hasMiddleSubtitle = true
+                    }
+                    if card.bottomTopLabel != nil, !hasBottomTopLabel {
+                        hasBottomTopLabel = true
+                    }
+                    if card.bottomPrimaryLabel != nil, !hasBottomPrimaryLabel {
+                        hasBottomPrimaryLabel = true
+                    }
+                    if card.bottomInfo != nil, !hasBottomInfo {
+                        hasBottomInfo = true
+                    }
+                }
+                
             }
         }
-        var collectionViewHeight = 0.0
+        
         collectionViewHeight += topSpaceHeight
         
         if hasTopImage {

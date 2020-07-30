@@ -42,12 +42,23 @@ class HybridCarouselData: NSObject, MLBusinessTouchpointsData {
                                                                  blocked: false,
                                                                  name: "El Nomble")))
         }
+        
+        items.append(createViewMoreItem(mainImage: "https://upload.wikimedia.org/wikipedia/commons/b/b3/Logo-freddo.jpg",
+                                        mainTitle: "Ver todos",
+                                        link:  "meli://home",
+                                        tracking: createTrackingItem(trackingId: "1048784",
+                                                                     blocked: false,
+                                                                     name: "El Nomble")))
                 
         return ["title": "Nuevos", "subtitle": "Touchpoints", "items" : items] as [String : Any]
     }
     
     private func createItem(topImage: String, topImageAccessory: String, middleTitle: String, middleSubtitle: String, bottomPrimaryLabel: String, bottomSecondaryLabel: String, bottomLabelStatus: String, bottomInfoIcon: String, bottomInfoLabel: String, bottomInfoTextColor: String, bottomInfoBackgroundColor: String, link: String, tracking: [String : Any]) -> [String : Any] {
-        return ["top_image" : topImage, "top_image_accessory" : topImageAccessory, "middle_title" : middleTitle, "middle_subtitle" : middleSubtitle, "bottom_primary_label" : bottomPrimaryLabel, "bottom_secondary_label" : bottomSecondaryLabel, "bottom_label_status" : bottomLabelStatus, "bottom_info" : ["icon" : bottomInfoIcon, "label" : bottomInfoLabel, "format" : ["text_color" : bottomInfoTextColor, "background_color" : bottomInfoBackgroundColor]],  "link" : link, "tracking" : tracking]
+        return ["card_type": "DEFAULT_CARD", "card_content": ["top_image" : topImage, "top_image_accessory" : topImageAccessory, "middle_title" : middleTitle, "middle_subtitle" : middleSubtitle, "bottom_primary_label" : bottomPrimaryLabel, "bottom_secondary_label" : bottomSecondaryLabel, "bottom_label_status" : bottomLabelStatus, "bottom_info" : ["icon" : bottomInfoIcon, "label" : bottomInfoLabel, "format" : ["text_color" : bottomInfoTextColor, "background_color" : bottomInfoBackgroundColor]]],  "link" : link, "tracking" : tracking]
+    }
+    
+    private func createViewMoreItem(mainImage: String, mainTitle: String, link: String, tracking: [String : Any]) -> [String : Any] {
+        return ["card_type": "VIEW_MORE", "card_content": ["main_image" : mainImage, "main_title" : ["label" : mainTitle, "format" : ["text_color" : "#009ee3", "background_color" : "#00FFFFFF"]]],  "link" : link, "tracking" : tracking]
     }
     
     private func createTrackingItem(trackingId: String, blocked: Bool, name: String) -> [String : Any] {
