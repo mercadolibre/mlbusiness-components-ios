@@ -13,11 +13,23 @@ public class MLBusinessHybridCarouselCardModel: NSObject, Codable {
     let tracking: MLBusinessHybridCarouselCardModelTracking?
     let link: String?
 
-    init(cardType: String, cardContent: [String : Any], tracking: MLBusinessHybridCarouselCardModelTracking?, link: String?) {
+    public init(cardType: String, cardContent: [String : Any], tracking: MLBusinessHybridCarouselCardModelTracking?, link: String?) {
         self.cardType = cardType
         self.cardContent = MLBusinessCodableDictionary(value: cardContent)
         self.tracking = tracking
         self.link = link
+    }
+    
+    public func getTrackingId() -> String? {
+        return trackingId
+    }
+    
+    public func getEventData() -> [String : Any]? {
+        return eventData?.rawValue
+    }
+    
+    public func getLink() -> String? {
+        return link
     }
 }
 

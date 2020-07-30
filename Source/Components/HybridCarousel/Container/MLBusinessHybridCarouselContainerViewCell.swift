@@ -43,7 +43,7 @@ class MLBusinessHybridCarouselContainerViewCell: UICollectionViewCell {
     }
 
     func update(with content: MLBusinessHybridCarouselCardModel) {
-        backgroundColor = .white
+        itemView.backgroundColor = .white
         currentBackgroundColor = .white
         itemView.update(with: content)
     }
@@ -54,12 +54,12 @@ class MLBusinessHybridCarouselContainerViewCell: UICollectionViewCell {
     }
 
     private func setup() {
-        backgroundColor = .clear
+        itemView.backgroundColor = .clear
         
-        layer.borderColor =  "ececec".hexaToUIColor().cgColor
-        layer.borderWidth = 1.0
-        layer.cornerRadius = 6.0
-        layer.applyShadow(alpha: 0.1, x: 0, y: 2, blur: 4)
+        itemView.layer.borderColor =  "ececec".hexaToUIColor().cgColor
+        itemView.layer.borderWidth = 1.0
+        itemView.layer.cornerRadius = 6.0
+        itemView.layer.applyShadow(alpha: 0.1, x: 0, y: 2, blur: 4)
         
         contentView.addSubview(itemView)
     }
@@ -67,24 +67,14 @@ class MLBusinessHybridCarouselContainerViewCell: UICollectionViewCell {
     private func setupConstraints() {
         itemView.translatesAutoresizingMaskIntoConstraints = false
 
-        let top = UILayoutGuide()
-        let bottom = UILayoutGuide()
-
-        contentView.addLayoutGuide(top)
-        contentView.addLayoutGuide(bottom)
-
         NSLayoutConstraint.activate([
-            top.heightAnchor.constraint(equalTo: bottom.heightAnchor),
-            top.topAnchor.constraint(equalTo: contentView.topAnchor),
-            itemView.topAnchor.constraint(equalTo: top.bottomAnchor),
+            itemView.topAnchor.constraint(equalTo: topAnchor),
             itemView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
             itemView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
-            itemView.bottomAnchor.constraint(equalTo: bottom.topAnchor),
-            bottom.bottomAnchor.constraint(greaterThanOrEqualTo: contentView.bottomAnchor, constant: 0),
         ])
     }
     
     private func setHighlighted(_ highlighted: Bool) {
-        backgroundColor = highlighted ? currentBackgroundColor?.darker() : currentBackgroundColor
+        itemView.backgroundColor = highlighted ? currentBackgroundColor?.darker() : currentBackgroundColor
     }
 }

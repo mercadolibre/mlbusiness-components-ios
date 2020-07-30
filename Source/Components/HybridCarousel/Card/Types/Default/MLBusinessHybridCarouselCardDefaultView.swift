@@ -237,6 +237,10 @@ class MLBusinessHybridCarouselCardDefaultView: MLBusinessHybridCarouselCardBaseV
             bottomTopLabel.textColor = MLStyleSheetManager.styleSheet.blackColor.withAlphaComponent(0.4)
             bottomPrimaryLabel.textColor = MLStyleSheetManager.styleSheet.blackColor.withAlphaComponent(0.4)
             bottomSecondaryLabel.textColor = MLStyleSheetManager.styleSheet.blackColor.withAlphaComponent(0.4)
+        } else {
+            bottomTopLabel.textColor = MLStyleSheetManager.styleSheet.blackColor
+            bottomPrimaryLabel.textColor = MLStyleSheetManager.styleSheet.blackColor
+            bottomSecondaryLabel.textColor = MLStyleSheetManager.styleSheet.blackColor
         }
 
         bottomVerticalStackView.addArrangedSubview(bottomHorizontalStackView)
@@ -275,6 +279,7 @@ class MLBusinessHybridCarouselCardDefaultView: MLBusinessHybridCarouselCardBaseV
 
     private func prepareForReuse() {
         topImageImageView.image = nil
+        topImageAccessoryImageView.image = nil
         pillView.icon = nil
         middleVerticalStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         bottomHorizontalStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
