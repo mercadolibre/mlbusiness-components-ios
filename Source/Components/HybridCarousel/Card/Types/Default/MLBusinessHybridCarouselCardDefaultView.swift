@@ -293,13 +293,16 @@ class MLBusinessHybridCarouselCardDefaultView: MLBusinessHybridCarouselCardBaseV
             if let bottomPrimaryLabel = item.bottomPrimaryLabel, !bottomPrimaryLabel.isEmpty {
                 bottomVerticalStackViewTopAnchorConstraint?.constant = 18.0
                 bottomVerticalStackViewBottomAnchorConstraint?.constant = -18.0
+                bottomTopHeightAnchorConstraint?.isActive = true
+                bottomBottomAnchorEqualConstraint?.isActive = true
+                bottomBottomAnchorLessThanConstraint?.isActive = false
             } else {
                 bottomVerticalStackViewTopAnchorConstraint?.constant = 0
                 bottomVerticalStackViewBottomAnchorConstraint?.constant = -12.0
+                bottomTopHeightAnchorConstraint?.isActive = false
+                bottomBottomAnchorEqualConstraint?.isActive = false
+                bottomBottomAnchorLessThanConstraint?.isActive = true
             }
-            bottomTopHeightAnchorConstraint?.isActive = false
-            bottomBottomAnchorEqualConstraint?.isActive = false
-            bottomBottomAnchorLessThanConstraint?.isActive = true
         }
     }
 
