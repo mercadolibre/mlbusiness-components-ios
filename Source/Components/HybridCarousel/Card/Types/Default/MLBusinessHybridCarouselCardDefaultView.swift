@@ -133,6 +133,9 @@ class MLBusinessHybridCarouselCardDefaultView: MLBusinessHybridCarouselCardBaseV
     
     private var bottomVerticalStackViewTopAnchorConstraint: NSLayoutConstraint?
     private var bottomVerticalStackViewBottomAnchorConstraint: NSLayoutConstraint?
+    private var bottomTopHeightAnchorConstraint: NSLayoutConstraint?
+    private var bottomBottomAnchorEqualConstraint: NSLayoutConstraint?
+    private var bottomBottomAnchorLessThanConstraint: NSLayoutConstraint?
 
     required init() {
         super.init()
@@ -159,16 +162,21 @@ class MLBusinessHybridCarouselCardDefaultView: MLBusinessHybridCarouselCardBaseV
         addLayoutGuide(top)
         addLayoutGuide(bottom)
         
+        bottomTopHeightAnchorConstraint = top.heightAnchor.constraint(equalTo: bottom.heightAnchor)
+        bottomTopHeightAnchorConstraint?.isActive = true
+        
+        bottomBottomAnchorEqualConstraint = bottom.bottomAnchor.constraint(equalTo: bottomAnchor)
+        bottomBottomAnchorEqualConstraint?.isActive = true
+        
+        bottomBottomAnchorLessThanConstraint = bottom.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: 0.0)
+        bottomBottomAnchorLessThanConstraint?.isActive = false
+        
         NSLayoutConstraint.activate([
-            top.heightAnchor.constraint(equalTo: bottom.heightAnchor),
             top.topAnchor.constraint(equalTo: topAnchor),
             top.bottomAnchor.constraint(equalTo: containerView.topAnchor),
-//            containerView.topAnchor.constraint(equalTo: topAnchor),
             containerView.leftAnchor.constraint(equalTo: leftAnchor),
             containerView.rightAnchor.constraint(equalTo: rightAnchor),
-//            containerView.bottomAnchor.constraint(equalTo: bottomAnchor),
             bottom.topAnchor.constraint(equalTo: containerView.bottomAnchor),
-            bottom.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
 
         NSLayoutConstraint.activate([
@@ -277,6 +285,10 @@ class MLBusinessHybridCarouselCardDefaultView: MLBusinessHybridCarouselCardBaseV
             bottomVerticalStackView.addArrangedSubview(pillContainerView)
             bottomVerticalStackViewTopAnchorConstraint?.constant = 10.0
             bottomVerticalStackViewBottomAnchorConstraint?.constant = -10.0
+            bottomTopHeightAnchorConstraint?.isActive = true
+            bottomBottomAnchorEqualConstraint?.isActive = true
+            bottomBottomAnchorLessThanConstraint?.isActive = false
+
         } else {
             if let bottomPrimaryLabel = item.bottomPrimaryLabel, !bottomPrimaryLabel.isEmpty {
                 bottomVerticalStackViewTopAnchorConstraint?.constant = 18.0
@@ -285,6 +297,9 @@ class MLBusinessHybridCarouselCardDefaultView: MLBusinessHybridCarouselCardBaseV
                 bottomVerticalStackViewTopAnchorConstraint?.constant = 0
                 bottomVerticalStackViewBottomAnchorConstraint?.constant = -12.0
             }
+            bottomTopHeightAnchorConstraint?.isActive = false
+            bottomBottomAnchorEqualConstraint?.isActive = false
+            bottomBottomAnchorLessThanConstraint?.isActive = true
         }
     }
 
