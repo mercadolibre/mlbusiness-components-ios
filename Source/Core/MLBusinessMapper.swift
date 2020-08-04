@@ -1,17 +1,17 @@
 //
-//  MLBusinessHybridCarouselCardMapper.swift
+//  MLBusinessMapper.swift
 //  MLBusinessComponents
 //
-//  Created by Vicente Veltri on 29/07/2020.
+//  Created by Vicente Veltri on 04/08/2020.
 //
 
 import Foundation
 
-protocol MLBusinessHybridCarouselCardMapperProtocol {
+protocol MLBusinessMapperProtocol {
     func map(dictionary: MLBusinessCodableDictionary) -> Codable?
 }
 
-class MLBusinessHybridCarouselCardMapper<Model: Codable>: MLBusinessHybridCarouselCardMapperProtocol {
+class MLBusinessMapper<Model: Codable>: MLBusinessMapperProtocol {
     func map(dictionary: MLBusinessCodableDictionary) -> Codable? {
         do {
             let encoder = JSONEncoder()
@@ -21,7 +21,6 @@ class MLBusinessHybridCarouselCardMapper<Model: Codable>: MLBusinessHybridCarous
             decoder.keyDecodingStrategy = .convertFromSnakeCase
             return try decoder.decode(Model.self, from: encodedContent)
         } catch {
-            // TODO: handle error
             return nil
         }
     }

@@ -8,25 +8,25 @@
 import Foundation
 
 protocol MLBusinessHybridCarouselCardRegistryProtocol {
-    func mapper(for type: String) -> MLBusinessHybridCarouselCardMapperProtocol?
+    func mapper(for type: String) -> MLBusinessMapperProtocol?
     func views(for type: String) -> MLBusinessHybridCarouselCardBaseView.Type?
 }
 
 class MLBusinessHybridCarouselCardRegistry: MLBusinessHybridCarouselCardRegistryProtocol {
-    private var mappers: [String: MLBusinessHybridCarouselCardMapperProtocol] = [:]
+    private var mappers: [String: MLBusinessMapperProtocol] = [:]
     private var views: [String: MLBusinessHybridCarouselCardBaseView.Type] = [:]
 
     init() {
-        register(type: "DEFAULT_CARD", mapper: MLBusinessHybridCarouselCardMapper<MLBusinessHybridCarouselCardDefaultModel>(), view: MLBusinessHybridCarouselCardDefaultView.self)
-        register(type: "VIEW_MORE", mapper: MLBusinessHybridCarouselCardMapper<MLBusinessHybridCarouselViewMoreCardModel>(), view: MLBusinessHybridCarouselViewMoreCardView.self)
+        register(type: "DEFAULT", mapper: MLBusinessMapper<MLBusinessHybridCarouselCardDefaultModel>(), view: MLBusinessHybridCarouselCardDefaultView.self)
+        register(type: "VIEW_MORE", mapper: MLBusinessMapper<MLBusinessHybridCarouselViewMoreCardModel>(), view: MLBusinessHybridCarouselViewMoreCardView.self)
     }
 
-    func register(type: String, mapper: MLBusinessHybridCarouselCardMapperProtocol, view: MLBusinessHybridCarouselCardBaseView.Type) {
+    func register(type: String, mapper: MLBusinessMapperProtocol, view: MLBusinessHybridCarouselCardBaseView.Type) {
         views[type.uppercased()] = view
         mappers[type.uppercased()] = mapper
     }
 
-    func mapper(for type: String) -> MLBusinessHybridCarouselCardMapperProtocol? {
+    func mapper(for type: String) -> MLBusinessMapperProtocol? {
         return mappers[type.uppercased()]
     }
 

@@ -125,8 +125,8 @@ class MLBusinessHybridCarouselCardDefaultView: MLBusinessHybridCarouselCardBaseV
         return label
     }()
 
-    private let pillView: MLBusinessHybridCarosuelPillView = {
-        let pillView = MLBusinessHybridCarosuelPillView()
+    private let pillView: MLBusinessPillView = {
+        let pillView = MLBusinessPillView()
         pillView.translatesAutoresizingMaskIntoConstraints = false
         return pillView
     }()

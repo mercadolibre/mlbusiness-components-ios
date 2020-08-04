@@ -40,7 +40,7 @@ class MLBusinessHybridCarouselDataHandler: NSObject {
             let hybridCarouselCardType = item.cardType.lowercased()
             let hybridCarouselCardContent = item.cardContent
             
-            if hybridCarouselCardType == "default_card" {
+            if hybridCarouselCardType == "default" {
                 
                 let hybridCarouselCardMapper = registry.mapper(for: hybridCarouselCardType)
                 let codableContent = hybridCarouselCardMapper?.map(dictionary: hybridCarouselCardContent)

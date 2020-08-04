@@ -1,14 +1,14 @@
 //
-//  MLBusinessHybridCarosuelPillView.swift
+//  MLBusinessPillView.swift
 //  MLBusinessComponents
 //
-//  Created by Vicente Veltri on 27/07/2020.
+//  Created by Vicente Veltri on 20/07/2020.
 //
 
 import Foundation
 import MLUI
 
-class MLBusinessHybridCarosuelPillView: UIView {
+public class MLBusinessPillView: UIView {
     public override var tintColor: UIColor! {
         didSet {
             textLabel.textColor = tintColor
@@ -65,7 +65,7 @@ class MLBusinessHybridCarosuelPillView: UIView {
         return iconImageView
     }()
 
-    private var imageWidth, imageLeft: NSLayoutConstraint?
+    private var imageWidth: NSLayoutConstraint?
     private var pillHeight: CGFloat
 
     init(with pillHeight: CGFloat = 10) {
@@ -87,10 +87,7 @@ class MLBusinessHybridCarosuelPillView: UIView {
 
     private func setupConstraints() {
         let width = iconImageView.widthAnchor.constraint(equalToConstant: 0)
-        let left = textLabel.leftAnchor.constraint(equalTo: iconImageView.rightAnchor)
-
         imageWidth = width
-        imageLeft = left
 
         NSLayoutConstraint.activate([
             iconImageView.leftAnchor.constraint(equalTo: leftAnchor),
@@ -100,11 +97,10 @@ class MLBusinessHybridCarosuelPillView: UIView {
         ])
 
         NSLayoutConstraint.activate([
+            textLabel.leftAnchor.constraint(equalTo: iconImageView.rightAnchor, constant: 2),
             textLabel.rightAnchor.constraint(equalTo: rightAnchor),
-            left,
             textLabel.topAnchor.constraint(equalTo: topAnchor),
             textLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
-            textLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
         ])
 
         NSLayoutConstraint.activate([
@@ -116,12 +112,6 @@ class MLBusinessHybridCarosuelPillView: UIView {
     }
 
     private func toggleSizeChange() {
-        if iconImageView.image == nil {
-            imageWidth?.constant = 0.0
-            imageLeft?.constant = 0.0
-        } else {
-            imageWidth?.constant = 8.0
-            imageLeft?.constant = 3.0
-        }
+        imageWidth?.constant = iconImageView.image == nil ? 0 : 8
     }
 }
