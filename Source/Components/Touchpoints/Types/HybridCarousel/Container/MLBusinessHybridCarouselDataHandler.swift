@@ -21,6 +21,8 @@ class MLBusinessHybridCarouselDataHandler: NSObject {
     var maxItemHeight = CGFloat(0)
     var collectionViewHeightConstraint: NSLayoutConstraint?
     var imageProvider: MLBusinessImageProvider?
+    var cardTypeProvider: MLBusinessHybridCarouselCardTypeProvider?
+    var cardTypeRegistry: MLBusinessHybridCarouselCardRegistry?
     
     func update(with items: [MLBusinessHybridCarouselCardModel]) {
         self.items = items
@@ -37,10 +39,10 @@ class MLBusinessHybridCarouselDataHandler: NSObject {
         
         for item in items {
             
-            let hybridCarouselCardType = item.cardType.lowercased()
-            let hybridCarouselCardContent = item.cardContent
+            let hybridCarouselCardType = item.type
+            let hybridCarouselCardContent = item.content
             
-            if hybridCarouselCardType == "default" {
+            if hybridCarouselCardType.lowercased() == MLBusinessHybridCarouselCardTypes.defaultType.lowercased() {
                 
                 let hybridCarouselCardMapper = registry.mapper(for: hybridCarouselCardType)
                 let codableContent = hybridCarouselCardMapper?.map(dictionary: hybridCarouselCardContent)
@@ -116,13 +118,10 @@ extension MLBusinessHybridCarouselDataHandler: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView
-            .dequeueReusableCell(withReuseIdentifier: MLBusinessHybridCarouselContainerViewCell.reuseIdentifier,
-                                 for: indexPath) as? MLBusinessHybridCarouselContainerViewCell else {
-                                    return MLBusinessHybridCarouselContainerViewCell() }
         let item = items[indexPath.row]
+        guard let cell = cardTypeProvider?.view(for: item.type, at: indexPath) else { return UICollectionViewCell() }
         cell.imageProvider = imageProvider
-        cell.update(with: item)
+        cell.update(with: cardTypeRegistry?.mapper(for: item.type)?.map(dictionary: item.content))
         
         if let height = collectionViewHeightConstraint {
             cell.update(height: height.constant)

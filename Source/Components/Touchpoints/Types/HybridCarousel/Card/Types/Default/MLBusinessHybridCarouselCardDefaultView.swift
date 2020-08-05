@@ -8,7 +8,9 @@
 import Foundation
 import MLUI
 
-class MLBusinessHybridCarouselCardDefaultView: MLBusinessHybridCarouselCardBaseView {
+class MLBusinessHybridCarouselCardDefaultViewCell: MLBusinessHybridCarouselCardTypeViewCell<MLBusinessHybridCarouselCardDefaultView, MLBusinessHybridCarouselCardDefaultModel> {}
+
+class MLBusinessHybridCarouselCardDefaultView: MLBusinessHybridCarouselCardTypeView<MLBusinessHybridCarouselCardDefaultModel> {
 
     private let containerView: UIView = {
         let view = UIView(frame: .zero)
@@ -219,8 +221,7 @@ class MLBusinessHybridCarouselCardDefaultView: MLBusinessHybridCarouselCardBaseV
         ])
     }
 
-    override func update(with item: Codable?) {
-        guard let item = item as? MLBusinessHybridCarouselCardDefaultModel else { return }
+    override func update(with item: MLBusinessHybridCarouselCardDefaultModel) {
         prepareForReuse()
         
         if let topImageKey = item.topImage {
@@ -306,7 +307,7 @@ class MLBusinessHybridCarouselCardDefaultView: MLBusinessHybridCarouselCardBaseV
         }
     }
 
-    private func prepareForReuse() {
+    override func prepareForReuse() {
         topImageImageView.image = nil
         topImageAccessoryImageView.image = nil
         pillView.icon = nil

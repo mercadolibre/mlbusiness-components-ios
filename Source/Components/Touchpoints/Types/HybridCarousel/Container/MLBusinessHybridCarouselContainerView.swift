@@ -43,8 +43,6 @@ public class MLBusinessHybridCarouselContainerView: UIView {
         layout.minimumLineSpacing = 12
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.register(MLBusinessHybridCarouselContainerViewCell.self,
-                                forCellWithReuseIdentifier: MLBusinessHybridCarouselContainerViewCell.reuseIdentifier)
         collectionView.backgroundColor = .clear
         collectionView.alwaysBounceHorizontal = true
         collectionView.clipsToBounds = false
@@ -75,6 +73,9 @@ public class MLBusinessHybridCarouselContainerView: UIView {
 
     private func setup() {
         addSubview(collectionView)
+        let registry = MLBusinessHybridCarouselCardRegistry()
+        dataHandler.cardTypeRegistry = registry
+        dataHandler.cardTypeProvider = MLBusinessHybridCarouselCardTypeProvider(collectionView: collectionView, registry: registry)
         collectionView.dataSource = dataHandler
         collectionView.delegate = dataHandler
     }

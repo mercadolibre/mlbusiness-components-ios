@@ -8,7 +8,9 @@
 import Foundation
 import MLUI
 
-class MLBusinessHybridCarouselViewMoreCardView: MLBusinessHybridCarouselCardBaseView {
+class MLBusinessHybridCarouselViewMoreCardViewCell: MLBusinessHybridCarouselCardTypeViewCell<MLBusinessHybridCarouselViewMoreCardView, MLBusinessHybridCarouselViewMoreCardModel> {}
+
+class MLBusinessHybridCarouselViewMoreCardView: MLBusinessHybridCarouselCardTypeView<MLBusinessHybridCarouselViewMoreCardModel> {
 
     private let verticalStackView: UIStackView = {
         let stackView = UIStackView(frame: .zero)
@@ -61,8 +63,7 @@ class MLBusinessHybridCarouselViewMoreCardView: MLBusinessHybridCarouselCardBase
         ])
     }
 
-    override func update(with item: Codable?) {
-        guard let item = item as? MLBusinessHybridCarouselViewMoreCardModel else { return }
+    override func update(with item: MLBusinessHybridCarouselViewMoreCardModel) {
         prepareForReuse()
         
         if let mainImage = item.mainImage {
@@ -78,7 +79,7 @@ class MLBusinessHybridCarouselViewMoreCardView: MLBusinessHybridCarouselCardBase
         verticalStackView.addArrangedSubview(mainTitleLabel)
     }
 
-    private func prepareForReuse() {
+    override func prepareForReuse() {
         mainImageImageView.image = nil
         verticalStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
     }

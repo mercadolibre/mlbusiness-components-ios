@@ -8,14 +8,14 @@
 import Foundation
 
 public class MLBusinessHybridCarouselCardModel: NSObject, Codable {
-    let cardType: String
-    let cardContent: MLBusinessCodableDictionary
+    let type: String
+    let content: MLBusinessCodableDictionary
     let tracking: MLBusinessHybridCarouselCardModelTracking?
     let link: String?
 
-    public init(cardType: String, cardContent: [String : Any], tracking: MLBusinessHybridCarouselCardModelTracking?, link: String?) {
-        self.cardType = cardType
-        self.cardContent = MLBusinessCodableDictionary(value: cardContent)
+    public init(type: String, content: [String : Any], tracking: MLBusinessHybridCarouselCardModelTracking?, link: String?) {
+        self.type = type
+        self.content = MLBusinessCodableDictionary(value: content)
         self.tracking = tracking
         self.link = link
     }
