@@ -1,17 +1,17 @@
 //
-//  MLBusinessTouchpointsMapper.swift
+//  MLBusinessMapper.swift
 //  MLBusinessComponents
 //
-//  Created by Vicente Veltri on 22/04/2020.
+//  Created by Vicente Veltri on 04/08/2020.
 //
 
 import Foundation
 
-protocol MLBusinessTouchpointsMapperProtocol {
+protocol MLBusinessMapperProtocol {
     func map(dictionary: MLBusinessCodableDictionary) -> Codable?
 }
 
-class MLBusinessTouchpointsMapper<Model: Codable>: MLBusinessTouchpointsMapperProtocol {
+class MLBusinessMapper<Model: Codable>: MLBusinessMapperProtocol {
     func map(dictionary: MLBusinessCodableDictionary) -> Codable? {
         do {
             let encoder = JSONEncoder()
@@ -21,7 +21,6 @@ class MLBusinessTouchpointsMapper<Model: Codable>: MLBusinessTouchpointsMapperPr
             decoder.keyDecodingStrategy = .convertFromSnakeCase
             return try decoder.decode(Model.self, from: encodedContent)
         } catch {
-            // TODO: handle error
             return nil
         }
     }

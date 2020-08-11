@@ -49,7 +49,7 @@ public class MLBusinessPillView: UIView {
     private let textLabel: UILabel = {
         let textLabel = UILabel(frame: .zero)
         textLabel.translatesAutoresizingMaskIntoConstraints = false
-        textLabel.textAlignment = .right
+        textLabel.textAlignment = .left
         textLabel.font = MLStyleSheetManager.styleSheet.boldSystemFont(ofSize: CGFloat(9.0))
         textLabel.numberOfLines = 1
         textLabel.adjustsFontSizeToFitWidth = true
@@ -65,7 +65,7 @@ public class MLBusinessPillView: UIView {
         return iconImageView
     }()
 
-    private var imageWidth, imageLeft: NSLayoutConstraint?
+    private var imageWidth: NSLayoutConstraint?
     private var pillHeight: CGFloat
 
     init(with pillHeight: CGFloat = 10) {
@@ -87,24 +87,20 @@ public class MLBusinessPillView: UIView {
 
     private func setupConstraints() {
         let width = iconImageView.widthAnchor.constraint(equalToConstant: 0)
-        let left = iconImageView.leftAnchor.constraint(equalTo: leftAnchor, constant: 5)
-
         imageWidth = width
-        imageLeft = left
 
         NSLayoutConstraint.activate([
-            left,
+            iconImageView.leftAnchor.constraint(equalTo: leftAnchor),
             iconImageView.heightAnchor.constraint(equalTo: textLabel.heightAnchor, multiplier: 0.8),
             width,
             iconImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
         ])
 
         NSLayoutConstraint.activate([
-            textLabel.leftAnchor.constraint(equalTo: iconImageView.rightAnchor, constant: 3),
+            textLabel.leftAnchor.constraint(equalTo: iconImageView.rightAnchor, constant: 2),
             textLabel.rightAnchor.constraint(equalTo: rightAnchor),
-            textLabel.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 0),
-            textLabel.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: 0),
-            textLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            textLabel.topAnchor.constraint(equalTo: topAnchor),
+            textLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
 
         NSLayoutConstraint.activate([
@@ -116,12 +112,6 @@ public class MLBusinessPillView: UIView {
     }
 
     private func toggleSizeChange() {
-        if iconImageView.image == nil {
-            imageWidth?.constant = 0
-            imageLeft?.constant = 5
-        } else {
-            imageWidth?.constant = 8
-            imageLeft?.constant = 8
-        }
+        imageWidth?.constant = iconImageView.image == nil ? 0 : 8
     }
 }

@@ -42,8 +42,9 @@ extension ViewController {
         let loyaltyHeaderView = setupLoyaltyHeaderView(bottomOf: downloadAppView)
         let animatedButtonView = setupAnimatedButtonView(bottomOf: loyaltyHeaderView)
         let rowView = setupRowView(bottomOf: animatedButtonView)
+        let hybridRow = setupHybridRowView(bottomOf: rowView)
         
-        rowView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -64).isActive = true
+        hybridRow.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -64).isActive = true
     }
 
     private func setupRingView() -> MLBusinessLoyaltyRingView {
@@ -199,6 +200,19 @@ extension ViewController {
             rowView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16)
         ])
         return rowView
+    }
+    
+    private func setupHybridRowView(bottomOf targetView: UIView) -> UIView {
+        let discountTouchpointsView = MLBusinessTouchpointsView()
+        discountTouchpointsView.setTouchpointsTracker(with: DiscountTrackerData(touchPointId: "BusinessComponents-Example"))
+        discountTouchpointsView.update(with: HybridCarouselData())
+        containerView.addSubview(discountTouchpointsView)
+        NSLayoutConstraint.activate([
+            discountTouchpointsView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            discountTouchpointsView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+            discountTouchpointsView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16)
+        ])
+        return discountTouchpointsView
     }
 
     @objc
