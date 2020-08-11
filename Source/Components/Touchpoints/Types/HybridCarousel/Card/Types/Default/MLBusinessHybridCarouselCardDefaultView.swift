@@ -52,7 +52,7 @@ class MLBusinessHybridCarouselCardDefaultView: MLBusinessHybridCarouselCardTypeV
         let stackView = UIStackView(frame: .zero)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.distribution = .equalSpacing
-        stackView.spacing = 2
+        stackView.spacing = 3
         stackView.axis = .vertical
         return stackView
     }()
@@ -182,7 +182,7 @@ class MLBusinessHybridCarouselCardDefaultView: MLBusinessHybridCarouselCardTypeV
         ])
 
         NSLayoutConstraint.activate([
-            topImageImageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 12.0),
+            topImageImageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 10.0),
             topImageImageView.heightAnchor.constraint(equalToConstant: 72.0),
             topImageImageView.widthAnchor.constraint(equalTo: topImageImageView.heightAnchor),
             topImageImageView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
@@ -203,7 +203,7 @@ class MLBusinessHybridCarouselCardDefaultView: MLBusinessHybridCarouselCardTypeV
         ])
 
         NSLayoutConstraint.activate([
-            middleVerticalStackView.topAnchor.constraint(equalTo: topImageImageView.bottomAnchor, constant: 12.0),
+            middleVerticalStackView.topAnchor.constraint(equalTo: topImageImageView.bottomAnchor, constant: 14.0),
             middleVerticalStackView.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 8.0),
             middleVerticalStackView.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -8.0),
         ])
@@ -211,7 +211,7 @@ class MLBusinessHybridCarouselCardDefaultView: MLBusinessHybridCarouselCardTypeV
         bottomVerticalStackViewTopAnchorConstraint = bottomVerticalStackView.topAnchor.constraint(equalTo: middleVerticalStackView.bottomAnchor, constant: 18.0)
         bottomVerticalStackViewTopAnchorConstraint?.isActive = true
         
-        bottomVerticalStackViewBottomAnchorConstraint = bottomVerticalStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -18.0)
+        bottomVerticalStackViewBottomAnchorConstraint = bottomVerticalStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -16.0)
         bottomVerticalStackViewBottomAnchorConstraint?.isActive = true
 
         NSLayoutConstraint.activate([
@@ -281,7 +281,7 @@ class MLBusinessHybridCarouselCardDefaultView: MLBusinessHybridCarouselCardTypeV
             }
             pillContainerView.addSubview(pillView)
             pillView.centerXAnchor.constraint(equalTo: pillContainerView.centerXAnchor).isActive = true
-            pillView.topAnchor.constraint(equalTo: pillContainerView.topAnchor).isActive = true
+            pillView.topAnchor.constraint(equalTo: pillContainerView.topAnchor, constant: 4.0).isActive = true
             pillView.bottomAnchor.constraint(equalTo: pillContainerView.bottomAnchor).isActive = true
             bottomVerticalStackView.addArrangedSubview(pillContainerView)
             bottomVerticalStackViewTopAnchorConstraint?.constant = 10.0
