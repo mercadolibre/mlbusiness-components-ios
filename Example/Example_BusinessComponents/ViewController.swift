@@ -42,9 +42,10 @@ extension ViewController {
         let loyaltyHeaderView = setupLoyaltyHeaderView(bottomOf: downloadAppView)
         let animatedButtonView = setupAnimatedButtonView(bottomOf: loyaltyHeaderView)
         let rowView = setupRowView(bottomOf: animatedButtonView)
-        let hybridRow = setupHybridRowView(bottomOf: rowView)
+        let hybridCarousel = setupHybridCarouselView(bottomOf: rowView)
+        let multipleRowView = setupMultipleRowView(bottomOf: hybridCarousel)
         
-        hybridRow.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -64).isActive = true
+        multipleRowView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -64).isActive = true
     }
 
     private func setupRingView() -> MLBusinessLoyaltyRingView {
@@ -202,7 +203,7 @@ extension ViewController {
         return rowView
     }
     
-    private func setupHybridRowView(bottomOf targetView: UIView) -> UIView {
+    private func setupHybridCarouselView(bottomOf targetView: UIView) -> UIView {
         let discountTouchpointsView = MLBusinessTouchpointsView()
         discountTouchpointsView.setTouchpointsTracker(with: DiscountTrackerData(touchPointId: "BusinessComponents-Example"))
         discountTouchpointsView.update(with: HybridCarouselData())
@@ -213,6 +214,18 @@ extension ViewController {
             discountTouchpointsView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16)
         ])
         return discountTouchpointsView
+    }
+    
+    private func setupMultipleRowView(bottomOf targetView: UIView) -> MLBusinessMultipleRowView {
+        let rowView = MLBusinessMultipleRowView()
+        rowView.update(with: [RowData(), RowData()])
+        containerView.addSubview(rowView)
+        NSLayoutConstraint.activate([
+            rowView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16),
+            rowView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            rowView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16)
+        ])
+        return rowView
     }
 
     @objc
