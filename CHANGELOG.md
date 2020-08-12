@@ -1,3 +1,7 @@
+# v1.18.0
+🚀 1.18.0 🚀
+- Added Hybrid Carousel Component
+
 # v1.17.0
 🚀 1.17.0 🚀
 - Fix MLBusinessActionCardView shadow
