@@ -84,6 +84,8 @@ public class MLBusinessMultipleRowView: UIView {
                 ])
             }
             multipleRowStackView.addArrangedSubview(containerView)
+            containerView.leftAnchor.constraint(equalTo: multipleRowStackView.leftAnchor).isActive = true
+            containerView.rightAnchor.constraint(equalTo: multipleRowStackView.rightAnchor).isActive = true
         }
     }
 }
