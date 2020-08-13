@@ -10,6 +10,6 @@ import Foundation
 @objc public protocol MLBusinessTouchpointsMultipleRowData: NSObjectProtocol {
     @objc optional func getTitle() -> String?
     @objc optional func getSubtitle() -> String?
-    @objc func getItems() -> [MLBusinessRowData]
+    @objc func getItems() -> [MLBusinessMultipleRowItemModel]
     @objc optional func getDiscountTracker() -> MLBusinessDiscountTrackerProtocol?
 }

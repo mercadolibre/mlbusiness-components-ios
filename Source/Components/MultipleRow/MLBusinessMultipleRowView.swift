@@ -8,7 +8,13 @@
 import Foundation
 import MLUI
 
+public protocol MLBusinessMultipleRowViewDelegate: class {
+    func multipleRowView(_: MLBusinessMultipleRowView, didSelect item: MLBusinessMultipleRowItemModel)
+}
+
 public class MLBusinessMultipleRowView: UIView {
+    public weak var delegate: MLBusinessMultipleRowViewDelegate?
+
     private let multipleRowStackView: UIStackView = {
         let stackView = UIStackView(frame: .zero)
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -20,6 +26,7 @@ public class MLBusinessMultipleRowView: UIView {
     }()
     
     private var imageProvider: MLBusinessImageProvider
+    private var items: [MLBusinessMultipleRowItemModel]?
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
@@ -48,12 +55,15 @@ public class MLBusinessMultipleRowView: UIView {
         ])
     }
     
-    public func update(with content: [MLBusinessRowData]) {
+    public func update(with content: [MLBusinessMultipleRowItemModel]) {
+        items = content
         multipleRowStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         
         for index in 0...content.count - 1 {
-            let containerView = UIView(frame: .zero)
+            let containerView = MLBusinessMultipleRowContainerView(frame: .zero)
             containerView.translatesAutoresizingMaskIntoConstraints = false
+            containerView.index = index
+            containerView.pressableDelegate = self
             
             let rowView = MLBusinessRowView(with: imageProvider)
             rowView.update(with: content[index])
@@ -88,4 +98,15 @@ public class MLBusinessMultipleRowView: UIView {
             containerView.rightAnchor.constraint(equalTo: multipleRowStackView.rightAnchor).isActive = true
         }
     }
+}
+
+extension MLBusinessMultipleRowView: PressableDelegate {
+    public func didTap(view: PressableView) {
+        guard let items = items, let view = view as? MLBusinessMultipleRowContainerView, let index = view.index else { return }
+        delegate?.multipleRowView(self, didSelect: items[index])
+    }
+}
+
+private class MLBusinessMultipleRowContainerView: PressableView {
+    var index: Int?
 }

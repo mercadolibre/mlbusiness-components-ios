@@ -10,9 +10,9 @@ import Foundation
 class MLBusinessTouchpointsMultipleRowModel: NSObject, Codable {
     private let title: String?
     private let subtitle: String?
-    private let items: [MLBusinessTouchpointsMultipleRowItemModel]
+    private let items: [MLBusinessMultipleRowItemModel]
 
-    init(title: String?, subtitle: String?, items: [MLBusinessTouchpointsMultipleRowItemModel]) {
+    init(title: String?, subtitle: String?, items: [MLBusinessMultipleRowItemModel]) {
         self.title = title
         self.subtitle = subtitle
         self.items = items
@@ -34,7 +34,7 @@ extension MLBusinessTouchpointsMultipleRowModel: MLBusinessTouchpointsMultipleRo
         return subtitle
     }
 
-    func getItems() -> [MLBusinessRowData] {
+    func getItems() -> [MLBusinessMultipleRowItemModel] {
         return items
     }
 }
@@ -45,7 +45,7 @@ extension MLBusinessTouchpointsMultipleRowModel: ComponentTrackable {
     }
 }
 
-class MLBusinessTouchpointsMultipleRowItemModel: NSObject, Codable {
+public class MLBusinessMultipleRowItemModel: NSObject, Codable {
     private let leftImage: String?
     private let leftImageAccessory: String?
     private let mainTitle: String
@@ -56,11 +56,11 @@ class MLBusinessTouchpointsMultipleRowItemModel: NSObject, Codable {
     private let rightMiddleLabel: String?
     private let rightTopLabel: String?
     private let rightLabelStatus: String?
-    private let rightBottomInfo: MLBusinessToucpointsRowRightBottomInfo?
+    private let rightBottomInfo: MLBusinessRowRightBottomInfo?
     private let link: String?
     private let tracking: MLBusinessItemModelTracking?
     
-    init(leftImage: String?, leftImageAccessory: String?, mainTitle: String, mainSubtitle: String?, mainDescription: [MLBusinessRowMainDescription]?, rightPrimaryLabel: String?, rightSecondaryLabel: String?, rightMiddleLabel: String?, rightTopLabel: String?, rightLabelStatus: String?, rightBottomInfo: MLBusinessToucpointsRowRightBottomInfo?, link: String?, tracking: MLBusinessItemModelTracking?) {
+    public init(leftImage: String?, leftImageAccessory: String?, mainTitle: String, mainSubtitle: String?, mainDescription: [MLBusinessRowMainDescription]?, rightPrimaryLabel: String?, rightSecondaryLabel: String?, rightMiddleLabel: String?, rightTopLabel: String?, rightLabelStatus: String?, rightBottomInfo: MLBusinessRowRightBottomInfo?, link: String?, tracking: MLBusinessItemModelTracking?) {
         self.leftImage = leftImage
         self.leftImageAccessory = leftImageAccessory
         self.mainTitle = mainTitle
@@ -77,70 +77,70 @@ class MLBusinessTouchpointsMultipleRowItemModel: NSObject, Codable {
     }
 }
 
-extension MLBusinessTouchpointsMultipleRowItemModel: MLBusinessRowData {
-    func getLeftImage() -> String? {
+extension MLBusinessMultipleRowItemModel: MLBusinessRowData {
+    public func getLeftImage() -> String? {
         return leftImage
     }
     
-    func getLeftImageAccessory() -> String? {
+    public func getLeftImageAccessory() -> String? {
         return leftImageAccessory
     }
     
-    func getMainTitle() -> String {
+    public func getMainTitle() -> String {
         return mainTitle
     }
     
-    func getMainSubtitle() -> String? {
+    public func getMainSubtitle() -> String? {
         return mainSubtitle
     }
     
-    func getMainDescription() -> [MLBusinessRowMainDescriptionData]? {
+    public func getMainDescription() -> [MLBusinessRowMainDescriptionData]? {
         return mainDescription
     }
     
-    func getRightPrimaryLabel() -> String? {
+    public func getRightPrimaryLabel() -> String? {
         return rightPrimaryLabel
     }
     
-    func getRightSecondaryLabel() -> String? {
+    public func getRightSecondaryLabel() -> String? {
         return rightSecondaryLabel
     }
     
-    func getRightMiddleLabel() -> String? {
+    public func getRightMiddleLabel() -> String? {
         return rightMiddleLabel
     }
     
-    func getRightTopLabel() -> String? {
+    public func getRightTopLabel() -> String? {
         return rightTopLabel
     }
     
-    func getRightLabelStatus() -> String? {
+    public func getRightLabelStatus() -> String? {
         return rightLabelStatus
     }
     
-    func getRightBottomInfo() -> MLBusinessRowRightBottomInfoData? {
+    public func getRightBottomInfo() -> MLBusinessRowRightBottomInfoData? {
         return rightBottomInfo
     }
     
-    func getLink() -> String? {
+    public func getLink() -> String? {
         return link
     }
         
-    func trackIdForItem() -> String? {
+    public func getTrackingId() -> String? {
         return trackingId
     }
 
-    func eventDataForItem() -> [String : Any]? {
+    public func getEventData() -> [String : Any]? {
         return eventData?.rawValue
     }
 }
 
-class MLBusinessRowMainDescription: NSObject, Codable {
+public class MLBusinessRowMainDescription: NSObject, Codable {
     private let type: String
     private let content: String
     private let color: String?
     
-    init(type: String, content: String, color: String?) {
+    public init(type: String, content: String, color: String?) {
         self.type = type
         self.content = content
         self.color = color
@@ -148,66 +148,66 @@ class MLBusinessRowMainDescription: NSObject, Codable {
 }
 
 extension MLBusinessRowMainDescription: MLBusinessRowMainDescriptionData {
-    func getType() -> String {
+    public func getType() -> String {
         return type
     }
     
-    func getContent() -> String {
+    public func getContent() -> String {
         return content
     }
     
-    func getColor() -> String? {
+    public func getColor() -> String? {
         return color
     }
 }
 
-class MLBusinessToucpointsRowRightBottomInfo: NSObject, Codable {
+public class MLBusinessRowRightBottomInfo: NSObject, Codable {
     private let icon: String?
     private let label: String?
-    private let format: MLBusinessTouchpointsRowRightBottomInfoFormat?
+    private let format: MLBusinessRowRightBottomInfoFormat?
     
-    init(icon: String?, label: String?, format: MLBusinessTouchpointsRowRightBottomInfoFormat?) {
+    public init(icon: String?, label: String?, format: MLBusinessRowRightBottomInfoFormat?) {
         self.icon = icon
         self.label = label
         self.format = format
     }
 }
 
-extension MLBusinessToucpointsRowRightBottomInfo: MLBusinessRowRightBottomInfoData {
-    func getIcon() -> String? {
+extension MLBusinessRowRightBottomInfo: MLBusinessRowRightBottomInfoData {
+    public func getIcon() -> String? {
         return icon
     }
     
-    func getLabel() -> String? {
+    public func getLabel() -> String? {
         return label
     }
     
-    func getFormat() -> MLBusinessRowRightBottomInfoFormatData? {
+    public func getFormat() -> MLBusinessRowRightBottomInfoFormatData? {
         return format
     }
 }
 
-class MLBusinessTouchpointsRowRightBottomInfoFormat: NSObject, Codable {
+public class MLBusinessRowRightBottomInfoFormat: NSObject, Codable {
     private let textColor: String
     private let backgroundColor: String
     
-    init(textColor: String, backgroundColor: String) {
+    public init(textColor: String, backgroundColor: String) {
         self.textColor = textColor
         self.backgroundColor = backgroundColor
     }
 }
 
-extension MLBusinessTouchpointsRowRightBottomInfoFormat: MLBusinessRowRightBottomInfoFormatData {
-    func getTextColor() -> String {
+extension MLBusinessRowRightBottomInfoFormat: MLBusinessRowRightBottomInfoFormatData {
+    public func getTextColor() -> String {
         return textColor
     }
     
-    func getBackgroundColor() -> String {
+    public func getBackgroundColor() -> String {
         return backgroundColor
     }
 }
 
-extension MLBusinessTouchpointsMultipleRowItemModel: Trackable {
+extension MLBusinessMultipleRowItemModel: Trackable {
     var trackingId: String? {
         return tracking?.trackingId
     }
