@@ -41,6 +41,7 @@ class PullDownPanEffect: PanEffect {
     private let heightConstraint: NSLayoutConstraint
     
     private var previousTranslation = CGFloat(0.0)
+    private var differenceBelowMin = CGFloat(0.0)
     
     init(contentController: UIViewController, presentingController: UIViewController?, sizeManager: SheetSizeManager, heightConstraint: NSLayoutConstraint) {
         self.contentController = contentController
@@ -52,18 +53,26 @@ class PullDownPanEffect: PanEffect {
     func panned(in view: UIView, recognizer: UIPanGestureRecognizer) {
         if recognizer.state == .began {
             previousTranslation = 0.0
+            differenceBelowMin = 0.0
         }
 
         let translation = recognizer.translation(in: view)
         let min = sizeManager.dimension(for: sizeManager.min())
         let difference = translation.y - previousTranslation
         
-        if recognizer.state == .changed {
+        /*if recognizer.state == .changed {
             if heightConstraint.constant - difference < min {
-                contentController?.view.transform = CGAffineTransform(translationX: 0.0, y: translation.y)
+                if difference.sign == .plus {
+                    differenceBelowMin += difference
+                    contentController?.view.transform = CGAffineTransform(translationX: 0.0, y: differenceBelowMin)
+                } else {
+                    contentController?.view.transform = CGAffineTransform(translationX: 0.0, y: differenceBelowMin - difference)
+                }
+            } else {
+                differenceBelowMin = 0
             }
         } else if [UIGestureRecognizer.State.cancelled, UIGestureRecognizer.State.failed, UIGestureRecognizer.State.ended].contains(recognizer.state) {
-            if (contentController?.view.transform.ty ?? 0.0) > min * 0.5 {
+            /*if (contentController?.view.transform.ty ?? 0.0) > min * 0.5 {
                 presentingController?.dismiss(animated: true)
             } else {
                 if contentController?.view.transform != .identity {
@@ -74,8 +83,8 @@ class PullDownPanEffect: PanEffect {
                         self.contentController?.view.transform = .identity
                     })
                 }
-            }
-        }
+            }*/
+        }*/
         
         previousTranslation = translation.y
     }
@@ -86,7 +95,7 @@ class StretchingPanEffect: PanEffect {
     private let heightConstraint: NSLayoutConstraint
     
     private var previousTranslation = CGFloat(0.0)
-    private var translationOverMax = CGFloat(0.0)
+    private var differenceOverMax = CGFloat(0.0)
     
     init(sizeManager: SheetSizeManager, heightConstraint: NSLayoutConstraint) {
         self.sizeManager = sizeManager
@@ -96,7 +105,7 @@ class StretchingPanEffect: PanEffect {
     func panned(in view: UIView, recognizer: UIPanGestureRecognizer) {
         if recognizer.state == .began {
             previousTranslation = 0.0
-            translationOverMax = 0.0
+            differenceOverMax = 0.0
         }
         
         if recognizer.state == .changed {
@@ -105,13 +114,13 @@ class StretchingPanEffect: PanEffect {
             let difference = translation.y - previousTranslation
             if heightConstraint.constant - difference > max {
                 if difference.sign == .minus {
-                    translationOverMax += difference
-                    heightConstraint.constant = max + sqrt(translationOverMax * translationOverMax.sign())
+                    differenceOverMax += difference
+                    heightConstraint.constant = max + sqrt(differenceOverMax * differenceOverMax.sign())
                 } else {
                     heightConstraint.constant -= difference
                 }
             } else {
-                translationOverMax = 0.0
+                differenceOverMax = 0.0
             }
             previousTranslation = translation.y
         } else if [UIGestureRecognizer.State.cancelled, UIGestureRecognizer.State.failed, UIGestureRecognizer.State.ended].contains(recognizer.state) {
