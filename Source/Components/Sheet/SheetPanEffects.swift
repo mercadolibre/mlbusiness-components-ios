@@ -86,6 +86,7 @@ class StretchingPanEffect: PanEffect {
     private let heightConstraint: NSLayoutConstraint
     
     private var previousTranslation = CGFloat(0.0)
+    private var translationOverMax = CGFloat(0.0)
     
     init(sizeManager: SheetSizeManager, heightConstraint: NSLayoutConstraint) {
         self.sizeManager = sizeManager
@@ -95,18 +96,23 @@ class StretchingPanEffect: PanEffect {
     func panned(in view: UIView, recognizer: UIPanGestureRecognizer) {
         if recognizer.state == .began {
             previousTranslation = 0.0
+            translationOverMax = 0.0
         }
         
         if recognizer.state == .changed {
             let translation = recognizer.translation(in: view)
             let max = sizeManager.dimension(for: sizeManager.max())
-            
             let difference = translation.y - previousTranslation
-            
             if heightConstraint.constant - difference > max {
-                heightConstraint.constant += log10(1.0 + difference * difference.sign())
+                if difference.sign == .minus {
+                    translationOverMax += difference
+                    heightConstraint.constant = max + sqrt(translationOverMax * translationOverMax.sign())
+                } else {
+                    heightConstraint.constant -= difference
+                }
+            } else {
+                translationOverMax = 0.0
             }
-            
             previousTranslation = translation.y
         } else if [UIGestureRecognizer.State.cancelled, UIGestureRecognizer.State.failed, UIGestureRecognizer.State.ended].contains(recognizer.state) {
             heightConstraint.constant = sizeManager.currentDimension
@@ -142,7 +148,7 @@ class ResizePanEffect: PanEffect {
         if (recognizer.state == .began) {
             previousTranslation = 0.0
         } else if (recognizer.state == .changed) {
-            if minHeight...maxHeight ~= currentHeight {
+            if minHeight...(maxHeight * 1.01) ~= currentHeight {
                 heightConstraint.constant = max(min(currentHeight - difference, maxHeight), minHeight)
             }
         } else if (recognizer.state == .cancelled || recognizer.state == .failed) {

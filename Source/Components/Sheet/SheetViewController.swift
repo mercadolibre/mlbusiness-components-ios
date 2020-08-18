@@ -95,7 +95,7 @@ public class SheetViewController: UIViewController {
         panEffects.append(ResizePanEffect(sizeManager: sizeManager, heightConstraint: contentControllerViewHeightConstraint))
         panEffects.append(VelocityDismissPanEffect(contentController: contentController, presentingController: presentingViewController, sizeManager: sizeManager))
         panEffects.append(StretchingPanEffect(sizeManager: sizeManager, heightConstraint: contentControllerViewHeightConstraint))
-        panEffects.append(PullDownPanEffect(contentController: contentController, presentingController: presentingViewController, sizeManager: sizeManager, heightConstraint: contentControllerViewHeightConstraint))
+        // panEffects.append(PullDownPanEffect(contentController: contentController, presentingController: presentingViewController, sizeManager: sizeManager, heightConstraint: contentControllerViewHeightConstraint))
     }
     
     @objc

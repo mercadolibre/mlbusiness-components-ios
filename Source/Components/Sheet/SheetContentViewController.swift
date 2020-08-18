@@ -14,11 +14,12 @@ class SheetContentViewController: UIViewController {
     
     private var contentView = UIView()
     private var contentContainerView = UIView()
-    private var handleView = UIView()
+    private var handleView: UIVisualEffectView
     
     init(viewController: UIViewController, configuration: SheetConfiguration) {
         self.viewController = viewController
         self.configuration = configuration
+        self.handleView = UIVisualEffectView(effect: UIBlurEffect(style: configuration.handleStyle.blurStyle()))
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -58,14 +59,13 @@ class SheetContentViewController: UIViewController {
         NSLayoutConstraint.activate([
             handleView.leftAnchor.constraint(greaterThanOrEqualTo: contentView.leftAnchor),
             handleView.rightAnchor.constraint(lessThanOrEqualTo: contentView.rightAnchor),
-            handleView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-            handleView.widthAnchor.constraint(equalToConstant: 48.0),
-            handleView.heightAnchor.constraint(equalToConstant: 4.0),
+            handleView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 6),
+            handleView.widthAnchor.constraint(equalToConstant: 40.0),
+            handleView.heightAnchor.constraint(equalToConstant: 5.0),
             handleView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
         ])
         
-        handleView.backgroundColor = UIColor.black.withAlphaComponent(0.2)
-        handleView.layer.cornerRadius = 2.0
+        handleView.layer.cornerRadius = 2.5
         handleView.layer.masksToBounds = true
     }
     
@@ -128,6 +128,17 @@ private extension UIView {
             let mask = CAShapeLayer()
             mask.path = path.cgPath
             self.layer.mask = mask
+        }
+    }
+}
+
+private extension HandleStyle {
+    func blurStyle() -> UIBlurEffect.Style {
+        switch self {
+        case .light:
+        return .extraLight
+        case .dark:
+        return .prominent
         }
     }
 }

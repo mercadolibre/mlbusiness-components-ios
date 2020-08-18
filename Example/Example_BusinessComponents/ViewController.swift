@@ -219,9 +219,8 @@ extension ViewController {
     private func setupSheetViewController(bottomOf targetView: UIView) -> UIView {
         let button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.titleLabel?.text = "Open Sheet"
+        button.setTitle("Open Sheet", for: .normal)
         button.titleLabel?.textColor = .black
-        button.backgroundColor = .red
         containerView.addSubview(button)
         
         NSLayoutConstraint.activate([
