@@ -43,8 +43,9 @@ extension ViewController {
         let animatedButtonView = setupAnimatedButtonView(bottomOf: loyaltyHeaderView)
         let rowView = setupRowView(bottomOf: animatedButtonView)
         let hybridRow = setupHybridRowView(bottomOf: rowView)
+        let openSheet = setupSheetViewController(bottomOf: hybridRow)
         
-        hybridRow.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -64).isActive = true
+        openSheet.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -64).isActive = true
     }
 
     private func setupRingView() -> MLBusinessLoyaltyRingView {
@@ -214,7 +215,54 @@ extension ViewController {
         ])
         return discountTouchpointsView
     }
+    
+    private func setupSheetViewController(bottomOf targetView: UIView) -> UIView {
+        let button = UIButton(type: .custom)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.titleLabel?.text = "Open Sheet"
+        button.titleLabel?.textColor = .black
+        button.backgroundColor = .red
+        containerView.addSubview(button)
+        
+        NSLayoutConstraint.activate([
+            button.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16),
+            button.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            button.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+            button.heightAnchor.constraint(equalToConstant: 50.0)
+        ])
+        
+        button.addTarget(self, action: #selector(openSheetDidTap), for: .touchUpInside)
+        
+        return button
+    }
 
+    @objc
+    private func openSheetDidTap() {
+        let contentView = MLBusinessTouchpointsView()
+        contentView.setTouchpointsTracker(with: DiscountTrackerData(touchPointId: "BusinessComponents-Example"))
+        contentView.update(with: DiscountTouchpointsGridData(numberOfItems: 6))
+        
+        let container = UIViewController()
+        container.view.translatesAutoresizingMaskIntoConstraints = false
+        container.view.addSubview(contentView)
+        
+        NSLayoutConstraint.activate([
+            contentView.leftAnchor.constraint(equalTo: container.view.leftAnchor),
+            contentView.rightAnchor.constraint(equalTo: container.view.rightAnchor),
+            contentView.topAnchor.constraint(equalTo: container.view.topAnchor)
+        ])
+        
+        if #available(iOS 11.0, *) {
+            contentView.bottomAnchor.constraint(equalTo: container.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        } else {
+            contentView.bottomAnchor.constraint(equalTo: container.view.bottomAnchor).isActive = true
+        }
+        
+        let sheet = SheetViewController(rootViewController: container, sizes: [.intrinsic])
+        
+        self.present(sheet, animated: true)
+    }
+    
     @objc
     private func animatedButtonDidTap(_ button: MLBusinessAnimatedButton) {
         button.startLoading()
