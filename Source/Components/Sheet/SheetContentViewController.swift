@@ -19,7 +19,7 @@ class SheetContentViewController: UIViewController {
     init(viewController: UIViewController, configuration: SheetConfiguration) {
         self.viewController = viewController
         self.configuration = configuration
-        self.handleView = UIVisualEffectView(effect: UIBlurEffect(style: configuration.handleStyle.blurStyle()))
+        self.handleView = UIVisualEffectView(effect: UIBlurEffect(style: configuration.handle.tint.blurStyle()))
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -56,16 +56,26 @@ class SheetContentViewController: UIViewController {
     private func setupHandleView() {
         contentView.addSubview(handleView)
         handleView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let gripHeight: CGFloat = 5.0
+        let handleHeight: CGFloat
+        
+        if #available(iOS 11.0, *) {
+            handleHeight = configuration.handle.height
+        } else {
+            handleHeight = SheetConfiguration.default.handle.height
+        }
+        
         NSLayoutConstraint.activate([
             handleView.leftAnchor.constraint(greaterThanOrEqualTo: contentView.leftAnchor),
             handleView.rightAnchor.constraint(lessThanOrEqualTo: contentView.rightAnchor),
-            handleView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 6),
+            handleView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: (handleHeight - gripHeight) / 2),
             handleView.widthAnchor.constraint(equalToConstant: 40.0),
-            handleView.heightAnchor.constraint(equalToConstant: 5.0),
+            handleView.heightAnchor.constraint(equalToConstant: gripHeight),
             handleView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
         ])
         
-        handleView.layer.cornerRadius = 2.5
+        handleView.layer.cornerRadius = gripHeight / 2
         handleView.layer.masksToBounds = true
     }
     
@@ -96,6 +106,13 @@ class SheetContentViewController: UIViewController {
             viewController.view.topAnchor.constraint(equalTo: contentContainerView.topAnchor),
             viewController.view.bottomAnchor.constraint(equalTo: contentContainerView.bottomAnchor)
         ])
+        
+        if #available(iOS 11.0, *) {
+            if configuration.handle.height > 0 {
+                viewController.additionalSafeAreaInsets = UIEdgeInsets(top: configuration.handle.height, left: 0, bottom: 0, right: 0)
+            }
+        }
+        
         viewController.didMove(toParent: self)
     }
     
@@ -132,13 +149,13 @@ private extension UIView {
     }
 }
 
-private extension HandleStyle {
+private extension HandleTint {
     func blurStyle() -> UIBlurEffect.Style {
         switch self {
-        case .light:
-        return .extraLight
-        case .dark:
-        return .prominent
+            case .light:
+            return .extraLight
+            case .dark:
+            return .prominent
         }
     }
 }
