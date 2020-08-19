@@ -55,24 +55,22 @@ class PullDownPanEffect: PanEffect {
             previousTranslation = 0.0
             differenceBelowMin = 0.0
         }
-
-        let translation = recognizer.translation(in: view)
-        let min = sizeManager.dimension(for: sizeManager.min())
-        let difference = translation.y - previousTranslation
         
-        /*if recognizer.state == .changed {
-            if heightConstraint.constant - difference < min {
-                if difference.sign == .plus {
-                    differenceBelowMin += difference
-                    contentController?.view.transform = CGAffineTransform(translationX: 0.0, y: differenceBelowMin)
-                } else {
-                    contentController?.view.transform = CGAffineTransform(translationX: 0.0, y: differenceBelowMin - difference)
-                }
+        let min = sizeManager.dimension(for: sizeManager.min())
+        
+        if recognizer.state == .changed {
+            let translation = recognizer.translation(in: view)
+            let difference = translation.y - previousTranslation
+            if heightConstraint.constant - differenceBelowMin <= min {
+                differenceBelowMin += difference
+                contentController?.view.transform = CGAffineTransform(translationX: 0.0, y: .maximum(differenceBelowMin, 0.0))
             } else {
-                differenceBelowMin = 0
+                differenceBelowMin = 0.0
+                contentController?.view.transform = CGAffineTransform(translationX: 0.0, y: 0.0)
             }
+            previousTranslation = translation.y
         } else if [UIGestureRecognizer.State.cancelled, UIGestureRecognizer.State.failed, UIGestureRecognizer.State.ended].contains(recognizer.state) {
-            /*if (contentController?.view.transform.ty ?? 0.0) > min * 0.5 {
+            if (contentController?.view.transform.ty ?? 0.0) > min * 0.5 {
                 presentingController?.dismiss(animated: true)
             } else {
                 if contentController?.view.transform != .identity {
@@ -83,10 +81,8 @@ class PullDownPanEffect: PanEffect {
                         self.contentController?.view.transform = .identity
                     })
                 }
-            }*/
-        }*/
-        
-        previousTranslation = translation.y
+            }
+        }
     }
 }
 
@@ -132,12 +128,14 @@ class StretchingPanEffect: PanEffect {
 class ResizePanEffect: PanEffect {
     private let sizeManager: SheetSizeManager
     private let heightConstraint: NSLayoutConstraint
+    private weak var contentController: UIViewController?
     
     private var previousTranslation = CGFloat(0.0)
     
-    init(sizeManager: SheetSizeManager, heightConstraint: NSLayoutConstraint) {
+    init(sizeManager: SheetSizeManager, heightConstraint: NSLayoutConstraint, contentController: UIViewController) {
         self.sizeManager = sizeManager
         self.heightConstraint = heightConstraint
+        self.contentController = contentController
     }
     
     func panned(in view: UIView, recognizer: UIPanGestureRecognizer) {
@@ -152,12 +150,13 @@ class ResizePanEffect: PanEffect {
         let maxHeight = sizeManager.dimension(for: sizeManager.max())
 
         let currentHeight = heightConstraint.constant
+        let currentLocation = currentHeight - CGFloat(contentController?.view.transform.ty ?? 0.0)
         let difference = translation.y - previousTranslation
         
         if (recognizer.state == .began) {
             previousTranslation = 0.0
         } else if (recognizer.state == .changed) {
-            if minHeight...(maxHeight * 1.01) ~= currentHeight {
+            if minHeight...(maxHeight * 1.01) ~= currentLocation {
                 heightConstraint.constant = max(min(currentHeight - difference, maxHeight), minHeight)
             }
         } else if (recognizer.state == .cancelled || recognizer.state == .failed) {
