@@ -70,26 +70,22 @@ public class MLBusinessMultipleDescriptionView: UIView {
     
     private func createMainDescriptionImage(with imageKey: String, imageColor: UIColor?) -> UIImageView {
         let imageView = UIImageView()
-        
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
         imageView.backgroundColor = .clear
         imageView.tintColor = imageColor
         imageView.image = nil
         imageProvider.getImage(key: imageKey) { image in imageView.image = image?.withRenderingMode(.alwaysTemplate) }
-        
         return imageView
     }
     
     private func createMainDescriptionLabel(with text: String, textColor: UIColor?) -> UILabel{
         let label = UILabel(frame: .zero)
-        
         label.numberOfLines = 1
         label.font = MLStyleSheetManager.styleSheet.regularSystemFont(ofSize: CGFloat(kMLFontsSizeXXSmall))
         label.textAlignment = .left
         label.text = text
         label.textColor = textColor
-        
         return label
     }
     
