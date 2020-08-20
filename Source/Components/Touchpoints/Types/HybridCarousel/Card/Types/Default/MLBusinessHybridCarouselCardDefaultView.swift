@@ -142,7 +142,7 @@ class MLBusinessHybridCarouselCardDefaultView: MLBusinessHybridCarouselCardTypeV
     private var bottomBottomAnchorEqualConstraint: NSLayoutConstraint?
     private var bottomBottomAnchorLessThanConstraint: NSLayoutConstraint?
     private var topImageAccessoryImageViewWidthConstraint: NSLayoutConstraint?
-    private let topImageAccessoryImageViewHeight = CGFloat(22.0)
+    private let topImageAccessoryImageViewHeight = CGFloat(20.0)
 
     required init() {
         super.init()
