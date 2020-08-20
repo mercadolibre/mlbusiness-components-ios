@@ -70,6 +70,8 @@ class SheetSizeManager {
             return sheetViewSize.height * percent
         case .fixedFromTop(let margin):
             return sheetViewSize.height - margin
+        case .fullscreen:
+            return calculateDimension(for: .percent(1.0))
         }
     }
 }

@@ -12,4 +12,5 @@ public enum SheetSize: Equatable, Hashable {
     case percent(CGFloat)
     case fixed(CGFloat)
     case fixedFromTop(CGFloat)
+    case fullscreen
 }

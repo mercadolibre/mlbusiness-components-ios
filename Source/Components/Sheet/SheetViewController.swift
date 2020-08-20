@@ -108,23 +108,21 @@ public class SheetViewController: UIViewController {
 
 extension SheetViewController: UIGestureRecognizerDelegate {
     public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        guard let scrollView = self.scrollView else { return true }
+        guard let scrollView = self.scrollView, scrollView.window != nil else { return true }
         
         let point = gestureRecognizer.location(in: view)
-        
         let pointInChildScrollView = view.convert(point, to: scrollView).y - scrollView.contentOffset.y
         
-        let velocity = panGestureRecognizer.velocity(in: panGestureRecognizer.view?.superview)
-        guard pointInChildScrollView > 0, pointInChildScrollView < scrollView.bounds.height else {
-            return true
-        }
+        guard pointInChildScrollView > 0, pointInChildScrollView < scrollView.bounds.height else { return true }
+        
         let topInset = scrollView.contentInset.top
+        let velocity = panGestureRecognizer.velocity(in: panGestureRecognizer.view?.superview)
         
         guard abs(velocity.y) > abs(velocity.x), scrollView.contentOffset.y <= -topInset else { return false }
         
         if velocity.y < 0 {
             let containerHeight = sizeManager.currentDimension
-            return sizeManager.dimension(for: sizeManager.max()) > containerHeight && containerHeight < sizeManager.dimension(for: .percent(1.0))
+            return sizeManager.dimension(for: sizeManager.max()) > containerHeight && containerHeight < sizeManager.dimension(for: .fullscreen)
         }
         
         return true
