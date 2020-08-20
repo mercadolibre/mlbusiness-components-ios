@@ -41,7 +41,9 @@ class MLBusinessHybridCarouselCardDefaultView: MLBusinessHybridCarouselCardTypeV
     private let topImageAccessoryImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.layer.cornerRadius = 10
+        imageView.layer.cornerRadius = 11.0
+        imageView.layer.borderColor = MLStyleSheetManager.styleSheet.whiteColor.cgColor
+        imageView.layer.borderWidth = 1.0
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
         imageView.backgroundColor = .clear
@@ -196,8 +198,7 @@ class MLBusinessHybridCarouselCardDefaultView: MLBusinessHybridCarouselCardTypeV
         ])
         
         NSLayoutConstraint.activate([
-            topImageAccessoryImageView.heightAnchor.constraint(equalToConstant: 20.0),
-            topImageAccessoryImageView.widthAnchor.constraint(equalTo: topImageAccessoryImageView.heightAnchor),
+            topImageAccessoryImageView.heightAnchor.constraint(equalToConstant: 22.0),
             topImageAccessoryImageView.bottomAnchor.constraint(equalTo: topImageImageView.bottomAnchor),
             topImageAccessoryImageView.rightAnchor.constraint(equalTo: topImageImageView.rightAnchor),
         ])
