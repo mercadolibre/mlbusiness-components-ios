@@ -58,7 +58,8 @@ extension ViewController {
     }
 
     private func setupRingView(_ receiver: MLBusinessLoyaltyBroadcastReceiver) -> MLBusinessLoyaltyRingView {
-        let ringView = MLBusinessLoyaltyRingView(LoyaltyRingData(), fillPercentProgress: false)
+        let ringData = LoyaltyRingData()
+        let ringView = MLBusinessLoyaltyRingView(ringData, fillPercentProgress: false)
 
         containerView.addSubview(ringView)
 
@@ -74,9 +75,9 @@ extension ViewController {
         
         let broadcaster = MLBusinessLoyaltyBroadcaster.instance as MLBusinessLoyaltyBroadcaster
         broadcaster.register(receiver)
-        broadcaster.updateInfo(MLBusinessLoyaltyBroadcastData(level:LoyaltyRingData().getRingNumber(),
-                                                              percentage: LoyaltyRingData().getRingPercentage(),
-                                                              primaryColor: LoyaltyRingData().getRingHexaColor()))
+        broadcaster.updateInfo(MLBusinessLoyaltyBroadcastData(level: ringData.getRingNumber(),
+                                                              percentage: ringData.getRingPercentage(),
+                                                              primaryColor: ringData.getRingHexaColor()))
         
         return ringView
     }

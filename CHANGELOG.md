@@ -1,6 +1,7 @@
 # Sin Publicar
 - Added Multiple Row Component
 - Resized pill icon on Hybrid Carousel
+- Loyalty Broadcast
 
 # v1.18.0
 🚀 1.18.0 🚀
@@ -18,7 +19,6 @@
 
 # v1.15.0
 🚀 1.15.0 🚀
-- Loyalty Broadcast
 - Reduce image sizes
 
 # v1.14.0
