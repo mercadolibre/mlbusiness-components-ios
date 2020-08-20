@@ -1,6 +1,7 @@
 # Sin Publicar
 - Added Multiple Row Component
 - Resized pill icon on Hybrid Carousel
+- New image accesory for Hyrbrid Carousel Card
 
 # v1.18.0
 🚀 1.18.0 🚀
