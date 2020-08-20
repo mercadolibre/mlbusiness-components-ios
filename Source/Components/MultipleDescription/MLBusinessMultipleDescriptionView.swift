@@ -55,16 +55,20 @@ public class MLBusinessMultipleDescriptionView: UIView {
             let itemColor = item.getColor()?.hexaToUIColor()
             switch item.getType().lowercased() {
             case "image":
-                createMainDescriptionImage(with: itemContent, imageColor: itemColor)
+                let imageView = createMainDescriptionImage(with: itemContent, imageColor: itemColor)
+                multipleDescriptionStackView.addArrangedSubview(imageView)
+                imageView.heightAnchor.constraint(equalToConstant: 12.0).isActive = true
+                imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor).isActive = true
             case "text":
-                createMainDescriptionLabel(with: itemContent, textColor: itemColor)
+                let label = createMainDescriptionLabel(with: itemContent, textColor: itemColor)
+                multipleDescriptionStackView.addArrangedSubview(label)
             default:
                 break
             }
         }
     }
     
-    private func createMainDescriptionImage(with imageKey: String, imageColor: UIColor?) {
+    private func createMainDescriptionImage(with imageKey: String, imageColor: UIColor?) -> UIImageView {
         let imageView = UIImageView()
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -73,12 +77,11 @@ public class MLBusinessMultipleDescriptionView: UIView {
         imageView.tintColor = imageColor
         imageView.image = nil
         imageProvider.getImage(key: imageKey) { image in imageView.image = image?.withRenderingMode(.alwaysTemplate) }
-        multipleDescriptionStackView.addArrangedSubview(imageView)
-        imageView.heightAnchor.constraint(equalToConstant: 12).isActive = true
-        imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor).isActive = true
+        
+        return imageView
     }
     
-    private func createMainDescriptionLabel(with text: String, textColor: UIColor?) {
+    private func createMainDescriptionLabel(with text: String, textColor: UIColor?) -> UILabel{
         let label = UILabel(frame: .zero)
         
         label.numberOfLines = 1
@@ -86,7 +89,8 @@ public class MLBusinessMultipleDescriptionView: UIView {
         label.textAlignment = .left
         label.text = text
         label.textColor = textColor
-        multipleDescriptionStackView.addArrangedSubview(label)
+        
+        return label
     }
     
 }
