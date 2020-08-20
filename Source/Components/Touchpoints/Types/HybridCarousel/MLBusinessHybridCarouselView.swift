@@ -1,13 +1,13 @@
 //
-//  MLBusinessTouchpointsCarouselView.swift
+//  MLBusinessHybridCarouselView.swift
 //  MLBusinessComponents
 //
-//  Created by Vicente Veltri on 30/04/2020.
+//  Created by Vicente Veltri on 29/07/2020.
 //
 
 import Foundation
 
-class MLBusinessTouchpointsCarouselView: MLBusinessTouchpointsBaseView {
+class MLBusinessHybridCarouselView: MLBusinessTouchpointsBaseView {
     
     override var canOpenMercadoPagoApp: Bool? {
         didSet {
@@ -15,13 +15,13 @@ class MLBusinessTouchpointsCarouselView: MLBusinessTouchpointsBaseView {
         }
     }
 
-    private let collectionView: MLBusinessCarouselContainerView = {
-        let collectionView = MLBusinessCarouselContainerView()
+    private let collectionView: MLBusinessHybridCarouselContainerView = {
+        let collectionView = MLBusinessHybridCarouselContainerView()
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
 
-    private var model: MLBusinessTouchpointsCarouselModel?
+    private var model: MLBusinessHybridCarouselModel?
 
     required init?(configuration: Codable?) {
         super.init(configuration: configuration)
@@ -46,7 +46,7 @@ class MLBusinessTouchpointsCarouselView: MLBusinessTouchpointsBaseView {
     }
 
     override func update(with configuration: Codable?) {
-        guard let model = configuration as? MLBusinessTouchpointsCarouselModel else { return }
+        guard let model = configuration as? MLBusinessHybridCarouselModel else { return }
         self.model = model
         collectionView.leftMargin = collectionView.contentInset.left
         collectionView.update(with: model.getItems())
@@ -72,20 +72,20 @@ class MLBusinessTouchpointsCarouselView: MLBusinessTouchpointsBaseView {
     }
     
     override func getTouchpointViewHeight(with data: Codable?, topInset: CGFloat, bottomInset: CGFloat) -> CGFloat {
-        guard let model = data as? MLBusinessTouchpointsCarouselModel else { return 0 }
+        guard let model = data as? MLBusinessHybridCarouselModel else { return 0 }
         
         return CGFloat(collectionView.getMaxItemHeight(with: model.getItems())) + topInset + bottomInset
     }
 }
 
-extension MLBusinessTouchpointsCarouselView: MLBusinessCarouselContainerViewDelegate {
-    func carouselContainerView(_: MLBusinessCarouselContainerView, didSelect item: MLBusinessCarouselItemModel, at index: Int) {
+extension MLBusinessHybridCarouselView: MLBusinessHybridCarouselContainerViewDelegate {
+    func carouselContainerView(_: MLBusinessHybridCarouselContainerView, didSelect item: MLBusinessHybridCarouselCardModel, at index: Int) {
         guard let link = item.link, let trackingId = item.tracking?.trackingId else { return }
 
         delegate?.trackTap(with: index, deeplink: link, trackingId: trackingId)
     }
     
-    func carouselContainerView(_: MLBusinessCarouselContainerView, didFinishScrolling visibleItems: [MLBusinessCarouselItemModel]?) {
+    func carouselContainerView(_: MLBusinessHybridCarouselContainerView, didFinishScrolling visibleItems: [MLBusinessHybridCarouselCardModel]?) {
         delegate?.trackPrints(prints: visibleItems)
     }
 }

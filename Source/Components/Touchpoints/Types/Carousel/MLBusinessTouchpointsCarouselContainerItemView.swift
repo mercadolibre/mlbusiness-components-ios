@@ -1,5 +1,5 @@
 //
-//  MLBusinessTouchpointsCarouselCollectionItemView.swift
+//  MLBusinessTouchpointsCarouselContainerItemView.swift
 //  MLBusinessComponents
 //
 //  Created by Vicente Veltri on 30/04/2020.
@@ -8,7 +8,7 @@
 import Foundation
 import MLUI
 
-public class MLBusinessTouchpointsCarouselCollectionItemView: UIView {
+class MLBusinessTouchpointsCarouselContainerItemView: UIView {
 
     private let containerView: UIView = {
         let containerView = UIView(frame: .zero)
@@ -62,12 +62,6 @@ public class MLBusinessTouchpointsCarouselCollectionItemView: UIView {
         return stackView
     }()
 
-    private let discountRightValueView: UIView = {
-        let view = UIView(frame: .zero)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-
     private let discountMainLabel: UILabel = {
         let discountMainLabel = UILabel(frame: .zero)
         discountMainLabel.numberOfLines = 1
@@ -115,6 +109,7 @@ public class MLBusinessTouchpointsCarouselCollectionItemView: UIView {
     private var logoImageViewTopConstraint: NSLayoutConstraint?
     private var discountValueVerticalStackViewTopConstraint: NSLayoutConstraint?
     private var brandNameLabelTopConstraint: NSLayoutConstraint?
+    var imageProvider: MLBusinessImageProvider = MLBusinessURLImageProvider()
 
     public required init() {
         super.init(frame: .zero)
@@ -193,7 +188,7 @@ public class MLBusinessTouchpointsCarouselCollectionItemView: UIView {
         ])
     }
 
-    func update(with item: MLBusinessTouchpointsCarouselItemModel) {
+    func update(with item: MLBusinessCarouselItemModel) {
         discountValueHorizontalStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         discountValueVerticalStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
 
@@ -231,7 +226,9 @@ public class MLBusinessTouchpointsCarouselCollectionItemView: UIView {
         discountValueVerticalStackView.addArrangedSubview(discountValueHorizontalStackView)
 
         if let logo = item.image {
-            logoImageView.setRemoteImage(imageUrl: logo)
+            imageProvider.getImage(key: logo) { image in
+                self.logoImageView.image = image
+            }
         }
 
         if let pill = item.pill {
@@ -240,9 +237,8 @@ public class MLBusinessTouchpointsCarouselCollectionItemView: UIView {
             pillView.tintColor = pill.format.textColor.hexaToUIColor()
             pillView.text = pill.label
             if let icon = pill.icon {
-                let imageView = UIImageView()
-                imageView.setRemoteImage(imageUrl: icon, customCache: nil) { iconImage in
-                    self.pillView.icon = iconImage
+                imageProvider.getImage(key: icon) { image in
+                    self.pillView.icon = image
                 }
             } else {
                 pillView.icon = nil
@@ -263,7 +259,7 @@ public class MLBusinessTouchpointsCarouselCollectionItemView: UIView {
         pillView.icon = nil
     }
     
-    private func applyFormats(to item: MLBusinessTouchpointsCarouselItemModel) {
+    private func applyFormats(to item: MLBusinessCarouselItemModel) {
         if let titleFormat = item.titleFormat {
             applyFormat(format: titleFormat, label: brandNameLabel)
         } else {
@@ -291,7 +287,7 @@ public class MLBusinessTouchpointsCarouselCollectionItemView: UIView {
         label.textColor = format.color.hexaToUIColor()
         let size: CGFloat = CGFloat(format.size)
         
-        if format.weight == "semibold" {
+        if format.weight.lowercased() == "semibold" {
             label.font = MLStyleSheetManager.styleSheet.semiboldSystemFont(ofSize: size)
         } else {
             label.font = MLStyleSheetManager.styleSheet.regularSystemFont(ofSize: size)

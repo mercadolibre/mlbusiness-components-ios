@@ -1,5 +1,5 @@
 //
-//  MLBusinessTouchpointsCarouselCollectionViewCell.swift
+//  MLBusinessTouchpointsCarouselContainerViewCell.swift
 //  MLBusinessComponents
 //
 //  Created by Vicente Veltri on 30/04/2020.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class MLBusinessTouchpointsCarouselCollectionViewCell: UICollectionViewCell {
+class MLBusinessTouchpointsCarouselContainerViewCell: UICollectionViewCell {
     override var isHighlighted: Bool {
         didSet {
            setHighlighted(isHighlighted)
@@ -15,12 +15,20 @@ class MLBusinessTouchpointsCarouselCollectionViewCell: UICollectionViewCell {
     }
 
     private var height: NSLayoutConstraint? = nil
-    let itemView = MLBusinessTouchpointsCarouselCollectionItemView()
+    let itemView = MLBusinessTouchpointsCarouselContainerItemView()
     
     private var currentBackgroundColor: UIColor?
 
     static var reuseIdentifier: String {
         return "\(String(describing: self))ReuseIdentifier"
+    }
+    
+    var imageProvider: MLBusinessImageProvider? {
+        didSet {
+            if let imageProvider = imageProvider {
+                itemView.imageProvider = imageProvider
+            }
+        }
     }
 
     override init(frame: CGRect) {
@@ -34,12 +42,11 @@ class MLBusinessTouchpointsCarouselCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func update(with content: MLBusinessTouchpointsCarouselItemModel) {
+    func update(with content: MLBusinessCarouselItemModel) {
         if let colorString = content.backgroundColor {
-            currentBackgroundColor = colorString.hexaToUIColor()
+            currentBackgroundColor =  colorString.hexaToUIColor()
             backgroundColor = currentBackgroundColor ?? .white
         }
-        
         itemView.update(with: content)
     }
     
@@ -51,7 +58,7 @@ class MLBusinessTouchpointsCarouselCollectionViewCell: UICollectionViewCell {
     private func setup() {
         backgroundColor = .clear
         
-        layer.borderColor = "ececec".hexaToUIColor().cgColor
+        layer.borderColor =  "ececec".hexaToUIColor().cgColor
         layer.borderWidth = 1.0
         layer.cornerRadius = 6.0
         layer.applyShadow(alpha: 0.1, x: 0, y: 2, blur: 4)

@@ -49,8 +49,12 @@ extension ViewController {
         let downloadAppView = setupDownloadAppView(bottomOf: discountTouchpointView)
         let loyaltyHeaderView = setupLoyaltyHeaderView(bottomOf: downloadAppView)
         let animatedButtonView = setupAnimatedButtonView(bottomOf: loyaltyHeaderView)
+        let rowView = setupRowView(bottomOf: animatedButtonView)
+        let hybridCarousel = setupHybridCarouselView(bottomOf: rowView)
+        let multipleRowView = setupMultipleRowView(bottomOf: hybridCarousel)
+        let multipleRowTouchpointView = setupMultipleRowTouchpointView(bottomOf: multipleRowView)
         
-        animatedButtonView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -64).isActive = true
+        multipleRowTouchpointView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -64).isActive = true
     }
 
     private func setupRingView(_ receiver: MLBusinessLoyaltyBroadcastReceiver) -> MLBusinessLoyaltyRingView {
@@ -200,6 +204,56 @@ extension ViewController {
         animatedButtonView.delegate = self
 
         return animatedButtonView
+    }
+    
+    private func setupRowView(bottomOf targetView: UIView) -> MLBusinessRowView {
+        let rowView = MLBusinessRowView()
+        rowView.update(with: RowData())
+        containerView.addSubview(rowView)
+        NSLayoutConstraint.activate([
+            rowView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16),
+            rowView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            rowView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16)
+        ])
+        return rowView
+    }
+    
+    private func setupHybridCarouselView(bottomOf targetView: UIView) -> UIView {
+        let discountTouchpointsView = MLBusinessTouchpointsView()
+        discountTouchpointsView.setTouchpointsTracker(with: DiscountTrackerData(touchPointId: "BusinessComponents-Example"))
+        discountTouchpointsView.update(with: HybridCarouselData())
+        containerView.addSubview(discountTouchpointsView)
+        NSLayoutConstraint.activate([
+            discountTouchpointsView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            discountTouchpointsView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+            discountTouchpointsView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16)
+        ])
+        return discountTouchpointsView
+    }
+    
+    private func setupMultipleRowView(bottomOf targetView: UIView) -> MLBusinessMultipleRowView {
+        let rowView = MLBusinessMultipleRowView()
+        rowView.update(with: [RowData(), RowData()])
+        containerView.addSubview(rowView)
+        NSLayoutConstraint.activate([
+            rowView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16),
+            rowView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            rowView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16)
+        ])
+        return rowView
+    }
+    
+    private func setupMultipleRowTouchpointView(bottomOf targetView: UIView) -> UIView {
+        let discountTouchpointsView = MLBusinessTouchpointsView()
+        discountTouchpointsView.setTouchpointsTracker(with: DiscountTrackerData(touchPointId: "BusinessComponents-Example"))
+        discountTouchpointsView.update(with: MultipleRowData())
+        containerView.addSubview(discountTouchpointsView)
+        NSLayoutConstraint.activate([
+            discountTouchpointsView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            discountTouchpointsView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            discountTouchpointsView.topAnchor.constraint(equalTo: targetView.bottomAnchor)
+        ])
+        return discountTouchpointsView
     }
 
     @objc

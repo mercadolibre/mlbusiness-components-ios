@@ -1,3 +1,21 @@
+# Sin Publicar
+- Added Multiple Row Component
+- Resized pill icon on Hybrid Carousel
+
+# v1.18.0
+🚀 1.18.0 🚀
+- Added Hybrid Carousel Component
+
+# v1.17.0
+🚀 1.17.0 🚀
+- Fix MLBusinessActionCardView shadow
+- Added Row Component
+
+# v1.16.0
+🚀 1.16.0 🚀
+- Changed Dividing Line View stroke color (darker)
+- Make MLBusinessTouchpointView Carousel public
+
 # v1.15.0
 🚀 1.15.0 🚀
 - Loyalty Broadcast
