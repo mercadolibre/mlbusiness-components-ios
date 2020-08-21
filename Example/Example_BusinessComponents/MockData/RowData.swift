@@ -27,11 +27,20 @@ class RowData: NSObject, MLBusinessRowData {
     }
     
     func getMainDescription() -> [MLBusinessRowMainDescriptionData]? {
-        return [RowMainDescriptionData(type: "image", content: "https://urbancomunicacion.com/wp-content/uploads/2017/04/Logotipos-famosos-Starbucks-Urban-comunicacion-1.png"),
-                RowMainDescriptionData(type: "text", content: "598m", color: "#8C8C8C"),
-                RowMainDescriptionData(type: "text", content: " · ", color: "#8C8C8C"),
-                RowMainDescriptionData(type: "image", content: "https://urbancomunicacion.com/wp-content/uploads/2017/04/Logotipos-famosos-Starbucks-Urban-comunicacion-1.png"),
-                RowMainDescriptionData(type: "text", content: "4.3 (24)", color: "#8C8C8C"),]
+        return [RowMainDescriptionData(type: "image", content: "https://i.ibb.co/2KcdLdy/16-px.png", color: "#454545"),
+                RowMainDescriptionData(type: "text", content: "598m", color: "#454545"),
+                RowMainDescriptionData(type: "text", content: " · ", color: "#454545"),
+                RowMainDescriptionData(type: "image", content: "https://i.ibb.co/prSV6dY/estrella-android.png", color: "#454545"),
+                RowMainDescriptionData(type: "text", content: "4.3 (24)", color: "#454545"),]
+    }
+    
+    func getMainSecondaryDescription() -> [MLBusinessMultipleDescriptionModel]? {
+        
+        return [MLBusinessMultipleDescriptionModel(type: "image", content: "https://i.ibb.co/bWSWDHc/icon-delivery-android.png", color: "#00a650"),
+            MLBusinessMultipleDescriptionModel(type: "text", content: "Envío", color: "#00a650"),
+            MLBusinessMultipleDescriptionModel(type: "text", content: " · ", color: "#00a650"),
+            MLBusinessMultipleDescriptionModel(type: "image", content: "https://i.ibb.co/n8gJqYk/icon-pickup-android.png", color: "#00a650"),
+            MLBusinessMultipleDescriptionModel(type: "text", content: "Retiro", color: "#00a650"),]
     }
     
     func getRightPrimaryLabel() -> String? {
