@@ -1,4 +1,5 @@
-# Sin Publicar
+# v1.19.0
+🚀 1.19.0 🚀
 - Added Multiple Row Component
 - Resized pill icon on Hybrid Carousel
 - Added Multiple Description Component
