@@ -184,6 +184,12 @@ class ResizePanEffect: PanEffect {
     }
 }
 
+class AdditionalSafeInsetsPanEffect: PanEffect {
+    func panned(in view: UIView, recognizer: UIPanGestureRecognizer) {
+        
+    }
+}
+
 private extension CGFloat {
     func sign() -> CGFloat {
         return self > 0 ? 1.0 : -1.0

@@ -54,15 +54,19 @@ public class SheetViewController: UIViewController {
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         guard !isPanning else { return }
+        contentControllerViewHeightConstraint.priority = .defaultLow
         sizeManager.sheetViewSize = view.bounds.size
         contentControllerViewHeightConstraint.constant = sizeManager.currentDimension
+        contentControllerViewHeightConstraint.priority = .defaultHigh
         contentControllerViewHeightConstraint.isActive = true
     }
     
     public override func preferredContentSizeDidChange(forChildContentContainer container: UIContentContainer) {
         guard !isPanning else { return }
+        contentControllerViewHeightConstraint.priority = .defaultLow
         sizeManager.sheetContentSize = container.preferredContentSize
         contentControllerViewHeightConstraint.constant = sizeManager.currentDimension
+        contentControllerViewHeightConstraint.priority = .defaultHigh
         contentControllerViewHeightConstraint.isActive = true
     }
     
@@ -93,7 +97,7 @@ public class SheetViewController: UIViewController {
     
     private func setupPanEffects() {
         panEffects.append(ResizePanEffect(sizeManager: sizeManager, heightConstraint: contentControllerViewHeightConstraint, contentController: contentController))
-        // panEffects.append(VelocityDismissPanEffect(contentController: contentController, presentingController: presentingViewController, sizeManager: sizeManager))
+        panEffects.append(VelocityDismissPanEffect(contentController: contentController, presentingController: presentingViewController, sizeManager: sizeManager))
         panEffects.append(StretchingPanEffect(sizeManager: sizeManager, heightConstraint: contentControllerViewHeightConstraint))
         panEffects.append(PullDownPanEffect(contentController: contentController, presentingController: presentingViewController, sizeManager: sizeManager, heightConstraint: contentControllerViewHeightConstraint))
     }
