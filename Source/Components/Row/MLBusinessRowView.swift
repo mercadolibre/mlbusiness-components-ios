@@ -74,24 +74,12 @@ public class MLBusinessRowView: UIView {
         return label
     }()
     
-    private let mainDescriptionView: MLBusinessMultipleDescriptionView = {
-        let view = MLBusinessMultipleDescriptionView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     private let mainSecondaryDescriptionContainerView: UIView = {
         let view = UIView(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     } ()
     
-    private let mainSecondaryDescriptionView: MLBusinessMultipleDescriptionView = {
-        let view = MLBusinessMultipleDescriptionView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-
     private let rightStackView: UIStackView = {
         let stackView = UIStackView(frame: .zero)
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -165,6 +153,8 @@ public class MLBusinessRowView: UIView {
     }()
 
     private var imageProvider: MLBusinessImageProvider
+    private let mainDescriptionView: MLBusinessMultipleDescriptionView
+    private let mainSecondaryDescriptionView: MLBusinessMultipleDescriptionView
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
@@ -173,6 +163,8 @@ public class MLBusinessRowView: UIView {
 
     public init(with imageProvider: MLBusinessImageProvider? = nil) {
         self.imageProvider = imageProvider ?? MLBusinessURLImageProvider()
+        self.mainDescriptionView = MLBusinessMultipleDescriptionView(with: self.imageProvider)
+        self.mainSecondaryDescriptionView = MLBusinessMultipleDescriptionView(with: self.imageProvider)
         super.init(frame: .zero)
         setup()
         setupConstraints()
