@@ -74,6 +74,12 @@ public class MLBusinessRowView: UIView {
         return label
     }()
     
+    private let mainDescriptionContainerView: UIView = {
+        let view = UIView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private let mainDescriptionStackView: UIStackView = {
         let stackView = UIStackView(frame: .zero)
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -176,6 +182,7 @@ public class MLBusinessRowView: UIView {
         addSubview(overlayLeftImageImageView)
         addSubview(leftImageAccessoryImageView)
         mainSubtitleView.addSubview(mainSubtitleLabel)
+        mainDescriptionContainerView.addSubview(mainDescriptionStackView)
         addSubview(mainStackView)
         addSubview(rightStackView)
         rightBottomInfoPillView.addSubview(rightBottomInfoPill)
@@ -210,6 +217,13 @@ public class MLBusinessRowView: UIView {
             mainSubtitleLabel.bottomAnchor.constraint(equalTo: mainSubtitleView.bottomAnchor),
             mainSubtitleLabel.leftAnchor.constraint(equalTo: mainSubtitleView.leftAnchor),
             mainSubtitleLabel.rightAnchor.constraint(equalTo: mainSubtitleView.rightAnchor),
+        ])
+        
+        NSLayoutConstraint.activate([
+            mainDescriptionStackView.topAnchor.constraint(equalTo: mainDescriptionContainerView.topAnchor),
+            mainDescriptionStackView.rightAnchor.constraint(lessThanOrEqualTo: mainDescriptionContainerView.rightAnchor),
+            mainDescriptionStackView.bottomAnchor.constraint(equalTo: mainDescriptionContainerView.bottomAnchor),
+            mainDescriptionStackView.leftAnchor.constraint(equalTo: mainDescriptionContainerView.leftAnchor),
         ])
 
         NSLayoutConstraint.activate([
@@ -307,7 +321,7 @@ public class MLBusinessRowView: UIView {
                     break
                 }
             }
-            mainStackView.addArrangedSubview(mainDescriptionStackView)
+            mainStackView.addArrangedSubview(mainDescriptionContainerView)
         }
     }
     
