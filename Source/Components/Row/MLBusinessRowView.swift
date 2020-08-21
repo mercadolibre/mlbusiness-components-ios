@@ -74,15 +74,12 @@ public class MLBusinessRowView: UIView {
         return label
     }()
     
-    private let mainDescriptionStackView: UIStackView = {
-        let stackView = UIStackView(frame: .zero)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.distribution = .equalSpacing
-        stackView.spacing = 1
-        stackView.axis = .horizontal
-        return stackView
-    }()
-
+    private let mainSecondaryDescriptionContainerView: UIView = {
+        let view = UIView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    } ()
+    
     private let rightStackView: UIStackView = {
         let stackView = UIStackView(frame: .zero)
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -156,6 +153,8 @@ public class MLBusinessRowView: UIView {
     }()
 
     private var imageProvider: MLBusinessImageProvider
+    private let mainDescriptionView: MLBusinessMultipleDescriptionView
+    private let mainSecondaryDescriptionView: MLBusinessMultipleDescriptionView
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
@@ -164,6 +163,8 @@ public class MLBusinessRowView: UIView {
 
     public init(with imageProvider: MLBusinessImageProvider? = nil) {
         self.imageProvider = imageProvider ?? MLBusinessURLImageProvider()
+        self.mainDescriptionView = MLBusinessMultipleDescriptionView(with: self.imageProvider)
+        self.mainSecondaryDescriptionView = MLBusinessMultipleDescriptionView(with: self.imageProvider)
         super.init(frame: .zero)
         setup()
         setupConstraints()
@@ -177,6 +178,7 @@ public class MLBusinessRowView: UIView {
         addSubview(leftImageAccessoryImageView)
         mainSubtitleView.addSubview(mainSubtitleLabel)
         addSubview(mainStackView)
+        mainSecondaryDescriptionContainerView.addSubview(mainSecondaryDescriptionView)
         addSubview(rightStackView)
         rightBottomInfoPillView.addSubview(rightBottomInfoPill)
     }
@@ -233,6 +235,13 @@ public class MLBusinessRowView: UIView {
             rightBottomInfoPill.leftAnchor.constraint(equalTo: rightBottomInfoPillView.leftAnchor),
             rightBottomInfoPill.rightAnchor.constraint(equalTo: rightBottomInfoPillView.rightAnchor),
         ])
+        
+        NSLayoutConstraint.activate([
+            mainSecondaryDescriptionView.topAnchor.constraint(equalTo: mainSecondaryDescriptionContainerView.topAnchor, constant: 7.0),
+            mainSecondaryDescriptionView.rightAnchor.constraint(equalTo: mainSecondaryDescriptionContainerView.rightAnchor),
+            mainSecondaryDescriptionView.bottomAnchor.constraint(equalTo: mainSecondaryDescriptionContainerView.bottomAnchor),
+            mainSecondaryDescriptionView.leftAnchor.constraint(equalTo: mainSecondaryDescriptionContainerView.leftAnchor),
+        ])
     }
 
     public func update(with content: MLBusinessRowData) {
@@ -245,7 +254,6 @@ public class MLBusinessRowView: UIView {
     private func prepareForReuse() {
         rightStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         rightPrimarySecondaryStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
-        mainDescriptionStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         leftImageImageView.image = nil
         leftImageAccessoryImageView.image = nil
         rightBottomInfoPill.icon = nil
@@ -260,6 +268,7 @@ public class MLBusinessRowView: UIView {
         createMainTitle(with: content.getMainTitle())
         createMainSubtitle(with: content.getMainSubtitle())
         createMainDescription(with: content.getMainDescription())
+        createMainSecondaryDescription(with: content.getMainSecondaryDescription?())
     }
     
     private func createRightSection(with content: MLBusinessRowData) {
@@ -294,46 +303,17 @@ public class MLBusinessRowView: UIView {
     }
     
     private func createMainDescription(with mainDescriptionData: [MLBusinessRowMainDescriptionData]?) {
-        if let mainDescription = mainDescriptionData, mainDescription.count > 0 {
-            for item in mainDescription {
-                let itemContent = item.getContent()
-                let itemColor = item.getColor()?.hexaToUIColor()
-                switch item.getType().lowercased() {
-                case "image":
-                    createMainDescriptionImage(with: itemContent, imageColor: itemColor)
-                case "text":
-                    createMainDescriptionLabel(with: itemContent, textColor: itemColor)
-                default:
-                    break
-                }
-            }
-            mainStackView.addArrangedSubview(mainDescriptionStackView)
-        }
+        guard let mainDescriptionData = mainDescriptionData, mainDescriptionData.count > 0 else { return }
+        var mainDescriptionModel: [MLBusinessMultipleDescriptionModel] = []
+        mainDescriptionData.forEach { mainDescriptionModel.append(MLBusinessMultipleDescriptionModel(data: $0)) }
+        mainDescriptionView.update(with: mainDescriptionModel)
+        mainStackView.addArrangedSubview(mainDescriptionView)
     }
     
-    private func createMainDescriptionImage(with imageKey: String, imageColor: UIColor?) {
-        let imageView = UIImageView()
-        
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFill
-        imageView.backgroundColor = .clear
-        imageView.tintColor = imageColor
-        imageView.image = nil
-        imageProvider.getImage(key: imageKey) { image in imageView.image = image }
-        mainDescriptionStackView.addArrangedSubview(imageView)
-        imageView.heightAnchor.constraint(equalToConstant: 10).isActive = true
-        imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor).isActive = true
-    }
-    
-    private func createMainDescriptionLabel(with text: String, textColor: UIColor?) {
-        let label = UILabel(frame: .zero)
-        
-        label.numberOfLines = 1
-        label.font = MLStyleSheetManager.styleSheet.regularSystemFont(ofSize: CGFloat(kMLFontsSizeXXSmall))
-        label.textAlignment = .left
-        label.text = text
-        label.textColor = textColor
-        mainDescriptionStackView.addArrangedSubview(label)
+    private func createMainSecondaryDescription(with mainSecondaryDescriptionModel: [MLBusinessMultipleDescriptionModel]?) {
+        guard let model = mainSecondaryDescriptionModel, model.count > 0 else { return }
+        mainSecondaryDescriptionView.update(with: model)
+        mainStackView.addArrangedSubview(mainSecondaryDescriptionContainerView)
     }
     
     private func createRightTopLabel(with text: String?) {
