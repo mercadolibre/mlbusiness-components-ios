@@ -37,15 +37,17 @@ class VelocityDismissPanEffect: PanEffect {
 class PullDownPanEffect: PanEffect {
     private weak var presentingController: UIViewController?
     private weak var contentController: UIViewController?
+    private weak var overlayView: UIView?
     private var sizeManager: SheetSizeManager
     private let heightConstraint: NSLayoutConstraint
     
     private var previousTranslation = CGFloat(0.0)
     private var differenceBelowMin = CGFloat(0.0)
     
-    init(contentController: UIViewController, presentingController: UIViewController?, sizeManager: SheetSizeManager, heightConstraint: NSLayoutConstraint) {
+    init(contentController: UIViewController, presentingController: UIViewController?, overlayView: UIView, sizeManager: SheetSizeManager, heightConstraint: NSLayoutConstraint) {
         self.contentController = contentController
         self.presentingController = presentingController
+        self.overlayView = overlayView
         self.sizeManager = sizeManager
         self.heightConstraint = heightConstraint
     }
@@ -68,6 +70,7 @@ class PullDownPanEffect: PanEffect {
                 differenceBelowMin = 0.0
                 contentController?.view.transform = CGAffineTransform(translationX: 0.0, y: 0.0)
             }
+            overlayView?.alpha = 1 - (differenceBelowMin / sizeManager.dimension(for: sizeManager.min()))
             previousTranslation = translation.y
         } else if [UIGestureRecognizer.State.cancelled, UIGestureRecognizer.State.failed, UIGestureRecognizer.State.ended].contains(recognizer.state) {
             if (contentController?.view.transform.ty ?? 0.0) > min * 0.5 {
@@ -78,6 +81,7 @@ class PullDownPanEffect: PanEffect {
                                    delay: 0,
                                    options: [.curveEaseOut],
                                    animations: {
+                        self.overlayView?.alpha = 1.0
                         self.contentController?.view.transform = .identity
                     })
                 }
@@ -181,12 +185,6 @@ class ResizePanEffect: PanEffect {
         }
         
         previousTranslation = translation.y
-    }
-}
-
-class AdditionalSafeInsetsPanEffect: PanEffect {
-    func panned(in view: UIView, recognizer: UIPanGestureRecognizer) {
-        
     }
 }
 

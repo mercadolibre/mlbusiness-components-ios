@@ -21,20 +21,25 @@ public class SheetViewController: UIViewController {
         }
     }
     
+    private(set) var overlayView: UIView = UIView()
+    
+    private var configuration: SheetConfiguration
     private var contentController: SheetContentViewController
     
-    private var panGestureRecognizer: UIPanGestureRecognizer!
+    private var isPanning: Bool = false
     private var panEffects: [PanEffect] = []
+    private var panGestureRecognizer: UIPanGestureRecognizer!
     
     private let sizeManager: SheetSizeManager
-    private var isPanning: Bool = false
     private var contentControllerViewHeightConstraint: NSLayoutConstraint!
     
     public init(rootViewController: UIViewController, sizes: [SheetSize] = [.intrinsic], configuration: SheetConfiguration = .default) {
         self.contentController = SheetContentViewController(viewController: rootViewController, configuration: configuration)
         self.sizeManager = SheetSizeManager(sizes: sizes)
+        self.configuration = configuration
         super.init(nibName: nil, bundle: nil)
-        modalPresentationStyle = .overCurrentContext
+        self.transitioningDelegate = self
+        self.modalPresentationStyle = .overCurrentContext
     }
     
     @available(*, unavailable)
@@ -46,6 +51,7 @@ public class SheetViewController: UIViewController {
         super.viewDidLoad()
         
         setupView()
+        setupOverlayView()
         setupContentViewController()
         setupPanGestureRecognizer()
         setupPanEffects()
@@ -71,7 +77,19 @@ public class SheetViewController: UIViewController {
     }
     
     private func setupView() {
-        view.backgroundColor = .clear
+        view.backgroundColor = .clear// UIColor.black.withAlphaComponent(configuration.backgroundAlpha)
+    }
+    
+    private func setupOverlayView() {
+        overlayView.backgroundColor = UIColor.black.withAlphaComponent(configuration.backgroundAlpha)
+        view.addSubview(overlayView)
+        overlayView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            overlayView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            overlayView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            overlayView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            overlayView.topAnchor.constraint(equalTo: view.topAnchor),
+        ])
     }
     
     private func setupContentViewController() {
@@ -99,7 +117,7 @@ public class SheetViewController: UIViewController {
         panEffects.append(ResizePanEffect(sizeManager: sizeManager, heightConstraint: contentControllerViewHeightConstraint, contentController: contentController))
         panEffects.append(VelocityDismissPanEffect(contentController: contentController, presentingController: presentingViewController, sizeManager: sizeManager))
         panEffects.append(StretchingPanEffect(sizeManager: sizeManager, heightConstraint: contentControllerViewHeightConstraint))
-        panEffects.append(PullDownPanEffect(contentController: contentController, presentingController: presentingViewController, sizeManager: sizeManager, heightConstraint: contentControllerViewHeightConstraint))
+        panEffects.append(PullDownPanEffect(contentController: contentController, presentingController: presentingViewController, overlayView: overlayView, sizeManager: sizeManager, heightConstraint: contentControllerViewHeightConstraint))
     }
     
     @objc
@@ -130,5 +148,15 @@ extension SheetViewController: UIGestureRecognizerDelegate {
         }
         
         return true
+    }
+}
+
+extension SheetViewController: UIViewControllerTransitioningDelegate {
+    public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return SheetPresentingTransitionAnimation()
+    }
+    
+    public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return SheetDismissingTransitionAnimation()
     }
 }

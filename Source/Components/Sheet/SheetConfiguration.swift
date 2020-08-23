@@ -15,8 +15,9 @@ public enum HandleTint {
 public struct SheetConfiguration {
     public static var `default` = SheetConfiguration()
     
-    public var cornerRadius: CGFloat = 12
     public var handle: HandleConfiguration = .default
+    public var cornerRadius: CGFloat = 12
+    public var backgroundAlpha: CGFloat = 0.6
 }
 
 public struct HandleConfiguration {
