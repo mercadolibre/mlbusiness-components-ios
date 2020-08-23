@@ -37,11 +37,11 @@ class SheetSizeManager {
     }
     
     func floor(height: CGFloat) -> SheetSize {
-        possible.reversed().first { 0...height ~= dimension(for: $0) } ?? min()
+        return possible.reversed().first { 0...height ~= dimension(for: $0) } ?? min()
     }
     
     func ceil(height: CGFloat) -> SheetSize {
-        possible.first { dimension(for: $0) >= height } ?? max()
+        return possible.first { dimension(for: $0) >= height } ?? max()
     }
     
     func min() -> SheetSize {
