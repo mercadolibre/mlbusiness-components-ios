@@ -54,6 +54,7 @@ public class SheetViewController: UIViewController {
         setupOverlayView()
         setupContentViewController()
         setupPanGestureRecognizer()
+        setupTapGestureRecognizer()
         setupPanEffects()
     }
     
@@ -77,7 +78,7 @@ public class SheetViewController: UIViewController {
     }
     
     private func setupView() {
-        view.backgroundColor = .clear// UIColor.black.withAlphaComponent(configuration.backgroundAlpha)
+        view.backgroundColor = .clear
     }
     
     private func setupOverlayView() {
@@ -113,6 +114,11 @@ public class SheetViewController: UIViewController {
         view.addGestureRecognizer(panGestureRecognizer)
     }
     
+    private func setupTapGestureRecognizer() {
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapped(_:)))
+        overlayView.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
     private func setupPanEffects() {
         panEffects.append(ResizePanEffect(sizeManager: sizeManager, heightConstraint: contentControllerViewHeightConstraint, contentController: contentController))
         panEffects.append(VelocityDismissPanEffect(contentController: contentController, presentingController: presentingViewController, sizeManager: sizeManager))
@@ -126,10 +132,16 @@ public class SheetViewController: UIViewController {
         panEffects.forEach { $0.panned(in: view, recognizer: recognizer) }
         if [UIGestureRecognizer.State.cancelled, UIGestureRecognizer.State.failed, UIGestureRecognizer.State.ended].contains(recognizer.state) { isPanning = false }
     }
+    
+    @objc
+    private func tapped(_ recongizer: UITapGestureRecognizer) {
+        presentingViewController?.dismiss(animated: true)
+    }
 }
 
 extension SheetViewController: UIGestureRecognizerDelegate {
     public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard let gestureRecognizer = gestureRecognizer as? UIPanGestureRecognizer else { return true }
         guard let scrollView = self.scrollView, scrollView.window != nil else { return true }
         
         let point = gestureRecognizer.location(in: view)
@@ -138,7 +150,7 @@ extension SheetViewController: UIGestureRecognizerDelegate {
         guard pointInChildScrollView > 0, pointInChildScrollView < scrollView.bounds.height else { return true }
         
         let topInset = scrollView.contentInset.top
-        let velocity = panGestureRecognizer.velocity(in: panGestureRecognizer.view?.superview)
+        let velocity = gestureRecognizer.velocity(in: gestureRecognizer.view?.superview)
         
         guard abs(velocity.y) > abs(velocity.x), scrollView.contentOffset.y <= -topInset else { return false }
         
