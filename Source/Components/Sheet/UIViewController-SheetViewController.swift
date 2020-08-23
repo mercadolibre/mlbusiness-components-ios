@@ -7,8 +7,8 @@
 
 import Foundation
 
-extension UIViewController {
-    public var sheetViewController: SheetViewController? {
+public extension UIViewController {
+    var sheetViewController: SheetViewController? {
         var parent = self.parent
         while let currentParent = parent {
             if let sheetViewController = currentParent as? SheetViewController {
