@@ -42,8 +42,9 @@ extension ViewController {
         let loyaltyHeaderView = setupLoyaltyHeaderView(bottomOf: downloadAppView)
         let animatedButtonView = setupAnimatedButtonView(bottomOf: loyaltyHeaderView)
         let rowView = setupRowView(bottomOf: animatedButtonView)
-        let hybridRow = setupHybridRowView(bottomOf: rowView)
-        let openSheet = setupSheetViewController(bottomOf: hybridRow)
+        let hybridCarousel = setupHybridCarouselView(bottomOf: rowView)
+        let multipleRowTouchpointView = setupMultipleRowTouchpointView(bottomOf: hybridCarousel)
+        let openSheet = setupSheetViewController(bottomOf: multipleRowTouchpointView)
         
         openSheet.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -64).isActive = true
     }
@@ -203,7 +204,7 @@ extension ViewController {
         return rowView
     }
     
-    private func setupHybridRowView(bottomOf targetView: UIView) -> UIView {
+    private func setupHybridCarouselView(bottomOf targetView: UIView) -> UIView {
         let discountTouchpointsView = MLBusinessTouchpointsView()
         discountTouchpointsView.setTouchpointsTracker(with: DiscountTrackerData(touchPointId: "BusinessComponents-Example"))
         discountTouchpointsView.update(with: HybridCarouselData())
@@ -216,18 +217,33 @@ extension ViewController {
         return discountTouchpointsView
     }
     
+    private func setupMultipleRowTouchpointView(bottomOf targetView: UIView) -> UIView {
+        let discountTouchpointsView = MLBusinessTouchpointsView()
+        discountTouchpointsView.setTouchpointsTracker(with: DiscountTrackerData(touchPointId: "BusinessComponents-Example"))
+        discountTouchpointsView.update(with: MultipleRowData())
+        containerView.addSubview(discountTouchpointsView)
+        NSLayoutConstraint.activate([
+            discountTouchpointsView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            discountTouchpointsView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            discountTouchpointsView.topAnchor.constraint(equalTo: targetView.bottomAnchor)
+        ])
+        return discountTouchpointsView
+    }
+    
     private func setupSheetViewController(bottomOf targetView: UIView) -> UIView {
         let button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Open Sheet", for: .normal)
-        button.titleLabel?.textColor = .black
+        button.setTitleColor(.black, for: .normal)
+        button.backgroundColor = .lightGray
+        button.layer.cornerRadius = 6.0
         containerView.addSubview(button)
         
         NSLayoutConstraint.activate([
             button.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16),
             button.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
             button.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
-            button.heightAnchor.constraint(equalToConstant: 50.0)
+            button.heightAnchor.constraint(equalToConstant: 54.0)
         ])
         
         button.addTarget(self, action: #selector(openSheetDidTap), for: .touchUpInside)
@@ -237,28 +253,25 @@ extension ViewController {
 
     @objc
     private func openSheetDidTap() {
-        let contentView = MLBusinessTouchpointsView()
-        contentView.setTouchpointsTracker(with: DiscountTrackerData(touchPointId: "BusinessComponents-Example"))
-        contentView.update(with: DiscountTouchpointsGridData(numberOfItems: 6))
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Hello, world!"
+        label.textColor = .black
         
-        let container = UIViewController()
-        container.view.translatesAutoresizingMaskIntoConstraints = false
-        container.view.addSubview(contentView)
+        let vc = UIViewController()
+        vc.view.translatesAutoresizingMaskIntoConstraints = false
+        vc.view.backgroundColor = .red
         
+        vc.view.addSubview(label)
         NSLayoutConstraint.activate([
-            contentView.leftAnchor.constraint(equalTo: container.view.leftAnchor),
-            contentView.rightAnchor.constraint(equalTo: container.view.rightAnchor),
-            contentView.topAnchor.constraint(equalTo: container.view.topAnchor)
+            label.leftAnchor.constraint(equalTo: vc.view.leftAnchor),
+            label.rightAnchor.constraint(equalTo: vc.view.rightAnchor),
+            label.topAnchor.constraint(equalTo: vc.view.topAnchor),
+            label.bottomAnchor.constraint(equalTo: vc.view.bottomAnchor),
+            vc.view.heightAnchor.constraint(greaterThanOrEqualToConstant: 400)
         ])
         
-        if #available(iOS 11.0, *) {
-            contentView.bottomAnchor.constraint(equalTo: container.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        } else {
-            contentView.bottomAnchor.constraint(equalTo: container.view.bottomAnchor).isActive = true
-        }
-        
-        let sheet = SheetViewController(rootViewController: container, sizes: [.intrinsic])
-        
+        let sheet = SheetViewController(rootViewController: vc, sizes: [.intrinsic, .fixedFromTop(100)])
         self.present(sheet, animated: true)
     }
     
@@ -269,7 +282,6 @@ extension ViewController {
             button.finishLoading(color: .ml_meli_green(), image: nil)
         }
     }
-
 }
 
 extension ViewController {

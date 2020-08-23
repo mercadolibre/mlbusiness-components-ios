@@ -13,6 +13,7 @@ import Foundation
     @objc func getMainTitle() -> String
     @objc func getMainSubtitle() -> String?
     @objc func getMainDescription() -> [MLBusinessRowMainDescriptionData]?
+    @objc optional func getMainSecondaryDescription() -> [MLBusinessMultipleDescriptionModel]?
     @objc func getRightPrimaryLabel() -> String?
     @objc func getRightSecondaryLabel() -> String?
     @objc func getRightMiddleLabel() -> String?

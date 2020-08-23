@@ -91,7 +91,7 @@ public class MLBusinessPillView: UIView {
 
         NSLayoutConstraint.activate([
             iconImageView.leftAnchor.constraint(equalTo: leftAnchor),
-            iconImageView.heightAnchor.constraint(equalTo: textLabel.heightAnchor, multiplier: 0.8),
+            iconImageView.heightAnchor.constraint(equalToConstant: 10.0),
             width,
             iconImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
         ])
@@ -112,6 +112,6 @@ public class MLBusinessPillView: UIView {
     }
 
     private func toggleSizeChange() {
-        imageWidth?.constant = iconImageView.image == nil ? 0 : 8
+        imageWidth?.constant = iconImageView.image == nil ? 0.0 : 10.0
     }
 }

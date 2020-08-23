@@ -1,3 +1,11 @@
+# v1.19.0
+🚀 1.19.0 🚀
+- Added Multiple Row Component
+- Resized pill icon on Hybrid Carousel
+- Added Multiple Description Component
+- Added Multiple Description to Row
+- New image accesory for Hyrbrid Carousel Card
+
 # v1.18.0
 🚀 1.18.0 🚀
 - Added Hybrid Carousel Component
