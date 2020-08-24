@@ -7,7 +7,11 @@
 
 import UIKit
 
-public class SheetViewController: UIViewController {
+public protocol SheetViewControllerDelegate: class {
+    func sheetViewController(_ sheetViewController: SheetViewController, sheetHeightDidChange height: CGFloat)
+}
+
+open class SheetViewController: UIViewController {
     
     public var rootViewController: UIViewController {
         get {
@@ -21,6 +25,8 @@ public class SheetViewController: UIViewController {
         }
     }
     
+    public weak var delegate: SheetViewControllerDelegate?
+    
     private(set) var overlayView: UIView = UIView()
     
     private var configuration: SheetConfiguration
@@ -31,7 +37,7 @@ public class SheetViewController: UIViewController {
     private var panGestureRecognizer: UIPanGestureRecognizer!
     
     private let sizeManager: SheetSizeManager
-    private var contentControllerViewHeightConstraint: NSLayoutConstraint!
+    private var heightConstraintManager: SheetHeightConstraintManager!
     
     public init(rootViewController: UIViewController, sizes: [SheetSize] = [.intrinsic], configuration: SheetConfiguration = .default) {
         self.contentController = SheetContentViewController(viewController: rootViewController, configuration: configuration)
@@ -43,11 +49,11 @@ public class SheetViewController: UIViewController {
     }
     
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
         
         setupView()
@@ -58,23 +64,23 @@ public class SheetViewController: UIViewController {
         setupPanEffects()
     }
     
-    public override func viewDidLayoutSubviews() {
+    open override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         guard !isPanning else { return }
-        contentControllerViewHeightConstraint.priority = .defaultLow
+        heightConstraintManager.setPriority(.defaultLow)
         sizeManager.sheetViewSize = view.bounds.size
-        contentControllerViewHeightConstraint.constant = sizeManager.currentDimension
-        contentControllerViewHeightConstraint.priority = .defaultHigh
-        contentControllerViewHeightConstraint.isActive = true
+        heightConstraintManager.setHeight(sizeManager.currentDimension)
+        heightConstraintManager.setPriority(.defaultHigh)
+        heightConstraintManager.setActive(true)
     }
     
-    public override func preferredContentSizeDidChange(forChildContentContainer container: UIContentContainer) {
+    open override func preferredContentSizeDidChange(forChildContentContainer container: UIContentContainer) {
         guard !isPanning else { return }
-        contentControllerViewHeightConstraint.priority = .defaultLow
+        heightConstraintManager.setPriority(.defaultLow)
         sizeManager.sheetContentSize = container.preferredContentSize
-        contentControllerViewHeightConstraint.constant = sizeManager.currentDimension
-        contentControllerViewHeightConstraint.priority = .defaultHigh
-        contentControllerViewHeightConstraint.isActive = true
+        heightConstraintManager.setHeight(sizeManager.currentDimension)
+        heightConstraintManager.setPriority(.defaultHigh)
+        heightConstraintManager.setActive(true)
     }
     
     private func setupView() {
@@ -91,13 +97,15 @@ public class SheetViewController: UIViewController {
             overlayView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             overlayView.topAnchor.constraint(equalTo: view.topAnchor),
         ])
+        overlayView.isUserInteractionEnabled = configuration.tapEmptySpaceToDismiss
     }
     
     private func setupContentViewController() {
         contentController.willMove(toParent: self)
         addChild(contentController)
         view.addSubview(contentController.view)
-        contentControllerViewHeightConstraint = contentController.view.heightAnchor.constraint(equalToConstant: sizeManager.currentDimension)
+        heightConstraintManager = SheetHeightConstraintManager(constraint: contentController.view.heightAnchor.constraint(equalToConstant: sizeManager.currentDimension),
+                                                               delegate: self)
         NSLayoutConstraint.activate([
             contentController.view.leftAnchor.constraint(equalTo: view.leftAnchor),
             contentController.view.rightAnchor.constraint(equalTo: view.rightAnchor),
@@ -115,15 +123,16 @@ public class SheetViewController: UIViewController {
     }
     
     private func setupTapGestureRecognizer() {
+        guard configuration.tapEmptySpaceToDismiss else { return }
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapped(_:)))
         overlayView.addGestureRecognizer(tapGestureRecognizer)
     }
     
     private func setupPanEffects() {
-        panEffects.append(ResizePanEffect(sizeManager: sizeManager, heightConstraint: contentControllerViewHeightConstraint, contentController: contentController))
+        panEffects.append(ResizePanEffect(sizeManager: sizeManager, heightManager: heightConstraintManager, contentController: contentController))
         panEffects.append(VelocityDismissPanEffect(contentController: contentController, presentingController: presentingViewController, sizeManager: sizeManager))
-        panEffects.append(StretchingPanEffect(sizeManager: sizeManager, heightConstraint: contentControllerViewHeightConstraint))
-        panEffects.append(PullDownPanEffect(contentController: contentController, presentingController: presentingViewController, overlayView: overlayView, sizeManager: sizeManager, heightConstraint: contentControllerViewHeightConstraint))
+        panEffects.append(StretchingPanEffect(sizeManager: sizeManager, heightManager: heightConstraintManager))
+        panEffects.append(PullDownPanEffect(contentController: contentController, presentingController: presentingViewController, overlayView: overlayView, sizeManager: sizeManager, heightManager: heightConstraintManager))
     }
     
     @objc
@@ -139,8 +148,14 @@ public class SheetViewController: UIViewController {
     }
 }
 
+extension SheetViewController: SheetHeightConstraintManagerDelegate {
+    func sheetHeightDidChange(_ height: CGFloat) {
+        delegate?.sheetViewController(self, sheetHeightDidChange: height)
+    }
+}
+
 extension SheetViewController: UIGestureRecognizerDelegate {
-    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+    open func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         guard let gestureRecognizer = gestureRecognizer as? UIPanGestureRecognizer else { return true }
         guard let scrollView = self.scrollView, scrollView.window != nil else { return true }
         
@@ -164,11 +179,11 @@ extension SheetViewController: UIGestureRecognizerDelegate {
 }
 
 extension SheetViewController: UIViewControllerTransitioningDelegate {
-    public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    open func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return SheetPresentingTransitionAnimation()
     }
     
-    public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    open func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return SheetDismissingTransitionAnimation()
     }
 }

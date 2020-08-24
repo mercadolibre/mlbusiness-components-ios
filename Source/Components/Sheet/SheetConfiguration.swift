@@ -18,6 +18,7 @@ public struct SheetConfiguration {
     public var handle: HandleConfiguration = .default
     public var cornerRadius: CGFloat = 12
     public var backgroundAlpha: CGFloat = 0.6
+    public var tapEmptySpaceToDismiss: Bool = true
 }
 
 public struct HandleConfiguration {

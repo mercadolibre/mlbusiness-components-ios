@@ -104,7 +104,7 @@ class SheetContentViewController: UIViewController {
         NSLayoutConstraint.activate([
             handleView.leftAnchor.constraint(greaterThanOrEqualTo: contentView.leftAnchor),
             handleView.rightAnchor.constraint(lessThanOrEqualTo: contentView.rightAnchor),
-            handleView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: (handleHeight - gripHeight) / 2),
+            handleView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: max((handleHeight - gripHeight) / 2, 6)),
             handleView.widthAnchor.constraint(equalToConstant: 40.0),
             handleView.heightAnchor.constraint(equalToConstant: gripHeight),
             handleView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
