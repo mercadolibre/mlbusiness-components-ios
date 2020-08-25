@@ -1,3 +1,7 @@
+# v1.20.0
+🚀 1.20.0 🚀
+- New Sheet Component
+
 # v1.19.0
 🚀 1.19.0 🚀
 - Added Multiple Row Component
