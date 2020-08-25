@@ -1,7 +1,17 @@
-# Sin Publicar
+# Sin publicar
+- Loyalty Broadcast
+
+# v1.20.0
+🚀 1.20.0 🚀
+- New Sheet Component
+
+# v1.19.0
+🚀 1.19.0 🚀
 - Added Multiple Row Component
 - Resized pill icon on Hybrid Carousel
-- Loyalty Broadcast
+- Added Multiple Description Component
+- Added Multiple Description to Row
+- New image accesory for Hyrbrid Carousel Card
 
 # v1.18.0
 🚀 1.18.0 🚀

@@ -41,10 +41,13 @@ class MLBusinessHybridCarouselCardDefaultView: MLBusinessHybridCarouselCardTypeV
     private let topImageAccessoryImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.layer.cornerRadius = 10
+        imageView.layer.cornerRadius = 10.0
+        imageView.layer.borderColor = MLStyleSheetManager.styleSheet.whiteColor.cgColor
+        imageView.layer.borderWidth = 1.0
         imageView.clipsToBounds = true
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         imageView.backgroundColor = .clear
+        imageView.isHidden = true
         return imageView
     }()
     
@@ -138,6 +141,8 @@ class MLBusinessHybridCarouselCardDefaultView: MLBusinessHybridCarouselCardTypeV
     private var bottomTopHeightAnchorConstraint: NSLayoutConstraint?
     private var bottomBottomAnchorEqualConstraint: NSLayoutConstraint?
     private var bottomBottomAnchorLessThanConstraint: NSLayoutConstraint?
+    private var topImageAccessoryImageViewWidthConstraint: NSLayoutConstraint?
+    private let topImageAccessoryImageViewHeight = CGFloat(20.0)
 
     required init() {
         super.init()
@@ -195,9 +200,11 @@ class MLBusinessHybridCarouselCardDefaultView: MLBusinessHybridCarouselCardTypeV
             topImageOverlayImageView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
         ])
         
+        topImageAccessoryImageViewWidthConstraint = topImageAccessoryImageView.widthAnchor.constraint(equalToConstant: topImageAccessoryImageViewHeight)
+        topImageAccessoryImageViewWidthConstraint?.isActive = true
+        
         NSLayoutConstraint.activate([
-            topImageAccessoryImageView.heightAnchor.constraint(equalToConstant: 20.0),
-            topImageAccessoryImageView.widthAnchor.constraint(equalTo: topImageAccessoryImageView.heightAnchor),
+            topImageAccessoryImageView.heightAnchor.constraint(equalToConstant: topImageAccessoryImageViewHeight),
             topImageAccessoryImageView.bottomAnchor.constraint(equalTo: topImageImageView.bottomAnchor),
             topImageAccessoryImageView.rightAnchor.constraint(equalTo: topImageImageView.rightAnchor),
         ])
@@ -228,8 +235,14 @@ class MLBusinessHybridCarouselCardDefaultView: MLBusinessHybridCarouselCardTypeV
              imageProvider.getImage(key: topImageKey) { image in self.topImageImageView.image = image }
          }
          
-         if let topImageAccessoryKey = item.topImageAccessory {
-            imageProvider.getImage(key: topImageAccessoryKey) { image in self.topImageAccessoryImageView.image = image }
+        if let topImageAccessoryKey = item.topImageAccessory {
+            topImageAccessoryImageView.isHidden = false
+            imageProvider.getImage(key: topImageAccessoryKey) { image in
+                self.topImageAccessoryImageView.image = image
+                if let image = image {
+                    self.topImageAccessoryImageViewWidthConstraint?.constant = self.topImageAccessoryImageViewHeight * (image.size.width / image.size.height)
+                }
+            }
         }
         
         middleTitleLabel.text = item.middleTitle
