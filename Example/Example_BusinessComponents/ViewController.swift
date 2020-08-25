@@ -44,8 +44,9 @@ extension ViewController {
         let rowView = setupRowView(bottomOf: animatedButtonView)
         let hybridCarousel = setupHybridCarouselView(bottomOf: rowView)
         let multipleRowTouchpointView = setupMultipleRowTouchpointView(bottomOf: hybridCarousel)
+        let openSheet = setupSheetViewController(bottomOf: multipleRowTouchpointView)
         
-        multipleRowTouchpointView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -64).isActive = true
+        openSheet.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -64).isActive = true
     }
 
     private func setupRingView() -> MLBusinessLoyaltyRingView {
@@ -228,7 +229,52 @@ extension ViewController {
         ])
         return discountTouchpointsView
     }
+    
+    private func setupSheetViewController(bottomOf targetView: UIView) -> UIView {
+        let button = UIButton(type: .custom)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Open Sheet", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.backgroundColor = .lightGray
+        button.layer.cornerRadius = 6.0
+        containerView.addSubview(button)
+        
+        NSLayoutConstraint.activate([
+            button.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 16),
+            button.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            button.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+            button.heightAnchor.constraint(equalToConstant: 54.0)
+        ])
+        
+        button.addTarget(self, action: #selector(openSheetDidTap), for: .touchUpInside)
+        
+        return button
+    }
 
+    @objc
+    private func openSheetDidTap() {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Hello, world!"
+        label.textColor = .black
+        
+        let vc = UIViewController()
+        vc.view.translatesAutoresizingMaskIntoConstraints = false
+        vc.view.backgroundColor = .red
+        
+        vc.view.addSubview(label)
+        NSLayoutConstraint.activate([
+            label.leftAnchor.constraint(equalTo: vc.view.leftAnchor),
+            label.rightAnchor.constraint(equalTo: vc.view.rightAnchor),
+            label.topAnchor.constraint(equalTo: vc.view.topAnchor),
+            label.bottomAnchor.constraint(equalTo: vc.view.bottomAnchor),
+            vc.view.heightAnchor.constraint(greaterThanOrEqualToConstant: 400)
+        ])
+        
+        let sheet = SheetViewController(rootViewController: vc, sizes: [.intrinsic, .fixedFromTop(100)])
+        self.present(sheet, animated: true)
+    }
+    
     @objc
     private func animatedButtonDidTap(_ button: MLBusinessAnimatedButton) {
         button.startLoading()
@@ -236,7 +282,6 @@ extension ViewController {
             button.finishLoading(color: .ml_meli_green(), image: nil)
         }
     }
-
 }
 
 extension ViewController {
