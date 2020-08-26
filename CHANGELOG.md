@@ -1,4 +1,5 @@
-# Sin publicar
+# v1.21.0
+🚀 1.21.0 🚀
 - Loyalty Broadcast
 
 # v1.20.0
