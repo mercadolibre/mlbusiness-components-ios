@@ -1,3 +1,6 @@
+# Sin Publicar
+- Updated Row Component
+
 # v1.21.0
 🚀 1.21.0 🚀
 - Loyalty Broadcast
