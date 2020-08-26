@@ -254,6 +254,7 @@ public class MLBusinessRowView: UIView {
     private func prepareForReuse() {
         rightStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         rightPrimarySecondaryStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        mainStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         leftImageImageView.image = nil
         leftImageAccessoryImageView.image = nil
         rightBottomInfoPill.icon = nil
