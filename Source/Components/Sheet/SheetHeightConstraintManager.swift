@@ -38,8 +38,4 @@ class SheetHeightConstraintManager: SheetHeightManager {
     func setActive(_ active: Bool) {
         contentControllerViewHeightConstraint.isActive = active
     }
-    
-    func setPriority(_ priority: UILayoutPriority) {
-        contentControllerViewHeightConstraint.priority = priority
-    }
 }

@@ -67,19 +67,17 @@ open class SheetViewController: UIViewController {
     open override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         guard !isPanning else { return }
-        heightConstraintManager.setPriority(.defaultLow)
+        heightConstraintManager.setActive(false)
         sizeManager.sheetViewSize = view.bounds.size
         heightConstraintManager.setHeight(sizeManager.currentDimension)
-        heightConstraintManager.setPriority(.required)
         heightConstraintManager.setActive(true)
     }
     
     open override func preferredContentSizeDidChange(forChildContentContainer container: UIContentContainer) {
         guard !isPanning else { return }
-        heightConstraintManager.setPriority(.defaultLow)
+        heightConstraintManager.setActive(false)
         sizeManager.sheetContentSize = container.preferredContentSize
         heightConstraintManager.setHeight(sizeManager.currentDimension)
-        heightConstraintManager.setPriority(.required)
         heightConstraintManager.setActive(true)
     }
     
