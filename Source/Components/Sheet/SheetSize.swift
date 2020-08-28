@@ -7,10 +7,11 @@
 
 import Foundation
 
-public enum SheetSize: Equatable, Hashable {
+public indirect enum SheetSize: Equatable, Hashable {
     case intrinsic
     case percent(CGFloat)
     case fixed(CGFloat)
     case fixedFromTop(CGFloat)
-    case fullscreen
+    case min(SheetSize, SheetSize)
+    case max(SheetSize, SheetSize)
 }
