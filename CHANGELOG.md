@@ -1,3 +1,7 @@
+# v1.23.0
+🚀 1.23.0 🚀
+- Improvements in Sheet
+
 # v1.22.0
 🚀 1.22.0 🚀
 - Updated Row Component
