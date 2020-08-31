@@ -67,19 +67,17 @@ open class SheetViewController: UIViewController {
     open override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         guard !isPanning else { return }
-        heightConstraintManager.setPriority(.defaultLow)
+        heightConstraintManager.setActive(false)
         sizeManager.sheetViewSize = view.bounds.size
         heightConstraintManager.setHeight(sizeManager.currentDimension)
-        heightConstraintManager.setPriority(.defaultHigh)
         heightConstraintManager.setActive(true)
     }
     
     open override func preferredContentSizeDidChange(forChildContentContainer container: UIContentContainer) {
         guard !isPanning else { return }
-        heightConstraintManager.setPriority(.defaultLow)
+        heightConstraintManager.setActive(false)
         sizeManager.sheetContentSize = container.preferredContentSize
         heightConstraintManager.setHeight(sizeManager.currentDimension)
-        heightConstraintManager.setPriority(.defaultHigh)
         heightConstraintManager.setActive(true)
     }
     
@@ -113,7 +111,6 @@ open class SheetViewController: UIViewController {
             contentController.view.topAnchor.constraint(greaterThanOrEqualTo: view.topAnchor),
         ])
         contentController.didMove(toParent: self)
-        sizeManager.sheetContentSize = contentController.preferredContentSize
     }
     
     private func setupPanGestureRecognizer() {
@@ -171,7 +168,7 @@ extension SheetViewController: UIGestureRecognizerDelegate {
         
         if velocity.y < 0 {
             let containerHeight = sizeManager.currentDimension
-            return sizeManager.dimension(for: sizeManager.max()) > containerHeight && containerHeight < sizeManager.dimension(for: .fullscreen)
+            return sizeManager.dimension(for: sizeManager.max()) > containerHeight && containerHeight < sizeManager.dimension(for: .percent(1.0))
         }
         
         return true

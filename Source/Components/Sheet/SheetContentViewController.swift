@@ -14,14 +14,11 @@ class SheetContentViewController: UIViewController {
     
     private var contentView = UIView()
     private var contentContainerView = UIView()
-    private var handleView: UIVisualEffectView
-    
-    private var isFullscreen: Bool?
+    private var handleView = UIView()
     
     init(viewController: UIViewController, configuration: SheetConfiguration) {
         self.viewController = viewController
         self.configuration = configuration
-        self.handleView = UIVisualEffectView(effect: UIBlurEffect(style: configuration.handle.tint.blurStyle()))
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -39,10 +36,14 @@ class SheetContentViewController: UIViewController {
         setupHandleView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        calculatePreferredContentSize()
+    }
+    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         calculatePreferredContentSize()
-        updateForPossibleFullscreen()
     }
     
     private func setupContentView() {
@@ -80,11 +81,6 @@ class SheetContentViewController: UIViewController {
             viewController.view.topAnchor.constraint(equalTo: contentContainerView.topAnchor),
             viewController.view.bottomAnchor.constraint(equalTo: contentContainerView.bottomAnchor)
         ])
-        if #available(iOS 11.0, *) {
-            if configuration.handle.height > 0 {
-                viewController.additionalSafeAreaInsets = UIEdgeInsets(top: configuration.handle.height, left: 0, bottom: 0, right: 0)
-            }
-        }
         viewController.didMove(toParent: self)
     }
     
@@ -92,7 +88,7 @@ class SheetContentViewController: UIViewController {
         contentView.addSubview(handleView)
         handleView.translatesAutoresizingMaskIntoConstraints = false
         
-        let gripHeight: CGFloat = 5.0
+        let gripHeight: CGFloat = 4.0
         let handleHeight: CGFloat
         
         if #available(iOS 11.0, *) {
@@ -105,13 +101,14 @@ class SheetContentViewController: UIViewController {
             handleView.leftAnchor.constraint(greaterThanOrEqualTo: contentView.leftAnchor),
             handleView.rightAnchor.constraint(lessThanOrEqualTo: contentView.rightAnchor),
             handleView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: max((handleHeight - gripHeight) / 2, 6)),
-            handleView.widthAnchor.constraint(equalToConstant: 40.0),
+            handleView.widthAnchor.constraint(equalToConstant: 46.0),
             handleView.heightAnchor.constraint(equalToConstant: gripHeight),
             handleView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
         ])
         
         handleView.layer.cornerRadius = gripHeight / 2
         handleView.layer.masksToBounds = true
+        handleView.backgroundColor = configuration.handle.tint.color()
     }
     
     private func calculatePreferredContentSize() {
@@ -121,36 +118,18 @@ class SheetContentViewController: UIViewController {
         if newSize != currentSize { preferredContentSize = newSize }
     }
     
-    private func updateForPossibleFullscreen() {
-        let isFirstLaunch = isFullscreen == nil
-        let fullscreen = view.bounds.height == UIScreen.main.bounds.height
-        guard isFullscreen != fullscreen || isFirstLaunch else { return }
-        if #available(iOS 11.0, *) {
-            viewController.additionalSafeAreaInsets = UIEdgeInsets(top: fullscreen ? 0.0 : configuration.handle.height, left: 0, bottom: 0, right: 0)
-        }
-        if configuration.cornerRadius > 0 {
-            setupCornerRadius(fullscreen ? 0.0 : configuration.cornerRadius)
-        }
-        let animations = {
-            self.handleView.alpha = fullscreen ? 0.0 : 1.0
-            self.view.layoutIfNeeded()
-        }
-        isFirstLaunch ? animations() : UIView.animate(withDuration: 0.2, animations: animations)
-        isFullscreen = fullscreen
-    }
-    
     private func setupCornerRadius(_ radius: CGFloat) {
         contentContainerView.roundCorners([.layerMaxXMinYCorner, .layerMinXMinYCorner], radius: radius)
     }
 }
 
 private extension HandleTint {
-    func blurStyle() -> UIBlurEffect.Style {
+    func color() -> UIColor {
         switch self {
-            case .light:
-            return .extraLight
-            case .dark:
-            return .prominent
+        case .light:
+        return UIColor.white.withAlphaComponent(0.1)
+        case .dark:
+        return UIColor.black.withAlphaComponent(0.1)
         }
     }
 }

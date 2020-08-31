@@ -16,8 +16,8 @@ public struct SheetConfiguration {
     public static var `default` = SheetConfiguration()
     
     public var handle: HandleConfiguration = .default
-    public var cornerRadius: CGFloat = 12
-    public var backgroundAlpha: CGFloat = 0.6
+    public var cornerRadius: CGFloat = 6
+    public var backgroundAlpha: CGFloat = 0.7
     public var tapEmptySpaceToDismiss: Bool = true
 }
 
@@ -25,5 +25,5 @@ public struct HandleConfiguration {
     public static var `default` = HandleConfiguration()
     
     public var tint: HandleTint = .dark
-    public var height: CGFloat = 18
+    public var height: CGFloat = 24
 }
