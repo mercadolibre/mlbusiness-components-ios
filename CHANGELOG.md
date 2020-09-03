@@ -1,4 +1,5 @@
-# Sin Publicar
+# v1.24.0
+🚀 1.24.0 🚀
 - Fixes in Hybrid Carousel Component
 
 # v1.23.0
