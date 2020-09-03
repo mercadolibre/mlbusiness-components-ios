@@ -1,3 +1,6 @@
+# Sin Publicar
+- Fixes in Hybrid Carousel Component
+
 # v1.23.0
 🚀 1.23.0 🚀
 - Improvements in Sheet
