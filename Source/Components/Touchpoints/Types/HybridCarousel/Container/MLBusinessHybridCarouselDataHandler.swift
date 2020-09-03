@@ -81,10 +81,12 @@ class MLBusinessHybridCarouselDataHandler: NSObject {
             collectionViewHeight += hasMiddleTitle ? middleTitleLabelHeight : 0
             collectionViewHeight += hasMiddleSubtitle ? middleSubtitleLabelHeight : 0
             
-            if hasMiddleSubtitle {
-                collectionViewHeight += bottomSectionHeightWithSubtitle
-            } else {
-                collectionViewHeight += bottomSectionHeightWithoutSubtitle
+            if hasBottomTopLabel || hasBottomPrimaryLabel || hasBottomInfo {
+                if hasMiddleSubtitle {
+                    collectionViewHeight += bottomSectionHeightWithSubtitle
+                } else {
+                    collectionViewHeight += bottomSectionHeightWithoutSubtitle
+                }
             }
         }
         collectionViewHeight += spaceToBottom
