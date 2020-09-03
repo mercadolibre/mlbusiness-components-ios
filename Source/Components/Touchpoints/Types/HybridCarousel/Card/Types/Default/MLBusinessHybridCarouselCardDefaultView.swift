@@ -323,6 +323,7 @@ class MLBusinessHybridCarouselCardDefaultView: MLBusinessHybridCarouselCardTypeV
     override func prepareForReuse() {
         topImageImageView.image = nil
         topImageAccessoryImageView.image = nil
+        topImageAccessoryImageView.isHidden = true
         pillView.icon = nil
         middleVerticalStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         bottomHorizontalStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
