@@ -71,9 +71,9 @@ class SheetSizeManager {
         case .fixedFromTop(let margin):
             return sheetViewSize.height - margin
         case .min(let s1, let s2):
-            return min(calculateDimension(for: s1), calculateDimension(for: s2))
+            return Swift.min(calculateDimension(for: s1), calculateDimension(for: s2))
         case .max(let s1, let s2):
-            return max(calculateDimension(for: s1), calculateDimension(for: s2))
+            return Swift.max(calculateDimension(for: s1), calculateDimension(for: s2))
         }
     }
 }
