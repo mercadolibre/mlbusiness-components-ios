@@ -45,4 +45,11 @@ open class PressableView: UIView {
         super.touchesCancelled(touches, with: event)
         pressableAnimator?.animate(view: self, highlighted: false)
     }
+    
+    open override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesMoved(touches, with: event)
+        // Please Don remove this method.
+        // This is having interference with HomeSectionAPI.PressableView,
+        // the issue is being discuss on https://developer.apple.com/forums/thread/658012
+    }
 }
