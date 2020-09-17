@@ -1,3 +1,8 @@
+# v1.25.0
+🚀 1.25.0 🚀
+- Fix for Xcode 12 and iOS 14 API
+- Fix for conflicts between MLBusinessComponent.PressableView and HomeSectionAPI.PressableView
+
 # v1.24.0
 🚀 1.24.0 🚀
 - Fixes in Hybrid Carousel Component
