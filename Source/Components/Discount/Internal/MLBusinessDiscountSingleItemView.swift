@@ -109,7 +109,7 @@ extension MLBusinessDiscountSingleItemView {
         NSLayoutConstraint.activate([
             iconOverlay.heightAnchor.constraint(equalToConstant: MLBusinessDiscountSingleItemView.iconImageSize),
             iconOverlay.widthAnchor.constraint(equalToConstant: MLBusinessDiscountSingleItemView.iconImageSize),
-            iconOverlay.topAnchor.constraint(equalTo: self.topAnchor, constant: itemHeightMargin),
+            iconOverlay.topAnchor.constraint(equalTo: top.bottomAnchor, constant: itemHeightMargin),
             iconOverlay.centerXAnchor.constraint(equalTo: self.centerXAnchor)
         ])
         
