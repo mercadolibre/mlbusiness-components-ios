@@ -155,6 +155,7 @@ public class MLBusinessRowView: UIView {
     private var imageProvider: MLBusinessImageProvider
     private let mainDescriptionView: MLBusinessMultipleDescriptionView
     private let mainSecondaryDescriptionView: MLBusinessMultipleDescriptionView
+    private var rightStackViewWidthConstraint: NSLayoutConstraint?
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
@@ -222,9 +223,11 @@ public class MLBusinessRowView: UIView {
             mainStackView.rightAnchor.constraint(lessThanOrEqualTo: rightStackView.leftAnchor, constant: -14),
         ])
 
+        rightStackViewWidthConstraint = rightStackView.widthAnchor.constraint(greaterThanOrEqualToConstant: 80)
+        rightStackViewWidthConstraint?.isActive = true
+        
         NSLayoutConstraint.activate([
             rightStackView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 18.0),
-            rightStackView.widthAnchor.constraint(greaterThanOrEqualToConstant: 80),
             rightStackView.centerYAnchor.constraint(equalTo: centerYAnchor),
             rightStackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -16),
         ])
@@ -258,6 +261,7 @@ public class MLBusinessRowView: UIView {
         leftImageImageView.image = nil
         leftImageAccessoryImageView.image = nil
         rightBottomInfoPill.icon = nil
+        rightStackViewWidthConstraint?.isActive = false
     }
     
     private func createLeftSection(with content: MLBusinessRowData) {
@@ -320,6 +324,7 @@ public class MLBusinessRowView: UIView {
     private func createRightTopLabel(with text: String?) {
         guard let rightTopLabelText = text else { return }
         rightTopLabel.text = rightTopLabelText
+        rightStackViewWidthConstraint?.isActive = true
         rightStackView.addArrangedSubview(rightTopLabel)
     }
     
@@ -330,28 +335,30 @@ public class MLBusinessRowView: UIView {
     }
     
     private func createRightSecondaryLabel(with text: String?) {
-        if let rightSecondaryLabelText = text {
-            let rightSecondaryLabelView = UIView(frame: .zero)
-            rightSecondaryLabelView.translatesAutoresizingMaskIntoConstraints = false
-            rightSecondaryLabelView.addSubview(rightSecondaryLabel)
+        guard let rightSecondaryLabelText = text  else { return }
+        
+        let rightSecondaryLabelView = UIView(frame: .zero)
+        rightSecondaryLabelView.translatesAutoresizingMaskIntoConstraints = false
+        rightSecondaryLabelView.addSubview(rightSecondaryLabel)
 
-            NSLayoutConstraint.activate([
-                rightSecondaryLabel.topAnchor.constraint(equalTo: rightSecondaryLabelView.topAnchor),
-                rightSecondaryLabel.leftAnchor.constraint(equalTo: rightSecondaryLabelView.leftAnchor),
-                rightSecondaryLabel.rightAnchor.constraint(equalTo: rightSecondaryLabelView.rightAnchor),
-                rightSecondaryLabel.bottomAnchor.constraint(equalTo: rightSecondaryLabelView.bottomAnchor, constant: -1),
-            ])
+        NSLayoutConstraint.activate([
+            rightSecondaryLabel.topAnchor.constraint(equalTo: rightSecondaryLabelView.topAnchor),
+            rightSecondaryLabel.leftAnchor.constraint(equalTo: rightSecondaryLabelView.leftAnchor),
+            rightSecondaryLabel.rightAnchor.constraint(equalTo: rightSecondaryLabelView.rightAnchor),
+            rightSecondaryLabel.bottomAnchor.constraint(equalTo: rightSecondaryLabelView.bottomAnchor, constant: -1),
+        ])
 
-            rightSecondaryLabel.text = rightSecondaryLabelText
-            rightPrimarySecondaryStackView.addArrangedSubview(rightSecondaryLabelView)
-        }
+        rightSecondaryLabel.text = rightSecondaryLabelText
+        rightPrimarySecondaryStackView.addArrangedSubview(rightSecondaryLabelView)
 
+        rightStackViewWidthConstraint?.isActive = true
         rightStackView.addArrangedSubview(rightPrimarySecondaryStackView)
     }
     
     private func createRightMiddleLabel(with text: String?) {
         guard let rightMiddleLabelText = text else { return }
         rightMiddleLabel.text = rightMiddleLabelText
+        rightStackViewWidthConstraint?.isActive = true
         rightStackView.addArrangedSubview(rightMiddleLabel)
     }
     
@@ -365,6 +372,7 @@ public class MLBusinessRowView: UIView {
                 self.rightBottomInfoPill.icon = image
             }
         }
+        rightStackViewWidthConstraint?.isActive = true
         rightStackView.addArrangedSubview(rightBottomInfoPillView)
     }
     

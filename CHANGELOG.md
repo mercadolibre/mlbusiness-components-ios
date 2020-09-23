@@ -1,3 +1,6 @@
+# Sin Publicar
+- Added dynamic width for description on Row Component
+
 # v1.25.0
 🚀 1.25.0 🚀
 - Fix for Xcode 12 and iOS 14 API
