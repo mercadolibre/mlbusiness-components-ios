@@ -1,4 +1,5 @@
-# Sin publicar
+# Sin Publicar
+- Added dynamic width for description on Row Component
 - Fix center icon on Touchpoint Grid
 
 # v1.25.0
