@@ -1,3 +1,6 @@
+# Sin publicar
+- Fix center icon on Touchpoint Grid
+
 # v1.25.0
 🚀 1.25.0 🚀
 - Fix for Xcode 12 and iOS 14 API
