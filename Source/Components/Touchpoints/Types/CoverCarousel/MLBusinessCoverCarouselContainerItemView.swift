@@ -13,11 +13,6 @@ public class MLBusinessCoverCarouselContainerItemView: UIView {
         
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .clear
-        view.layer.cornerRadius = 8
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOpacity = 1
-        view.layer.shadowOffset = .zero
-        view.layer.shadowRadius = 10
         
         return view
     }()
@@ -87,7 +82,7 @@ public class MLBusinessCoverCarouselContainerItemView: UIView {
             coverView.topAnchor.constraint(equalTo: containerView.topAnchor),
             coverView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
             coverView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-            coverView.heightAnchor.constraint(equalToConstant: 150)
+            coverView.heightAnchor.constraint(equalToConstant: 100)
         ])
         
         NSLayoutConstraint.activate([
