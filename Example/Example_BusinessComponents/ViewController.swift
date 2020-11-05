@@ -52,9 +52,33 @@ extension ViewController {
         let rowView = setupRowView(bottomOf: animatedButtonView)
         let hybridCarousel = setupHybridCarouselView(bottomOf: rowView)
         let multipleRowTouchpointView = setupMultipleRowTouchpointView(bottomOf: hybridCarousel)
-        let openSheet = setupSheetViewController(bottomOf: multipleRowTouchpointView)
+        
+        /* Cover Carousel */
+        
+        let carouselView = setupCoverCarouselView(bottomOf: multipleRowTouchpointView)
+        
+        /******************/
+        
+        let openSheet = setupSheetViewController(bottomOf: carouselView)
         
         openSheet.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -64).isActive = true
+    }
+    
+    private func setupCoverCarouselView(bottomOf topView: UIView) -> UIView {
+        let carousel = MLBusinessCoverCarouselContainerView()
+        
+        containerView.addSubview(carousel)
+        
+        NSLayoutConstraint.activate([
+            carousel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 0),
+            carousel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: 0),
+            carousel.topAnchor.constraint(equalTo: topView.bottomAnchor, constant: 16)
+        ])
+        
+        let cardModels = [MLBusinessCoverCarouselContainerItemModel(row: RowData()), MLBusinessCoverCarouselContainerItemModel(row: RowData())]
+        carousel.update(with: cardModels)
+        
+        return carousel
     }
 
     private func setupRingView(_ receiver: MLBusinessLoyaltyBroadcastReceiver) -> MLBusinessLoyaltyRingView {
