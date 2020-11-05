@@ -67,8 +67,7 @@ public class MLBusinessCoverCarouselContainerView: UIView {
         let layout = SnappingLayout()
         
         layout.scrollDirection = .horizontal
-        layout.minimumInteritemSpacing = 8
-        layout.minimumLineSpacing = 12
+        layout.minimumLineSpacing = 8
         
         return layout
     }()

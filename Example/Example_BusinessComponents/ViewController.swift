@@ -75,7 +75,7 @@ extension ViewController {
             carousel.topAnchor.constraint(equalTo: topView.bottomAnchor, constant: 16)
         ])
         
-        let cardModels = [MLBusinessCoverCarouselContainerItemModel(row: RowData()), MLBusinessCoverCarouselContainerItemModel(row: RowData())]
+        let cardModels = [MLBusinessCoverCarouselContainerItemModel(row: RowData()), MLBusinessCoverCarouselContainerItemModel(row: RowData()), MLBusinessCoverCarouselContainerItemModel(row: RowData())]
         carousel.update(with: cardModels)
         
         return carousel
