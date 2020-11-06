@@ -72,6 +72,65 @@ class RowData: NSObject, MLBusinessRowData {
     }
 }
 
+class RowData2: NSObject, MLBusinessRowData {
+    func getLeftImage() -> String? {
+        return "https://urbancomunicacion.com/wp-content/uploads/2017/04/Logotipos-famosos-Starbucks-Urban-comunicacion-1.png"
+    }
+    
+    func getLeftImageAccessory() -> String? {
+        return "https://urbancomunicacion.com/wp-content/uploads/2017/04/Logotipos-famosos-Starbucks-Urban-comunicacion-1.png"
+    }
+    
+    func getMainTitle() -> String {
+        return "Starbucks"
+    }
+    
+    func getMainSubtitle() -> String? {
+        return "Cafetería"
+    }
+    
+    func getMainDescription() -> [MLBusinessRowMainDescriptionData]? {
+        return [RowMainDescriptionData(type: "image", content: "https://i.ibb.co/2KcdLdy/16-px.png", color: "#454545"),
+                RowMainDescriptionData(type: "text", content: "598m", color: "#454545"),
+                RowMainDescriptionData(type: "text", content: " · ", color: "#454545"),
+                RowMainDescriptionData(type: "image", content: "https://i.ibb.co/prSV6dY/estrella-android.png", color: "#454545"),
+                RowMainDescriptionData(type: "text", content: "4.3 (24)", color: "#454545"),]
+    }
+    
+    func getMainSecondaryDescription() -> [MLBusinessMultipleDescriptionModel]? {
+        
+        return nil
+    }
+    
+    func getRightPrimaryLabel() -> String? {
+        return "15%"
+    }
+    
+    func getRightSecondaryLabel() -> String? {
+        return "OFF"
+    }
+    
+    func getRightMiddleLabel() -> String? {
+        return "Tope de $100"
+    }
+    
+    func getRightTopLabel() -> String? {
+        return nil
+    }
+    
+    func getRightLabelStatus() -> String? {
+        return "BLOCKED"
+    }
+    
+    func getRightBottomInfo() -> MLBusinessRowRightBottomInfoData? {
+        return RowRightBottomInfoData()
+    }
+    
+    func getLink() -> String? {
+        return "mercadopago://scanqr"
+    }
+}
+
 class RowMainDescriptionData: NSObject, MLBusinessRowMainDescriptionData {
     private let type: String
     private let content: String

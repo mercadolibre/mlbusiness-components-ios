@@ -97,10 +97,3 @@ public class MLBusinessCoverCarouselContainerItemView: UIView {
         rowView.update(with: item.row)
     }
 }
-
-public struct MLBusinessCoverCarouselContainerItemModel {
-    public init(row: MLBusinessRowData) {
-        self.row = row
-    }
-    public let row: MLBusinessRowData
-}

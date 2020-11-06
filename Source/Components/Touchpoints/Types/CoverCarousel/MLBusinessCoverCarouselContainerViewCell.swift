@@ -8,16 +8,7 @@
 import Foundation
 
 class MLBusinessCoverCarouselContainerViewCell: UICollectionViewCell {
-    override var isHighlighted: Bool {
-        didSet {
-           setHighlighted(isHighlighted)
-        }
-    }
-
-    private var height: NSLayoutConstraint? = nil
-    let itemView = MLBusinessCoverCarouselContainerItemView()
-    
-    private var currentBackgroundColor: UIColor?
+    private let itemView = MLBusinessCoverCarouselContainerItemView()
 
     static var reuseIdentifier: String {
         return "\(String(describing: self))ReuseIdentifier"
@@ -36,13 +27,7 @@ class MLBusinessCoverCarouselContainerViewCell: UICollectionViewCell {
     }
 
     func update(with content: MLBusinessCoverCarouselContainerItemModel) {
-        
         itemView.update(with: content)
-    }
-    
-    func update(height: CGFloat) {
-        self.height?.constant = height
-        self.height?.isActive = true
     }
 
     private func setup() {
@@ -65,9 +50,5 @@ class MLBusinessCoverCarouselContainerViewCell: UICollectionViewCell {
             itemView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
             itemView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
         ])
-    }
-    
-    private func setHighlighted(_ highlighted: Bool) {
-        backgroundColor = highlighted ? currentBackgroundColor?.darker() : currentBackgroundColor
     }
 }

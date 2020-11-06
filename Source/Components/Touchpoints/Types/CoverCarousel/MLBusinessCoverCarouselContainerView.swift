@@ -7,52 +7,9 @@
 
 import UIKit
 
-extension MLBusinessCoverCarouselContainerView: UICollectionViewDataSource {
-    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return items.count
-    }
-    
-    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView
-            .dequeueReusableCell(withReuseIdentifier: MLBusinessCoverCarouselContainerViewCell.reuseIdentifier,
-                                 for: indexPath) as? MLBusinessCoverCarouselContainerViewCell else {
-                                    return MLBusinessCoverCarouselContainerViewCell() }
-        let item = items[indexPath.row]
-        cell.update(with: item)
-        
-        return cell
-    }
-    
-    func getMaxHeight() -> CGFloat {
-        var maxHeight = CGFloat(96.0)
-
-        for item in items {
-            maxHeight = max(maxHeight, getViewHeight(with: item))
-        }
-        collectionViewHeightConstraint?.constant = maxHeight
-        return maxHeight
-    }
-    
-    func getViewHeight(with model: MLBusinessCoverCarouselContainerItemModel) -> CGFloat {
-        let view = MLBusinessCoverCarouselContainerItemView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 32.0).isActive = true
-        view.update(with: model)
-        view.setNeedsLayout()
-        view.layoutIfNeeded()
-        return view.frame.height
-    }
-}
-
-extension MLBusinessCoverCarouselContainerView: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: UIScreen.main.bounds.width - 32, height: getMaxHeight())
-    }
-}
-
 public protocol MLBusinessCoverCarouselContainerViewDelegate: class {
-    func coverCarouselContainerView(_: MLBusinessHybridCarouselContainerView, didSelect item: MLBusinessHybridCarouselCardModel, at index: Int)
-    func coverCarouselContainerView(_: MLBusinessHybridCarouselContainerView, didFinishScrolling visibleItems: [MLBusinessHybridCarouselCardModel]?)
+    func coverCarouselContainerView(_: MLBusinessCoverCarouselContainerView, didSelect item: MLBusinessCoverCarouselContainerItemModel, at index: Int)
+    func coverCarouselContainerView(_: MLBusinessCoverCarouselContainerView, didFinishScrolling visibleItems: [MLBusinessCoverCarouselContainerItemModel]?)
 }
 
 public class MLBusinessCoverCarouselContainerView: UIView {
@@ -64,7 +21,7 @@ public class MLBusinessCoverCarouselContainerView: UIView {
     private var items: [MLBusinessCoverCarouselContainerItemModel] = []
     
     private lazy var layout: UICollectionViewFlowLayout = {
-        let layout = SnappingLayout()
+        let layout = MLBusinessCarouselSnappingLayout()
         
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 8
@@ -127,38 +84,45 @@ public class MLBusinessCoverCarouselContainerView: UIView {
     }
 }
 
-class SnappingLayout: UICollectionViewFlowLayout {
-    
-    override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
-        
-        guard let collectionView = collectionView else {
-            return super.targetContentOffset(forProposedContentOffset: proposedContentOffset, withScrollingVelocity: velocity)
-        }
-        
-        let nextX: CGFloat
-        
-        if proposedContentOffset.x <= 0 || collectionView.contentOffset == proposedContentOffset {
-            nextX = proposedContentOffset.x
-        } else {
-            nextX = collectionView.contentOffset.x + (velocity.x > 0 ? collectionView.bounds.size.width : -collectionView.bounds.size.width)
-        }
-        
-        let targetRect = CGRect(x: nextX, y: 0, width: collectionView.bounds.size.width, height: collectionView.bounds.size.height)
-        
-        var offsetAdjustment = CGFloat.greatestFiniteMagnitude
-        
-        let horizontalOffset = proposedContentOffset.x + collectionView.contentInset.left
-        
-        let layoutAttributesArray = super.layoutAttributesForElements(in: targetRect)
-        
-        layoutAttributesArray?.forEach({ (layoutAttributes) in
-            let itemOffset = layoutAttributes.frame.origin.x
-            if fabsf(Float(itemOffset - horizontalOffset)) < fabsf(Float(offsetAdjustment)) {
-                offsetAdjustment = itemOffset - horizontalOffset
-            }
-        })
-        
-        return CGPoint(x: proposedContentOffset.x + offsetAdjustment, y: proposedContentOffset.y)
+extension MLBusinessCoverCarouselContainerView: UICollectionViewDataSource {
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return items.count
     }
     
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView
+            .dequeueReusableCell(withReuseIdentifier: MLBusinessCoverCarouselContainerViewCell.reuseIdentifier,
+                                 for: indexPath) as? MLBusinessCoverCarouselContainerViewCell else {
+                                    return MLBusinessCoverCarouselContainerViewCell() }
+        let item = items[indexPath.row]
+        cell.update(with: item)
+        
+        return cell
+    }
+}
+
+extension MLBusinessCoverCarouselContainerView: UICollectionViewDelegateFlowLayout {
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: UIScreen.main.bounds.width - 32, height: getMaxHeight())
+    }
+    
+    private func getMaxHeight() -> CGFloat {
+        var maxHeight = CGFloat(96.0)
+
+        for item in items {
+            maxHeight = max(maxHeight, getViewHeight(with: item))
+        }
+        collectionViewHeightConstraint?.constant = maxHeight
+        return maxHeight
+    }
+    
+    private func getViewHeight(with model: MLBusinessCoverCarouselContainerItemModel) -> CGFloat {
+        let view = MLBusinessCoverCarouselContainerItemView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 32.0).isActive = true
+        view.update(with: model)
+        view.setNeedsLayout()
+        view.layoutIfNeeded()
+        return view.frame.height
+    }
 }
