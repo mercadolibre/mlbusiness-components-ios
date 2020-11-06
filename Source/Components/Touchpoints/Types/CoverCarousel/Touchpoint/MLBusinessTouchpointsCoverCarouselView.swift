@@ -25,7 +25,7 @@ class MLBusinessTouchpointsCoverCarouselView: MLBusinessTouchpointsBaseView {
 
     private func setup() {
         addSubview(collectionView)
-//        collectionView.delegate = self
+        collectionView.delegate = self
     }
     
     private func setupConstraints() {
@@ -73,7 +73,7 @@ class MLBusinessTouchpointsCoverCarouselView: MLBusinessTouchpointsBaseView {
 
 extension MLBusinessTouchpointsCoverCarouselView: MLBusinessCoverCarouselViewDelegate {
     func coverCarouselView(_: MLBusinessCoverCarouselView, didSelect item: MLBusinessCoverCarouselItemModel, at index: Int) {
-        guard let link = item.description?.getLink(), let trackingId = item.tracking?.trackingId else { return }
+        guard let link = item.description?.getLink(), let trackingId = item.description?.trackingId else { return }
         
         delegate?.trackTap(with: index, deeplink: link, trackingId: trackingId)
     }

@@ -9,24 +9,72 @@
 import Foundation
 import MLBusinessComponents
 
-class RowData: NSObject, MLBusinessRowData {
-    func getLeftImage() -> String? {
+class RowMockData: NSObject, MLBusinessRowData {
+    func getLeftImage() -> String? { return nil }
+    func getLeftImageAccessory() -> String? { return nil }
+    func getMainTitle() -> String { return "" }
+    func getMainSubtitle() -> String? { return nil }
+    func getMainDescription() -> [MLBusinessRowMainDescriptionData]? { return nil }
+    func getMainSecondaryDescription() -> [MLBusinessMultipleDescriptionModel]? { return nil }
+    func getRightPrimaryLabel() -> String? { return nil }
+    func getRightSecondaryLabel() -> String? { return nil }
+    func getRightMiddleLabel() -> String? { return nil }
+    func getRightTopLabel() -> String? { return nil }
+    func getRightLabelStatus() -> String? { return nil }
+    func getRightBottomInfo() -> MLBusinessRowRightBottomInfoData? { return nil }
+    func getLink() -> String? { return nil }
+    
+    func asModel() -> MLBusinessMultipleRowItemModel {
+        let mainDescription = getMainDescription()?.compactMap({
+            return MLBusinessRowMainDescription(type: $0.getType(), content: $0.getContent(), color: $0.getColor())
+        })
+
+        let bottomInfo = MLBusinessRowRightBottomInfo(icon: getRightBottomInfo()?.getIcon(),
+                                                      label: getRightBottomInfo()?.getLabel(),
+                                                      format: MLBusinessRowRightBottomInfoFormat(textColor: (getRightBottomInfo()?.getFormat()?.getTextColor())!,
+                                                                                                 backgroundColor: (getRightBottomInfo()?.getFormat()?.getBackgroundColor())!))
+
+        return MLBusinessMultipleRowItemModel(leftImage: getLeftImage(),
+                                                     leftImageAccessory: getLeftImageAccessory(),
+                                                     mainTitle: getMainTitle(),
+                                                     mainSubtitle: getMainSubtitle(),
+                                                     mainDescription: mainDescription,
+                                                     mainSecondaryDescription: getMainSecondaryDescription(),
+                                                     rightPrimaryLabel: getRightPrimaryLabel(),
+                                                     rightSecondaryLabel: getRightSecondaryLabel(),
+                                                     rightMiddleLabel: getRightMiddleLabel(),
+                                                     rightTopLabel: getRightTopLabel(),
+                                                     rightLabelStatus: getRightLabelStatus(),
+                                                     rightBottomInfo: bottomInfo,
+                                                     link: getLink(),
+                                                     tracking: createTrackingItem(trackingId: "1048784",
+                                                                                  blocked: false,
+                                                                                  name: "El Nombre"))
+    }
+    
+    private func createTrackingItem(trackingId: String, blocked: Bool, name: String) -> MLBusinessItemModelTracking {
+        return MLBusinessItemModelTracking(trackingId: trackingId, eventData: ["blocked" : blocked, "name" : name, "tracking_id" : trackingId])
+    }
+}
+
+class RowData: RowMockData {
+    override func getLeftImage() -> String? {
         return "https://urbancomunicacion.com/wp-content/uploads/2017/04/Logotipos-famosos-Starbucks-Urban-comunicacion-1.png"
     }
     
-    func getLeftImageAccessory() -> String? {
+    override func getLeftImageAccessory() -> String? {
         return "https://urbancomunicacion.com/wp-content/uploads/2017/04/Logotipos-famosos-Starbucks-Urban-comunicacion-1.png"
     }
     
-    func getMainTitle() -> String {
+    override func getMainTitle() -> String {
         return "Starbucks"
     }
     
-    func getMainSubtitle() -> String? {
+    override func getMainSubtitle() -> String? {
         return "Cafetería"
     }
     
-    func getMainDescription() -> [MLBusinessRowMainDescriptionData]? {
+    override func getMainDescription() -> [MLBusinessRowMainDescriptionData]? {
         return [RowMainDescriptionData(type: "image", content: "https://i.ibb.co/2KcdLdy/16-px.png", color: "#454545"),
                 RowMainDescriptionData(type: "text", content: "598m", color: "#454545"),
                 RowMainDescriptionData(type: "text", content: " · ", color: "#454545"),
@@ -34,7 +82,7 @@ class RowData: NSObject, MLBusinessRowData {
                 RowMainDescriptionData(type: "text", content: "4.3 (24)", color: "#454545"),]
     }
     
-    func getMainSecondaryDescription() -> [MLBusinessMultipleDescriptionModel]? {
+    override func getMainSecondaryDescription() -> [MLBusinessMultipleDescriptionModel]? {
         
         return [MLBusinessMultipleDescriptionModel(type: "image", content: "https://i.ibb.co/bWSWDHc/icon-delivery-android.png", color: "#00a650"),
             MLBusinessMultipleDescriptionModel(type: "text", content: "Envío", color: "#00a650"),
@@ -43,53 +91,53 @@ class RowData: NSObject, MLBusinessRowData {
             MLBusinessMultipleDescriptionModel(type: "text", content: "Retiro", color: "#00a650"),]
     }
     
-    func getRightPrimaryLabel() -> String? {
+    override func getRightPrimaryLabel() -> String? {
         return "15%"
     }
     
-    func getRightSecondaryLabel() -> String? {
+    override func getRightSecondaryLabel() -> String? {
         return "OFF"
     }
     
-    func getRightMiddleLabel() -> String? {
+    override func getRightMiddleLabel() -> String? {
         return "Tope de $100"
     }
     
-    func getRightTopLabel() -> String? {
+    override func getRightTopLabel() -> String? {
         return nil
     }
     
-    func getRightLabelStatus() -> String? {
+    override func getRightLabelStatus() -> String? {
         return "BLOCKED"
     }
     
-    func getRightBottomInfo() -> MLBusinessRowRightBottomInfoData? {
+    override func getRightBottomInfo() -> MLBusinessRowRightBottomInfoData? {
         return RowRightBottomInfoData()
     }
     
-    func getLink() -> String? {
+    override func getLink() -> String? {
         return "mercadopago://scanqr"
     }
 }
 
-class RowData2: NSObject, MLBusinessRowData {
-    func getLeftImage() -> String? {
+class RowData2: RowMockData {
+    override func getLeftImage() -> String? {
         return "https://urbancomunicacion.com/wp-content/uploads/2017/04/Logotipos-famosos-Starbucks-Urban-comunicacion-1.png"
     }
     
-    func getLeftImageAccessory() -> String? {
+    override func getLeftImageAccessory() -> String? {
         return "https://urbancomunicacion.com/wp-content/uploads/2017/04/Logotipos-famosos-Starbucks-Urban-comunicacion-1.png"
     }
     
-    func getMainTitle() -> String {
+    override func getMainTitle() -> String {
         return "Starbucks"
     }
     
-    func getMainSubtitle() -> String? {
+    override func getMainSubtitle() -> String? {
         return "Cafetería"
     }
     
-    func getMainDescription() -> [MLBusinessRowMainDescriptionData]? {
+    override func getMainDescription() -> [MLBusinessRowMainDescriptionData]? {
         return [RowMainDescriptionData(type: "image", content: "https://i.ibb.co/2KcdLdy/16-px.png", color: "#454545"),
                 RowMainDescriptionData(type: "text", content: "598m", color: "#454545"),
                 RowMainDescriptionData(type: "text", content: " · ", color: "#454545"),
@@ -97,36 +145,36 @@ class RowData2: NSObject, MLBusinessRowData {
                 RowMainDescriptionData(type: "text", content: "4.3 (24)", color: "#454545"),]
     }
     
-    func getMainSecondaryDescription() -> [MLBusinessMultipleDescriptionModel]? {
+    override func getMainSecondaryDescription() -> [MLBusinessMultipleDescriptionModel]? {
         
         return nil
     }
     
-    func getRightPrimaryLabel() -> String? {
+    override func getRightPrimaryLabel() -> String? {
         return "15%"
     }
     
-    func getRightSecondaryLabel() -> String? {
+    override func getRightSecondaryLabel() -> String? {
         return "OFF"
     }
     
-    func getRightMiddleLabel() -> String? {
+    override func getRightMiddleLabel() -> String? {
         return "Tope de $100"
     }
     
-    func getRightTopLabel() -> String? {
+    override func getRightTopLabel() -> String? {
         return nil
     }
     
-    func getRightLabelStatus() -> String? {
+    override func getRightLabelStatus() -> String? {
         return "BLOCKED"
     }
     
-    func getRightBottomInfo() -> MLBusinessRowRightBottomInfoData? {
+    override func getRightBottomInfo() -> MLBusinessRowRightBottomInfoData? {
         return RowRightBottomInfoData()
     }
     
-    func getLink() -> String? {
+    override func getLink() -> String? {
         return "mercadopago://scanqr"
     }
 }

@@ -14,3 +14,9 @@ public struct MLBusinessCoverCarouselModel: Codable {
         self.items = items
     }
 }
+
+extension MLBusinessCoverCarouselModel: ComponentTrackable {
+    func getTrackables() -> [Trackable]? {
+        return items
+    }
+}

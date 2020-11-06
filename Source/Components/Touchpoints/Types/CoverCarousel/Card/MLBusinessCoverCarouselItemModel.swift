@@ -10,21 +10,19 @@ import Foundation
 public struct MLBusinessCoverCarouselItemModel: Codable {
     public let cover: String?
     public let description: MLBusinessMultipleRowItemModel?
-    public let tracking: MLBusinessCoverCarouselItemModelTracking?
 
-    public init(cover: String?, description: MLBusinessMultipleRowItemModel?, tracking: MLBusinessCoverCarouselItemModelTracking?) {
+    public init(cover: String?, description: MLBusinessMultipleRowItemModel?) {
         self.cover = cover
         self.description = description
-        self.tracking = tracking
     }
 }
 
 extension MLBusinessCoverCarouselItemModel: Trackable {
     var trackingId: String? {
-        return tracking?.trackingId
+        return description?.trackingId
     }
 
     var eventData: MLBusinessCodableDictionary? {
-        return tracking?.eventData
+        return description?.eventData
     }
 }
