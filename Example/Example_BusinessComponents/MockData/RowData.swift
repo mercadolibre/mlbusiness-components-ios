@@ -176,6 +176,6 @@ class RowRightBottomInfoFormatData: NSObject, MLBusinessRowRightBottomInfoFormat
     }
     
     func getBackgroundColor() -> String {
-        return "#FFFFFF"
+        return "#00FFFFFF"
     }
 }

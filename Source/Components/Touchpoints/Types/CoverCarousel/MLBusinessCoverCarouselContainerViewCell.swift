@@ -13,12 +13,17 @@ class MLBusinessCoverCarouselContainerViewCell: UICollectionViewCell {
     static var reuseIdentifier: String {
         return "\(String(describing: self))ReuseIdentifier"
     }
+    
+    override var isHighlighted: Bool {
+        didSet {
+           setHighlighted(isHighlighted)
+        }
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
         setupConstraints()
-        backgroundColor = .purple
     }
 
     @available(*, unavailable)
@@ -31,9 +36,7 @@ class MLBusinessCoverCarouselContainerViewCell: UICollectionViewCell {
     }
 
     private func setup() {
-        backgroundColor = .clear
-        
-        layer.borderColor =  "ececec".hexaToUIColor().cgColor
+        layer.borderColor = UIColor(white: 155.0/255.0, alpha: 0.1).cgColor
         layer.borderWidth = 1.0
         layer.cornerRadius = 6.0
         layer.applyShadow(alpha: 0.1, x: 0, y: 2, blur: 4)
@@ -50,5 +53,9 @@ class MLBusinessCoverCarouselContainerViewCell: UICollectionViewCell {
             itemView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
             itemView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
         ])
+    }
+    
+    private func setHighlighted(_ highlighted: Bool) {
+        itemView.setHighlighted(highlighted)
     }
 }

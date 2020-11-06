@@ -9,14 +9,13 @@ import UIKit
 
 public protocol MLBusinessCoverCarouselContainerViewDelegate: class {
     func coverCarouselContainerView(_: MLBusinessCoverCarouselContainerView, didSelect item: MLBusinessCoverCarouselContainerItemModel, at index: Int)
+    
     func coverCarouselContainerView(_: MLBusinessCoverCarouselContainerView, didFinishScrolling visibleItems: [MLBusinessCoverCarouselContainerItemModel]?)
 }
 
 public class MLBusinessCoverCarouselContainerView: UIView {
     private var imageProvider: MLBusinessImageProvider?
-    var collectionViewHeightConstraint: NSLayoutConstraint?
-    
-    public weak var delegate: MLBusinessCoverCarouselContainerViewDelegate?
+    private var collectionViewHeightConstraint: NSLayoutConstraint?
     
     private var items: [MLBusinessCoverCarouselContainerItemModel] = []
     
@@ -49,7 +48,19 @@ public class MLBusinessCoverCarouselContainerView: UIView {
         return collectionView
     }()
     
-    public init() {
+    public weak var delegate: MLBusinessCoverCarouselContainerViewDelegate?
+    
+    public var shouldHighlightItems = true
+    
+    public var scrollView: UIScrollView {
+        return collectionView
+    }
+    
+    public var visibleItems: [MLBusinessCoverCarouselContainerItemModel]? {
+        return collectionView.indexPathsForVisibleItems.compactMap({ items[$0.item] })
+    }
+    
+    public init(with imageProvider: MLBusinessImageProvider?) {
         super.init(frame: .zero)
         
         setupView()
@@ -62,6 +73,7 @@ public class MLBusinessCoverCarouselContainerView: UIView {
     
     public func update(with items: [MLBusinessCoverCarouselContainerItemModel]) {
         self.items = items
+        collectionViewHeightConstraint?.constant = getMaxHeight()
         collectionView.reloadData()
     }
     
@@ -107,16 +119,10 @@ extension MLBusinessCoverCarouselContainerView: UICollectionViewDelegateFlowLayo
     }
     
     private func getMaxHeight() -> CGFloat {
-        var maxHeight = CGFloat(96.0)
-
-        for item in items {
-            maxHeight = max(maxHeight, getViewHeight(with: item))
-        }
-        collectionViewHeightConstraint?.constant = maxHeight
-        return maxHeight
+        return items.map({ getViewHeight(for: $0) }).max() ?? 96
     }
     
-    private func getViewHeight(with model: MLBusinessCoverCarouselContainerItemModel) -> CGFloat {
+    private func getViewHeight(for model: MLBusinessCoverCarouselContainerItemModel) -> CGFloat {
         let view = MLBusinessCoverCarouselContainerItemView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 32.0).isActive = true
@@ -124,5 +130,21 @@ extension MLBusinessCoverCarouselContainerView: UICollectionViewDelegateFlowLayo
         view.setNeedsLayout()
         view.layoutIfNeeded()
         return view.frame.height
+    }
+}
+
+extension MLBusinessCoverCarouselContainerView: UICollectionViewDelegate {
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        delegate?.coverCarouselContainerView(self, didSelect: items[indexPath.item], at: indexPath.item)
+    }
+    
+    private func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
+        return shouldHighlightItems
+    }
+}
+
+extension MLBusinessCoverCarouselContainerView: UIScrollViewDelegate {
+    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        delegate?.coverCarouselContainerView(self, didFinishScrolling: visibleItems)
     }
 }

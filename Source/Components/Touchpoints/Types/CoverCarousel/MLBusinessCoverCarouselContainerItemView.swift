@@ -8,27 +8,20 @@
 import Foundation
 
 public class MLBusinessCoverCarouselContainerItemView: UIView {
-    private let baseView: UIView = {
-        let view = UIView()
-        
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .clear
-        
-        return view
-    }()
+    private let colorForBackground = UIColor.white
     
-    private let containerView: UIView = {
+    private lazy var containerView: UIView = {
         let containerView = UIView(frame: .zero)
         
         containerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.layer.masksToBounds = true
-        containerView.backgroundColor = .white
+        containerView.backgroundColor = colorForBackground
         containerView.layer.cornerRadius = 8
         
         return containerView
     }()
     
-    private let coverView: UIImageView = {
+    private lazy var coverView: UIImageView = {
         let image = UIImageView()
         
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -37,7 +30,7 @@ public class MLBusinessCoverCarouselContainerItemView: UIView {
         return image
     }()
     
-    private let rowView: MLBusinessRowView = {
+    private lazy var rowView: MLBusinessRowView = {
         let row = MLBusinessRowView()
         
         return row
@@ -45,6 +38,7 @@ public class MLBusinessCoverCarouselContainerItemView: UIView {
     
     public required init() {
         super.init(frame: .zero)
+        
         setupView()
         setupConstraints()
     }
@@ -53,11 +47,18 @@ public class MLBusinessCoverCarouselContainerItemView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    public func update(with item: MLBusinessCoverCarouselContainerItemModel) {
+        rowView.update(with: item.row)
+    }
+    
+    public func setHighlighted(_ highlighted: Bool) {
+        containerView.backgroundColor = highlighted ? colorForBackground.darker() : colorForBackground
+    }
+    
     private func setupView() {
-        addSubview(baseView)
-        
         translatesAutoresizingMaskIntoConstraints = false
-        baseView.addSubview(containerView)
+        
+        addSubview(containerView)
         
         containerView.addSubview(coverView)
         containerView.addSubview(rowView)
@@ -65,17 +66,10 @@ public class MLBusinessCoverCarouselContainerItemView: UIView {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            baseView.topAnchor.constraint(equalTo: topAnchor),
-            baseView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            baseView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            baseView.trailingAnchor.constraint(equalTo: trailingAnchor)
-        ])
-        
-        NSLayoutConstraint.activate([
-            containerView.topAnchor.constraint(equalTo: baseView.topAnchor),
-            containerView.bottomAnchor.constraint(equalTo: baseView.bottomAnchor),
-            containerView.leadingAnchor.constraint(equalTo: baseView.leadingAnchor),
-            containerView.trailingAnchor.constraint(equalTo: baseView.trailingAnchor)
+            containerView.topAnchor.constraint(equalTo: topAnchor),
+            containerView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            containerView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            containerView.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
         
         NSLayoutConstraint.activate([
@@ -91,9 +85,5 @@ public class MLBusinessCoverCarouselContainerItemView: UIView {
             rowView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
             rowView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor)
         ])
-    }
-    
-    public func update(with item: MLBusinessCoverCarouselContainerItemModel) {
-        rowView.update(with: item.row)
     }
 }

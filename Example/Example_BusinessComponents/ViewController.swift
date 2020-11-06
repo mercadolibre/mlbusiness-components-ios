@@ -65,7 +65,7 @@ extension ViewController {
     }
     
     private func setupCoverCarouselView(bottomOf topView: UIView) -> UIView {
-        let carousel = MLBusinessCoverCarouselContainerView()
+        let carousel = MLBusinessCoverCarouselContainerView(with: nil)
         
         containerView.addSubview(carousel)
         
