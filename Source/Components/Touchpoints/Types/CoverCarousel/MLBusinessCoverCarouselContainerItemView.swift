@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MLUI
 
 public class MLBusinessCoverCarouselContainerItemView: UIView {
     private let colorForBackground = UIColor.white
@@ -15,19 +16,21 @@ public class MLBusinessCoverCarouselContainerItemView: UIView {
         
         containerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.layer.masksToBounds = true
-        containerView.backgroundColor = colorForBackground
         containerView.layer.cornerRadius = 8
+        containerView.backgroundColor = colorForBackground
         
         return containerView
     }()
     
-    private lazy var coverView: UIImageView = {
-        let image = UIImageView()
+    private lazy var coverImageView: UIImageView = {
+        let imageView = UIImageView()
         
-        image.translatesAutoresizingMaskIntoConstraints = false
-        image.backgroundColor = .purple
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.backgroundColor = MLStyleSheetManager.styleSheet.lightGreyColor
+        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
         
-        return image
+        return imageView
     }()
     
     private lazy var rowView: MLBusinessRowView = {
@@ -36,7 +39,11 @@ public class MLBusinessCoverCarouselContainerItemView: UIView {
         return row
     }()
     
+    var imageProvider: MLBusinessImageProvider
+    
     public required init() {
+        imageProvider = MLBusinessURLImageProvider()
+            
         super.init(frame: .zero)
         
         setupView()
@@ -48,11 +55,20 @@ public class MLBusinessCoverCarouselContainerItemView: UIView {
     }
     
     public func update(with item: MLBusinessCoverCarouselContainerItemModel) {
+        imageProvider.getImage(key: item.coverImage) { [weak self] image in
+            self?.coverImageView.image = image
+        }
+        
         rowView.update(with: item.row)
     }
     
     public func setHighlighted(_ highlighted: Bool) {
-        containerView.backgroundColor = highlighted ? colorForBackground.darker() : colorForBackground
+        containerView.backgroundColor = highlighted ? colorForBackground.darker(by: 80) : colorForBackground
+    }
+    
+    public func clear() {
+        coverImageView.image = nil
+        rowView.prepareForReuse()
     }
     
     private func setupView() {
@@ -60,7 +76,7 @@ public class MLBusinessCoverCarouselContainerItemView: UIView {
         
         addSubview(containerView)
         
-        containerView.addSubview(coverView)
+        containerView.addSubview(coverImageView)
         containerView.addSubview(rowView)
     }
     
@@ -73,14 +89,14 @@ public class MLBusinessCoverCarouselContainerItemView: UIView {
         ])
         
         NSLayoutConstraint.activate([
-            coverView.topAnchor.constraint(equalTo: containerView.topAnchor),
-            coverView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            coverView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-            coverView.heightAnchor.constraint(equalToConstant: 100)
+            coverImageView.topAnchor.constraint(equalTo: containerView.topAnchor),
+            coverImageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            coverImageView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            coverImageView.heightAnchor.constraint(equalToConstant: 100)
         ])
         
         NSLayoutConstraint.activate([
-            rowView.topAnchor.constraint(equalTo: coverView.bottomAnchor),
+            rowView.topAnchor.constraint(equalTo: coverImageView.bottomAnchor),
             rowView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
             rowView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
             rowView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor)

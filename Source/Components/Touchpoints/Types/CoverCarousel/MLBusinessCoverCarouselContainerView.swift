@@ -61,6 +61,8 @@ public class MLBusinessCoverCarouselContainerView: UIView {
     }
     
     public init(with imageProvider: MLBusinessImageProvider?) {
+        self.imageProvider = imageProvider
+        
         super.init(frame: .zero)
         
         setupView()
@@ -107,6 +109,7 @@ extension MLBusinessCoverCarouselContainerView: UICollectionViewDataSource {
                                  for: indexPath) as? MLBusinessCoverCarouselContainerViewCell else {
                                     return MLBusinessCoverCarouselContainerViewCell() }
         let item = items[indexPath.row]
+        cell.imageProvider = imageProvider
         cell.update(with: item)
         
         return cell

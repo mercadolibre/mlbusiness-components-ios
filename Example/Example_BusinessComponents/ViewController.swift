@@ -75,7 +75,25 @@ extension ViewController {
             carousel.topAnchor.constraint(equalTo: topView.bottomAnchor, constant: 16)
         ])
         
-        let cardModels = [MLBusinessCoverCarouselContainerItemModel(row: RowData()), MLBusinessCoverCarouselContainerItemModel(row: RowData2()), MLBusinessCoverCarouselContainerItemModel(row: RowData())]
+        let burger = "https://cdn2.cocinadelirante.com/sites/default/files/styles/gallerie/public/images/2018/05/hamburguesa-con-fondue-receta.jpg"
+        let pizza = "https://gift-static.kxscdn.com/img/pizza-napolitana/pizza-napolitana.jpg"
+        let friedChicken = "https://c.ndtvimg.com/2019-05/usn4dnv_fried-chicken_625x300_24_May_19.jpg"
+        
+        let cardModels = [MLBusinessCoverCarouselContainerItemModel(row: RowData(), coverImage: burger),
+                          MLBusinessCoverCarouselContainerItemModel(row: RowData2(), coverImage: pizza),
+                          MLBusinessCoverCarouselContainerItemModel(row: RowData(), coverImage: pizza),
+                          MLBusinessCoverCarouselContainerItemModel(row: RowData(), coverImage: pizza),
+                          MLBusinessCoverCarouselContainerItemModel(row: RowData2(), coverImage: pizza),
+                          MLBusinessCoverCarouselContainerItemModel(row: RowData(), coverImage: pizza),
+                          MLBusinessCoverCarouselContainerItemModel(row: RowData(), coverImage: pizza),
+                          MLBusinessCoverCarouselContainerItemModel(row: RowData(), coverImage: friedChicken),
+                          MLBusinessCoverCarouselContainerItemModel(row: RowData(), coverImage: pizza),
+                          MLBusinessCoverCarouselContainerItemModel(row: RowData(), coverImage: pizza),
+                          MLBusinessCoverCarouselContainerItemModel(row: RowData(), coverImage: pizza),
+                          MLBusinessCoverCarouselContainerItemModel(row: RowData(), coverImage: pizza),
+                          MLBusinessCoverCarouselContainerItemModel(row: RowData(), coverImage: burger),
+                          MLBusinessCoverCarouselContainerItemModel(row: RowData(), coverImage: pizza),
+        ]
         carousel.update(with: cardModels)
         
         return carousel

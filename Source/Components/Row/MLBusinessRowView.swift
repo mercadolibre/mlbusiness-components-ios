@@ -254,7 +254,7 @@ public class MLBusinessRowView: UIView {
         createRightSection(with: content)
     }
     
-    private func prepareForReuse() {
+    public func prepareForReuse() {
         rightStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         rightPrimarySecondaryStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         mainStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
