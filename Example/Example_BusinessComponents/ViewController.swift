@@ -52,20 +52,14 @@ extension ViewController {
         let rowView = setupRowView(bottomOf: animatedButtonView)
         let hybridCarousel = setupHybridCarouselView(bottomOf: rowView)
         let multipleRowTouchpointView = setupMultipleRowTouchpointView(bottomOf: hybridCarousel)
-        
-        /* Cover Carousel */
-        
         let carouselView = setupCoverCarouselView(bottomOf: multipleRowTouchpointView)
-        
-        /******************/
-        
         let openSheet = setupSheetViewController(bottomOf: carouselView)
         
         openSheet.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -64).isActive = true
     }
     
     private func setupCoverCarouselView(bottomOf topView: UIView) -> UIView {
-        let carousel = MLBusinessCoverCarouselContainerView(with: nil)
+        let carousel = MLBusinessCoverCarouselView(with: nil)
         
         containerView.addSubview(carousel)
         
@@ -77,22 +71,9 @@ extension ViewController {
         
         let burger = "https://cdn2.cocinadelirante.com/sites/default/files/styles/gallerie/public/images/2018/05/hamburguesa-con-fondue-receta.jpg"
         let pizza = "https://gift-static.kxscdn.com/img/pizza-napolitana/pizza-napolitana.jpg"
-        let friedChicken = "https://c.ndtvimg.com/2019-05/usn4dnv_fried-chicken_625x300_24_May_19.jpg"
         
-        let cardModels = [MLBusinessCoverCarouselContainerItemModel(row: RowData(), coverImage: burger),
-                          MLBusinessCoverCarouselContainerItemModel(row: RowData2(), coverImage: pizza),
-                          MLBusinessCoverCarouselContainerItemModel(row: RowData(), coverImage: pizza),
-                          MLBusinessCoverCarouselContainerItemModel(row: RowData(), coverImage: pizza),
-                          MLBusinessCoverCarouselContainerItemModel(row: RowData2(), coverImage: pizza),
-                          MLBusinessCoverCarouselContainerItemModel(row: RowData(), coverImage: pizza),
-                          MLBusinessCoverCarouselContainerItemModel(row: RowData(), coverImage: pizza),
-                          MLBusinessCoverCarouselContainerItemModel(row: RowData(), coverImage: friedChicken),
-                          MLBusinessCoverCarouselContainerItemModel(row: RowData(), coverImage: pizza),
-                          MLBusinessCoverCarouselContainerItemModel(row: RowData(), coverImage: pizza),
-                          MLBusinessCoverCarouselContainerItemModel(row: RowData(), coverImage: pizza),
-                          MLBusinessCoverCarouselContainerItemModel(row: RowData(), coverImage: pizza),
-                          MLBusinessCoverCarouselContainerItemModel(row: RowData(), coverImage: burger),
-                          MLBusinessCoverCarouselContainerItemModel(row: RowData(), coverImage: pizza),
+        let cardModels = [MLBusinessCoverCarouselItemModel(row: RowData(), coverImage: burger),
+                          MLBusinessCoverCarouselItemModel(row: RowData2(), coverImage: pizza)
         ]
         carousel.update(with: cardModels)
         

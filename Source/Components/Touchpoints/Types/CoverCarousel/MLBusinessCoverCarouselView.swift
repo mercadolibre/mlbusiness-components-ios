@@ -1,5 +1,5 @@
 //
-//  MLBusinessCoverCarouselContainerView.swift
+//  MLBusinessCoverCarouselView.swift
 //  MLBusinessComponents
 //
 //  Created by Gaston Maspero on 02/11/2020.
@@ -7,17 +7,17 @@
 
 import UIKit
 
-public protocol MLBusinessCoverCarouselContainerViewDelegate: class {
-    func coverCarouselContainerView(_: MLBusinessCoverCarouselContainerView, didSelect item: MLBusinessCoverCarouselContainerItemModel, at index: Int)
+public protocol MLBusinessCoverCarouselViewDelegate: class {
+    func coverCarouselView(_: MLBusinessCoverCarouselView, didSelect item: MLBusinessCoverCarouselItemModel, at index: Int)
     
-    func coverCarouselContainerView(_: MLBusinessCoverCarouselContainerView, didFinishScrolling visibleItems: [MLBusinessCoverCarouselContainerItemModel]?)
+    func coverCarouselView(_: MLBusinessCoverCarouselView, didFinishScrolling visibleItems: [MLBusinessCoverCarouselItemModel]?)
 }
 
-public class MLBusinessCoverCarouselContainerView: UIView {
+public class MLBusinessCoverCarouselView: UIView {
     private var imageProvider: MLBusinessImageProvider?
     private var collectionViewHeightConstraint: NSLayoutConstraint?
     
-    private var items: [MLBusinessCoverCarouselContainerItemModel] = []
+    private var items: [MLBusinessCoverCarouselItemModel] = []
     
     private lazy var layout: UICollectionViewFlowLayout = {
         let layout = MLBusinessCarouselSnappingLayout()
@@ -40,15 +40,15 @@ public class MLBusinessCoverCarouselContainerView: UIView {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
         collectionView.isPagingEnabled = false
-        collectionView.register(MLBusinessCoverCarouselContainerViewCell.self,
-                                forCellWithReuseIdentifier: MLBusinessCoverCarouselContainerViewCell.reuseIdentifier)
+        collectionView.register(MLBusinessCoverCarouselViewCell.self,
+                                forCellWithReuseIdentifier: MLBusinessCoverCarouselViewCell.reuseIdentifier)
         collectionView.dataSource = self
         collectionView.delegate = self
         
         return collectionView
     }()
     
-    public weak var delegate: MLBusinessCoverCarouselContainerViewDelegate?
+    public weak var delegate: MLBusinessCoverCarouselViewDelegate?
     
     public var shouldHighlightItems = true
     
@@ -56,7 +56,7 @@ public class MLBusinessCoverCarouselContainerView: UIView {
         return collectionView
     }
     
-    public var visibleItems: [MLBusinessCoverCarouselContainerItemModel]? {
+    public var visibleItems: [MLBusinessCoverCarouselItemModel]? {
         return collectionView.indexPathsForVisibleItems.compactMap({ items[$0.item] })
     }
     
@@ -73,7 +73,7 @@ public class MLBusinessCoverCarouselContainerView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func update(with items: [MLBusinessCoverCarouselContainerItemModel]) {
+    public func update(with items: [MLBusinessCoverCarouselItemModel]) {
         self.items = items
         collectionViewHeightConstraint?.constant = getMaxHeight()
         collectionView.reloadData()
@@ -98,16 +98,16 @@ public class MLBusinessCoverCarouselContainerView: UIView {
     }
 }
 
-extension MLBusinessCoverCarouselContainerView: UICollectionViewDataSource {
+extension MLBusinessCoverCarouselView: UICollectionViewDataSource {
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return items.count
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView
-            .dequeueReusableCell(withReuseIdentifier: MLBusinessCoverCarouselContainerViewCell.reuseIdentifier,
-                                 for: indexPath) as? MLBusinessCoverCarouselContainerViewCell else {
-                                    return MLBusinessCoverCarouselContainerViewCell() }
+            .dequeueReusableCell(withReuseIdentifier: MLBusinessCoverCarouselViewCell.reuseIdentifier,
+                                 for: indexPath) as? MLBusinessCoverCarouselViewCell else {
+                                    return MLBusinessCoverCarouselViewCell() }
         let item = items[indexPath.row]
         cell.imageProvider = imageProvider
         cell.update(with: item)
@@ -116,7 +116,7 @@ extension MLBusinessCoverCarouselContainerView: UICollectionViewDataSource {
     }
 }
 
-extension MLBusinessCoverCarouselContainerView: UICollectionViewDelegateFlowLayout {
+extension MLBusinessCoverCarouselView: UICollectionViewDelegateFlowLayout {
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: UIScreen.main.bounds.width - 32, height: getMaxHeight())
     }
@@ -125,8 +125,8 @@ extension MLBusinessCoverCarouselContainerView: UICollectionViewDelegateFlowLayo
         return items.map({ getViewHeight(for: $0) }).max() ?? 96
     }
     
-    private func getViewHeight(for model: MLBusinessCoverCarouselContainerItemModel) -> CGFloat {
-        let view = MLBusinessCoverCarouselContainerItemView()
+    private func getViewHeight(for model: MLBusinessCoverCarouselItemModel) -> CGFloat {
+        let view = MLBusinessCoverCarouselItemView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 32.0).isActive = true
         view.update(with: model)
@@ -136,9 +136,9 @@ extension MLBusinessCoverCarouselContainerView: UICollectionViewDelegateFlowLayo
     }
 }
 
-extension MLBusinessCoverCarouselContainerView: UICollectionViewDelegate {
+extension MLBusinessCoverCarouselView: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        delegate?.coverCarouselContainerView(self, didSelect: items[indexPath.item], at: indexPath.item)
+        delegate?.coverCarouselView(self, didSelect: items[indexPath.item], at: indexPath.item)
     }
     
     private func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
@@ -146,8 +146,8 @@ extension MLBusinessCoverCarouselContainerView: UICollectionViewDelegate {
     }
 }
 
-extension MLBusinessCoverCarouselContainerView: UIScrollViewDelegate {
+extension MLBusinessCoverCarouselView: UIScrollViewDelegate {
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        delegate?.coverCarouselContainerView(self, didFinishScrolling: visibleItems)
+        delegate?.coverCarouselView(self, didFinishScrolling: visibleItems)
     }
 }

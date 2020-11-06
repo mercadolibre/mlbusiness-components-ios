@@ -1,5 +1,5 @@
 //
-//  MLBusinessCoverCarouselContainerItemView.swift
+//  MLBusinessCoverCarouselItemView.swift
 //  MLBusinessComponents
 //
 //  Created by Gaston Maspero on 03/11/2020.
@@ -8,7 +8,7 @@
 import Foundation
 import MLUI
 
-public class MLBusinessCoverCarouselContainerItemView: UIView {
+public class MLBusinessCoverCarouselItemView: UIView {
     private let colorForBackground = UIColor.white
     
     private lazy var containerView: UIView = {
@@ -54,7 +54,7 @@ public class MLBusinessCoverCarouselContainerItemView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func update(with item: MLBusinessCoverCarouselContainerItemModel) {
+    public func update(with item: MLBusinessCoverCarouselItemModel) {
         imageProvider.getImage(key: item.coverImage) { [weak self] image in
             self?.coverImageView.image = image
         }
@@ -103,3 +103,4 @@ public class MLBusinessCoverCarouselContainerItemView: UIView {
         ])
     }
 }
+
