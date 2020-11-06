@@ -17,7 +17,9 @@ public class MLBusinessCoverCarouselView: UIView {
     private var imageProvider: MLBusinessImageProvider?
     private var collectionViewHeightConstraint: NSLayoutConstraint?
     
-    private var items: [MLBusinessCoverCarouselItemModel] = []
+    private var model: MLBusinessCoverCarouselModel?
+
+    private var items: [MLBusinessCoverCarouselItemModel] { model?.items ?? [] }
     
     private lazy var layout: UICollectionViewFlowLayout = {
         let layout = MLBusinessCarouselSnappingLayout()
@@ -73,8 +75,8 @@ public class MLBusinessCoverCarouselView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func update(with items: [MLBusinessCoverCarouselItemModel]) {
-        self.items = items
+    public func update(with model: MLBusinessCoverCarouselModel) {
+        self.model = model
         collectionViewHeightConstraint?.constant = getMaxHeight()
         collectionView.reloadData()
     }

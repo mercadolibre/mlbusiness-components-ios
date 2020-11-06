@@ -8,11 +8,11 @@
 import Foundation
 
 public struct MLBusinessCoverCarouselItemModel {
-    public init(row: MLBusinessRowData, coverImage: String) {
-        self.row = row
-        self.coverImage = coverImage
-    }
+    public let cover: String
+    public let description: MLBusinessRowData
     
-    public let row: MLBusinessRowData
-    public let coverImage: String
+    public init(cover: String, description: MLBusinessRowData) {
+        self.cover = cover
+        self.description = description
+    }
 }

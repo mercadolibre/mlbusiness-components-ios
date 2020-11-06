@@ -72,10 +72,13 @@ extension ViewController {
         let burger = "https://cdn2.cocinadelirante.com/sites/default/files/styles/gallerie/public/images/2018/05/hamburguesa-con-fondue-receta.jpg"
         let pizza = "https://gift-static.kxscdn.com/img/pizza-napolitana/pizza-napolitana.jpg"
         
-        let cardModels = [MLBusinessCoverCarouselItemModel(row: RowData(), coverImage: burger),
-                          MLBusinessCoverCarouselItemModel(row: RowData2(), coverImage: pizza)
+        let cardModels = [MLBusinessCoverCarouselItemModel(cover: burger, description: RowData()),
+                          MLBusinessCoverCarouselItemModel(cover: pizza, description: RowData2())
         ]
-        carousel.update(with: cardModels)
+        
+        let carouselModel = MLBusinessCoverCarouselModel(items: cardModels)
+        
+        carousel.update(with: carouselModel)
         
         return carousel
     }
