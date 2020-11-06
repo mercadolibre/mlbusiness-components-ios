@@ -27,7 +27,10 @@ class CoverCarouselData: NSObject, MLBusinessTouchpointsData {
         let pizza = "https://gift-static.kxscdn.com/img/pizza-napolitana/pizza-napolitana.jpg"
 
         let cardModels = [MLBusinessCoverCarouselItemModel(cover: burger, description: RowData().asModel()),
-                          MLBusinessCoverCarouselItemModel(cover: pizza, description: RowData2().asModel())
+                          MLBusinessCoverCarouselItemModel(cover: pizza, description: RowData2().asModel()),
+                          MLBusinessCoverCarouselItemModel(cover: burger, description: RowData2().asModel()),
+                          MLBusinessCoverCarouselItemModel(cover: pizza, description: RowData2().asModel()),
+                          MLBusinessCoverCarouselItemModel(cover: pizza, description: RowData().asModel())
         ]
 
         let carouselModel = MLBusinessCoverCarouselModel(items: cardModels)
