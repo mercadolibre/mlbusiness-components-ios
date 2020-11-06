@@ -59,28 +59,19 @@ extension ViewController {
     }
     
     private func setupCoverCarouselView(bottomOf topView: UIView) -> UIView {
-        let carousel = MLBusinessCoverCarouselView(with: nil)
+        let discountTouchpointsView = MLBusinessTouchpointsView()
+        discountTouchpointsView.setTouchpointsTracker(with: DiscountTrackerData(touchPointId: "BusinessComponents-Example"))
         
-        containerView.addSubview(carousel)
+        containerView.addSubview(discountTouchpointsView)
         
         NSLayoutConstraint.activate([
-            carousel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 0),
-            carousel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: 0),
-            carousel.topAnchor.constraint(equalTo: topView.bottomAnchor, constant: 16)
+            discountTouchpointsView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 0),
+            discountTouchpointsView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: 0),
+            discountTouchpointsView.topAnchor.constraint(equalTo: topView.bottomAnchor, constant: 16)
         ])
         
-        let burger = "https://cdn2.cocinadelirante.com/sites/default/files/styles/gallerie/public/images/2018/05/hamburguesa-con-fondue-receta.jpg"
-        let pizza = "https://gift-static.kxscdn.com/img/pizza-napolitana/pizza-napolitana.jpg"
-        
-        let cardModels = [MLBusinessCoverCarouselItemModel(cover: burger, description: RowData()),
-                          MLBusinessCoverCarouselItemModel(cover: pizza, description: RowData2())
-        ]
-        
-        let carouselModel = MLBusinessCoverCarouselModel(items: cardModels)
-        
-        carousel.update(with: carouselModel)
-        
-        return carousel
+        discountTouchpointsView.update(with: CoverCarouselData())
+        return discountTouchpointsView
     }
 
     private func setupRingView(_ receiver: MLBusinessLoyaltyBroadcastReceiver) -> MLBusinessLoyaltyRingView {

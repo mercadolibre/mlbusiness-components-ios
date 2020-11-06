@@ -55,11 +55,15 @@ public class MLBusinessCoverCarouselItemView: UIView {
     }
     
     public func update(with item: MLBusinessCoverCarouselItemModel) {
-        imageProvider.getImage(key: item.cover) { [weak self] image in
-            self?.coverImageView.image = image
+        if let cover = item.cover {
+            imageProvider.getImage(key: cover) { [weak self] image in
+                self?.coverImageView.image = image
+            }
         }
         
-        rowView.update(with: item.description)
+        if let description = item.description {
+            rowView.update(with: description)
+        }
     }
     
     public func setHighlighted(_ highlighted: Bool) {

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct MLBusinessCoverCarouselModel {
+public struct MLBusinessCoverCarouselModel: Codable {
     public let items: [MLBusinessCoverCarouselItemModel]
     
     public init(items: [MLBusinessCoverCarouselItemModel]) {

@@ -7,12 +7,24 @@
 
 import Foundation
 
-public struct MLBusinessCoverCarouselItemModel {
-    public let cover: String
-    public let description: MLBusinessRowData
-    
-    public init(cover: String, description: MLBusinessRowData) {
+public struct MLBusinessCoverCarouselItemModel: Codable {
+    public let cover: String?
+    public let description: MLBusinessMultipleRowItemModel?
+    public let tracking: MLBusinessCoverCarouselItemModelTracking?
+
+    public init(cover: String?, description: MLBusinessMultipleRowItemModel?, tracking: MLBusinessCoverCarouselItemModelTracking?) {
         self.cover = cover
         self.description = description
+        self.tracking = tracking
+    }
+}
+
+extension MLBusinessCoverCarouselItemModel: Trackable {
+    var trackingId: String? {
+        return tracking?.trackingId
+    }
+
+    var eventData: MLBusinessCodableDictionary? {
+        return tracking?.eventData
     }
 }
