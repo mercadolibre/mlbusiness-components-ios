@@ -15,8 +15,6 @@ public class MLBusinessCoverCarouselItemView: UIView {
         let containerView = UIView(frame: .zero)
         
         containerView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.layer.masksToBounds = true
-        containerView.layer.cornerRadius = 8
         containerView.backgroundColor = colorForBackground
         
         return containerView
@@ -55,6 +53,7 @@ public class MLBusinessCoverCarouselItemView: UIView {
     }
     
     public func update(with item: MLBusinessCoverCarouselItemModel) {
+        clear()
         if let cover = item.cover {
             imageProvider.getImage(key: cover) { [weak self] image in
                 self?.coverImageView.image = image
@@ -77,6 +76,7 @@ public class MLBusinessCoverCarouselItemView: UIView {
     
     private func setupView() {
         translatesAutoresizingMaskIntoConstraints = false
+        layer.masksToBounds = true
         
         addSubview(containerView)
         

@@ -8,8 +8,16 @@
 import Foundation
 
 class MLBusinessCoverCarouselViewCell: UICollectionViewCell {
-    private let itemView = MLBusinessCoverCarouselItemView()
     private let pressableAnimator = ShrinkPressableAnimator()
+    private let cornerRadius: CGFloat = 6
+    
+    private lazy var itemView: MLBusinessCoverCarouselItemView = {
+        let itemView = MLBusinessCoverCarouselItemView()
+        
+        itemView.layer.cornerRadius = cornerRadius
+        
+        return itemView
+    }()
     
     private lazy var mainContentView: PressableView = {
         let view = PressableView()
@@ -69,7 +77,7 @@ class MLBusinessCoverCarouselViewCell: UICollectionViewCell {
     private func setup() {
         mainContentView.layer.borderColor = UIColor(white: 155.0/255.0, alpha: 0.1).cgColor
         mainContentView.layer.borderWidth = 1.0
-        mainContentView.layer.cornerRadius = 6.0
+        mainContentView.layer.cornerRadius = cornerRadius
         mainContentView.layer.applyShadow(alpha: 0.1, x: 0, y: 2, blur: 4)
         
         contentView.addSubview(mainContentView)
