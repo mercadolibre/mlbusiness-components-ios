@@ -33,8 +33,11 @@ class CoverCarouselData: NSObject, MLBusinessTouchpointsData {
                           MLBusinessCoverCarouselItemModel(cover: pizza, description: RowData().asModel())
         ]
 
-        let carouselModel = MLBusinessCoverCarouselModel(items: cardModels)
-
-        return try! carouselModel.asDictionary()
+        let carouselModel = MLBusinessCoverCarouselModel(items: cardModels,
+                                                         alphaAnimation: nil,
+                                                         scaleAnimation: nil,
+                                                         pressAnimation: nil)
+        
+        return carouselModel.asDictionary()
     }
 }

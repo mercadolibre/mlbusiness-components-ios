@@ -9,11 +9,11 @@ import Foundation
 
 class MLBusinessCoverCarouselViewCell: UICollectionViewCell {
     private let itemView = MLBusinessCoverCarouselItemView()
+    private let pressableAnimator = ShrinkPressableAnimator()
     
     private lazy var mainContentView: PressableView = {
         let view = PressableView()
         
-        view.pressableAnimator = ShrinkPressableAnimator()
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
@@ -31,6 +31,12 @@ class MLBusinessCoverCarouselViewCell: UICollectionViewCell {
         }
     }
     
+    var animatesWhenPressed: Bool {
+        didSet {
+            mainContentView.pressableAnimator = animatesWhenPressed ? pressableAnimator : nil
+        }
+    }
+    
     override var isHighlighted: Bool {
         didSet {
            setHighlighted(isHighlighted)
@@ -38,7 +44,10 @@ class MLBusinessCoverCarouselViewCell: UICollectionViewCell {
     }
 
     override init(frame: CGRect) {
+        animatesWhenPressed = true
+        
         super.init(frame: frame)
+        
         setup()
         setupConstraints()
     }
