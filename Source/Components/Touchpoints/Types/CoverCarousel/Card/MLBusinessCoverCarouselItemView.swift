@@ -39,7 +39,7 @@ public class MLBusinessCoverCarouselItemView: UIView {
     var imageProvider: MLBusinessImageProvider
     
     public init(with imageProvider: MLBusinessImageProvider? = nil, coverHeight: CGFloat = 100) {
-        self.imageProvider = imageProvider != nil ? imageProvider! : MLBusinessURLImageProvider()
+        self.imageProvider = imageProvider ?? MLBusinessURLImageProvider()
         self.coverHeight = coverHeight
             
         super.init(frame: .zero)
