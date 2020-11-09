@@ -10,6 +10,7 @@ import MLUI
 
 public class MLBusinessCoverCarouselItemView: UIView {
     private let colorForBackground = UIColor.white
+    private let coverHeight: CGFloat
     
     private lazy var containerView: UIView = {
         let containerView = UIView(frame: .zero)
@@ -32,15 +33,14 @@ public class MLBusinessCoverCarouselItemView: UIView {
     }()
     
     private lazy var rowView: MLBusinessRowView = {
-        let row = MLBusinessRowView()
-        
-        return row
+        return MLBusinessRowView()
     }()
     
     var imageProvider: MLBusinessImageProvider
     
-    public required init() {
-        imageProvider = MLBusinessURLImageProvider()
+    public init(with imageProvider: MLBusinessImageProvider? = nil, coverHeight: CGFloat = 100) {
+        self.imageProvider = imageProvider != nil ? imageProvider! : MLBusinessURLImageProvider()
+        self.coverHeight = coverHeight
             
         super.init(frame: .zero)
         
@@ -96,7 +96,7 @@ public class MLBusinessCoverCarouselItemView: UIView {
             coverImageView.topAnchor.constraint(equalTo: containerView.topAnchor),
             coverImageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
             coverImageView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-            coverImageView.heightAnchor.constraint(equalToConstant: 100)
+            coverImageView.heightAnchor.constraint(equalToConstant: coverHeight)
         ])
         
         NSLayoutConstraint.activate([
