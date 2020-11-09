@@ -19,7 +19,7 @@ public class MLBusinessCoverCarouselView: UIView {
     
     private var model: MLBusinessCoverCarouselModel?
 
-    private var items: [MLBusinessCoverCarouselItemModel] { model?.items ?? [] }
+    private var items: [MLBusinessCoverCarouselItemModel] { return model?.items ?? [] }
     
     private lazy var layout: MLBusinessCarouselSnappingLayout = {
         let layout = MLBusinessCarouselSnappingLayout()
