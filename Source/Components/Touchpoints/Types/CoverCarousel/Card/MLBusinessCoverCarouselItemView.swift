@@ -5,20 +5,20 @@
 //  Created by Gaston Maspero on 03/11/2020.
 //
 
-import Foundation
+import UIKit
 import MLUI
 
 public class MLBusinessCoverCarouselItemView: UIView {
-    private let colorForBackground = UIColor.white
     private let coverHeight: CGFloat
     
-    private lazy var containerView: UIView = {
-        let containerView = UIView(frame: .zero)
+    private lazy var alphaOverlayView: UIView = {
+        let view = UIView()
         
-        containerView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.backgroundColor = colorForBackground
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor(white: 0, alpha: 0.04)
+        view.isHidden = true
         
-        return containerView
+        return view
     }()
     
     private lazy var coverImageView: UIImageView = {
@@ -66,7 +66,7 @@ public class MLBusinessCoverCarouselItemView: UIView {
     }
     
     public func setHighlighted(_ highlighted: Bool) {
-        containerView.backgroundColor = highlighted ? colorForBackground.darker(by: 80) : colorForBackground
+        self.alphaOverlayView.isHidden = !highlighted
     }
     
     public func clear() {
@@ -75,35 +75,35 @@ public class MLBusinessCoverCarouselItemView: UIView {
     }
     
     private func setupView() {
+        backgroundColor = .white
         translatesAutoresizingMaskIntoConstraints = false
         layer.masksToBounds = true
         
-        addSubview(containerView)
-        
-        containerView.addSubview(coverImageView)
-        containerView.addSubview(rowView)
+        addSubview(alphaOverlayView)
+        addSubview(coverImageView)
+        addSubview(rowView)
     }
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            containerView.topAnchor.constraint(equalTo: topAnchor),
-            containerView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            containerView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            containerView.trailingAnchor.constraint(equalTo: trailingAnchor)
+            alphaOverlayView.topAnchor.constraint(equalTo: topAnchor),
+            alphaOverlayView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            alphaOverlayView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            alphaOverlayView.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
         
         NSLayoutConstraint.activate([
-            coverImageView.topAnchor.constraint(equalTo: containerView.topAnchor),
-            coverImageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            coverImageView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            coverImageView.topAnchor.constraint(equalTo: topAnchor),
+            coverImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            coverImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
             coverImageView.heightAnchor.constraint(equalToConstant: coverHeight)
         ])
         
         NSLayoutConstraint.activate([
             rowView.topAnchor.constraint(equalTo: coverImageView.bottomAnchor),
-            rowView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
-            rowView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            rowView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor)
+            rowView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            rowView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            rowView.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
     }
 }
