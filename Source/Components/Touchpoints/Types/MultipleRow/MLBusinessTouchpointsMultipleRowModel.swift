@@ -61,7 +61,7 @@ public class MLBusinessMultipleRowItemModel: NSObject, Codable {
     private let link: String?
     private let tracking: MLBusinessItemModelTracking?
     
-    public init(leftImage: String?, leftImageAccessory: String?, mainTitle: String, mainSubtitle: String?, mainDescription: [MLBusinessRowMainDescription]?, mainSecondaryDescription: [MLBusinessMultipleDescriptionModel]?, rightPrimaryLabel: String?, rightSecondaryLabel: String?, rightMiddleLabel: String?, rightTopLabel: String?, rightLabelStatus: String?, rightBottomInfo: MLBusinessRowRightBottomInfo?, link: String?, tracking: MLBusinessItemModelTracking?) {
+    public init(leftImage: String?, leftImageAccessory: String?, mainTitle: String, mainSubtitle: String?, mainDescription: [MLBusinessRowMainDescription]?, mainSecondaryDescription: [MLBusinessMultipleDescriptionModel]? = nil, rightPrimaryLabel: String?, rightSecondaryLabel: String?, rightMiddleLabel: String?, rightTopLabel: String?, rightLabelStatus: String?, rightBottomInfo: MLBusinessRowRightBottomInfo?, link: String?, tracking: MLBusinessItemModelTracking?) {
         self.leftImage = leftImage
         self.leftImageAccessory = leftImageAccessory
         self.mainTitle = mainTitle
