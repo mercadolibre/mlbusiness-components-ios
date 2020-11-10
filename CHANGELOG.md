@@ -1,5 +1,7 @@
-# Sin publicar
+# v1.26.1
+🚀 1.26.1 🚀
 - Added Cover Carousel Component
+- Make lib static
 
 # v1.26.0
 🚀 1.26.0 🚀
