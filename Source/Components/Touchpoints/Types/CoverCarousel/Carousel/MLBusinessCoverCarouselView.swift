@@ -122,7 +122,7 @@ public class MLBusinessCoverCarouselView: UIView {
     }
     
     private func setLayoutAnimators(from model: MLBusinessCoverCarouselModel) {
-        let shouldAnimateAlpha = model.alphaAnimation ?? true
+        let shouldAnimateAlpha = model.alphaAnimation ?? false
         let shouldAnimateScale = model.scaleAnimation ?? false
         
         var animators: [MLBusinessLayoutAttributeAnimator] = []
@@ -153,7 +153,7 @@ extension MLBusinessCoverCarouselView: UICollectionViewDataSource {
         let item = items[indexPath.row]
         cell.imageProvider = imageProvider
         cell.update(with: item)
-        cell.animatesWhenPressed = model?.pressAnimation ?? true
+        cell.animatesWhenPressed = model?.pressAnimation ?? false
         
         return cell
     }
