@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "MLBusinessComponents"
-  s.version          = "1.26.1"
+  s.version          = "1.27.0"
   s.summary          = "MLBusinessComponents for iOS"
   s.homepage         = "https://www.mercadolibre.com"
   s.license          = { :type => "MIT", :file => "LICENSE" }
@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   s.platform         = :ios, '10.0'
   s.requires_arc     = true
   s.default_subspec = 'Default'
-  s.static_framework = true
+  ### s.static_framework = true
 
   s.subspec 'Default' do |default|
     default.source_files = ['Source/**/**/**/*.{h,m,swift}']
