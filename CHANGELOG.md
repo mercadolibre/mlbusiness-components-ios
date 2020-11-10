@@ -1,3 +1,6 @@
+# Sin publicar
+- Added Cover Carousel Component
+
 # v1.26.0
 🚀 1.26.0 🚀
 - Added dynamic width for description on Row Component

@@ -52,9 +52,26 @@ extension ViewController {
         let rowView = setupRowView(bottomOf: animatedButtonView)
         let hybridCarousel = setupHybridCarouselView(bottomOf: rowView)
         let multipleRowTouchpointView = setupMultipleRowTouchpointView(bottomOf: hybridCarousel)
-        let openSheet = setupSheetViewController(bottomOf: multipleRowTouchpointView)
+        let carouselView = setupCoverCarouselView(bottomOf: multipleRowTouchpointView)
+        let openSheet = setupSheetViewController(bottomOf: carouselView)
         
         openSheet.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -64).isActive = true
+    }
+    
+    private func setupCoverCarouselView(bottomOf topView: UIView) -> UIView {
+        let discountTouchpointsView = MLBusinessTouchpointsView()
+        discountTouchpointsView.setTouchpointsTracker(with: DiscountTrackerData(touchPointId: "BusinessComponents-Example"))
+        
+        containerView.addSubview(discountTouchpointsView)
+        
+        NSLayoutConstraint.activate([
+            discountTouchpointsView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 0),
+            discountTouchpointsView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: 0),
+            discountTouchpointsView.topAnchor.constraint(equalTo: topView.bottomAnchor, constant: 16)
+        ])
+        
+        discountTouchpointsView.update(with: CoverCarouselData())
+        return discountTouchpointsView
     }
 
     private func setupRingView(_ receiver: MLBusinessLoyaltyBroadcastReceiver) -> MLBusinessLoyaltyRingView {

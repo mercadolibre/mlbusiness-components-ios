@@ -21,6 +21,7 @@ class MLBusinessTouchpointsRegistry: MLBusinessTouchpointsRegistryProtocol {
         register(type: "CAROUSEL", mapper: MLBusinessMapper<MLBusinessTouchpointsCarouselModel>(), view: MLBusinessTouchpointsCarouselView.self)
         register(type: "HYBRID_CAROUSEL", mapper: MLBusinessMapper<MLBusinessHybridCarouselModel>(), view: MLBusinessHybridCarouselView.self)
         register(type: "MULTIPLE_ROW", mapper: MLBusinessMapper<MLBusinessTouchpointsMultipleRowModel>(), view: MLBusinessTouchpointsMultipleRowView.self)
+        register(type: "COVER_CAROUSEL", mapper: MLBusinessMapper<MLBusinessCoverCarouselModel>(), view: MLBusinessTouchpointsCoverCarouselView.self)
     }
 
     func register(type: String, mapper: MLBusinessMapperProtocol, view: MLBusinessTouchpointsBaseView.Type) {

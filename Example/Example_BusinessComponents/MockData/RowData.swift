@@ -72,6 +72,40 @@ class RowData: NSObject, MLBusinessRowData {
     }
 }
 
+extension RowData {
+    func asModel() -> MLBusinessMultipleRowItemModel {
+        let mainDescription = getMainDescription()?.compactMap({
+            return MLBusinessRowMainDescription(type: $0.getType(), content: $0.getContent(), color: $0.getColor())
+        })
+
+        let bottomInfo = MLBusinessRowRightBottomInfo(icon: getRightBottomInfo()?.getIcon(),
+                                                      label: getRightBottomInfo()?.getLabel(),
+                                                      format: MLBusinessRowRightBottomInfoFormat(textColor: (getRightBottomInfo()?.getFormat()?.getTextColor())!,
+                                                                                                 backgroundColor: (getRightBottomInfo()?.getFormat()?.getBackgroundColor())!))
+
+        return MLBusinessMultipleRowItemModel(leftImage: getLeftImage(),
+                                              leftImageAccessory: getLeftImageAccessory(),
+                                              mainTitle: getMainTitle(),
+                                              mainSubtitle: getMainSubtitle(),
+                                              mainDescription: mainDescription,
+                                              mainSecondaryDescription: getMainSecondaryDescription(),
+                                              rightPrimaryLabel: getRightPrimaryLabel(),
+                                              rightSecondaryLabel: getRightSecondaryLabel(),
+                                              rightMiddleLabel: getRightMiddleLabel(),
+                                              rightTopLabel: getRightTopLabel(),
+                                              rightLabelStatus: getRightLabelStatus(),
+                                              rightBottomInfo: bottomInfo,
+                                              link: getLink(),
+                                              tracking: createTrackingItem(trackingId: "1048784",
+                                                                           blocked: false,
+                                                                           name: "El Nombre"))
+    }
+    
+    private func createTrackingItem(trackingId: String, blocked: Bool, name: String) -> MLBusinessItemModelTracking {
+            return MLBusinessItemModelTracking(trackingId: trackingId, eventData: ["blocked" : blocked, "name" : name, "tracking_id" : trackingId])
+        }
+}
+
 class RowMainDescriptionData: NSObject, MLBusinessRowMainDescriptionData {
     private let type: String
     private let content: String
