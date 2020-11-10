@@ -10,7 +10,6 @@ import Foundation
 import MLBusinessComponents
 
 class CrossSellingBoxData: NSObject, MLBusinessCrossSellingBoxData {
-
     func getIconUrl() -> String {
         return "https://urbancomunicacion.com/wp-content/uploads/2017/04/Logotipos-famosos-Starbucks-Urban-comunicacion-1.png"
     }
