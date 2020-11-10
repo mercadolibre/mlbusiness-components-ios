@@ -1,4 +1,5 @@
-# Sin publicar
+# v1.27.0
+🚀 1.27.0 🚀
 - Added Cover Carousel Component
 
 # v1.26.0
