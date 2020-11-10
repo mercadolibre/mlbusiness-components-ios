@@ -11,7 +11,12 @@ internal final class MLBusinessResourceManager {
     static let shared = MLBusinessResourceManager()
 
     func getBundle() -> Bundle? {
-        return Bundle(for: MLBusinessResourceManager.self)
+        let bundle = Bundle(for: MLBusinessResourceManager.self)
+        if let path = bundle.path(forResource: "MLBusinessComponentsResources", ofType: "bundle"),
+            let resourcesBundle = Bundle(path: path) {
+            return resourcesBundle
+        }
+        return bundle
     }
 
     func getImage(_ name: String?) -> UIImage? {
