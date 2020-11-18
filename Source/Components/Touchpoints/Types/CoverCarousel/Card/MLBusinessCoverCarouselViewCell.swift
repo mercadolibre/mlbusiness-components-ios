@@ -70,7 +70,9 @@ class MLBusinessCoverCarouselViewCell: UICollectionViewCell {
         itemView.clear()
     }
     
-    func update(with content: MLBusinessCoverCarouselItemModel) {
+    func update(with content: MLBusinessCoverCarouselItemContentModel?) {
+        guard let content = content else { return }
+        
         itemView.update(with: content)
     }
 

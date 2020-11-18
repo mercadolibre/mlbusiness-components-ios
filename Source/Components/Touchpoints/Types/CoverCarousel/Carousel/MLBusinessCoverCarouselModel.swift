@@ -9,23 +9,30 @@ import Foundation
 
 public struct MLBusinessCoverCarouselModel: Codable {
     public let items: [MLBusinessCoverCarouselItemModel]
-    public let alphaAnimation: Bool?
-    public let scaleAnimation: Bool?
-    public let pressAnimation: Bool?
+    public let carouselAnimation: MLBusinessCoverCarouselAnimation?
     
-    public init(items: [MLBusinessCoverCarouselItemModel],
-                alphaAnimation: Bool?,
-                scaleAnimation: Bool?,
-                pressAnimation: Bool?) {
+    public init(items: [MLBusinessCoverCarouselItemModel], carouselAnimation: MLBusinessCoverCarouselAnimation?) {
         self.items = items
-        self.alphaAnimation = alphaAnimation
-        self.scaleAnimation = scaleAnimation
-        self.pressAnimation = pressAnimation
+        self.carouselAnimation = carouselAnimation
     }
 }
 
 extension MLBusinessCoverCarouselModel: ComponentTrackable {
     func getTrackables() -> [Trackable]? {
         return items
+    }
+}
+
+public struct MLBusinessCoverCarouselAnimation: Codable {
+    public let alphaAnimation: Bool?
+    public let scaleAnimation: Bool?
+    public let pressAnimation: Bool?
+    
+    public init(alphaAnimation: Bool?,
+                scaleAnimation: Bool?,
+                pressAnimation: Bool?) {
+        self.alphaAnimation = alphaAnimation
+        self.scaleAnimation = scaleAnimation
+        self.pressAnimation = pressAnimation
     }
 }

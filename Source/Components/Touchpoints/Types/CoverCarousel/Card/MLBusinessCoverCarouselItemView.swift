@@ -9,7 +9,8 @@ import UIKit
 import MLUI
 
 public class MLBusinessCoverCarouselItemView: UIView {
-    private let coverHeight: CGFloat
+    static let coverHeight: CGFloat = 100
+    private let mapper: MLBusinessCoverCarouselItemContentModelMapperProtocol
     
     private lazy var alphaOverlayView: UIView = {
         let view = UIView()
@@ -38,9 +39,9 @@ public class MLBusinessCoverCarouselItemView: UIView {
     
     var imageProvider: MLBusinessImageProvider
     
-    public init(with imageProvider: MLBusinessImageProvider? = nil, coverHeight: CGFloat = 100) {
+    public init(with imageProvider: MLBusinessImageProvider? = nil) {
         self.imageProvider = imageProvider ?? MLBusinessURLImageProvider()
-        self.coverHeight = coverHeight
+        self.mapper = MLBusinessCoverCarouselItemContentModelMapper()
             
         super.init(frame: .zero)
         
@@ -52,17 +53,17 @@ public class MLBusinessCoverCarouselItemView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func update(with item: MLBusinessCoverCarouselItemModel) {
+    public func update(with item: MLBusinessCoverCarouselItemContentModel) {
         clear()
+        
         if let cover = item.cover {
             imageProvider.getImage(key: cover) { [weak self] image in
                 self?.coverImageView.image = image
             }
         }
         
-        if let description = item.description {
-            rowView.update(with: description)
-        }
+        let rowModel = mapper.map(from: item)
+        rowView.update(with: rowModel)
     }
     
     public func setHighlighted(_ highlighted: Bool) {
@@ -72,6 +73,13 @@ public class MLBusinessCoverCarouselItemView: UIView {
     public func clear() {
         coverImageView.image = nil
         rowView.prepareForReuse()
+    }
+    
+    static func height(for model: MLBusinessCoverCarouselItemContentModel) -> CGFloat {
+        let isRowSmall = model.mainSecondaryDescription?.isEmpty ?? true
+        let rowHeight: CGFloat = isRowSmall ? 96 : 114
+        
+        return coverHeight + rowHeight
     }
     
     private func setupView() {
@@ -96,7 +104,7 @@ public class MLBusinessCoverCarouselItemView: UIView {
             coverImageView.topAnchor.constraint(equalTo: topAnchor),
             coverImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             coverImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            coverImageView.heightAnchor.constraint(equalToConstant: coverHeight)
+            coverImageView.heightAnchor.constraint(equalToConstant: MLBusinessCoverCarouselItemView.coverHeight)
         ])
         
         NSLayoutConstraint.activate([
