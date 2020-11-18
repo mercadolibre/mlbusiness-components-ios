@@ -19,6 +19,14 @@ public struct MLBusinessCoverCarouselItemModel: Codable {
         self.link = link
         self.tracking = tracking
     }
+    
+    public func getTrackingId() -> String? {
+        return trackingId
+    }
+    
+    public func getEventData() -> [String : Any]? {
+        return eventData?.rawValue
+    }
 }
 
 extension MLBusinessCoverCarouselItemModel: Trackable {
