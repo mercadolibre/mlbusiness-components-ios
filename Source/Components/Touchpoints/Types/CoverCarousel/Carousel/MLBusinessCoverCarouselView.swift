@@ -143,13 +143,14 @@ extension MLBusinessCoverCarouselView: UICollectionViewDataSource {
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView
-            .dequeueReusableCell(withReuseIdentifier: MLBusinessCoverCarouselViewCell.reuseIdentifier,
-                                 for: indexPath) as? MLBusinessCoverCarouselViewCell else {
-                                    return MLBusinessCoverCarouselViewCell() }
-        let item = items[indexPath.row]
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MLBusinessCoverCarouselViewCell.reuseIdentifier,
+                                                            for: indexPath) as? MLBusinessCoverCarouselViewCell,
+              let content = items[indexPath.row].content else {
+                                    return MLBusinessCoverCarouselViewCell()
+        }
+        
         cell.imageProvider = imageProvider
-        cell.update(with: item.content)
+        cell.update(with: content)
         cell.animatesWhenPressed = model?.carouselAnimation?.pressAnimation ?? false
         
         return cell
