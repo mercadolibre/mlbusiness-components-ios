@@ -37,7 +37,11 @@ public class MLBusinessCoverCarouselItemView: UIView {
         return MLBusinessRowView()
     }()
     
-    var imageProvider: MLBusinessImageProvider
+    var imageProvider: MLBusinessImageProvider {
+        didSet {
+            rowView.imageProvider = imageProvider
+        }
+    }
     
     public init(with imageProvider: MLBusinessImageProvider? = nil) {
         self.imageProvider = imageProvider ?? MLBusinessURLImageProvider()

@@ -18,7 +18,7 @@ public class MLBusinessMultipleDescriptionView: UIView {
         return stackView
     }()
     
-    private var imageProvider: MLBusinessImageProvider
+    var imageProvider: MLBusinessImageProvider
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
