@@ -84,13 +84,13 @@ public class MLBusinessCoverCarouselView: UIView {
     public func update(with model: MLBusinessCoverCarouselModel) {
         self.model = model
         
-        setLayoutAnimators(from: model)
+        setLayoutAnimators(from: model.carouselAnimation)
         collectionViewHeightConstraint?.constant = getMaxItemHeight(for: model)
         collectionView.reloadData()
     }
     
     func getMaxItemHeight(for model: MLBusinessCoverCarouselModel?) -> CGFloat {
-        return model?.items.map({ getViewHeight(for: $0) }).max() ?? 0
+        return model?.items.map({ getViewHeight(for: $0.content) }).max() ?? 0
     }
     
     private func setupView() {
@@ -111,19 +111,16 @@ public class MLBusinessCoverCarouselView: UIView {
         ])
     }
     
-    private func getViewHeight(for model: MLBusinessCoverCarouselItemModel) -> CGFloat {
-        let view = MLBusinessCoverCarouselItemView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 32.0).isActive = true
-        view.update(with: model)
-        view.setNeedsLayout()
-        view.layoutIfNeeded()
-        return view.frame.height
+    private func getViewHeight(for model: MLBusinessCoverCarouselItemContentModel?) -> CGFloat {
+        guard let model = model else { return 0 }
+        
+        return MLBusinessCoverCarouselItemView.height(for: model)
     }
     
-    private func setLayoutAnimators(from model: MLBusinessCoverCarouselModel) {
-        let shouldAnimateAlpha = model.alphaAnimation ?? false
-        let shouldAnimateScale = model.scaleAnimation ?? false
+    private func setLayoutAnimators(from model: MLBusinessCoverCarouselAnimation?) {
+        let shouldAnimateAlpha = model?.alphaAnimation ?? false
+        let shouldAnimateScale = model?.scaleAnimation ?? false
+
         
         var animators: [MLBusinessLayoutAttributeAnimator] = []
         
@@ -146,14 +143,15 @@ extension MLBusinessCoverCarouselView: UICollectionViewDataSource {
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView
-            .dequeueReusableCell(withReuseIdentifier: MLBusinessCoverCarouselViewCell.reuseIdentifier,
-                                 for: indexPath) as? MLBusinessCoverCarouselViewCell else {
-                                    return MLBusinessCoverCarouselViewCell() }
-        let item = items[indexPath.row]
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MLBusinessCoverCarouselViewCell.reuseIdentifier,
+                                                            for: indexPath) as? MLBusinessCoverCarouselViewCell,
+              let content = items[indexPath.row].content else {
+                                    return MLBusinessCoverCarouselViewCell()
+        }
+        
         cell.imageProvider = imageProvider
-        cell.update(with: item)
-        cell.animatesWhenPressed = model?.pressAnimation ?? false
+        cell.update(with: content)
+        cell.animatesWhenPressed = model?.carouselAnimation?.pressAnimation ?? false
         
         return cell
     }

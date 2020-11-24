@@ -73,7 +73,7 @@ class MLBusinessTouchpointsCoverCarouselView: MLBusinessTouchpointsBaseView {
 
 extension MLBusinessTouchpointsCoverCarouselView: MLBusinessCoverCarouselViewDelegate {
     func coverCarouselView(_: MLBusinessCoverCarouselView, didSelect item: MLBusinessCoverCarouselItemModel, at index: Int) {
-        guard let link = item.description?.getLink(), let trackingId = item.description?.trackingId else { return }
+        guard let link = item.link, let trackingId = item.trackingId else { return }
         
         delegate?.trackTap(with: index, deeplink: link, trackingId: trackingId)
     }
