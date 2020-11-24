@@ -152,7 +152,14 @@ public class MLBusinessRowView: UIView {
         return rightBottomInfo
     }()
 
-    private var imageProvider: MLBusinessImageProvider
+    var imageProvider: MLBusinessImageProvider {
+        didSet {
+            mainDescriptionView.imageProvider = imageProvider
+            mainSecondaryDescriptionView.imageProvider = imageProvider
+            
+        }
+    }
+    
     private let mainDescriptionView: MLBusinessMultipleDescriptionView
     private let mainSecondaryDescriptionView: MLBusinessMultipleDescriptionView
     private var rightStackViewWidthConstraint: NSLayoutConstraint?
