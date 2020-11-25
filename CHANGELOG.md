@@ -1,3 +1,7 @@
+# v1.28.0
+🚀 1.28.0 🚀
+- Signature refactor in Cover Carousel
+
 # v1.27.0
 🚀 1.27.0 🚀
 - Added Cover Carousel Component
