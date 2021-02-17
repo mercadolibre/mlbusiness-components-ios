@@ -1,3 +1,6 @@
+# Sin publicar
+- Fix en `setAdditionalEdgeInsets(with:)` para el Cover Carousel
+
 # v1.28.0
 🚀 1.28.0 🚀
 - Signature refactor in Cover Carousel
