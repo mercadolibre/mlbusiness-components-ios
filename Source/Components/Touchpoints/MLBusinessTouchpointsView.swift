@@ -18,13 +18,11 @@ open class MLBusinessTouchpointsView: UIView {
     private var touchpointsData: MLBusinessTouchpointsData?
     private var touchpointTracker: MLBusinessTouchpointsTrackerProtocol?
     private var componentTrackable: ComponentTrackable?
-    private var touchpointDataViewMapper: MLBusinessTouchpointsDataViewMapper
     public weak var delegate: MLBusinessTouchpointsUserInteractionHandler?
     private var trackingProvider: MLBusinessDiscountTrackerProtocol?
     private var canOpenMercadoPagoApp: Bool?
     
     public init() {
-        touchpointDataViewMapper = MLBusinessTouchpointsDataViewMapper()
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
     }
@@ -50,8 +48,8 @@ open class MLBusinessTouchpointsView: UIView {
                 touchpointView = viewType.init(configuration: codableContent)
                 setupTouchpointView()
             }
-            let additionalInsets = touchpointDataViewMapper.mapAdditionalInsets(from: touchpointsData?.getAdditionalEdgeInsets?())
-            touchpointView?.setAdditionalEdgeInsets(with: additionalInsets)
+            
+            touchpointView?.setAdditionalEdgeInsets(with: touchpointsData?.getAdditionalEdgeInsets?())
             touchpointView?.update(with: codableContent)
             touchpointView?.canOpenMercadoPagoApp = canOpenMercadoPagoApp
             touchpointView?.delegate = self
@@ -64,9 +62,9 @@ open class MLBusinessTouchpointsView: UIView {
         let touchpointMapper = registry.mapper(for: touchpointType)
         let codableContent = touchpointMapper?.map(dictionary: MLBusinessCodableDictionary(value: data.getTouchpointContent()))
         let touchpointView = registry.views(for: touchpointType)?.init(configuration: codableContent)
-        let additionalEdgeInsets = touchpointDataViewMapper.mapAdditionalInsets(from: data.getAdditionalEdgeInsets?())
-        let topInset = additionalEdgeInsets?.top ?? 0
-        let bottomInset = additionalEdgeInsets?.bottom ?? 0
+        let additionalEdgeInsets = data.getAdditionalEdgeInsets?()
+        let topInset = CGFloat(additionalEdgeInsets?["top"] as? NSNumber ?? 0)
+        let bottomInset = CGFloat(additionalEdgeInsets?["bottom"] as? NSNumber ?? 0)
         return touchpointView?.getTouchpointViewHeight(with: codableContent, topInset: topInset, bottomInset: bottomInset) ?? 0
     }
     
