@@ -52,15 +52,15 @@ class MLBusinessHybridCarouselView: MLBusinessTouchpointsBaseView {
         collectionView.update(with: model.getItems())
     }
     
-    override func setAdditionalEdgeInsets(with insets: [String : Any]?) {
+    override func setAdditionalEdgeInsets(with insets: UIEdgeInsets?) {
         guard var additionalInsets = insets else { return }
         let insets = UIEdgeInsets(top: 0,
-                                  left: CGFloat(additionalInsets["left"] as? NSNumber ?? 0),
+                                  left: additionalInsets.left,
                                   bottom: 0,
-                                  right: CGFloat(additionalInsets["right"] as? NSNumber ?? 0) + 12.0)
+                                  right: additionalInsets.right + 12.0)
         
-        additionalInsets["left"] = 0.0
-        additionalInsets["right"] = 0.0
+        additionalInsets.left = 0.0
+        additionalInsets.right = 0.0
         
         super.setAdditionalEdgeInsets(with: additionalInsets)
 

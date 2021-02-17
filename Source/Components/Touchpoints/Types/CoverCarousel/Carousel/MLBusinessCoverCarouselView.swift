@@ -56,6 +56,8 @@ public class MLBusinessCoverCarouselView: UIView {
         }
     }
     
+    var cardWidth: CGFloat = UIScreen.main.bounds.width - 32
+    
     public weak var delegate: MLBusinessCoverCarouselViewDelegate?
     
     public var shouldHighlightItems = true
@@ -159,7 +161,7 @@ extension MLBusinessCoverCarouselView: UICollectionViewDataSource {
 
 extension MLBusinessCoverCarouselView: UICollectionViewDelegateFlowLayout {
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: UIScreen.main.bounds.width - 32, height: getMaxItemHeight(for: model))
+        return CGSize(width: cardWidth, height: getMaxItemHeight(for: model))
     }
 }
 

@@ -46,13 +46,13 @@ class MLBusinessTouchpointsBaseView: UIView & MLBusinessTouchpointsViewInitializ
 
     func update(with _: Codable?) {}
     
-    func setAdditionalEdgeInsets(with insets: [String : Any]?) {
+    func setAdditionalEdgeInsets(with insets: UIEdgeInsets?) {
         guard let additionalEdgeInsets = insets else { return }
         
-        topConstraint?.constant = CGFloat(additionalEdgeInsets["top"] as? NSNumber ?? 0)
-        leftConstraint?.constant = CGFloat(additionalEdgeInsets["left"] as? NSNumber ?? 0)
-        bottomConstraint?.constant = -CGFloat(additionalEdgeInsets["bottom"] as? NSNumber ?? 0)
-        rightConstraint?.constant = -CGFloat(additionalEdgeInsets["right"] as? NSNumber ?? 0)
+        topConstraint?.constant = additionalEdgeInsets.top
+        leftConstraint?.constant = additionalEdgeInsets.left
+        bottomConstraint?.constant = -additionalEdgeInsets.bottom
+        rightConstraint?.constant = -additionalEdgeInsets.right
     }
     
     func getVisibleItems() -> [Trackable]? { return nil }

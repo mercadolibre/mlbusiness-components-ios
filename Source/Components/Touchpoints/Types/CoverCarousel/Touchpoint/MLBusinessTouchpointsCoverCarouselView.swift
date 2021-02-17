@@ -24,6 +24,7 @@ class MLBusinessTouchpointsCoverCarouselView: MLBusinessTouchpointsBaseView {
     }
 
     private func setup() {
+        backgroundColor = .red
         addSubview(collectionView)
         collectionView.delegate = self
     }
@@ -45,19 +46,15 @@ class MLBusinessTouchpointsCoverCarouselView: MLBusinessTouchpointsBaseView {
         collectionView.update(with: model)
     }
     
-    override func setAdditionalEdgeInsets(with insets: [String : Any]?) {
-        guard var additionalInsets = insets else { return }
-        let insets = UIEdgeInsets(top: 0,
-                                  left: CGFloat(truncating: additionalInsets["left"] as? NSNumber ?? 0),
-                                  bottom: 0,
-                                  right: CGFloat(truncating: additionalInsets["right"] as? NSNumber ?? 0) + 12.0)
+    override func setAdditionalEdgeInsets(with insets: UIEdgeInsets?) {
+        guard let additionalEdgeInsets = insets else { return }
         
-        additionalInsets["left"] = 0.0
-        additionalInsets["right"] = 0.0
+        topConstraint?.constant = additionalEdgeInsets.top
+        bottomConstraint?.constant = -additionalEdgeInsets.bottom
         
-        super.setAdditionalEdgeInsets(with: additionalInsets)
-
-        collectionView.contentInset = insets
+        collectionView.cardWidth = UIScreen.main.bounds.width - additionalEdgeInsets.left - additionalEdgeInsets.right
+        collectionView.contentInset.left = additionalEdgeInsets.left
+        collectionView.contentInset.right = additionalEdgeInsets.right
     }
     
     override func getVisibleItems() -> [Trackable]? {
