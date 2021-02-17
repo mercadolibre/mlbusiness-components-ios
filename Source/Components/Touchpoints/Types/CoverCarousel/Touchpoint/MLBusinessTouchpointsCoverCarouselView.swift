@@ -24,7 +24,6 @@ class MLBusinessTouchpointsCoverCarouselView: MLBusinessTouchpointsBaseView {
     }
 
     private func setup() {
-        backgroundColor = .red
         addSubview(collectionView)
         collectionView.delegate = self
     }

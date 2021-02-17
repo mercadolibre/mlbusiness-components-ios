@@ -29,11 +29,6 @@ public class MLBusinessCarouselContainerView: UIView {
         didSet {
             dataHandler.leftMargin = leftMargin
         }
-        
-        
-        
-        
-        
     }
     
     static let minimumInteritemSpacing = CGFloat(12.0)
