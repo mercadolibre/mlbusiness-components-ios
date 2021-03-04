@@ -78,7 +78,13 @@ public class MLBusinessRowView: UIView {
         let view = UIView(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
-    } ()
+    }()
+    
+    private let statusDescriptionContainerView: UIView = {
+        let view = UIView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     
     private let rightStackView: UIStackView = {
         let stackView = UIStackView(frame: .zero)
@@ -162,6 +168,7 @@ public class MLBusinessRowView: UIView {
     
     private let mainDescriptionView: MLBusinessMultipleDescriptionView
     private let mainSecondaryDescriptionView: MLBusinessMultipleDescriptionView
+    private let statusDescriptionView: MLBusinessMultipleDescriptionView
     private var rightStackViewWidthConstraint: NSLayoutConstraint?
 
     @available(*, unavailable)
@@ -173,6 +180,7 @@ public class MLBusinessRowView: UIView {
         self.imageProvider = imageProvider ?? MLBusinessURLImageProvider()
         self.mainDescriptionView = MLBusinessMultipleDescriptionView(with: self.imageProvider)
         self.mainSecondaryDescriptionView = MLBusinessMultipleDescriptionView(with: self.imageProvider)
+        self.statusDescriptionView = MLBusinessMultipleDescriptionView(with: self.imageProvider)
         super.init(frame: .zero)
         setup()
         setupConstraints()
@@ -187,6 +195,7 @@ public class MLBusinessRowView: UIView {
         mainSubtitleView.addSubview(mainSubtitleLabel)
         addSubview(mainStackView)
         mainSecondaryDescriptionContainerView.addSubview(mainSecondaryDescriptionView)
+        statusDescriptionContainerView.addSubview(statusDescriptionView)
         addSubview(rightStackView)
         rightBottomInfoPillView.addSubview(rightBottomInfoPill)
     }
@@ -195,16 +204,16 @@ public class MLBusinessRowView: UIView {
         NSLayoutConstraint.activate([
             leftImageImageView.heightAnchor.constraint(equalToConstant: 64.0),
             leftImageImageView.widthAnchor.constraint(equalTo: leftImageImageView.heightAnchor),
-            leftImageImageView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 16.0),
-            leftImageImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            leftImageImageView.topAnchor.constraint(equalTo: topAnchor, constant: 16.0),
+            leftImageImageView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -16.0),
             leftImageImageView.leftAnchor.constraint(equalTo: leftAnchor, constant: 16.0),
         ])
         
         NSLayoutConstraint.activate([
             overlayLeftImageImageView.heightAnchor.constraint(equalToConstant: 64.0),
             overlayLeftImageImageView.widthAnchor.constraint(equalTo: overlayLeftImageImageView.heightAnchor),
-            overlayLeftImageImageView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 16.0),
-            overlayLeftImageImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            overlayLeftImageImageView.topAnchor.constraint(equalTo: topAnchor, constant: 16.0),
+            overlayLeftImageImageView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -16.0),
             overlayLeftImageImageView.leftAnchor.constraint(equalTo: leftAnchor, constant: 16.0),
         ])
         
@@ -252,6 +261,13 @@ public class MLBusinessRowView: UIView {
             mainSecondaryDescriptionView.bottomAnchor.constraint(equalTo: mainSecondaryDescriptionContainerView.bottomAnchor),
             mainSecondaryDescriptionView.leftAnchor.constraint(equalTo: mainSecondaryDescriptionContainerView.leftAnchor),
         ])
+        
+        NSLayoutConstraint.activate([
+            statusDescriptionView.topAnchor.constraint(equalTo: statusDescriptionContainerView.topAnchor, constant: 3.0),
+            statusDescriptionView.rightAnchor.constraint(equalTo: statusDescriptionContainerView.rightAnchor),
+            statusDescriptionView.bottomAnchor.constraint(equalTo: statusDescriptionContainerView.bottomAnchor),
+            statusDescriptionView.leftAnchor.constraint(equalTo: statusDescriptionContainerView.leftAnchor),
+        ])
     }
 
     public func update(with content: MLBusinessRowData) {
@@ -274,6 +290,7 @@ public class MLBusinessRowView: UIView {
     private func createLeftSection(with content: MLBusinessRowData) {
         createLeftImage(with: content.getLeftImage())
         createLeftImageAccessory(with: content.getLeftImageAccessory())
+        setLeftImageStatus(with: content.getLeftImageStatus?())
     }
     
     private func createMainSection(with content: MLBusinessRowData) {
@@ -281,6 +298,7 @@ public class MLBusinessRowView: UIView {
         createMainSubtitle(with: content.getMainSubtitle())
         createMainDescription(with: content.getMainDescription())
         createMainSecondaryDescription(with: content.getMainSecondaryDescription?())
+        createStatusDescription(with: content.getStatusDescription?())
     }
     
     private func createRightSection(with content: MLBusinessRowData) {
@@ -300,6 +318,16 @@ public class MLBusinessRowView: UIView {
     private func createLeftImageAccessory(with key: String?) {
         guard let leftImageAccessoryKey = key else { return }
         imageProvider.getImage(key: leftImageAccessoryKey) { image in self.leftImageAccessoryImageView.image = image }
+    }
+    
+    private func setLeftImageStatus(with leftImageStatus: String?) {
+        if let leftImageStatus = leftImageStatus, leftImageStatus.lowercased() == "closed" {
+            leftImageImageView.alpha = 0.40
+            leftImageAccessoryImageView.alpha = 0.40
+        } else {
+            leftImageImageView.alpha = 1
+            leftImageAccessoryImageView.alpha = 1
+        }
     }
     
     private func createMainTitle(with text: String?) {
@@ -326,6 +354,12 @@ public class MLBusinessRowView: UIView {
         guard let model = mainSecondaryDescriptionModel, model.count > 0 else { return }
         mainSecondaryDescriptionView.update(with: model)
         mainStackView.addArrangedSubview(mainSecondaryDescriptionContainerView)
+    }
+    
+    private func createStatusDescription(with statusDescriptionModel: [MLBusinessMultipleDescriptionModel]?) {
+        guard let model = statusDescriptionModel, model.count > 0 else { return }
+        statusDescriptionView.update(with: model)
+        mainStackView.addArrangedSubview(statusDescriptionContainerView)
     }
     
     private func createRightTopLabel(with text: String?) {
@@ -388,10 +422,23 @@ public class MLBusinessRowView: UIView {
             let blockedColor = MLStyleSheetManager.styleSheet.blackColor.withAlphaComponent(0.40)
             rightPrimaryLabel.textColor = blockedColor
             rightSecondaryLabel.textColor = blockedColor
+            rightBottomInfoPill.alpha = 1
+        } else if let rightLabelStatus = rightLabelStatus, rightLabelStatus.lowercased() == "closed" {
+            let closedBlackColor = MLStyleSheetManager.styleSheet.blackColor.withAlphaComponent(0.40)
+            let closedGreyColor = MLStyleSheetManager.styleSheet.greyColor.withAlphaComponent(0.40)
+            rightTopLabel.textColor = closedBlackColor
+            rightPrimaryLabel.textColor = closedBlackColor
+            rightSecondaryLabel.textColor = closedBlackColor
+            rightMiddleLabel.textColor = closedGreyColor
+            rightBottomInfoPill.alpha = 0.4
         } else {
             let blackColor = MLStyleSheetManager.styleSheet.blackColor
+            let greyColor = MLStyleSheetManager.styleSheet.greyColor
+            rightTopLabel.textColor = blackColor
             rightPrimaryLabel.textColor = blackColor
             rightSecondaryLabel.textColor = blackColor
+            rightMiddleLabel.textColor = greyColor
+            rightBottomInfoPill.alpha = 1
         }
     }
 }
