@@ -322,8 +322,8 @@ public class MLBusinessRowView: UIView {
     
     private func setLeftImageStatus(with leftImageStatus: String?) {
         if let leftImageStatus = leftImageStatus, leftImageStatus.lowercased() == "closed" {
-            leftImageImageView.alpha = 0.40
-            leftImageAccessoryImageView.alpha = 0.40
+            leftImageImageView.alpha = 0.4
+            leftImageAccessoryImageView.alpha = 0.4
         } else {
             leftImageImageView.alpha = 1
             leftImageAccessoryImageView.alpha = 1
@@ -419,13 +419,13 @@ public class MLBusinessRowView: UIView {
     
     private func setRightLabelStatus(with rightLabelStatus: String?) {
         if let rightLabelStatus = rightLabelStatus, rightLabelStatus.lowercased() == "blocked" {
-            let blockedColor = MLStyleSheetManager.styleSheet.blackColor.withAlphaComponent(0.40)
+            let blockedColor = MLStyleSheetManager.styleSheet.blackColor.withAlphaComponent(0.4)
             rightPrimaryLabel.textColor = blockedColor
             rightSecondaryLabel.textColor = blockedColor
             rightBottomInfoPill.alpha = 1
         } else if let rightLabelStatus = rightLabelStatus, rightLabelStatus.lowercased() == "closed" {
-            let closedBlackColor = MLStyleSheetManager.styleSheet.blackColor.withAlphaComponent(0.40)
-            let closedGreyColor = MLStyleSheetManager.styleSheet.greyColor.withAlphaComponent(0.40)
+            let closedBlackColor = MLStyleSheetManager.styleSheet.blackColor.withAlphaComponent(0.4)
+            let closedGreyColor = MLStyleSheetManager.styleSheet.greyColor.withAlphaComponent(0.4)
             rightTopLabel.textColor = closedBlackColor
             rightPrimaryLabel.textColor = closedBlackColor
             rightSecondaryLabel.textColor = closedBlackColor
