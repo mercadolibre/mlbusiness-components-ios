@@ -80,10 +80,15 @@ public class MLBusinessCoverCarouselItemView: UIView {
     }
     
     static func height(for model: MLBusinessCoverCarouselItemContentModel) -> CGFloat {
-        let isRowSmall = model.mainSecondaryDescription?.isEmpty ?? true
-        let rowHeight: CGFloat = isRowSmall ? 96 : 114
+        let rowLogoHeight: CGFloat = 96
         
-        return coverHeight + rowHeight
+        var rowDescriptionHeight: CGFloat = 86
+        // MainSecondaryDescription
+        rowDescriptionHeight += model.mainSecondaryDescription?.isEmpty ?? true ? 0 : 24
+        // StatusDescription
+        rowDescriptionHeight += model.statusDescription?.isEmpty ?? true ? 0 : 20
+        
+        return coverHeight + max(rowLogoHeight, rowDescriptionHeight)
     }
     
     private func setupView() {

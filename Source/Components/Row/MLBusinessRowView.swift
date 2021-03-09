@@ -204,16 +204,16 @@ public class MLBusinessRowView: UIView {
         NSLayoutConstraint.activate([
             leftImageImageView.heightAnchor.constraint(equalToConstant: 64.0),
             leftImageImageView.widthAnchor.constraint(equalTo: leftImageImageView.heightAnchor),
-            leftImageImageView.topAnchor.constraint(equalTo: topAnchor, constant: 16.0),
-            leftImageImageView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -16.0),
+            leftImageImageView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 16.0),
+            leftImageImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
             leftImageImageView.leftAnchor.constraint(equalTo: leftAnchor, constant: 16.0),
         ])
         
         NSLayoutConstraint.activate([
             overlayLeftImageImageView.heightAnchor.constraint(equalToConstant: 64.0),
             overlayLeftImageImageView.widthAnchor.constraint(equalTo: overlayLeftImageImageView.heightAnchor),
-            overlayLeftImageImageView.topAnchor.constraint(equalTo: topAnchor, constant: 16.0),
-            overlayLeftImageImageView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -16.0),
+            overlayLeftImageImageView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 16.0),
+            overlayLeftImageImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
             overlayLeftImageImageView.leftAnchor.constraint(equalTo: leftAnchor, constant: 16.0),
         ])
         
