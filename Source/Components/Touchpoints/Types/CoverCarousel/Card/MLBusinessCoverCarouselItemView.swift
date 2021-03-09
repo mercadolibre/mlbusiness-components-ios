@@ -86,7 +86,7 @@ public class MLBusinessCoverCarouselItemView: UIView {
         // MainSecondaryDescription
         rowDescriptionHeight += model.mainSecondaryDescription?.isEmpty ?? true ? 0 : 24
         // StatusDescription
-        rowDescriptionHeight += model.statusDescription?.isEmpty ?? true ? 0 : 20
+        rowDescriptionHeight += model.statusDescription?.isEmpty ?? true ? 0 : 24
         
         return coverHeight + max(rowLogoHeight, rowDescriptionHeight)
     }
