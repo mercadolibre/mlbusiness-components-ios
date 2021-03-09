@@ -1,3 +1,8 @@
+# Sin Publicar
+- Added closed status support to Row
+- Added Status Description to Row
+- Added closed status support to Hybrid Carousel
+
 # v1.28.0
 🚀 1.28.0 🚀
 - Signature refactor in Cover Carousel
