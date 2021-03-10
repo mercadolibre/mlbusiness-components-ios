@@ -10,6 +10,7 @@ import Foundation
 struct MLBusinessHybridCarouselCardDefaultModel: Codable {
     let topImage: String?
     let topImageAccessory: String?
+    let topImageStatus: String?
     let middleTitle: String?
     let middleSubtitle: String?
     let bottomTopLabel: String?

@@ -48,10 +48,12 @@ extension MLBusinessTouchpointsMultipleRowModel: ComponentTrackable {
 public class MLBusinessMultipleRowItemModel: NSObject, Codable {
     private let leftImage: String?
     private let leftImageAccessory: String?
+    private let leftImageStatus: String?
     private let mainTitle: String
     private let mainSubtitle: String?
     private let mainDescription: [MLBusinessRowMainDescription]?
     private let mainSecondaryDescription: [MLBusinessMultipleDescriptionModel]?
+    private let statusDescription: [MLBusinessMultipleDescriptionModel]?
     private let rightPrimaryLabel: String?
     private let rightSecondaryLabel: String?
     private let rightMiddleLabel: String?
@@ -61,13 +63,15 @@ public class MLBusinessMultipleRowItemModel: NSObject, Codable {
     private let link: String?
     private let tracking: MLBusinessItemModelTracking?
     
-    public init(leftImage: String?, leftImageAccessory: String?, mainTitle: String, mainSubtitle: String?, mainDescription: [MLBusinessRowMainDescription]?, mainSecondaryDescription: [MLBusinessMultipleDescriptionModel]? = nil, rightPrimaryLabel: String?, rightSecondaryLabel: String?, rightMiddleLabel: String?, rightTopLabel: String?, rightLabelStatus: String?, rightBottomInfo: MLBusinessRowRightBottomInfo?, link: String?, tracking: MLBusinessItemModelTracking?) {
+    public init(leftImage: String?, leftImageAccessory: String?, leftImageStatus: String? = nil, mainTitle: String, mainSubtitle: String?, mainDescription: [MLBusinessRowMainDescription]?, mainSecondaryDescription: [MLBusinessMultipleDescriptionModel]? = nil, statusDescription: [MLBusinessMultipleDescriptionModel]? = nil, rightPrimaryLabel: String?, rightSecondaryLabel: String?, rightMiddleLabel: String?, rightTopLabel: String?, rightLabelStatus: String?, rightBottomInfo: MLBusinessRowRightBottomInfo?, link: String?, tracking: MLBusinessItemModelTracking?) {
         self.leftImage = leftImage
         self.leftImageAccessory = leftImageAccessory
+        self.leftImageStatus = leftImageStatus
         self.mainTitle = mainTitle
         self.mainSubtitle = mainSubtitle
         self.mainDescription = mainDescription
         self.mainSecondaryDescription = mainSecondaryDescription
+        self.statusDescription = statusDescription
         self.rightPrimaryLabel = rightPrimaryLabel
         self.rightSecondaryLabel = rightSecondaryLabel
         self.rightMiddleLabel = rightMiddleLabel
@@ -88,6 +92,10 @@ extension MLBusinessMultipleRowItemModel: MLBusinessRowData {
         return leftImageAccessory
     }
     
+    public func getLeftImageStatus() -> String? {
+        return leftImageStatus
+    }
+    
     public func getMainTitle() -> String {
         return mainTitle
     }
@@ -102,6 +110,10 @@ extension MLBusinessMultipleRowItemModel: MLBusinessRowData {
     
     public func getMainSecondaryDescription() -> [MLBusinessMultipleDescriptionModel]? {
         return mainSecondaryDescription
+    }
+    
+    public func getStatusDescription() -> [MLBusinessMultipleDescriptionModel]? {
+        return statusDescription
     }
     
     public func getRightPrimaryLabel() -> String? {

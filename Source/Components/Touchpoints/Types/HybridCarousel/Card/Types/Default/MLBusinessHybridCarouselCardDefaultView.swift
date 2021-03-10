@@ -245,6 +245,12 @@ class MLBusinessHybridCarouselCardDefaultView: MLBusinessHybridCarouselCardTypeV
             }
         }
         
+        if let topImageStatus = item.topImageStatus, topImageStatus.lowercased() == "closed" {
+            topImageImageView.alpha = 0.4
+        } else {
+            topImageImageView.alpha = 1
+        }
+        
         middleTitleLabel.text = item.middleTitle
         middleVerticalStackView.addArrangedSubview(middleTitleLabel)
         
@@ -270,10 +276,18 @@ class MLBusinessHybridCarouselCardDefaultView: MLBusinessHybridCarouselCardTypeV
             bottomTopLabel.textColor = MLStyleSheetManager.styleSheet.blackColor.withAlphaComponent(0.4)
             bottomPrimaryLabel.textColor = MLStyleSheetManager.styleSheet.blackColor.withAlphaComponent(0.4)
             bottomSecondaryLabel.textColor = MLStyleSheetManager.styleSheet.blackColor.withAlphaComponent(0.4)
+            pillView.alpha = 1
+        } else if let bottomLabelStatus = item.bottomLabelStatus, bottomLabelStatus.lowercased() == "closed" {
+            let blackClosedColor = MLStyleSheetManager.styleSheet.blackColor.withAlphaComponent(0.4)
+            bottomTopLabel.textColor = blackClosedColor
+            bottomPrimaryLabel.textColor = blackClosedColor
+            bottomSecondaryLabel.textColor = blackClosedColor
+            pillView.alpha = 0.4
         } else {
             bottomTopLabel.textColor = MLStyleSheetManager.styleSheet.blackColor
             bottomPrimaryLabel.textColor = MLStyleSheetManager.styleSheet.blackColor
             bottomSecondaryLabel.textColor = MLStyleSheetManager.styleSheet.blackColor
+            pillView.alpha = 1
         }
 
         bottomVerticalStackView.addArrangedSubview(bottomHorizontalStackView)

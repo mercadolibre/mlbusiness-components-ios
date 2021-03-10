@@ -10,10 +10,12 @@ import Foundation
 @objc public protocol MLBusinessRowData: NSObjectProtocol {
     @objc func getLeftImage() -> String?
     @objc func getLeftImageAccessory() -> String?
+    @objc optional func getLeftImageStatus() -> String?
     @objc func getMainTitle() -> String
     @objc func getMainSubtitle() -> String?
     @objc func getMainDescription() -> [MLBusinessRowMainDescriptionData]?
     @objc optional func getMainSecondaryDescription() -> [MLBusinessMultipleDescriptionModel]?
+    @objc optional func getStatusDescription() -> [MLBusinessMultipleDescriptionModel]?
     @objc func getRightPrimaryLabel() -> String?
     @objc func getRightSecondaryLabel() -> String?
     @objc func getRightMiddleLabel() -> String?

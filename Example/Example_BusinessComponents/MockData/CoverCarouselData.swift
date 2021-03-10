@@ -30,7 +30,8 @@ class CoverCarouselData: NSObject, MLBusinessTouchpointsData {
                           getCoverCarouselModel(from: pizza, and: RowData().asModel()),
                           getCoverCarouselModel(from: burger, and: RowData().asModel()),
                           getCoverCarouselModel(from: pizza, and: RowData().asModel()),
-                          getCoverCarouselModel(from: pizza, and: RowData().asModel())
+                          getCoverCarouselModel(from: pizza, and: RowData().asModel()),
+                          getCoverCarouselModel(from: burger, and: ClosedRowData().asModel())
         ]
 
         let carouselModel = MLBusinessCoverCarouselModel(items: cardModels,
@@ -42,10 +43,12 @@ class CoverCarouselData: NSObject, MLBusinessTouchpointsData {
         let content = MLBusinessCoverCarouselItemContentModel(cover: cover,
                                                               leftImage: rowData.getLeftImage(),
                                                               leftImageAccessory: rowData.getLeftImageAccessory(),
+                                                              leftImageStatus: rowData.getLeftImageStatus?(),
                                                               mainTitle: rowData.getMainTitle(),
                                                               mainSubtitle: rowData.getMainSubtitle(),
                                                               mainDescription: getMainDescription(from: rowData),
                                                               mainSecondaryDescription: rowData.getMainSecondaryDescription?(),
+                                                              statusDescription: rowData.getStatusDescription?(),
                                                               rightPrimaryLabel: rowData.getRightPrimaryLabel(),
                                                               rightSecondaryLabel: rowData.getRightSecondaryLabel(),
                                                               rightMiddleLabel: rowData.getRightMiddleLabel(),

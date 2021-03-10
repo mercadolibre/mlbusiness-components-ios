@@ -18,6 +18,10 @@ class RowData: NSObject, MLBusinessRowData {
         return "https://urbancomunicacion.com/wp-content/uploads/2017/04/Logotipos-famosos-Starbucks-Urban-comunicacion-1.png"
     }
     
+    func getLeftImageStatus() -> String? {
+        return nil
+    }
+    
     func getMainTitle() -> String {
         return "Starbucks"
     }
@@ -41,6 +45,10 @@ class RowData: NSObject, MLBusinessRowData {
             MLBusinessMultipleDescriptionModel(type: "text", content: " · ", color: "#00a650"),
             MLBusinessMultipleDescriptionModel(type: "image", content: "https://i.ibb.co/n8gJqYk/icon-pickup-android.png", color: "#00a650"),
             MLBusinessMultipleDescriptionModel(type: "text", content: "Retiro", color: "#00a650"),]
+    }
+    
+    func getStatusDescription() -> [MLBusinessMultipleDescriptionModel]? {
+        return nil
     }
     
     func getRightPrimaryLabel() -> String? {
@@ -85,10 +93,12 @@ extension RowData {
 
         return MLBusinessMultipleRowItemModel(leftImage: getLeftImage(),
                                               leftImageAccessory: getLeftImageAccessory(),
+                                              leftImageStatus: getLeftImageStatus(),
                                               mainTitle: getMainTitle(),
                                               mainSubtitle: getMainSubtitle(),
                                               mainDescription: mainDescription,
                                               mainSecondaryDescription: getMainSecondaryDescription(),
+                                              statusDescription: getStatusDescription(),
                                               rightPrimaryLabel: getRightPrimaryLabel(),
                                               rightSecondaryLabel: getRightSecondaryLabel(),
                                               rightMiddleLabel: getRightMiddleLabel(),
@@ -152,5 +162,19 @@ class RowRightBottomInfoFormatData: NSObject, MLBusinessRowRightBottomInfoFormat
     
     func getBackgroundColor() -> String {
         return "#FFFFFF"
+    }
+}
+
+class ClosedRowData: RowData {
+    override func getLeftImageStatus() -> String? {
+        return "CLOSED"
+    }
+    
+    override func getStatusDescription() -> [MLBusinessMultipleDescriptionModel]? {
+        return [MLBusinessMultipleDescriptionModel(type: "text", content: "Cerrado · Abre el lunes", color: "#FF7733")]
+    }
+    
+    override func getRightLabelStatus() -> String? {
+        return "CLOSED"
     }
 }
