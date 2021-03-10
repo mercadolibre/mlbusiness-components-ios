@@ -1,4 +1,5 @@
-# Sin Publicar
+# v1.29.0
+🚀 1.29.0 🚀
 - Added closed status support to Row
 - Added Status Description to Row
 - Added closed status support to Hybrid Carousel
