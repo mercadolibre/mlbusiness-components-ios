@@ -1,3 +1,7 @@
+# v1.30.0
+🚀 1.30.0 🚀
+- Static frameworks
+
 # v1.29.0
 🚀 1.29.0 🚀
 - Added closed status support to Row
