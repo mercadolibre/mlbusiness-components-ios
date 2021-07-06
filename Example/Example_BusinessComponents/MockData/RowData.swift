@@ -78,6 +78,10 @@ class RowData: NSObject, MLBusinessRowData {
     func getLink() -> String? {
         return "mercadopago://scanqr"
     }
+    
+    func getMainTitleStatus() -> String? {
+        return "CLOSED"
+    }
 }
 
 extension RowData {
