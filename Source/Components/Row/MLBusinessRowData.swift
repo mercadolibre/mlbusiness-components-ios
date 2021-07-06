@@ -23,6 +23,7 @@ import Foundation
     @objc func getRightLabelStatus() -> String?
     @objc func getRightBottomInfo() -> MLBusinessRowRightBottomInfoData?
     @objc func getLink() -> String?
+    @objc optional func getMainTitleStatus() -> String?
 }
 
 @objc public protocol MLBusinessRowMainDescriptionData: NSObjectProtocol {

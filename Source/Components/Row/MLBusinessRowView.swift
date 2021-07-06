@@ -294,8 +294,8 @@ public class MLBusinessRowView: UIView {
     }
     
     private func createMainSection(with content: MLBusinessRowData) {
-        createMainTitle(with: content.getMainTitle())
-        createMainSubtitle(with: content.getMainSubtitle())
+        createMainTitle(with: content.getMainTitle(), titleStatus: content.getMainTitleStatus?())
+        createMainSubtitle(with: content.getMainSubtitle(), subtitleStatus: content.getMainTitleStatus?())
         createMainDescription(with: content.getMainDescription())
         createMainSecondaryDescription(with: content.getMainSecondaryDescription?())
         createStatusDescription(with: content.getStatusDescription?())
@@ -330,14 +330,24 @@ public class MLBusinessRowView: UIView {
         }
     }
     
-    private func createMainTitle(with text: String?) {
+    private func createMainTitle(with text: String?, titleStatus: String?) {
         guard let mainTitleText = text else { return }
+        
+        if let titleStatus = titleStatus, titleStatus.lowercased() == "closed" {
+            mainTitleLabel.textColor = MLStyleSheetManager.styleSheet.blackColor.withAlphaComponent(0.4)
+        }
+        
         mainTitleLabel.text = mainTitleText
         mainStackView.addArrangedSubview(mainTitleLabel)
     }
     
-    private func createMainSubtitle(with text: String?) {
+    private func createMainSubtitle(with text: String?, subtitleStatus: String?) {
         guard let mainSubtitleText = text else { return }
+        
+        if let subtitleStatus = subtitleStatus, subtitleStatus.lowercased() == "closed" {
+            mainSubtitleLabel.textColor = MLStyleSheetManager.styleSheet.blackColor.withAlphaComponent(0.4)
+        }
+        
         mainSubtitleLabel.text = mainSubtitleText
         mainStackView.addArrangedSubview(mainSubtitleView)
     }

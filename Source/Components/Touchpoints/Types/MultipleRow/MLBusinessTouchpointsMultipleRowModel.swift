@@ -50,6 +50,7 @@ public class MLBusinessMultipleRowItemModel: NSObject, Codable {
     private let leftImageAccessory: String?
     private let leftImageStatus: String?
     private let mainTitle: String
+    private let mainTitleStatus: String?
     private let mainSubtitle: String?
     private let mainDescription: [MLBusinessRowMainDescription]?
     private let mainSecondaryDescription: [MLBusinessMultipleDescriptionModel]?
@@ -63,11 +64,12 @@ public class MLBusinessMultipleRowItemModel: NSObject, Codable {
     private let link: String?
     private let tracking: MLBusinessItemModelTracking?
     
-    public init(leftImage: String?, leftImageAccessory: String?, leftImageStatus: String? = nil, mainTitle: String, mainSubtitle: String?, mainDescription: [MLBusinessRowMainDescription]?, mainSecondaryDescription: [MLBusinessMultipleDescriptionModel]? = nil, statusDescription: [MLBusinessMultipleDescriptionModel]? = nil, rightPrimaryLabel: String?, rightSecondaryLabel: String?, rightMiddleLabel: String?, rightTopLabel: String?, rightLabelStatus: String?, rightBottomInfo: MLBusinessRowRightBottomInfo?, link: String?, tracking: MLBusinessItemModelTracking?) {
+    public init(leftImage: String?, leftImageAccessory: String?, leftImageStatus: String? = nil, mainTitle: String, mainTitleStatus: String? = nil, mainSubtitle: String?, mainDescription: [MLBusinessRowMainDescription]?, mainSecondaryDescription: [MLBusinessMultipleDescriptionModel]? = nil, statusDescription: [MLBusinessMultipleDescriptionModel]? = nil, rightPrimaryLabel: String?, rightSecondaryLabel: String?, rightMiddleLabel: String?, rightTopLabel: String?, rightLabelStatus: String?, rightBottomInfo: MLBusinessRowRightBottomInfo?, link: String?, tracking: MLBusinessItemModelTracking?) {
         self.leftImage = leftImage
         self.leftImageAccessory = leftImageAccessory
         self.leftImageStatus = leftImageStatus
         self.mainTitle = mainTitle
+        self.mainTitleStatus = mainTitleStatus
         self.mainSubtitle = mainSubtitle
         self.mainDescription = mainDescription
         self.mainSecondaryDescription = mainSecondaryDescription
@@ -98,6 +100,10 @@ extension MLBusinessMultipleRowItemModel: MLBusinessRowData {
     
     public func getMainTitle() -> String {
         return mainTitle
+    }
+    
+    public func getMainTitleStatus() -> String? {
+        return mainTitleStatus
     }
     
     public func getMainSubtitle() -> String? {

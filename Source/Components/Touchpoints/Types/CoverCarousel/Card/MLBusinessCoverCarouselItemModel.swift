@@ -45,6 +45,7 @@ public struct MLBusinessCoverCarouselItemContentModel: Codable {
     public let leftImageAccessory: String?
     public let leftImageStatus: String?
     public let mainTitle: String
+    public let mainTitleStatus: String?
     public let mainSubtitle: String?
     public let mainDescription: [MLBusinessRowMainDescription]?
     public let mainSecondaryDescription: [MLBusinessMultipleDescriptionModel]?
@@ -61,6 +62,7 @@ public struct MLBusinessCoverCarouselItemContentModel: Codable {
                 leftImageAccessory: String?,
                 leftImageStatus: String? = nil,
                 mainTitle: String,
+                mainTitleStatus: String? = nil,
                 mainSubtitle: String?,
                 mainDescription: [MLBusinessRowMainDescription]?,
                 mainSecondaryDescription: [MLBusinessMultipleDescriptionModel]?,
@@ -76,6 +78,7 @@ public struct MLBusinessCoverCarouselItemContentModel: Codable {
         self.leftImageAccessory = leftImageAccessory
         self.leftImageStatus = leftImageStatus
         self.mainTitle = mainTitle
+        self.mainTitleStatus = mainTitleStatus
         self.mainSubtitle = mainSubtitle
         self.mainDescription = mainDescription
         self.mainSecondaryDescription = mainSecondaryDescription

@@ -1,3 +1,6 @@
+# Sin Publicar
+- Added hybrid row title and subtitle grayed from BE
+
 # v1.30.0
 🚀 1.30.0 🚀
 - Static frameworks
