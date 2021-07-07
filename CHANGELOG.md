@@ -1,5 +1,5 @@
 # Sin Publicar
-- Added hybrid row title and subtitle grayed from BE
+- Added closed status support to title and subtile on Hybrid Row
 
 # v1.30.0
 🚀 1.30.0 🚀
