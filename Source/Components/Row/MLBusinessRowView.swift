@@ -294,11 +294,12 @@ public class MLBusinessRowView: UIView {
     }
     
     private func createMainSection(with content: MLBusinessRowData) {
-        createMainTitle(with: content.getMainTitle(), titleStatus: content.getMainTitleStatus?())
-        createMainSubtitle(with: content.getMainSubtitle(), subtitleStatus: content.getMainTitleStatus?())
+        createMainTitle(with: content.getMainTitle())
+        createMainSubtitle(with: content.getMainSubtitle())
         createMainDescription(with: content.getMainDescription())
         createMainSecondaryDescription(with: content.getMainSecondaryDescription?())
         createStatusDescription(with: content.getStatusDescription?())
+        setMainTitleStatus(with: content.getMainTitleStatus?())
     }
     
     private func createRightSection(with content: MLBusinessRowData) {
@@ -330,24 +331,14 @@ public class MLBusinessRowView: UIView {
         }
     }
     
-    private func createMainTitle(with text: String?, titleStatus: String?) {
+    private func createMainTitle(with text: String?) {
         guard let mainTitleText = text else { return }
-        
-        if let titleStatus = titleStatus, titleStatus.lowercased() == "closed" {
-            mainTitleLabel.textColor = MLStyleSheetManager.styleSheet.blackColor.withAlphaComponent(0.4)
-        }
-        
         mainTitleLabel.text = mainTitleText
         mainStackView.addArrangedSubview(mainTitleLabel)
     }
     
-    private func createMainSubtitle(with text: String?, subtitleStatus: String?) {
+    private func createMainSubtitle(with text: String?) {
         guard let mainSubtitleText = text else { return }
-        
-        if let subtitleStatus = subtitleStatus, subtitleStatus.lowercased() == "closed" {
-            mainSubtitleLabel.textColor = MLStyleSheetManager.styleSheet.blackColor.withAlphaComponent(0.4)
-        }
-        
         mainSubtitleLabel.text = mainSubtitleText
         mainStackView.addArrangedSubview(mainSubtitleView)
     }
@@ -370,6 +361,12 @@ public class MLBusinessRowView: UIView {
         guard let model = statusDescriptionModel, model.count > 0 else { return }
         statusDescriptionView.update(with: model)
         mainStackView.addArrangedSubview(statusDescriptionContainerView)
+    }
+    
+    private func setMainTitleStatus(with status: String?) {
+        guard let status = status, status.lowercased() == "closed" else { return }
+        mainTitleLabel.textColor = MLStyleSheetManager.styleSheet.blackColor.withAlphaComponent(0.4)
+        mainSubtitleLabel.textColor = MLStyleSheetManager.styleSheet.blackColor.withAlphaComponent(0.4)
     }
     
     private func createRightTopLabel(with text: String?) {
