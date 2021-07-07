@@ -1,3 +1,6 @@
+# Sin publicar
+- Fix en `setAdditionalEdgeInsets(with:)` para el Cover Carousel
+
 # v1.30.0
 🚀 1.30.0 🚀
 - Static frameworks
