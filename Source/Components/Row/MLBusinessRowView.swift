@@ -291,8 +291,6 @@ public class MLBusinessRowView: UIView {
         leftImageAccessoryImageView.image = nil
         rightBottomInfoPill.icon = nil
         rightStackViewWidthConstraint?.isActive = false
-        mainTitleLabel.textColor = blackColor
-        mainSubtitleLabel.textColor = blackColor
     }
     
     private func createLeftSection(with content: MLBusinessRowData) {
@@ -372,7 +370,11 @@ public class MLBusinessRowView: UIView {
     }
     
     private func setMainTitleStatus(with status: String?) {
-        guard let status = status, status.lowercased() == "closed" else { return }
+        guard let status = status, status.lowercased() == "closed" else {
+            mainTitleLabel.textColor = blackColor
+            mainSubtitleLabel.textColor = blackColor
+            return
+        }
         mainTitleLabel.textColor = closedBlackColor
         mainSubtitleLabel.textColor = closedBlackColor
     }
