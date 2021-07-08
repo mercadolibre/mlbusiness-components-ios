@@ -1,4 +1,5 @@
-# Sin Publicar
+# Sin publicar
+- Fix en `setAdditionalEdgeInsets(with:)` para el Cover Carousel
 - Added closed status support to title and subtile on Hybrid Row
 
 # v1.30.0
