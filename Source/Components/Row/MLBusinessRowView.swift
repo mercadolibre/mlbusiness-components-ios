@@ -159,7 +159,7 @@ public class MLBusinessRowView: UIView {
     }()
     
     private let blockedColor = MLStyleSheetManager.styleSheet.blackColor.withAlphaComponent(0.4)
-    private let closedBlackColor = "#737373".hexaToUIColor()
+    private let closedBlackColor = MLStyleSheetManager.styleSheet.blackColor.withAlphaComponent(0.4)
     private let closedGreyColor = MLStyleSheetManager.styleSheet.greyColor.withAlphaComponent(0.4)
     private let blackColor = MLStyleSheetManager.styleSheet.blackColor
     private let greyColor = MLStyleSheetManager.styleSheet.greyColor
