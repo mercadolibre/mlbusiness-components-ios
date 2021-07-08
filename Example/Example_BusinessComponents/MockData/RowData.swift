@@ -31,11 +31,11 @@ class RowData: NSObject, MLBusinessRowData {
     }
     
     func getMainDescription() -> [MLBusinessRowMainDescriptionData]? {
-        return [RowMainDescriptionData(type: "image", content: "https://i.ibb.co/2KcdLdy/16-px.png", color: "#454545"),
-                RowMainDescriptionData(type: "text", content: "598m", color: "#999999"),
-                RowMainDescriptionData(type: "text", content: " · ", color: "#999999"),
-                RowMainDescriptionData(type: "image", content: "https://i.ibb.co/prSV6dY/estrella-android.png", color: "#999999"),
-                RowMainDescriptionData(type: "text", content: "4.3 (24)", color: "#999999"),]
+        return [RowMainDescriptionData(type: "image", content: "https://i.ibb.co/2KcdLdy/16-px.png", color: "#737373"),
+                RowMainDescriptionData(type: "text", content: "598m", color: "#737373"),
+                RowMainDescriptionData(type: "text", content: " · ", color: "#737373"),
+                RowMainDescriptionData(type: "image", content: "https://i.ibb.co/prSV6dY/estrella-android.png", color: "#737373"),
+                RowMainDescriptionData(type: "text", content: "4.3 (24)", color: "#737373"),]
     }
     
     func getMainSecondaryDescription() -> [MLBusinessMultipleDescriptionModel]? {
