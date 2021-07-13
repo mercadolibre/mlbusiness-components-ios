@@ -157,6 +157,12 @@ public class MLBusinessRowView: UIView {
         rightBottomInfo.translatesAutoresizingMaskIntoConstraints = false
         return rightBottomInfo
     }()
+    
+    private let blockedColor = MLStyleSheetManager.styleSheet.blackColor.withAlphaComponent(0.4)
+    private let closedBlackColor = MLStyleSheetManager.styleSheet.blackColor.withAlphaComponent(0.4)
+    private let closedGreyColor = MLStyleSheetManager.styleSheet.greyColor.withAlphaComponent(0.4)
+    private let blackColor = MLStyleSheetManager.styleSheet.blackColor
+    private let greyColor = MLStyleSheetManager.styleSheet.greyColor
 
     var imageProvider: MLBusinessImageProvider {
         didSet {
@@ -299,6 +305,7 @@ public class MLBusinessRowView: UIView {
         createMainDescription(with: content.getMainDescription())
         createMainSecondaryDescription(with: content.getMainSecondaryDescription?())
         createStatusDescription(with: content.getStatusDescription?())
+        setMainTitleStatus(with: content.getMainTitleStatus?())
     }
     
     private func createRightSection(with content: MLBusinessRowData) {
@@ -362,6 +369,16 @@ public class MLBusinessRowView: UIView {
         mainStackView.addArrangedSubview(statusDescriptionContainerView)
     }
     
+    private func setMainTitleStatus(with status: String?) {
+        guard let status = status, status.lowercased() == "closed" else {
+            mainTitleLabel.textColor = blackColor
+            mainSubtitleLabel.textColor = blackColor
+            return
+        }
+        mainTitleLabel.textColor = closedBlackColor
+        mainSubtitleLabel.textColor = closedBlackColor
+    }
+    
     private func createRightTopLabel(with text: String?) {
         guard let rightTopLabelText = text else { return }
         rightTopLabel.text = rightTopLabelText
@@ -419,21 +436,16 @@ public class MLBusinessRowView: UIView {
     
     private func setRightLabelStatus(with rightLabelStatus: String?) {
         if let rightLabelStatus = rightLabelStatus, rightLabelStatus.lowercased() == "blocked" {
-            let blockedColor = MLStyleSheetManager.styleSheet.blackColor.withAlphaComponent(0.4)
             rightPrimaryLabel.textColor = blockedColor
             rightSecondaryLabel.textColor = blockedColor
             rightBottomInfoPill.alpha = 1
         } else if let rightLabelStatus = rightLabelStatus, rightLabelStatus.lowercased() == "closed" {
-            let closedBlackColor = MLStyleSheetManager.styleSheet.blackColor.withAlphaComponent(0.4)
-            let closedGreyColor = MLStyleSheetManager.styleSheet.greyColor.withAlphaComponent(0.4)
             rightTopLabel.textColor = closedBlackColor
             rightPrimaryLabel.textColor = closedBlackColor
             rightSecondaryLabel.textColor = closedBlackColor
             rightMiddleLabel.textColor = closedGreyColor
             rightBottomInfoPill.alpha = 0.4
         } else {
-            let blackColor = MLStyleSheetManager.styleSheet.blackColor
-            let greyColor = MLStyleSheetManager.styleSheet.greyColor
             rightTopLabel.textColor = blackColor
             rightPrimaryLabel.textColor = blackColor
             rightSecondaryLabel.textColor = blackColor

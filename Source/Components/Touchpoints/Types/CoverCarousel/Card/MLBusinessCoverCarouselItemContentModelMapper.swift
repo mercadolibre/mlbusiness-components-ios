@@ -17,6 +17,7 @@ class MLBusinessCoverCarouselItemContentModelMapper: MLBusinessCoverCarouselItem
                                               leftImageAccessory: model.leftImageAccessory,
                                               leftImageStatus: model.leftImageStatus,
                                               mainTitle: model.mainTitle,
+                                              mainTitleStatus: model.mainTitleStatus,
                                               mainSubtitle: model.mainSubtitle,
                                               mainDescription: model.mainDescription,
                                               mainSecondaryDescription: model.mainSecondaryDescription,
