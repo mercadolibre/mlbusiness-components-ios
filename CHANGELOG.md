@@ -1,3 +1,6 @@
+# Sin Publicar
+- Added `main_label_top` attribute on Hybrid Row
+
 # v1.31.0
 🚀 1.31.0 🚀
 - Fix en `setAdditionalEdgeInsets(with:)` para el Cover Carousel

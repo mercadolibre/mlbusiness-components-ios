@@ -46,6 +46,16 @@ public class MLBusinessRowView: UIView {
         stackView.axis = .vertical
         return stackView
     }()
+    
+    private let mainTitleTopLabel: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.numberOfLines = 1
+        label.font = MLStyleSheetManager.styleSheet.semiboldSystemFont(ofSize: CGFloat(kMLFontsSizeXXSmall))
+        label.textAlignment = .left
+        label.textColor = MLStyleSheetManager.styleSheet.blackColor
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
 
     private let mainTitleLabel: UILabel = {
         let label = UILabel(frame: .zero)
@@ -300,6 +310,7 @@ public class MLBusinessRowView: UIView {
     }
     
     private func createMainSection(with content: MLBusinessRowData) {
+        createMainTitleTop(with: content.getMainTitleTop?()?.getText(), color: content.getMainTitleTop?()?.getTextColor())
         createMainTitle(with: content.getMainTitle())
         createMainSubtitle(with: content.getMainSubtitle())
         createMainDescription(with: content.getMainDescription())
@@ -335,6 +346,13 @@ public class MLBusinessRowView: UIView {
             leftImageImageView.alpha = 1
             leftImageAccessoryImageView.alpha = 1
         }
+    }
+    
+    private func createMainTitleTop(with text: String?, color: String?) {
+        guard let mainTitleTopText = text else { return }
+        mainTitleTopLabel.text = mainTitleTopText
+        mainTitleTopLabel.textColor = color?.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.blackColor
+        mainStackView.addArrangedSubview(mainTitleTopLabel)
     }
     
     private func createMainTitle(with text: String?) {

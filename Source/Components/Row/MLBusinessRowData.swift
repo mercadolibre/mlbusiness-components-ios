@@ -24,6 +24,7 @@ import Foundation
     @objc func getRightBottomInfo() -> MLBusinessRowRightBottomInfoData?
     @objc func getLink() -> String?
     @objc optional func getMainTitleStatus() -> String?
+    @objc optional func getMainTitleTop() -> MLBusinessRowMainTitleTopData?
 }
 
 @objc public protocol MLBusinessRowMainDescriptionData: NSObjectProtocol {
@@ -41,4 +42,9 @@ import Foundation
 @objc public protocol MLBusinessRowRightBottomInfoFormatData: NSObjectProtocol {
     @objc func getTextColor() -> String
     @objc func getBackgroundColor() -> String
+}
+
+@objc public protocol MLBusinessRowMainTitleTopData: NSObjectProtocol {
+    @objc func getText() -> String
+    @objc func getTextColor() -> String?
 }
