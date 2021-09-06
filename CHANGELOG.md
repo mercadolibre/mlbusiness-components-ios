@@ -1,5 +1,5 @@
 # Sin Publicar
-- Added `main_label_top attribute` on Hybrid Row
+- Added `main_label_top` attribute on Hybrid Row
 
 # v1.31.0
 🚀 1.31.0 🚀
