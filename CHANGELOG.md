@@ -1,4 +1,5 @@
-# Sin Publicar
+# v1.32.0
+🚀 1.32.0 🚀
 - Added optional icon color support on item description data
 
 # v1.32.0
