@@ -11,5 +11,5 @@ import UIKit
     @objc func getTitle() -> String
     @objc func getIconImageURL() -> String
     @objc func getIconHexaColor() -> String
-    func getOptionalIconHexaColor() -> String?
+    @objc optional func getOptionalIconHexaColor() -> String?
 }
