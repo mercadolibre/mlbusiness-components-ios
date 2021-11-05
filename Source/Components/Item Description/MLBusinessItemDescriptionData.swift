@@ -13,9 +13,3 @@ import UIKit
     @objc func getIconHexaColor() -> String
     @objc optional func getOptionalIconHexaColor() -> String?
 }
-
-extension MLBusinessItemDescriptionData {
-    func getOptionalIconHexaColor() -> String? {
-        return nil
-    }
-}
