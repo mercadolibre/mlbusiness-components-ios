@@ -1,3 +1,7 @@
+# v1.33.1
+🚀 1.33.1 🚀
+- Removed default initializer for optional icon color support on item description data
+
 # v1.33.0
 🚀 1.33.0 🚀
 - Added optional icon color support on item description data
