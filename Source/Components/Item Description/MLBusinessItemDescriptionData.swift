@@ -11,11 +11,5 @@ import UIKit
     @objc func getTitle() -> String
     @objc func getIconImageURL() -> String
     @objc func getIconHexaColor() -> String
-    @objc optional func getOptionalIconHexaColor() -> String?
-}
-
-extension MLBusinessItemDescriptionData {
-    func getOptionalIconHexaColor() -> String? {
-        return nil
-    }
+    func getOptionalIconHexaColor() -> String?
 }
