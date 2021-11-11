@@ -80,7 +80,7 @@ private extension MLBusinessItemDescriptionView {
     }
     
     private func setupImageView(image: UIImage) {
-        if let imageColor = self.viewData?.getIconHexaColor().hexaToUIColor() {
+        if let imageColor = self.viewData?.getOptionalIconHexaColor?()?.hexaToUIColor() {
             self.iconImageView?.backgroundColor = imageColor
             self.iconImageView?.image = image.ml_tintedImage(with: .white)
         } else {
