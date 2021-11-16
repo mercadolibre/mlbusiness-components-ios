@@ -1,5 +1,6 @@
 # Sin Publicar
 - Added optional icon color support on item description data
+- Add size to MLBusinessMultipleDescriptionView text and images
 
 # v1.32.0
 🚀 1.32.0 🚀
