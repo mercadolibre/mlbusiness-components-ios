@@ -48,19 +48,20 @@ public class MLBusinessMultipleDescriptionView: UIView {
         ])
     }
     
-    public func update(with model: [MLBusinessMultipleDescriptionModel]) {
+    public func update(with model: [MLBusinessMultipleDescriptionModel], size: String? = nil) {
         multipleDescriptionStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         for item in model {
+            let size = size ?? "Default"
             let itemContent = item.getContent()
             let itemColor = item.getColor()?.hexaToUIColor()
             switch item.getType().lowercased() {
             case "image":
                 let imageView = createMainDescriptionImage(with: itemContent, imageColor: itemColor)
                 multipleDescriptionStackView.addArrangedSubview(imageView)
-                imageView.heightAnchor.constraint(equalToConstant: 12.0).isActive = true
+                imageView.heightAnchor.constraint(equalToConstant: size.getImageSize()).isActive = true
                 imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor).isActive = true
             case "text":
-                let label = createMainDescriptionLabel(with: itemContent, textColor: itemColor)
+                let label = createMainDescriptionLabel(with: itemContent, textColor: itemColor, fontSize: size)
                 multipleDescriptionStackView.addArrangedSubview(label)
             default:
                 break
@@ -79,10 +80,10 @@ public class MLBusinessMultipleDescriptionView: UIView {
         return imageView
     }
     
-    private func createMainDescriptionLabel(with text: String, textColor: UIColor?) -> UILabel{
+    private func createMainDescriptionLabel(with text: String, textColor: UIColor?, fontSize: String) -> UILabel{
         let label = UILabel(frame: .zero)
         label.numberOfLines = 1
-        label.font = MLStyleSheetManager.styleSheet.regularSystemFont(ofSize: CGFloat(kMLFontsSizeXXSmall))
+        label.font = MLStyleSheetManager.styleSheet.regularSystemFont(ofSize: fontSize.getFontSize())
         label.textAlignment = .left
         label.text = text
         label.textColor = textColor
