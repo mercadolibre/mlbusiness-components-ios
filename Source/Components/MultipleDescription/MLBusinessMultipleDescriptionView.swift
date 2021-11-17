@@ -58,7 +58,7 @@ public class MLBusinessMultipleDescriptionView: UIView {
             case "image":
                 let imageView = createMainDescriptionImage(with: itemContent, imageColor: itemColor)
                 multipleDescriptionStackView.addArrangedSubview(imageView)
-                imageView.heightAnchor.constraint(equalToConstant: size.getImageSize()).isActive = true
+                imageView.heightAnchor.constraint(equalToConstant: getImageSize(size)).isActive = true
                 imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor).isActive = true
             case "text":
                 let label = createMainDescriptionLabel(with: itemContent, textColor: itemColor, fontSize: size)
@@ -83,11 +83,33 @@ public class MLBusinessMultipleDescriptionView: UIView {
     private func createMainDescriptionLabel(with text: String, textColor: UIColor?, fontSize: String) -> UILabel{
         let label = UILabel(frame: .zero)
         label.numberOfLines = 1
-        label.font = MLStyleSheetManager.styleSheet.regularSystemFont(ofSize: fontSize.getFontSize())
+        label.font = MLStyleSheetManager.styleSheet.regularSystemFont(ofSize: getFontSize(fontSize))
         label.textAlignment = .left
         label.text = text
         label.textColor = textColor
         return label
+    }
+    
+    private func getFontSize(_ size: String) -> CGFloat {
+        switch size.uppercased() {
+        case "SMALL":
+            return CGFloat(kMLFontsSizeXSmall)
+        case "MEDIUM":
+            return CGFloat(kMLFontsSizeSmall)
+        default:
+            return CGFloat(kMLFontsSizeXXSmall)
+        }
+    }
+    
+    private func getImageSize(_ size: String) -> CGFloat {
+        switch size.uppercased() {
+        case "SMALL":
+            return 14.0
+        case "MEDIUM":
+            return 16.0
+        default:
+            return 12.0
+        }
     }
     
 }
