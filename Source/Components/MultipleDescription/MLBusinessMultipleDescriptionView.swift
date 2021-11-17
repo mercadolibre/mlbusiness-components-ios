@@ -9,6 +9,8 @@ import Foundation
 import MLUI
 
 public class MLBusinessMultipleDescriptionView: UIView {
+    private let defaultSizeKey = "Default"
+    
     private let multipleDescriptionStackView: UIStackView = {
         let stackView = UIStackView(frame: .zero)
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -51,7 +53,7 @@ public class MLBusinessMultipleDescriptionView: UIView {
     public func update(with model: [MLBusinessMultipleDescriptionModel], size: String? = nil) {
         multipleDescriptionStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         for item in model {
-            let size = size ?? "Default"
+            let size = size ?? defaultSizeKey
             let itemContent = item.getContent()
             let itemColor = item.getColor()?.hexaToUIColor()
             switch item.getType().lowercased() {
