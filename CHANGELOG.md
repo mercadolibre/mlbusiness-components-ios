@@ -1,5 +1,5 @@
 # Sin publicar
-- Use optional icon color on benefits item
+- Allow optional icon color usage on benefits items
 
 # v1.33.1
 🚀 1.33.1 🚀
