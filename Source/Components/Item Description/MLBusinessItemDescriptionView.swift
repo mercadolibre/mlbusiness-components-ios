@@ -80,14 +80,23 @@ private extension MLBusinessItemDescriptionView {
     }
     
     private func setupImageView(image: UIImage) {
-        if let imageColor = self.viewData?.getIconHexaColor().hexaToUIColor() {
-            self.iconImageView?.backgroundColor = imageColor
+        if let backgroundColor = getIconBackgroundColor() {
+            self.iconImageView?.backgroundColor = backgroundColor
             self.iconImageView?.image = image.ml_tintedImage(with: .white)
         } else {
             self.iconImageView?.image = image
         }
     }
     
+    private func getIconBackgroundColor() -> UIColor? {
+        if let viewData = self.viewData,
+           viewData.responds(to: Selector("getOptionalIconHexaColor")) {
+            return viewData.getOptionalIconHexaColor?()?.hexaToUIColor()
+        } else {
+            return self.viewData?.getIconHexaColor().hexaToUIColor()
+        }
+    }
+        
     // MARK: Constraints.
     func makeConstraints(_ titleLabel: UILabel, _ iconImageView: UIImageView) {
         NSLayoutConstraint.activate([
