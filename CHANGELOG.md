@@ -1,3 +1,6 @@
+#Sin publicar
+- Add size to MLBusinessMultipleDescriptionView text and images
+
 # v1.33.1
 🚀 1.33.1 🚀
 - Removed default initializer for optional icon color support on item description data

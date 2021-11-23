@@ -9,6 +9,8 @@ import Foundation
 import MLUI
 
 public class MLBusinessMultipleDescriptionView: UIView {
+    private let defaultSizeKey = "Default"
+    
     private let multipleDescriptionStackView: UIStackView = {
         let stackView = UIStackView(frame: .zero)
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -48,19 +50,20 @@ public class MLBusinessMultipleDescriptionView: UIView {
         ])
     }
     
-    public func update(with model: [MLBusinessMultipleDescriptionModel]) {
+    public func update(with model: [MLBusinessMultipleDescriptionModel], size: String? = nil) {
         multipleDescriptionStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         for item in model {
+            let size = size ?? defaultSizeKey
             let itemContent = item.getContent()
             let itemColor = item.getColor()?.hexaToUIColor()
             switch item.getType().lowercased() {
             case "image":
                 let imageView = createMainDescriptionImage(with: itemContent, imageColor: itemColor)
                 multipleDescriptionStackView.addArrangedSubview(imageView)
-                imageView.heightAnchor.constraint(equalToConstant: 12.0).isActive = true
+                imageView.heightAnchor.constraint(equalToConstant: getImageSize(size)).isActive = true
                 imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor).isActive = true
             case "text":
-                let label = createMainDescriptionLabel(with: itemContent, textColor: itemColor)
+                let label = createMainDescriptionLabel(with: itemContent, textColor: itemColor, fontSize: size)
                 multipleDescriptionStackView.addArrangedSubview(label)
             default:
                 break
@@ -79,14 +82,36 @@ public class MLBusinessMultipleDescriptionView: UIView {
         return imageView
     }
     
-    private func createMainDescriptionLabel(with text: String, textColor: UIColor?) -> UILabel{
+    private func createMainDescriptionLabel(with text: String, textColor: UIColor?, fontSize: String) -> UILabel{
         let label = UILabel(frame: .zero)
         label.numberOfLines = 1
-        label.font = MLStyleSheetManager.styleSheet.regularSystemFont(ofSize: CGFloat(kMLFontsSizeXXSmall))
+        label.font = MLStyleSheetManager.styleSheet.regularSystemFont(ofSize: getFontSize(fontSize))
         label.textAlignment = .left
         label.text = text
         label.textColor = textColor
         return label
+    }
+    
+    private func getFontSize(_ size: String) -> CGFloat {
+        switch size.uppercased() {
+        case "SMALL":
+            return CGFloat(kMLFontsSizeXSmall)
+        case "MEDIUM":
+            return CGFloat(kMLFontsSizeSmall)
+        default:
+            return CGFloat(kMLFontsSizeXXSmall)
+        }
+    }
+    
+    private func getImageSize(_ size: String) -> CGFloat {
+        switch size.uppercased() {
+        case "SMALL":
+            return 14.0
+        case "MEDIUM":
+            return 16.0
+        default:
+            return 12.0
+        }
     }
     
 }
