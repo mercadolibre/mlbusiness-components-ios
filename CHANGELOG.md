@@ -1,5 +1,6 @@
 # Sin publicar
 - Allow optional icon color usage on benefits items
+- Add size to MLBusinessMultipleDescriptionView text and images
 
 # v1.33.1
 🚀 1.33.1 🚀
