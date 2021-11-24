@@ -1,4 +1,5 @@
-# Sin publicar
+# v1.34.1
+🚀 1.34.1 🚀
 - Allow optional icon color usage on benefits items
 
 # v1.34.0
