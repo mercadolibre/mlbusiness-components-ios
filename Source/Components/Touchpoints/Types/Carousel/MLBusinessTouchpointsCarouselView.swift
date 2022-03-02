@@ -27,6 +27,7 @@ class MLBusinessTouchpointsCarouselView: MLBusinessTouchpointsBaseView {
         super.init(configuration: configuration)
         setup()
         setupConstraints()
+        isAccessibilityElement = false
     }
 
     private func setup() {
