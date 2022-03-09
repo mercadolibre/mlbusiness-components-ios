@@ -8,8 +8,9 @@
 import Foundation
 import MLUI
 
-class MLBusinessTouchpointsCarouselContainerItemView: UIView {
-
+final class MLBusinessTouchpointsCarouselContainerItemView: UIView {
+    fileprivate enum Configuration {}
+    
     private let containerView: UIView = {
         let containerView = UIView(frame: .zero)
         containerView.translatesAutoresizingMaskIntoConstraints = false
@@ -107,6 +108,7 @@ class MLBusinessTouchpointsCarouselContainerItemView: UIView {
     }()
 
     private var logoImageViewTopConstraint: NSLayoutConstraint?
+    private var logoImageViewbackgroundConstraint: NSLayoutConstraint?
     private var discountValueVerticalStackViewTopConstraint: NSLayoutConstraint?
     private var brandNameLabelTopConstraint: NSLayoutConstraint?
     var imageProvider: MLBusinessImageProvider = MLBusinessURLImageProvider()
@@ -124,65 +126,57 @@ class MLBusinessTouchpointsCarouselContainerItemView: UIView {
 
     private func setup() {
         addSubview(containerView)
-
         containerView.addSubview(logoImageView)
         containerView.addSubview(overlayLogoView)
         containerView.addSubview(discountValueVerticalStackView)
         containerView.addSubview(brandNameLabel)
         containerView.addSubview(subtitleLabel)
-
         addSubview(pillView)
     }
 
     private func setupConstraints() {
+
+        logoImageViewTopConstraint = logoImageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 16.0)
+        logoImageViewTopConstraint?.isActive = true
+        
+        discountValueVerticalStackViewTopConstraint = discountValueVerticalStackView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 12.0)
+        discountValueVerticalStackViewTopConstraint?.isActive = true
+
+        brandNameLabelTopConstraint = brandNameLabel.topAnchor.constraint(equalTo: discountValueVerticalStackView.bottomAnchor, constant: 8)
+        brandNameLabelTopConstraint?.isActive = true
+        
         NSLayoutConstraint.activate([
             containerView.topAnchor.constraint(equalTo: topAnchor),
             containerView.leftAnchor.constraint(equalTo: leftAnchor),
             containerView.rightAnchor.constraint(equalTo: rightAnchor),
             containerView.bottomAnchor.constraint(equalTo: bottomAnchor),
-        ])
-
-        logoImageViewTopConstraint = logoImageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 16.0)
-        logoImageViewTopConstraint?.isActive = true
-
-        NSLayoutConstraint.activate([
+            
             logoImageView.heightAnchor.constraint(equalToConstant: 72),
             logoImageView.widthAnchor.constraint(equalTo: logoImageView.heightAnchor),
             logoImageView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-        ])
-
-        NSLayoutConstraint.activate([
+            
             overlayLogoView.heightAnchor.constraint(equalToConstant: 72),
             overlayLogoView.widthAnchor.constraint(equalTo: overlayLogoView.heightAnchor),
             overlayLogoView.topAnchor.constraint(equalTo: logoImageView.topAnchor),
             overlayLogoView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-        ])
-
-        discountValueVerticalStackViewTopConstraint = discountValueVerticalStackView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 12.0)
-        discountValueVerticalStackViewTopConstraint?.isActive = true
-
-        NSLayoutConstraint.activate([
+            
+            overlayLogoView.heightAnchor.constraint(equalToConstant: 72),
+            overlayLogoView.widthAnchor.constraint(equalTo: overlayLogoView.heightAnchor),
+            overlayLogoView.topAnchor.constraint(equalTo: logoImageView.topAnchor),
+            overlayLogoView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+            
             discountValueVerticalStackView.leftAnchor.constraint(greaterThanOrEqualTo: containerView.leftAnchor, constant: 8.0),
             discountValueVerticalStackView.rightAnchor.constraint(lessThanOrEqualTo: containerView.rightAnchor, constant: -8.0),
             discountValueVerticalStackView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-        ])
-
-        brandNameLabelTopConstraint = brandNameLabel.topAnchor.constraint(equalTo: discountValueVerticalStackView.bottomAnchor, constant: 8)
-        brandNameLabelTopConstraint?.isActive = true
-
-        NSLayoutConstraint.activate([
+            
             brandNameLabel.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 8),
             brandNameLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -8),
-        ])
-
-        NSLayoutConstraint.activate([
+            
             subtitleLabel.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 8),
             subtitleLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -8),
             subtitleLabel.topAnchor.constraint(equalTo: brandNameLabel.bottomAnchor, constant: 2),
             subtitleLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -12),
-        ])
-
-        NSLayoutConstraint.activate([
+            
             pillView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             pillView.bottomAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 8),
         ])
@@ -250,6 +244,13 @@ class MLBusinessTouchpointsCarouselContainerItemView: UIView {
             discountValueVerticalStackViewTopConstraint?.constant = 12
             logoImageViewTopConstraint?.constant = 16
         }
+        
+        if item.type?.uppercased() == Configuration.cardType.full {
+            setTypeFull()
+            overlayLogoView.isHidden = true
+        } else {
+            overlayLogoView.isHidden = false
+        }
 
         applyFormats(to: item)
     }
@@ -257,6 +258,19 @@ class MLBusinessTouchpointsCarouselContainerItemView: UIView {
     public func clear() {
         logoImageView.image = nil
         pillView.icon = nil
+    }
+    
+    private func setTypeFull() {
+        brandNameLabelTopConstraint?.isActive = false
+        insertSubview(logoImageView, at: 0)
+        logoImageView.layer.cornerRadius = 6.0
+        logoImageView.clipsToBounds = true
+        NSLayoutConstraint.activate([
+            logoImageView.topAnchor.constraint(equalTo: topAnchor),
+            logoImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            logoImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            logoImageView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
     }
     
     private func applyFormats(to item: MLBusinessCarouselItemModel) {
@@ -292,5 +306,11 @@ class MLBusinessTouchpointsCarouselContainerItemView: UIView {
         } else {
             label.font = MLStyleSheetManager.styleSheet.regularSystemFont(ofSize: size)
         }
+    }
+}
+
+extension MLBusinessTouchpointsCarouselContainerItemView.Configuration {
+    enum cardType {
+        static let full: String = "FULL"
     }
 }
