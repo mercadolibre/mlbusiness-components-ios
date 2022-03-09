@@ -252,6 +252,8 @@ class MLBusinessTouchpointsCarouselContainerItemView: UIView {
         }
 
         applyFormats(to: item)
+        
+        accessibilityLabel = "\(item.topLabel ?? "") \(item.mainLabel ?? "") \(item.rightLabel ?? "") \(item.title ?? "") \(item.subtitle ?? "")"
     }
 
     public func clear() {

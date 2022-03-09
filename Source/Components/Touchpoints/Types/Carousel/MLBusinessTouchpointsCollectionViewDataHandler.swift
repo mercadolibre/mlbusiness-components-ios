@@ -87,6 +87,8 @@ extension MLBusinessTouchpointsCollectionViewDataHandler: UICollectionViewDataSo
         let item = items[indexPath.row]
         cell.imageProvider = imageProvider
         cell.update(with: item)
+        cell.isAccessibilityElement = true
+        cell.shouldGroupAccessibilityChildren = true
         
         if let height = collectionViewHeightConstraint {
             cell.update(height: height.constant)

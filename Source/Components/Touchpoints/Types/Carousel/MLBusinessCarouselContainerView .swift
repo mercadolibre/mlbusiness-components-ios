@@ -51,6 +51,7 @@ public class MLBusinessCarouselContainerView: UIView {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
         collectionView.isPagingEnabled = false
+        collectionView.isAccessibilityElement = false
         return collectionView
     }()
     
@@ -71,6 +72,7 @@ public class MLBusinessCarouselContainerView: UIView {
         setup()
         setupDataHandler()
         setupConstraints()
+        isAccessibilityElement = false
     }
 
     private func setup() {
