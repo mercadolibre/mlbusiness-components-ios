@@ -151,29 +151,29 @@ final class MLBusinessTouchpointsCarouselContainerItemView: UIView {
             containerView.rightAnchor.constraint(equalTo: rightAnchor),
             containerView.bottomAnchor.constraint(equalTo: bottomAnchor),
             
-            logoImageView.heightAnchor.constraint(equalToConstant: 72),
+            logoImageView.heightAnchor.constraint(equalToConstant: Configuration.Layout.ImageHeight),
             logoImageView.widthAnchor.constraint(equalTo: logoImageView.heightAnchor),
             logoImageView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             
-            overlayLogoView.heightAnchor.constraint(equalToConstant: 72),
+            overlayLogoView.heightAnchor.constraint(equalToConstant: Configuration.Layout.ImageHeight),
             overlayLogoView.widthAnchor.constraint(equalTo: overlayLogoView.heightAnchor),
             overlayLogoView.topAnchor.constraint(equalTo: logoImageView.topAnchor),
             overlayLogoView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             
-            overlayLogoView.heightAnchor.constraint(equalToConstant: 72),
+            overlayLogoView.heightAnchor.constraint(equalToConstant: Configuration.Layout.ImageHeight),
             overlayLogoView.widthAnchor.constraint(equalTo: overlayLogoView.heightAnchor),
             overlayLogoView.topAnchor.constraint(equalTo: logoImageView.topAnchor),
             overlayLogoView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             
-            discountValueVerticalStackView.leftAnchor.constraint(greaterThanOrEqualTo: containerView.leftAnchor, constant: 8.0),
-            discountValueVerticalStackView.rightAnchor.constraint(lessThanOrEqualTo: containerView.rightAnchor, constant: -8.0),
+            discountValueVerticalStackView.leftAnchor.constraint(greaterThanOrEqualTo: containerView.leftAnchor, constant: Configuration.Layout.leftAnchor),
+            discountValueVerticalStackView.rightAnchor.constraint(lessThanOrEqualTo: containerView.rightAnchor, constant: Configuration.Layout.rightAnchor),
             discountValueVerticalStackView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             
-            brandNameLabel.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 8),
-            brandNameLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -8),
+            brandNameLabel.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: Configuration.Layout.leftAnchor),
+            brandNameLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: Configuration.Layout.rightAnchor),
             
-            subtitleLabel.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 8),
-            subtitleLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -8),
+            subtitleLabel.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: Configuration.Layout.leftAnchor),
+            subtitleLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: Configuration.Layout.rightAnchor),
             subtitleLabel.topAnchor.constraint(equalTo: brandNameLabel.bottomAnchor, constant: 2),
             subtitleLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -12),
             
@@ -312,5 +312,11 @@ final class MLBusinessTouchpointsCarouselContainerItemView: UIView {
 extension MLBusinessTouchpointsCarouselContainerItemView.Configuration {
     enum cardType {
         static let full: String = "FULL"
+    }
+    
+    enum Layout {
+        static let leftAnchor: CGFloat = 8
+        static let rightAnchor: CGFloat = -8
+        static let ImageHeight: CGFloat = 72
     }
 }
