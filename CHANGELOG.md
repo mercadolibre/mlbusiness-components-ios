@@ -1,4 +1,5 @@
-# Sin Publicar
+# v1.35.0
+🚀 1.35.0 🚀
 - Fix accessibility in carousel touchpoints
 
 # v1.34.1
