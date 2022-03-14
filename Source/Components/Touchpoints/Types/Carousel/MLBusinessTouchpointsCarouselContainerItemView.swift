@@ -174,11 +174,11 @@ final class MLBusinessTouchpointsCarouselContainerItemView: UIView {
             
             subtitleLabel.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: Configuration.Layout.leftAnchor),
             subtitleLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: Configuration.Layout.rightAnchor),
-            subtitleLabel.topAnchor.constraint(equalTo: brandNameLabel.bottomAnchor, constant: 2),
-            subtitleLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -12),
+            subtitleLabel.topAnchor.constraint(equalTo: brandNameLabel.bottomAnchor, constant: Configuration.Layout.subtitleLabelTop),
+            subtitleLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: Configuration.Layout.subtitleLabelBottom),
             
             pillView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-            pillView.bottomAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 8),
+            pillView.bottomAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: Configuration.Layout.pillViewBottom),
         ])
     }
 
@@ -319,5 +319,9 @@ extension MLBusinessTouchpointsCarouselContainerItemView.Configuration {
         static let leftAnchor: CGFloat = 8
         static let rightAnchor: CGFloat = -8
         static let ImageHeight: CGFloat = 72
+        static let subtitleLabelBottom:  CGFloat = -12
+        static let subtitleLabelTop:  CGFloat = 2
+        static let pillViewBottom:  CGFloat = 8
+        
     }
 }
