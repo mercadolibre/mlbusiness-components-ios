@@ -52,6 +52,7 @@ class MLBusinessTouchpointsCarouselContainerViewCell: UICollectionViewCell {
             backgroundColor = currentBackgroundColor ?? .white
         }
         itemView.update(with: content)
+        accessibilityLabel = itemView.accessibilityLabel
         
         if content.type?.uppercased() == Configuration.cardType.full {
             setupFullCard()

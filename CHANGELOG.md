@@ -1,3 +1,6 @@
+# Sin Publicar
+- Fix accessibility in carousel touchpoints
+
 # v1.34.1
 🚀 1.34.1 🚀
 - Allow optional icon color usage on benefits items
