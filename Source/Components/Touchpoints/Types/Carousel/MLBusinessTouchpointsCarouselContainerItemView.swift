@@ -262,7 +262,6 @@ final class MLBusinessTouchpointsCarouselContainerItemView: UIView {
     
     private func setTypeFull() {
         brandNameLabelTopConstraint?.isActive = false
-        insertSubview(logoImageView, at: 0)
         logoImageView.layer.cornerRadius = 6.0
         logoImageView.clipsToBounds = true
         NSLayoutConstraint.activate([
