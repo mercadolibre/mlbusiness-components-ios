@@ -136,13 +136,13 @@ final class MLBusinessTouchpointsCarouselContainerItemView: UIView {
 
     private func setupConstraints() {
 
-        logoImageViewTopConstraint = logoImageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 16.0)
+        logoImageViewTopConstraint = logoImageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: Configuration.Layout.logoImageViewTopConstraint)
         logoImageViewTopConstraint?.isActive = true
         
-        discountValueVerticalStackViewTopConstraint = discountValueVerticalStackView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 12.0)
+        discountValueVerticalStackViewTopConstraint = discountValueVerticalStackView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: Configuration.Layout.discountValueVerticalStackViewTopConstraint)
         discountValueVerticalStackViewTopConstraint?.isActive = true
 
-        brandNameLabelTopConstraint = brandNameLabel.topAnchor.constraint(equalTo: discountValueVerticalStackView.bottomAnchor, constant: 8)
+        brandNameLabelTopConstraint = brandNameLabel.topAnchor.constraint(equalTo: discountValueVerticalStackView.bottomAnchor, constant: Configuration.Layout.brandNameLabelTopConstraint)
         brandNameLabelTopConstraint?.isActive = true
         
         NSLayoutConstraint.activate([
@@ -322,6 +322,10 @@ extension MLBusinessTouchpointsCarouselContainerItemView.Configuration {
         static let subtitleLabelBottom:  CGFloat = -12
         static let subtitleLabelTop:  CGFloat = 2
         static let pillViewBottom:  CGFloat = 8
+        static let logoImageViewTopConstraint: CGFloat = 16.0
+        static let discountValueVerticalStackViewTopConstraint: CGFloat = 12
+        static let brandNameLabelTopConstraint: CGFloat = 8
+
         
     }
 }
