@@ -8,6 +8,10 @@
 import Foundation
 
 class MLBusinessTouchpointsCarouselContainerViewCell: UICollectionViewCell {
+    fileprivate enum Configuration {}
+    private var top = UILayoutGuide()
+    private var bottom = UILayoutGuide()
+    
     override var isHighlighted: Bool {
         didSet {
            setHighlighted(isHighlighted)
@@ -49,6 +53,20 @@ class MLBusinessTouchpointsCarouselContainerViewCell: UICollectionViewCell {
         }
         itemView.update(with: content)
         accessibilityLabel = itemView.accessibilityLabel
+        
+        if content.type?.uppercased() == Configuration.cardType.full {
+            setupFullCard()
+        }
+    }
+    
+    private func setupFullCard() {
+        contentView.removeConstraints(itemView.constraints)
+        NSLayoutConstraint.activate([
+            itemView.topAnchor.constraint(equalTo: topAnchor),
+            itemView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+            itemView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+            itemView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
     }
     
     func update(height: CGFloat) {
@@ -69,13 +87,8 @@ class MLBusinessTouchpointsCarouselContainerViewCell: UICollectionViewCell {
 
     private func setupConstraints() {
         itemView.translatesAutoresizingMaskIntoConstraints = false
-
-        let top = UILayoutGuide()
-        let bottom = UILayoutGuide()
-
         contentView.addLayoutGuide(top)
         contentView.addLayoutGuide(bottom)
-
         NSLayoutConstraint.activate([
             top.heightAnchor.constraint(equalTo: bottom.heightAnchor),
             top.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -94,5 +107,11 @@ class MLBusinessTouchpointsCarouselContainerViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         itemView.clear()
+    }
+}
+
+extension MLBusinessTouchpointsCarouselContainerViewCell.Configuration {
+    enum cardType {
+        static let full: String = "FULL"
     }
 }

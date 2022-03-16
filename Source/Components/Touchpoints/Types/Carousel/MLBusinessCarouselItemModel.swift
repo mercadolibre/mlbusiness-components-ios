@@ -8,6 +8,7 @@
 import Foundation
 
 public class MLBusinessCarouselItemModel: NSObject, Codable {
+    let type: String?
     let title: String?
     let topLabel: String?
     let mainLabel: String?
@@ -36,7 +37,8 @@ public class MLBusinessCarouselItemModel: NSObject, Codable {
         return eventData?.rawValue
     }
     
-    public init (title: String?, topLabel: String?, mainLabel: String?, rightLabel: String?, pill: DiscountItemDiscountPill?, image: String?, subtitle: String?, link: String?, textColor: String?, backgroundColor: String?, tracking: MLBusinessItemModelTracking?, titleFormat: DiscountItemTextFormat?, subtitleFormat: DiscountItemTextFormat?, imageFormat: DiscountItemImageFormat?) {
+    public init (type: String?, title: String?, topLabel: String?, mainLabel: String?, rightLabel: String?, pill: DiscountItemDiscountPill?, image: String?, subtitle: String?, link: String?, textColor: String?, backgroundColor: String?, tracking: MLBusinessItemModelTracking?, titleFormat: DiscountItemTextFormat?, subtitleFormat: DiscountItemTextFormat?, imageFormat: DiscountItemImageFormat?) {
+        self.type = type
         self.title = title
         self.topLabel = topLabel
         self.mainLabel = mainLabel
