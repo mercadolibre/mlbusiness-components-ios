@@ -1,7 +1,10 @@
+# v1.36.0
+🚀 1.36.0 🚀
+- Adding a full type in Touchpoints carousel
+
 # v1.35.0
 🚀 1.35.0 🚀
 - Fix accessibility in carousel touchpoints
-- adding a full type in Touchpoints carousel
 
 # v1.34.1
 🚀 1.34.1 🚀
