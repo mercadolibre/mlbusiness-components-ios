@@ -100,10 +100,8 @@ public class MLBusinessCarouselContainerView: UIView {
     }
     
     private func setupCardSpace() {
-        for item in items {
-            if item.type?.uppercased() == Configuration.CardType.full {
-                layout.minimumLineSpacing = Configuration.Layout.minimumLineSpacing
-            }
+        if items.contains { $0.type?.uppercased() == Configuration.CardType.full } {
+            layout.minimumLineSpacing = Configuration.Layout.minimumLineSpacing
         }
     }
     
