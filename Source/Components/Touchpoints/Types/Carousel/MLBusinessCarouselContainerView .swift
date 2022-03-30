@@ -13,13 +13,15 @@ public protocol MLBusinessCarouselContainerViewDelegate: class {
 }
 
 public class MLBusinessCarouselContainerView: UIView {
-    fileprivate enum Configuration {}
+    fileprivate enum Configuration { }
     public weak var delegate: MLBusinessCarouselContainerViewDelegate?
+    
     public var shouldHighlightItem = true {
         didSet {
             dataHandler.shouldHighlightItem = shouldHighlightItem
         }
     }
+    
     public var shouldCalculateItemWidth = true {
         didSet {
             dataHandler.shouldCalculateItemWidth = shouldCalculateItemWidth
@@ -100,7 +102,7 @@ public class MLBusinessCarouselContainerView: UIView {
     }
     
     private func setupCardSpace() {
-        if items.contains { $0.type?.uppercased() == Configuration.CardType.full } {
+        if items.contains(where: { ($0.type?.uppercased() == Configuration.CardType.full) }) {
             layout.minimumLineSpacing = Configuration.Layout.minimumLineSpacing
         }
     }
