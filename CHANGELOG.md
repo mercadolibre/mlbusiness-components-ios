@@ -1,3 +1,6 @@
+# sin publicar
+- fix card spaces in touchpoints full card type
+
 # v1.36.0
 🚀 1.36.0 🚀
 - Adding a full type in Touchpoints carousel
