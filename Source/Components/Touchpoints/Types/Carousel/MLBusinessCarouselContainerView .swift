@@ -13,6 +13,7 @@ public protocol MLBusinessCarouselContainerViewDelegate: class {
 }
 
 public class MLBusinessCarouselContainerView: UIView {
+    fileprivate enum Configuration {}
     public weak var delegate: MLBusinessCarouselContainerViewDelegate?
     public var shouldHighlightItem = true {
         didSet {
@@ -35,9 +36,9 @@ public class MLBusinessCarouselContainerView: UIView {
     private var items: [MLBusinessCarouselItemModel] = []
     private var dataHandler: MLBusinessTouchpointsCollectionViewDataHandler = MLBusinessTouchpointsCollectionViewDataHandler()
     private var imageProvider: MLBusinessImageProvider?
+    private var layout = UICollectionViewFlowLayout()
 
-    let collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
+    private lazy var collectionView: UICollectionView = {
         layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = MLBusinessCarouselContainerView.minimumInteritemSpacing
         layout.minimumLineSpacing = 12
@@ -98,12 +99,21 @@ public class MLBusinessCarouselContainerView: UIView {
         ])
     }
     
+    private func setupCardSpace() {
+        for item in items {
+            if item.type?.uppercased() == Configuration.CardType.full {
+                layout.minimumLineSpacing = Configuration.Layout.minimumLineSpacing
+            }
+        }
+    }
+    
     func getMaxItemHeight(with items: [MLBusinessCarouselItemModel]) -> CGFloat {
         return dataHandler.getMaxItemHeight(with: items)
     }
     
     public func update(with items: [MLBusinessCarouselItemModel]) {
         self.items = items
+        setupCardSpace()
         dataHandler.update(with: items)
         dataHandler.collectionViewHeightConstraint?.constant = dataHandler.getMaxItemHeight(with: items)
         collectionView.reloadData()
@@ -129,5 +139,14 @@ extension MLBusinessCarouselContainerView: MLBusinessTouchpointsCollectionViewDa
     
     public func carouselContainerViewDidFinishScrolling() {
         delegate?.carouselContainerView(self, didFinishScrolling: getVisibleItems())
+    }
+}
+
+extension MLBusinessCarouselContainerView.Configuration {
+    enum CardType {
+        static let full: String = "FULL"
+    }
+    enum Layout {
+        static let minimumLineSpacing = CGFloat(8)
     }
 }
