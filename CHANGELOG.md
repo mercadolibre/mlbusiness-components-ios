@@ -1,5 +1,6 @@
-# sin publicar
-- fix card spaces in touchpoints full card type
+# v1.37.0
+🚀 1.37.0 🚀
+- Fix card spaces in touchpoints full card type
 
 # v1.36.0
 🚀 1.36.0 🚀
