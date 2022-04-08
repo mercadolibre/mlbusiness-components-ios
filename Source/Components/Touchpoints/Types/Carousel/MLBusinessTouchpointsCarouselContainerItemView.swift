@@ -90,6 +90,8 @@ final class MLBusinessTouchpointsCarouselContainerItemView: UIView {
         brandNameLabel.numberOfLines = 1
         brandNameLabel.textAlignment = .center
         brandNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        brandNameLabel.adjustsFontSizeToFitWidth = true
+        brandNameLabel.minimumScaleFactor = 0.8
         return brandNameLabel
     }()
 
@@ -169,6 +171,7 @@ final class MLBusinessTouchpointsCarouselContainerItemView: UIView {
             discountValueVerticalStackView.rightAnchor.constraint(lessThanOrEqualTo: containerView.rightAnchor, constant: Configuration.Layout.rightAnchor),
             discountValueVerticalStackView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             
+            brandNameLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             brandNameLabel.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: Configuration.Layout.leftAnchor),
             brandNameLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: Configuration.Layout.rightAnchor),
             
