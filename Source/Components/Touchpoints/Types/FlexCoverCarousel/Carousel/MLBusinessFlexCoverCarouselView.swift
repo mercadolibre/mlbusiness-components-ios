@@ -58,7 +58,7 @@ public class MLBusinessFlexCoverCarouselView: UIView {
     
     var cardWidth: CGFloat = UIScreen.main.bounds.width - 32
     
-    public weak var delegate: MLBusinessCoverCarouselViewDelegate?
+    public weak var delegate: MLBusinessFlexCoverCarouselViewDelegate?
     
     public var shouldHighlightItems = true
     
@@ -66,7 +66,7 @@ public class MLBusinessFlexCoverCarouselView: UIView {
         return collectionView
     }
     
-    public var visibleItems: [MLBusinessCoverCarouselItemModel]? {
+    public var visibleItems: [MLBusinessFlexCoverCarouselItemModel]? {
         return collectionView.indexPathsForVisibleItems.compactMap({ items[$0.item] })
     }
     
@@ -83,16 +83,16 @@ public class MLBusinessFlexCoverCarouselView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func update(with model: MLBusinessCoverCarouselModel) {
+    func update(with model: MLBusinessFlexCoverCarouselModel) {
         self.model = model
         
-        setLayoutAnimators(from: model.carouselAnimation)
+        //setLayoutAnimators(from: model.carouselAnimation)
         collectionViewHeightConstraint?.constant = getMaxItemHeight(for: model)
         collectionView.reloadData()
     }
     
-    func getMaxItemHeight(for model: MLBusinessCoverCarouselModel?) -> CGFloat {
-        return model?.items.map({ getViewHeight(for: $0.content) }).max() ?? 0
+    func getMaxItemHeight(for model: MLBusinessFlexCoverCarouselModel?) -> CGFloat {
+        return 100
     }
     
     private func setupView() {
@@ -113,10 +113,10 @@ public class MLBusinessFlexCoverCarouselView: UIView {
         ])
     }
     
-    private func getViewHeight(for model: MLBusinessCoverCarouselItemContentModel?) -> CGFloat {
+    private func getViewHeight(for model: MLBusinessFlexCoverCarouselItemModel?) -> CGFloat {
         guard let model = model else { return 0 }
         
-        return MLBusinessCoverCarouselItemView.height(for: model)
+        return 107 + 83
     }
     
     private func setLayoutAnimators(from model: MLBusinessCoverCarouselAnimation?) {
@@ -139,33 +139,34 @@ public class MLBusinessFlexCoverCarouselView: UIView {
     }
 }
 
-extension MLBusinessCoverCarouselView: UICollectionViewDataSource {
+extension MLBusinessFlexCoverCarouselView: UICollectionViewDataSource {
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return items.count
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MLBusinessCoverCarouselViewCell.reuseIdentifier,
-                                                            for: indexPath) as? MLBusinessCoverCarouselViewCell,
-              let content = items[indexPath.row].content else {
-                                    return MLBusinessCoverCarouselViewCell()
+        let content = items[indexPath.row]
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MLBusinessFlexCoverCarouselViewCell.reuseIdentifier,
+                                                            for: indexPath) as? MLBusinessFlexCoverCarouselViewCell
+              else {
+                                    return MLBusinessFlexCoverCarouselViewCell()
         }
         
         cell.imageProvider = imageProvider
         cell.update(with: content)
-        cell.animatesWhenPressed = model?.carouselAnimation?.pressAnimation ?? false
+        //cell.animatesWhenPressed = model?.carouselAnimation?.pressAnimation ?? false
         
         return cell
     }
 }
 
-extension MLBusinessCoverCarouselView: UICollectionViewDelegateFlowLayout {
+extension MLBusinessFlexCoverCarouselView: UICollectionViewDelegateFlowLayout {
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: cardWidth, height: getMaxItemHeight(for: model))
     }
 }
 
-extension MLBusinessCoverCarouselView: UICollectionViewDelegate {
+extension MLBusinessFlexCoverCarouselView: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         delegate?.coverCarouselView(self, didSelect: items[indexPath.item], at: indexPath.item)
     }
@@ -175,7 +176,7 @@ extension MLBusinessCoverCarouselView: UICollectionViewDelegate {
     }
 }
 
-extension MLBusinessCoverCarouselView: UIScrollViewDelegate {
+extension MLBusinessFlexCoverCarouselView: UIScrollViewDelegate {
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         delegate?.coverCarouselView(self, didFinishScrolling: visibleItems)
     }

@@ -10,17 +10,41 @@ import Foundation
 
 public class MLBusinessFlexCoverCarouselItemModel: NSObject, Codable {
     
-    let link: String?
-    let backgroundColor: String?
-    let logos: [FlexCoverCarouselLogo]
-    let pill: FlexCoverCarouselPill?
-    let imageHeader: String?
-    let title: FlexCoverCarouselItemText?
-    let subtitle: FlexCoverCarouselItemText?
-    let mainDescription: FlexCoverCarouselItemText?
+    public let link: String?
+    public let backgroundColor: String?
+    public let logos: [FlexCoverCarouselLogo]
+    public let pill: FlexCoverCarouselPill?
+    public let imageHeader: String?
+    public let title: FlexCoverCarouselItemText?
+    public let subtitle: FlexCoverCarouselItemText?
+    public let mainDescription: FlexCoverCarouselItemText?
  
     public func getLink() -> String? {
         return link
+    }
+    
+    public func getBackgroundColor() -> String? {
+        return backgroundColor
+    }
+    
+    public func getPill() -> FlexCoverCarouselPill? {
+        return pill
+    }
+    
+    public func getImageHeader() -> String? {
+        return imageHeader
+    }
+    
+    public func getTitle() -> FlexCoverCarouselItemText? {
+        return title
+    }
+    
+    public func getSubtitle() -> FlexCoverCarouselItemText? {
+        return subtitle
+    }
+    
+    public func getMainDescription() -> FlexCoverCarouselItemText? {
+        return mainDescription
     }
         
     public init (title: FlexCoverCarouselItemText?, subtitle: FlexCoverCarouselItemText?, mainDescription: FlexCoverCarouselItemText? ,pill: FlexCoverCarouselPill?, imageHeader: String?,  link: String?, textColor: String?, backgroundColor: String?, logos: [FlexCoverCarouselLogo]) {
@@ -37,8 +61,8 @@ public class MLBusinessFlexCoverCarouselItemModel: NSObject, Codable {
 
 
 public class FlexCoverCarouselItemText: NSObject, Codable {
-    let text: String
-    let textColor: String
+    public let text: String
+    public let textColor: String
 
     public init(text: String, textColor: String) {
         self.text = text
@@ -47,18 +71,18 @@ public class FlexCoverCarouselItemText: NSObject, Codable {
 }
 
 public class FlexCoverCarouselLogo: NSObject, Codable {
-    let type: String?
-    let image: String?
-    let style: FlexCoverCarouselLogoStyle?
+    public let type: String?
+    public let image: String?
+    public let style: FlexCoverCarouselLogoStyle?
     
 }
 
 public class FlexCoverCarouselLogoStyle: NSObject, Codable {
-    let width: Int?
-    let height: Int?
-    let border: Int?
-    let borderColor: String?
-    let backgroundColor: String?
+    public let width: Int?
+    public let height: Int?
+    public let border: Int?
+    public let borderColor: String?
+    public let backgroundColor: String?
     
     public init(width: Int, height: Int, border: Int, borderColor: String?, backgroundColor: String?){
         self.width = width
@@ -70,10 +94,10 @@ public class FlexCoverCarouselLogoStyle: NSObject, Codable {
 }
 
 public class FlexCoverCarouselPill: NSObject, Codable {
-    let text: String?
-    let textColor: String?
-    let backgroundColor: String?
-    let borderColor: String?
+    public let text: String?
+    public let textColor: String?
+    public let backgroundColor: String?
+    public let borderColor: String?
     
     public init(text: String?, textColor: String?, backgroundColor: String?, borderColor: String?) {
         self.text = text

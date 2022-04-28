@@ -13,7 +13,7 @@ class MLBusinessFlexCoverCarouselViewCell: UICollectionViewCell {
     private let cornerRadius: CGFloat = 6
     
     private lazy var itemView: MLBusinessFlexCoverCarouselItemView = {
-        let itemView = MLBusinessCoverCarouselItemView()
+        let itemView = MLBusinessFlexCoverCarouselItemView()
         
         itemView.layer.cornerRadius = cornerRadius
         
@@ -71,7 +71,7 @@ class MLBusinessFlexCoverCarouselViewCell: UICollectionViewCell {
         itemView.clear()
     }
     
-    func update(with content: MLBusinessCoverCarouselItemContentModel) {
+    func update(with content: MLBusinessFlexCoverCarouselItemModel) {
         itemView.update(with: content)
     }
 

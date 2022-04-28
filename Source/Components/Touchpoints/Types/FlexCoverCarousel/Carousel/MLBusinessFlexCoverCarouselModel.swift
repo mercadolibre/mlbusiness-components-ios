@@ -9,8 +9,10 @@ import Foundation
 
 class MLBusinessFlexCoverCarouselModel: NSObject, Codable{
     
-    let items: [MLBusinessFlexCoverCarouselItemModel]
+    public let items: [MLBusinessFlexCoverCarouselItemModel]
     
-    
+    public init(items: [MLBusinessFlexCoverCarouselItemModel]){
+        self.items = items
+    }
 }
 
