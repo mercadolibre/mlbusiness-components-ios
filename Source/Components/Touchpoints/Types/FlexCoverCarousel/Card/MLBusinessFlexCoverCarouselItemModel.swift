@@ -12,7 +12,7 @@ public class MLBusinessFlexCoverCarouselItemModel: NSObject, Codable {
     
     public let link: String?
     public let backgroundColor: String?
-    public let logos: [FlexCoverCarouselLogo]
+    public let logos: [FlexCoverCarouselLogo]?
     public let pill: FlexCoverCarouselPill?
     public let imageHeader: String?
     public let title: FlexCoverCarouselItemText?

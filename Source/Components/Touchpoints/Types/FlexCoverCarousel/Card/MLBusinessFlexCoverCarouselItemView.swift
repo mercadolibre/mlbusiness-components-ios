@@ -37,6 +37,7 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
     private let mainCardContainerView: UIView = {
         let view = UIView(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
+       
         return view
     }()
     
@@ -52,30 +53,35 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
     private let mainTitleTopLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.numberOfLines = 1
-        label.font = MLStyleSheetManager.styleSheet.semiboldSystemFont(ofSize: CGFloat(kMLFontsSizeXXSmall))
+        label.font = MLStyleSheetManager.styleSheet.boldSystemFont(ofSize: CGFloat(kMLFontsSizeXSmall))
         label.textAlignment = .left
-        label.textColor = MLStyleSheetManager.styleSheet.blackColor
+        label.textColor = MLStyleSheetManager.styleSheet.whiteColor
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    private let mainSubtitleView: UIView = {
-        let view = UIView(frame: .zero)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .clear
-        return view
+    
+    private let mainDescriptionLabel: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.numberOfLines = 2
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = MLStyleSheetManager.styleSheet.regularSystemFont(ofSize: CGFloat(kMLFontsSizeXXSmall))
+        label.textAlignment = .left
+        label.textColor = MLStyleSheetManager.styleSheet.whiteColor
+        return label
     }()
     
     private let mainSubtitleLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = MLStyleSheetManager.styleSheet.regularSystemFont(ofSize: CGFloat(kMLFontsSizeXSmall))
+        label.font = MLStyleSheetManager.styleSheet.semiboldSystemFont(ofSize: CGFloat(6.0))
         label.textAlignment = .left
-        label.textColor = MLStyleSheetManager.styleSheet.blackColor
+        label.textColor = MLStyleSheetManager.styleSheet.whiteColor
         return label
     }()
     
+
     private func createMainTitleTop(with text: String?, color: String?) {
         guard let mainTitleTopText = text else { return }
         mainTitleTopLabel.text = mainTitleTopText
@@ -83,18 +89,53 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         mainStackView.addArrangedSubview(mainTitleTopLabel)
     }
     
-    private func createMainSubtitle(with text: String?) {
+    private func createMainSubtitle(with text: String?, color: String?) {
         guard let mainSubtitleText = text else { return }
         mainSubtitleLabel.text = mainSubtitleText
-        mainStackView.addArrangedSubview(mainSubtitleView)
+        mainSubtitleLabel.textColor = color?.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.blackColor
+        mainStackView.addArrangedSubview(mainSubtitleLabel)
     }
+    
+    private func createMainDescription(with text: String?, color: String?) {
+        guard let mainDescription = text else { return }
+        mainDescriptionLabel.text = mainDescription
+        mainDescriptionLabel.textColor = color?.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.blackColor
+        mainStackView.addArrangedSubview(mainDescriptionLabel)
+        
+    }
+    
+    private func createPill(with text: String?, color: String?) {
+        guard let pillText = text else { return }
+        
+        bottomPill.text = pillText
+        bottomPill.backgroundColor = color?.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.blackColor
+                
+        mainStackView.addArrangedSubview(bottomPill)
+    }
+    
+    private let bottomPill: MLBusinessPillView = {
+        let rightBottomInfo = MLBusinessPillView(with: 10.0)
+        rightBottomInfo.translatesAutoresizingMaskIntoConstraints = false
+        return rightBottomInfo
+    }()
+    
+    private let bottomPillView: UIView = {
+        let view = UIView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .clear
+        return view
+    }()
     
     private func createMainSection(with item: MLBusinessFlexCoverCarouselItemModel) {
         createMainTitleTop(with: item.getTitle()?.text, color: item.getTitle()?.textColor)
-        createMainSubtitle(with: item.getSubtitle()?.text)
+        createMainSubtitle(with: item.getSubtitle()?.text, color: item.getSubtitle()?.textColor)
+        createMainDescription(with: item.getMainDescription()?.text, color: item.getMainDescription()?.textColor)
     }
     
-    
+    private func createPillSecttion(with item: MLBusinessFlexCoverCarouselItemModel) {
+        createPill(with: item.getPill()?.text, color: item.getPill()?.textColor)
+    }
+        
     public init(with imageProvider: MLBusinessImageProvider? = nil) {
         self.imageProvider = imageProvider ?? MLBusinessURLImageProvider()
             
@@ -116,7 +157,13 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
                 self?.coverImageView.image = image
             }
         }
+        
+        if let colorString = item.backgroundColor {
+            mainCardContainerView.backgroundColor =  colorString.hexaToUIColor()
+        }
+
         createMainSection(with: item)
+        createPillSecttion(with: item)
         
     }
     
@@ -139,13 +186,14 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
     }
     
     private func setupView() {
-        backgroundColor = .white
         translatesAutoresizingMaskIntoConstraints = false
         layer.masksToBounds = true
         
-        addSubview(mainStackView)
         addSubview(coverImageView)
+        addSubview(mainCardContainerView)
         addSubview(alphaOverlayView)
+        addSubview(mainStackView)
+        bottomPillView.addSubview(bottomPill)
     }
     
     private func setupConstraints() {
@@ -155,20 +203,16 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
             coverImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             coverImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
             coverImageView.heightAnchor.constraint(equalToConstant: MLBusinessFlexCoverCarouselItemView.coverHeight),
-            coverImageView.widthAnchor.constraint(equalToConstant: 240),
             
             mainCardContainerView.topAnchor.constraint(equalTo: coverImageView.bottomAnchor),
             mainCardContainerView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            mainCardContainerView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            mainCardContainerView.leadingAnchor.constraint(equalTo: coverImageView.leadingAnchor),
             mainCardContainerView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            mainCardContainerView.widthAnchor.constraint(equalTo: coverImageView.widthAnchor),
-            
-            mainStackView.topAnchor.constraint(greaterThanOrEqualTo: mainCardContainerView.topAnchor, constant: 16.0),
-            mainStackView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            mainStackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -16.0),
-            mainStackView.leftAnchor.constraint(equalTo: mainCardContainerView.leftAnchor, constant: 14),
-            mainStackView.rightAnchor.constraint(lessThanOrEqualTo: mainCardContainerView.rightAnchor, constant: -14),
-            
+            mainCardContainerView.heightAnchor.constraint(equalToConstant: MLBusinessFlexCoverCarouselItemView.containerHeight),
+
+            mainStackView.leftAnchor.constraint(equalTo: mainCardContainerView.leftAnchor, constant: 16.0),
+            mainStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 10),
+            mainStackView.rightAnchor.constraint(equalTo: mainCardContainerView.rightAnchor, constant: 10)
             
         ])
         

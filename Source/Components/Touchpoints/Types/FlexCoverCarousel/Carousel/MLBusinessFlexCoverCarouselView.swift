@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MLUI
 
 public protocol MLBusinessFlexCoverCarouselViewDelegate: class {
     func coverCarouselView(_: MLBusinessFlexCoverCarouselView, didSelect item: MLBusinessFlexCoverCarouselItemModel, at index: Int)
@@ -36,20 +37,20 @@ public class MLBusinessFlexCoverCarouselView: UIView {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.decelerationRate = .fast
         collectionView.backgroundColor = .clear
-        collectionView.contentInset = .init(top: 0, left: 16, bottom: 0, right: 16)
+        collectionView.contentInset = .init(top: 0, left: 32, bottom: 0, right: 32)
         collectionView.alwaysBounceHorizontal = true
         collectionView.clipsToBounds = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
         collectionView.isPagingEnabled = false
-        collectionView.register(MLBusinessCoverCarouselViewCell.self,
-                                forCellWithReuseIdentifier: MLBusinessCoverCarouselViewCell.reuseIdentifier)
+        collectionView.register(MLBusinessFlexCoverCarouselViewCell.self,
+                                forCellWithReuseIdentifier: MLBusinessFlexCoverCarouselViewCell.reuseIdentifier)
         collectionView.dataSource = self
         collectionView.delegate = self
         
         return collectionView
     }()
-    
+        
     var contentInset: UIEdgeInsets = .zero {
         didSet {
             collectionView.contentInset = contentInset
@@ -92,7 +93,7 @@ public class MLBusinessFlexCoverCarouselView: UIView {
     }
     
     func getMaxItemHeight(for model: MLBusinessFlexCoverCarouselModel?) -> CGFloat {
-        return 100
+        return 160
     }
     
     private func setupView() {
@@ -102,7 +103,7 @@ public class MLBusinessFlexCoverCarouselView: UIView {
     }
     
     private func setupConstraints() {
-        collectionViewHeightConstraint = collectionView.heightAnchor.constraint(equalToConstant: 96.0)
+        collectionViewHeightConstraint = collectionView.heightAnchor.constraint(equalToConstant: 160)
         collectionViewHeightConstraint?.isActive = true
         
         NSLayoutConstraint.activate([

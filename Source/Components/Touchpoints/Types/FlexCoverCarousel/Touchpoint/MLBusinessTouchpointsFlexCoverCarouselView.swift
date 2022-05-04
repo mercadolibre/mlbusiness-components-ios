@@ -67,8 +67,9 @@ class MLBusinessTouchpointsFlexCoverCarouselView: MLBusinessTouchpointsBaseView 
     override func getTouchpointViewHeight(with data: Codable?, topInset: CGFloat, bottomInset: CGFloat) -> CGFloat {
         guard let model = data as? MLBusinessFlexCoverCarouselModel else { return 0 }
         
-        return CGFloat(collectionView.getMaxItemHeight(for: model)) + topInset + bottomInset
+        return 160//CGFloat(collectionView.getMaxItemHeight(for: model)) + topInset + bottomInset
     }
+    
 }
 
 extension MLBusinessTouchpointsFlexCoverCarouselView: MLBusinessFlexCoverCarouselViewDelegate {
