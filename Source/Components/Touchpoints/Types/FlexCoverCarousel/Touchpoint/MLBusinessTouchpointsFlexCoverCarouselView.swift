@@ -22,10 +22,10 @@ class MLBusinessTouchpointsFlexCoverCarouselView: MLBusinessTouchpointsBaseView 
         setup()
         setupConstraints()
     }
+    
 
     private func setup() {
         addSubview(collectionView)
-        collectionView.delegate = self
     }
     
     private func setupConstraints() {
@@ -55,9 +55,11 @@ class MLBusinessTouchpointsFlexCoverCarouselView: MLBusinessTouchpointsBaseView 
         topConstraint?.constant = insets.top
         bottomConstraint?.constant = -insets.bottom
 
-        collectionView.cardWidth = UIScreen.main.bounds.width - insets.left - insets.right
-        collectionView.contentInset.left = insets.left
-        collectionView.contentInset.right = insets.right
+        //collectionView.cardWidth = 240//UIScreen.main.bounds.width - insets.left - insets.right
+        collectionView.collectionViewDelegate.edgeInset = 16
+        collectionView.collectionViewDelegate.cellSpacing = 8
+//        collectionView.contentInset.left = insets.left
+//        collectionView.contentInset.right = insets.right
     }
     
 //    override func getVisibleItems() -> [Trackable]? {
@@ -70,15 +72,5 @@ class MLBusinessTouchpointsFlexCoverCarouselView: MLBusinessTouchpointsBaseView 
         return 160//CGFloat(collectionView.getMaxItemHeight(for: model)) + topInset + bottomInset
     }
     
-}
-
-extension MLBusinessTouchpointsFlexCoverCarouselView: MLBusinessFlexCoverCarouselViewDelegate {
-    func coverCarouselView(_: MLBusinessFlexCoverCarouselView, didSelect item: MLBusinessFlexCoverCarouselItemModel, at index: Int) {
-        
-    }
-    
-    func coverCarouselView(_: MLBusinessFlexCoverCarouselView, didFinishScrolling visibleItems: [MLBusinessFlexCoverCarouselItemModel]?) {
-       
-    }
 }
 

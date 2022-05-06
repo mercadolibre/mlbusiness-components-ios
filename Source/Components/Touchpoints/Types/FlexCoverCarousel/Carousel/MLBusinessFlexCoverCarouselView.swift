@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import MLUI
 
 public protocol MLBusinessFlexCoverCarouselViewDelegate: class {
     func coverCarouselView(_: MLBusinessFlexCoverCarouselView, didSelect item: MLBusinessFlexCoverCarouselItemModel, at index: Int)
@@ -31,22 +30,24 @@ public class MLBusinessFlexCoverCarouselView: UIView {
         return layout
     }()
     
+    lazy var collectionViewDelegate: CarouselCollectionViewDelegate = {
+        let delegate = CarouselCollectionViewDelegate()
+        delegate.delegate = self
+        return delegate
+    }()
+    
+    
     private lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.decelerationRate = .fast
         collectionView.backgroundColor = .clear
-        collectionView.contentInset = .init(top: 0, left: 32, bottom: 0, right: 32)
         collectionView.alwaysBounceHorizontal = true
         collectionView.clipsToBounds = false
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.isPagingEnabled = false
         collectionView.register(MLBusinessFlexCoverCarouselViewCell.self,
                                 forCellWithReuseIdentifier: MLBusinessFlexCoverCarouselViewCell.reuseIdentifier)
         collectionView.dataSource = self
-        collectionView.delegate = self
         
         return collectionView
     }()
@@ -57,9 +58,8 @@ public class MLBusinessFlexCoverCarouselView: UIView {
         }
     }
     
-    var cardWidth: CGFloat = UIScreen.main.bounds.width - 32
+    var cardWidth: CGFloat = 240
     
-    public weak var delegate: MLBusinessFlexCoverCarouselViewDelegate?
     
     public var shouldHighlightItems = true
     
@@ -84,6 +84,7 @@ public class MLBusinessFlexCoverCarouselView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
     func update(with model: MLBusinessFlexCoverCarouselModel) {
         self.model = model
         
@@ -96,7 +97,20 @@ public class MLBusinessFlexCoverCarouselView: UIView {
         return 160
     }
     
+    func getPeekInsets() -> UIEdgeInsets {
+        return UIEdgeInsets(top: 16,
+                            left: 16,
+                            bottom: 16,
+                            right: 72)
+    }
+    
     private func setupView() {
+        let peekInsets = getPeekInsets()
+        collectionView.delegate = collectionViewDelegate
+        collectionViewDelegate.rightCellPeekWidth = peekInsets.right
+        collectionViewDelegate.leftCellPeekWidth = peekInsets.left
+        collectionViewDelegate.edgeInset = 16
+        collectionView.configureForPeekingDelegate()
         translatesAutoresizingMaskIntoConstraints = false
         
         addSubview(collectionView)
@@ -159,27 +173,49 @@ extension MLBusinessFlexCoverCarouselView: UICollectionViewDataSource {
         
         return cell
     }
+    
+
 }
 
 extension MLBusinessFlexCoverCarouselView: UICollectionViewDelegateFlowLayout {
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: cardWidth, height: getMaxItemHeight(for: model))
     }
+    
+   
 }
 
 extension MLBusinessFlexCoverCarouselView: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        delegate?.coverCarouselView(self, didSelect: items[indexPath.item], at: indexPath.item)
+       // delegate?.coverCarouselView(self, didSelect: items[indexPath.item], at: indexPath.item)
     }
     
     private func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
         return shouldHighlightItems
     }
+    
+//    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+//        return
+//    }
+    
+  
+
 }
 
 extension MLBusinessFlexCoverCarouselView: UIScrollViewDelegate {
-    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        delegate?.coverCarouselView(self, didFinishScrolling: visibleItems)
+}
+
+extension MLBusinessFlexCoverCarouselView: CarouselCollectionViewDelegateDelegate {
+    
+    func carouselDelegateDidScrollToItem(_ carouselDelegate: CarouselCollectionViewDelegate) {
+//        if carouselDelegate.currentActiveIndex == 0 {
+//            collectionViewDelegate.rightCellPeekWidth = getPeekInsets().right
+//            collectionViewDelegate.leftCellPeekWidth = getPeekInsets().left
+//        } else {
+//            collectionViewDelegate.rightCellPeekWidth = getPeekInsets().left
+//            collectionViewDelegate.leftCellPeekWidth = getPeekInsets().right
+//        }
     }
 }
+
 
