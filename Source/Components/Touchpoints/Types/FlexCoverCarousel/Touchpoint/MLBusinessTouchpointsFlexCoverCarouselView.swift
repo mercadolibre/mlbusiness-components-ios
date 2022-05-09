@@ -56,10 +56,10 @@ class MLBusinessTouchpointsFlexCoverCarouselView: MLBusinessTouchpointsBaseView 
         bottomConstraint?.constant = -insets.bottom
 
         //collectionView.cardWidth = 240//UIScreen.main.bounds.width - insets.left - insets.right
-        collectionView.collectionViewDelegate.edgeInset = 16
+        collectionView.collectionViewDelegate.edgeInset = insets.left
         collectionView.collectionViewDelegate.cellSpacing = 8
-//        collectionView.contentInset.left = insets.left
-//        collectionView.contentInset.right = insets.right
+        collectionView.collectionViewDelegate.leftCellPeekWidth = insets.left
+        collectionView.collectionViewDelegate.rightCellPeekWidth = insets.right
     }
     
 //    override func getVisibleItems() -> [Trackable]? {

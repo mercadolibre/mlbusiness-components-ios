@@ -75,6 +75,11 @@ public class FlexCoverCarouselLogo: NSObject, Codable {
     public let image: String?
     public let style: FlexCoverCarouselLogoStyle?
     
+    public init(type: String?, image: String?, style: FlexCoverCarouselLogoStyle?){
+        self.type = type
+        self.image = image
+        self.style = style
+    }
 }
 
 public class FlexCoverCarouselLogoStyle: NSObject, Codable {

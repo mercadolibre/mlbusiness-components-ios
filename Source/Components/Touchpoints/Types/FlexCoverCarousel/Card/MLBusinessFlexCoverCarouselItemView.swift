@@ -9,8 +9,8 @@ import UIKit
 import MLUI
 
 public class MLBusinessFlexCoverCarouselItemView: UIView {
-    static let coverHeight: CGFloat = 83
-    static let containerHeight: CGFloat = 107
+    static let coverHeight: CGFloat = 104
+    static let containerHeight: CGFloat = 56
     var imageProvider: MLBusinessImageProvider
     
     private lazy var alphaOverlayView: UIView = {
@@ -32,6 +32,19 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         imageView.contentMode = .scaleAspectFill
         
         return imageView
+    }()
+    
+    private lazy var logoImageView: UIImageView = {
+        
+        let logoView = UIImageView()
+        logoView.translatesAutoresizingMaskIntoConstraints = false
+        logoView.backgroundColor = .white
+        logoView.clipsToBounds = true
+        logoView.contentMode = .scaleAspectFill
+        logoView.layer.borderWidth = 1.0
+        logoView.layer.borderColor = UIColor.white.cgColor
+        logoView.layer.cornerRadius = 20
+        return logoView
     }()
     
     private let mainCardContainerView: UIView = {
@@ -81,6 +94,15 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         return label
     }()
     
+    private let pillLabel: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.numberOfLines = 1
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = MLStyleSheetManager.styleSheet.semiboldSystemFont(ofSize: CGFloat(11.0))
+        label.textAlignment = .center
+        label.textColor = MLStyleSheetManager.styleSheet.whiteColor
+        return label
+    }()
 
     private func createMainTitleTop(with text: String?, color: String?) {
         guard let mainTitleTopText = text else { return }
@@ -104,36 +126,68 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         
     }
     
-    private func createPill(with text: String?, color: String?) {
-        guard let pillText = text else { return }
-        
-        bottomPill.text = pillText
-        bottomPill.backgroundColor = color?.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.blackColor
-                
-        mainStackView.addArrangedSubview(bottomPill)
+    private func createPillLabel(with text: String?, color: String?) {
+        guard let pillDescription = text else { return }
+        pillLabel.text = pillDescription
+        pillLabel.textColor = color?.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.whiteColor
     }
     
-    private let bottomPill: MLBusinessPillView = {
-        let rightBottomInfo = MLBusinessPillView(with: 10.0)
+    private func createPillView(color: String?) {
+        bottomPillView.backgroundColor =  color?.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.whiteColor
+    }
+    
+    private func createGradientView(color: String?) {
+        gradientContainer.backgroundColor = color?.hexaToUIColor() ?? .clear
+    }
+    
+    private func createLogoView(imageName: String?) {
+        if let imageName = imageName {
+            imageProvider.getImage(key: imageName) { [weak self] image in
+                self?.logoImageView.image = image
+            }
+            
+            
+        }
+        
+    }
+    
+    private let bottomPillView: UIView = {
+        let rightBottomInfo = UIView(frame: .zero)
         rightBottomInfo.translatesAutoresizingMaskIntoConstraints = false
+        rightBottomInfo.layer.cornerRadius = 8
         return rightBottomInfo
     }()
     
-    private let bottomPillView: UIView = {
-        let view = UIView(frame: .zero)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .clear
-        return view
+    private let gradientContainer: UIView = {
+        let containerView = UIView(frame: .zero)
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.layer.opacity = 0.30
+        return containerView
+    }()
+
+    
+    private let defaultGradientLayer: CAGradientLayer = {
+        let layer = CAGradientLayer()
+        layer.colors = [UIColor.red.cgColor, UIColor.blue.cgColor]
+        layer.locations = [0.0, 1.0]
+        return layer
     }()
     
     private func createMainSection(with item: MLBusinessFlexCoverCarouselItemModel) {
         createMainTitleTop(with: item.getTitle()?.text, color: item.getTitle()?.textColor)
         createMainSubtitle(with: item.getSubtitle()?.text, color: item.getSubtitle()?.textColor)
         createMainDescription(with: item.getMainDescription()?.text, color: item.getMainDescription()?.textColor)
+        createGradientView(color: item.backgroundColor)
     }
     
     private func createPillSecttion(with item: MLBusinessFlexCoverCarouselItemModel) {
-        createPill(with: item.getPill()?.text, color: item.getPill()?.textColor)
+        createPillView(color: item.getPill()?.backgroundColor)
+        createPillLabel(with: item.getPill()?.text, color: item.getPill()?.textColor)
+    }
+    
+    private func createLogoSection(with item: MLBusinessFlexCoverCarouselItemModel) {
+        
+        createLogoView(imageName: item.logos?[0].image)
     }
         
     public init(with imageProvider: MLBusinessImageProvider? = nil) {
@@ -161,10 +215,14 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         if let colorString = item.backgroundColor {
             mainCardContainerView.backgroundColor =  colorString.hexaToUIColor()
         }
-
+    
         createMainSection(with: item)
         createPillSecttion(with: item)
         
+        if let logos = item.logos {
+            logoImageView.isHidden = false
+            createLogoSection(with: item)
+        }
     }
     
     public func setHighlighted(_ highlighted: Bool) {
@@ -188,12 +246,16 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
     private func setupView() {
         translatesAutoresizingMaskIntoConstraints = false
         layer.masksToBounds = true
-        
         addSubview(coverImageView)
         addSubview(mainCardContainerView)
+        addSubview(gradientContainer)
+        addSubview(logoImageView)
         addSubview(alphaOverlayView)
         addSubview(mainStackView)
-        bottomPillView.addSubview(bottomPill)
+        addSubview(bottomPillView)
+        bottomPillView.addSubview(pillLabel)
+
+        logoImageView.isHidden = true
     }
     
     private func setupConstraints() {
@@ -211,8 +273,26 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
             mainCardContainerView.heightAnchor.constraint(equalToConstant: MLBusinessFlexCoverCarouselItemView.containerHeight),
 
             mainStackView.leftAnchor.constraint(equalTo: mainCardContainerView.leftAnchor, constant: 16.0),
-            mainStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 10),
-            mainStackView.rightAnchor.constraint(equalTo: mainCardContainerView.rightAnchor, constant: 10)
+            mainStackView.bottomAnchor.constraint(equalTo: bottomPillView.topAnchor, constant: -8),
+            mainStackView.rightAnchor.constraint(equalTo: mainCardContainerView.rightAnchor, constant: 10),
+            
+            bottomPillView.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor),
+            bottomPillView.bottomAnchor.constraint(equalTo: mainCardContainerView.bottomAnchor, constant: -12),
+            bottomPillView.heightAnchor.constraint(equalToConstant: 16),
+
+            pillLabel.centerYAnchor.constraint(equalTo: bottomPillView.centerYAnchor),
+            pillLabel.leadingAnchor.constraint(equalTo: bottomPillView.leadingAnchor, constant: 6),
+            pillLabel.trailingAnchor.constraint(equalTo: bottomPillView.trailingAnchor, constant: -6),
+            
+            gradientContainer.leadingAnchor.constraint(equalTo: mainCardContainerView.leadingAnchor),
+            gradientContainer.trailingAnchor.constraint(equalTo: mainCardContainerView.trailingAnchor),
+            gradientContainer.bottomAnchor.constraint(equalTo: coverImageView.bottomAnchor),
+            gradientContainer.heightAnchor.constraint(equalToConstant: 40),
+            
+            logoImageView.bottomAnchor.constraint(equalTo: mainStackView.topAnchor, constant: -10),
+            logoImageView.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor),
+            logoImageView.heightAnchor.constraint(equalToConstant: 40),
+            logoImageView.widthAnchor.constraint(equalToConstant: 40),
             
         ])
         

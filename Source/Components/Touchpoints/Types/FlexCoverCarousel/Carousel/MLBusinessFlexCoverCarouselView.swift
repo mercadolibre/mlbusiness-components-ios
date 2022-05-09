@@ -107,8 +107,6 @@ public class MLBusinessFlexCoverCarouselView: UIView {
     private func setupView() {
         let peekInsets = getPeekInsets()
         collectionView.delegate = collectionViewDelegate
-        collectionViewDelegate.rightCellPeekWidth = peekInsets.right
-        collectionViewDelegate.leftCellPeekWidth = peekInsets.left
         collectionViewDelegate.edgeInset = 16
         collectionView.configureForPeekingDelegate()
         translatesAutoresizingMaskIntoConstraints = false
@@ -208,13 +206,6 @@ extension MLBusinessFlexCoverCarouselView: UIScrollViewDelegate {
 extension MLBusinessFlexCoverCarouselView: CarouselCollectionViewDelegateDelegate {
     
     func carouselDelegateDidScrollToItem(_ carouselDelegate: CarouselCollectionViewDelegate) {
-//        if carouselDelegate.currentActiveIndex == 0 {
-//            collectionViewDelegate.rightCellPeekWidth = getPeekInsets().right
-//            collectionViewDelegate.leftCellPeekWidth = getPeekInsets().left
-//        } else {
-//            collectionViewDelegate.rightCellPeekWidth = getPeekInsets().left
-//            collectionViewDelegate.leftCellPeekWidth = getPeekInsets().right
-//        }
     }
 }
 
