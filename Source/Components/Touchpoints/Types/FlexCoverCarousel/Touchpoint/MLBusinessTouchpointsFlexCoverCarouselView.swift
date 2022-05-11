@@ -61,11 +61,7 @@ class MLBusinessTouchpointsFlexCoverCarouselView: MLBusinessTouchpointsBaseView 
         collectionView.collectionViewDelegate.leftCellPeekWidth = insets.left
         collectionView.collectionViewDelegate.rightCellPeekWidth = insets.right
     }
-    
-//    override func getVisibleItems() -> [Trackable]? {
-//        return collectionView.visibleItems
-//    }
-    
+        
     override func getTouchpointViewHeight(with data: Codable?, topInset: CGFloat, bottomInset: CGFloat) -> CGFloat {
         guard let model = data as? MLBusinessFlexCoverCarouselModel else { return 0 }
         

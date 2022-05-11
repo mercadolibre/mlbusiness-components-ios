@@ -18,7 +18,22 @@ public class MLBusinessFlexCoverCarouselItemModel: NSObject, Codable {
     public let title: FlexCoverCarouselItemText?
     public let subtitle: FlexCoverCarouselItemText?
     public let mainDescription: FlexCoverCarouselItemText?
- 
+  
+    
+    public init (title: FlexCoverCarouselItemText?, subtitle: FlexCoverCarouselItemText?, mainDescription: FlexCoverCarouselItemText? ,pill: FlexCoverCarouselPill?, imageHeader: String?,  link: String?, textColor: String?, backgroundColor: String?, logos: [FlexCoverCarouselLogo]) {
+        self.title = title
+        self.subtitle = subtitle
+        self.mainDescription = mainDescription
+        self.pill = pill
+        self.imageHeader = imageHeader
+        self.link = link
+        self.backgroundColor = backgroundColor
+        self.logos = logos
+    }
+    
+}
+
+extension MLBusinessFlexCoverCarouselItemModel {
     public func getLink() -> String? {
         return link
     }
@@ -46,19 +61,7 @@ public class MLBusinessFlexCoverCarouselItemModel: NSObject, Codable {
     public func getMainDescription() -> FlexCoverCarouselItemText? {
         return mainDescription
     }
-        
-    public init (title: FlexCoverCarouselItemText?, subtitle: FlexCoverCarouselItemText?, mainDescription: FlexCoverCarouselItemText? ,pill: FlexCoverCarouselPill?, imageHeader: String?,  link: String?, textColor: String?, backgroundColor: String?, logos: [FlexCoverCarouselLogo]) {
-        self.title = title
-        self.subtitle = subtitle
-        self.mainDescription = mainDescription
-        self.pill = pill
-        self.imageHeader = imageHeader
-        self.link = link
-        self.backgroundColor = backgroundColor
-        self.logos = logos
-    }
 }
-
 
 public class FlexCoverCarouselItemText: NSObject, Codable {
     public let text: String
@@ -111,6 +114,7 @@ public class FlexCoverCarouselPill: NSObject, Codable {
         self.borderColor = borderColor
     }
 }
+
 
 
 
