@@ -53,20 +53,11 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
        
         return view
     }()
-    
-    private let mainStackView: UIStackView = {
-        let stackView = UIStackView(frame: .zero)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.distribution = .equalSpacing
-        stackView.spacing = 5
-        stackView.axis = .vertical
-        return stackView
-    }()
-    
+        
     private let mainTitleTopLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.numberOfLines = 1
-        label.font = MLStyleSheetManager.styleSheet.boldSystemFont(ofSize: CGFloat(kMLFontsSizeXSmall))
+        label.font = MLStyleSheetManager.styleSheet.boldSystemFont(ofSize: CGFloat(kMLFontsSizeSmall))
         label.textAlignment = .left
         label.textColor = MLStyleSheetManager.styleSheet.whiteColor
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -113,7 +104,7 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
     private let gradientContainer: UIView = {
         let containerView = UIView(frame: .zero)
         containerView.translatesAutoresizingMaskIntoConstraints = false
-        //containerView.backgroundColor = .white
+
         return containerView
     }()
 
@@ -131,21 +122,18 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         guard let mainTitleTopText = text else { return }
         mainTitleTopLabel.text = mainTitleTopText
         mainTitleTopLabel.textColor = color?.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.blackColor
-        mainStackView.addArrangedSubview(mainTitleTopLabel)
     }
     
     private func createMainSubtitle(with text: String?, color: String?) {
         guard let mainSubtitleText = text else { return }
         mainSubtitleLabel.text = mainSubtitleText
         mainSubtitleLabel.textColor = color?.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.blackColor
-        mainStackView.addArrangedSubview(mainSubtitleLabel)
     }
     
     private func createMainDescription(with text: String?, color: String?) {
         guard let mainDescription = text else { return }
         mainDescriptionLabel.text = mainDescription
         mainDescriptionLabel.textColor = color?.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.blackColor
-        mainStackView.addArrangedSubview(mainDescriptionLabel)
         
     }
     
@@ -174,7 +162,7 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         NSLayoutConstraint.activate([
             viewAux.trailingAnchor.constraint(equalTo: coverImageView.trailingAnchor),
             viewAux.leadingAnchor.constraint(equalTo: coverImageView.leadingAnchor),
-            viewAux.bottomAnchor.constraint(equalTo: mainCardContainerView.bottomAnchor),
+            viewAux.bottomAnchor.constraint(equalTo: coverImageView.bottomAnchor),
             viewAux.centerXAnchor.constraint(equalTo: coverImageView.centerXAnchor)
         ])
         
@@ -200,7 +188,6 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
     }
     
     private func createLogoSection(with item: MLBusinessFlexCoverCarouselItemModel) {
-        
         createLogoView(imageName: item.logos?[0].image)
     }
         
@@ -250,30 +237,24 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
     }
     
     static func height(for model: MLBusinessFlexCoverCarouselItemModel) -> CGFloat {
-        let rowLogoHeight: CGFloat = 96
-        
-        var rowDescriptionHeight: CGFloat = 86
-        // MainSecondaryDescription
-        
-        return coverHeight + max(rowLogoHeight, rowDescriptionHeight)
+        return 0
     }
     
     private func setupView() {
         translatesAutoresizingMaskIntoConstraints = false
         layer.masksToBounds = true
- 
         addSubview(coverImageView)
         addSubview(mainCardContainerView)
         createGradientView()
         addSubview(logoImageView)
         addSubview(alphaOverlayView)
-        addSubview(mainStackView)
         addSubview(bottomPillView)
         bottomPillView.addSubview(pillLabel)
-
-        
         logoImageView.isHidden = true
-        
+
+        addSubview(mainTitleTopLabel)
+        addSubview(mainSubtitleLabel)
+        addSubview(mainDescriptionLabel)
         
     }
     
@@ -289,27 +270,33 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
             mainCardContainerView.bottomAnchor.constraint(equalTo: bottomAnchor),
             mainCardContainerView.leadingAnchor.constraint(equalTo: coverImageView.leadingAnchor),
             mainCardContainerView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            mainCardContainerView.heightAnchor.constraint(equalToConstant: MLBusinessFlexCoverCarouselItemView.containerHeight),
-
-            mainStackView.leftAnchor.constraint(equalTo: mainCardContainerView.leftAnchor, constant: 16.0),
-            mainStackView.bottomAnchor.constraint(equalTo: bottomPillView.topAnchor, constant: -8),
-            mainStackView.rightAnchor.constraint(equalTo: mainCardContainerView.rightAnchor, constant: 10),
+            mainCardContainerView.heightAnchor.constraint(equalToConstant:MLBusinessFlexCoverCarouselItemView.containerHeight),
             
-            bottomPillView.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor),
+            mainTitleTopLabel.topAnchor.constraint(equalTo: topAnchor, constant: 66),
+            mainTitleTopLabel.leadingAnchor.constraint(equalTo: coverImageView.leadingAnchor, constant: 16),
+            mainTitleTopLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            mainTitleTopLabel.heightAnchor.constraint(equalToConstant: 18),
+            
+            mainSubtitleLabel.topAnchor.constraint(equalTo: mainTitleTopLabel.bottomAnchor),
+            mainSubtitleLabel.leadingAnchor.constraint(equalTo: mainTitleTopLabel.leadingAnchor),
+            mainSubtitleLabel.trailingAnchor.constraint(equalTo: mainTitleTopLabel.trailingAnchor),
+            mainSubtitleLabel.heightAnchor.constraint(equalToConstant: 6),
+            
+            mainDescriptionLabel.leadingAnchor.constraint(equalTo: mainTitleTopLabel.leadingAnchor),
+            mainDescriptionLabel.trailingAnchor.constraint(equalTo: mainTitleTopLabel.trailingAnchor),
+            mainDescriptionLabel.heightAnchor.constraint(equalToConstant: 28),
+            mainDescriptionLabel.topAnchor.constraint(equalTo: mainTitleTopLabel.bottomAnchor, constant: 12),
+            
+            bottomPillView.leadingAnchor.constraint(equalTo: mainTitleTopLabel.leadingAnchor),
             bottomPillView.bottomAnchor.constraint(equalTo: mainCardContainerView.bottomAnchor, constant: -12),
             bottomPillView.heightAnchor.constraint(equalToConstant: 16),
 
             pillLabel.centerYAnchor.constraint(equalTo: bottomPillView.centerYAnchor),
             pillLabel.leadingAnchor.constraint(equalTo: bottomPillView.leadingAnchor, constant: 6),
             pillLabel.trailingAnchor.constraint(equalTo: bottomPillView.trailingAnchor, constant: -6),
-            
-//            viewAux.leadingAnchor.constraint(equalTo: coverImageView.leadingAnchor),
-//            viewAux.trailingAnchor.constraint(equalTo: coverImageView.trailingAnchor),
-//            viewAux.bottomAnchor.constraint(equalTo: coverImageView.bottomAnchor),
-//            viewAux.topAnchor.constraint(equalTo: coverImageView.topAnchor),
 
-            logoImageView.bottomAnchor.constraint(equalTo: mainStackView.topAnchor, constant: -10),
-            logoImageView.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor),
+            logoImageView.topAnchor.constraint(equalTo: coverImageView.topAnchor, constant: 10),
+            logoImageView.leadingAnchor.constraint(equalTo: mainTitleTopLabel.leadingAnchor),
             logoImageView.heightAnchor.constraint(equalToConstant: 40),
             logoImageView.widthAnchor.constraint(equalToConstant: 40),
             
@@ -318,8 +305,6 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
     }
     
     public func prepareForReuse() {
-        mainStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         coverImageView.image = nil
     }
 }
-
