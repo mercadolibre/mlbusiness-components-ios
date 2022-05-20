@@ -20,7 +20,9 @@ public class MLBusinessFlexCoverCarouselView: UIView {
 
     private var items: [MLBusinessFlexCoverCarouselItemModel] { return model?.items ?? [] }
     
-    private var cardWidth: CGFloat = 240
+    private var defaultCardWidth: CGFloat = 240
+    private var defaultCardHeight: CGFloat = 160
+    public weak var delegate: MLBusinessFlexCoverCarouselViewDelegate?
     
     private lazy var layout: MLBusinessCarouselSnappingLayout = {
         let layout = MLBusinessCarouselSnappingLayout()
@@ -58,12 +60,8 @@ public class MLBusinessFlexCoverCarouselView: UIView {
             collectionView.contentInset = contentInset
         }
     }
-    
-
-    
-    
+ 
     public var shouldHighlightItems = true
-    
     public var scrollView: UIScrollView {
         return collectionView
     }
@@ -94,22 +92,16 @@ public class MLBusinessFlexCoverCarouselView: UIView {
     }
     
     func getMaxItemHeight() -> CGFloat {
-        return (getItemCardWidth() * 160) / 240
+        return (getItemCardWidth() * defaultCardHeight) / self.defaultCardWidth
     }
     
     private func getItemCardWidth() -> CGFloat {
-        return UIScreen.main.bounds.width - collectionViewDelegate.leftCellPeekWidth - collectionViewDelegate.rightCellPeekWidth - 16
+        let cardWith = UIScreen.main.bounds.width - collectionViewDelegate.leftCellPeekWidth - collectionViewDelegate.rightCellPeekWidth - 16
+
+        return (cardWith < defaultCardWidth) ? defaultCardWidth : cardWith
     }
-        
-    func getPeekInsets() -> UIEdgeInsets {
-        return UIEdgeInsets(top: 16,
-                            left: 16,
-                            bottom: 16,
-                            right: 104)
-    }
-    
+            
     private func setupView() {
-        let peekInsets = getPeekInsets()
         collectionView.delegate = collectionViewDelegate
         collectionViewDelegate.edgeInset = 16
         collectionView.configureForPeekingDelegate()
@@ -168,18 +160,13 @@ extension MLBusinessFlexCoverCarouselView: UICollectionViewDataSource {
         cell.animatesWhenPressed = true
         return cell
     }
-    
-
 }
 
 extension MLBusinessFlexCoverCarouselView: UICollectionViewDelegateFlowLayout {
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: getItemCardWidth(), height: getMaxItemHeight())
     }
-    
-   
 }
-
 
 extension MLBusinessFlexCoverCarouselView: CarouselCollectionViewDelegateDelegate {
     
@@ -187,25 +174,8 @@ extension MLBusinessFlexCoverCarouselView: CarouselCollectionViewDelegateDelegat
     }
     
     func carouselDelegate(_ carouselDelegate: CarouselCollectionViewDelegate, didSelectItemAt indexPath: IndexPath) {
-        let item = items[indexPath.row]
-        
-        if let link = item.getLink(){
-            TouchPointLinkManager.open(link)
-        }
+
+        delegate?.coverCarouselView(self, didSelect:items[indexPath.item], at: indexPath.item)
     }
 }
 
-
-struct TouchPointLinkManager {
-    static func open(_ deepLink: String?) {
-        guard let targetUrl = deepLink else { return }
-        let appShared = UIApplication.shared
-        if let deepLinkUrl = URL(string: targetUrl), appShared.canOpenURL(deepLinkUrl) {
-            appShared.open(deepLinkUrl, options: [:], completionHandler: { success in
-                #if DEBUG
-                    print("OpenDeeplink \(targetUrl): \(success)")
-                #endif
-            })
-        }
-    }
-}

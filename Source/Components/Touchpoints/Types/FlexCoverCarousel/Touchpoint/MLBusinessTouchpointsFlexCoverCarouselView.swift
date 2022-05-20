@@ -26,6 +26,7 @@ class MLBusinessTouchpointsFlexCoverCarouselView: MLBusinessTouchpointsBaseView 
 
     private func setup() {
         addSubview(collectionView)
+        collectionView.delegate = self
     }
     
     private func setupConstraints() {
@@ -54,11 +55,11 @@ class MLBusinessTouchpointsFlexCoverCarouselView: MLBusinessTouchpointsBaseView 
         
         topConstraint?.constant = insets.top
         bottomConstraint?.constant = -insets.bottom
-
         collectionView.collectionViewDelegate.edgeInset = insets.left
         collectionView.collectionViewDelegate.cellSpacing = 8
         collectionView.collectionViewDelegate.leftCellPeekWidth = insets.left
         collectionView.collectionViewDelegate.rightCellPeekWidth = insets.right
+        
     }
         
     override func getTouchpointViewHeight(with data: Codable?, topInset: CGFloat, bottomInset: CGFloat) -> CGFloat {
@@ -69,3 +70,15 @@ class MLBusinessTouchpointsFlexCoverCarouselView: MLBusinessTouchpointsBaseView 
     
 }
 
+extension MLBusinessTouchpointsFlexCoverCarouselView: MLBusinessFlexCoverCarouselViewDelegate {
+    public func coverCarouselView(_: MLBusinessFlexCoverCarouselView, didSelect item: MLBusinessFlexCoverCarouselItemModel, at index: Int) {
+        
+        guard let link = item.link else { return }
+        delegate?.trackTap(with: index, deeplink: link, trackingId: "")
+    }
+    
+    public func coverCarouselView(_: MLBusinessFlexCoverCarouselView, didFinishScrolling visibleItems: [MLBusinessFlexCoverCarouselItemModel]?) {
+        
+    }
+    
+}

@@ -251,7 +251,6 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         addSubview(bottomPillView)
         bottomPillView.addSubview(pillLabel)
         logoImageView.isHidden = true
-
         addSubview(mainTitleTopLabel)
         addSubview(mainSubtitleLabel)
         addSubview(mainDescriptionLabel)
@@ -272,7 +271,7 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
             mainCardContainerView.trailingAnchor.constraint(equalTo: trailingAnchor),
             mainCardContainerView.heightAnchor.constraint(equalToConstant:MLBusinessFlexCoverCarouselItemView.containerHeight),
             
-            mainTitleTopLabel.topAnchor.constraint(equalTo: topAnchor, constant: 66),
+            mainTitleTopLabel.bottomAnchor.constraint(equalTo: mainDescriptionLabel.topAnchor, constant: -12),
             mainTitleTopLabel.leadingAnchor.constraint(equalTo: coverImageView.leadingAnchor, constant: 16),
             mainTitleTopLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             mainTitleTopLabel.heightAnchor.constraint(equalToConstant: 18),
@@ -285,7 +284,7 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
             mainDescriptionLabel.leadingAnchor.constraint(equalTo: mainTitleTopLabel.leadingAnchor),
             mainDescriptionLabel.trailingAnchor.constraint(equalTo: mainTitleTopLabel.trailingAnchor),
             mainDescriptionLabel.heightAnchor.constraint(equalToConstant: 28),
-            mainDescriptionLabel.topAnchor.constraint(equalTo: mainTitleTopLabel.bottomAnchor, constant: 12),
+            mainDescriptionLabel.bottomAnchor.constraint(equalTo: bottomPillView.topAnchor, constant: -8),
             
             bottomPillView.leadingAnchor.constraint(equalTo: mainTitleTopLabel.leadingAnchor),
             bottomPillView.bottomAnchor.constraint(equalTo: mainCardContainerView.bottomAnchor, constant: -12),
@@ -295,7 +294,7 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
             pillLabel.leadingAnchor.constraint(equalTo: bottomPillView.leadingAnchor, constant: 6),
             pillLabel.trailingAnchor.constraint(equalTo: bottomPillView.trailingAnchor, constant: -6),
 
-            logoImageView.topAnchor.constraint(equalTo: coverImageView.topAnchor, constant: 10),
+            logoImageView.bottomAnchor.constraint(equalTo: mainTitleTopLabel.topAnchor, constant: -12),
             logoImageView.leadingAnchor.constraint(equalTo: mainTitleTopLabel.leadingAnchor),
             logoImageView.heightAnchor.constraint(equalToConstant: 40),
             logoImageView.widthAnchor.constraint(equalToConstant: 40),
