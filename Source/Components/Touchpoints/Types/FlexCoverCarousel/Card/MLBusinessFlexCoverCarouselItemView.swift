@@ -15,27 +15,22 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
     
     private lazy var alphaOverlayView: UIView = {
         let view = UIView()
-        
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = UIColor(white: 0, alpha: 0.04)
         view.isHidden = true
-        
         return view
     }()
     
     private lazy var coverImageView: UIImageView = {
         let imageView = UIImageView()
-        
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.backgroundColor = MLStyleSheetManager.styleSheet.lightGreyColor
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
-        
         return imageView
     }()
     
     private lazy var logoImageView: UIImageView = {
-        
         let logoView = UIImageView()
         logoView.translatesAutoresizingMaskIntoConstraints = false
         logoView.backgroundColor = .white
@@ -171,9 +166,7 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         
     public init(with imageProvider: MLBusinessImageProvider? = nil) {
         self.imageProvider = imageProvider ?? MLBusinessURLImageProvider()
-            
         super.init(frame: .zero)
-        
         setupView()
         setupConstraints()
     }
@@ -231,7 +224,6 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         addSubview(mainTitleTopLabel)
         addSubview(mainSubtitleLabel)
         addSubview(mainDescriptionLabel)
-        
     }
     
     private func setupConstraints() {
@@ -275,9 +267,7 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
             logoImageView.leadingAnchor.constraint(equalTo: mainTitleTopLabel.leadingAnchor),
             logoImageView.heightAnchor.constraint(equalToConstant: 40),
             logoImageView.widthAnchor.constraint(equalToConstant: 40),
-            
         ])
-        
     }
     
     public func prepareForReuse() {

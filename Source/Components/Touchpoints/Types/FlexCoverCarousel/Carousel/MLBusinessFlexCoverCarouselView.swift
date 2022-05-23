@@ -15,11 +15,8 @@ public protocol MLBusinessFlexCoverCarouselViewDelegate: class {
 public class MLBusinessFlexCoverCarouselView: UIView {
     private var imageProvider: MLBusinessImageProvider?
     private var collectionViewHeightConstraint: NSLayoutConstraint?
-    
     private var model: MLBusinessFlexCoverCarouselModel?
-
     private var items: [MLBusinessFlexCoverCarouselItemModel] { return model?.items ?? [] }
-    
     private var defaultCardWidth: CGFloat = 240
     private var defaultCardHeight: CGFloat = 160
     public weak var delegate: MLBusinessFlexCoverCarouselViewDelegate?
@@ -39,10 +36,8 @@ public class MLBusinessFlexCoverCarouselView: UIView {
         return delegate
     }()
     
-    
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.decelerationRate = .fast
         collectionView.backgroundColor = .clear
@@ -51,7 +46,6 @@ public class MLBusinessFlexCoverCarouselView: UIView {
         collectionView.register(MLBusinessFlexCoverCarouselViewCell.self,
                                 forCellWithReuseIdentifier: MLBusinessFlexCoverCarouselViewCell.reuseIdentifier)
         collectionView.dataSource = self
-        
         return collectionView
     }()
         
@@ -72,7 +66,6 @@ public class MLBusinessFlexCoverCarouselView: UIView {
     
     public init(with imageProvider: MLBusinessImageProvider? = nil) {
         self.imageProvider = imageProvider
-        
         super.init(frame: .zero)
         setupView()
         setupConstraints()
@@ -82,10 +75,8 @@ public class MLBusinessFlexCoverCarouselView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     func update(with model: MLBusinessFlexCoverCarouselModel) {
         self.model = model
-        
         collectionViewHeightConstraint?.constant = getMaxItemHeight()
         collectionView.reloadData()
     }
@@ -119,7 +110,6 @@ public class MLBusinessFlexCoverCarouselView: UIView {
             collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
-        
 }
 
 extension MLBusinessFlexCoverCarouselView: UICollectionViewDataSource {
@@ -134,7 +124,6 @@ extension MLBusinessFlexCoverCarouselView: UICollectionViewDataSource {
               else {
                                     return MLBusinessFlexCoverCarouselViewCell()
         }
-        
         cell.imageProvider = imageProvider
         cell.update(with: content)
         cell.animatesWhenPressed = true
@@ -157,4 +146,3 @@ extension MLBusinessFlexCoverCarouselView: CarouselCollectionViewDelegateDelegat
         delegate?.coverCarouselView(self, didSelect:items[indexPath.item], at: indexPath.item)
     }
 }
-

@@ -9,7 +9,6 @@ import Foundation
 
 
 public class MLBusinessFlexCoverCarouselItemModel: NSObject, Codable {
-    
     public let link: String?
     public let backgroundColor: String?
     public let logos: [FlexCoverCarouselLogo]?
@@ -19,7 +18,6 @@ public class MLBusinessFlexCoverCarouselItemModel: NSObject, Codable {
     public let subtitle: FlexCoverCarouselItemText?
     public let mainDescription: FlexCoverCarouselItemText?
   
-    
     public init (title: FlexCoverCarouselItemText?, subtitle: FlexCoverCarouselItemText?, mainDescription: FlexCoverCarouselItemText? ,pill: FlexCoverCarouselPill?, imageHeader: String?,  link: String?, textColor: String?, backgroundColor: String?, logos: [FlexCoverCarouselLogo]) {
         self.title = title
         self.subtitle = subtitle
@@ -30,7 +28,6 @@ public class MLBusinessFlexCoverCarouselItemModel: NSObject, Codable {
         self.backgroundColor = backgroundColor
         self.logos = logos
     }
-    
 }
 
 extension MLBusinessFlexCoverCarouselItemModel {
@@ -114,7 +111,3 @@ public class FlexCoverCarouselPill: NSObject, Codable {
         self.borderColor = borderColor
     }
 }
-
-
-
-

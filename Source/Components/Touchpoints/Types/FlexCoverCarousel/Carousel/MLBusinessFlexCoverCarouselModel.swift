@@ -15,4 +15,3 @@ class MLBusinessFlexCoverCarouselModel: NSObject, Codable{
         self.items = items
     }
 }
-

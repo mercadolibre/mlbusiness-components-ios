@@ -14,7 +14,6 @@ class MLBusinessFlexCoverCarouselViewCell: UICollectionViewCell {
     
     private lazy var itemView: MLBusinessFlexCoverCarouselItemView = {
         let itemView = MLBusinessFlexCoverCarouselItemView()
-        
         itemView.layer.cornerRadius = cornerRadius
         
         return itemView
@@ -22,9 +21,7 @@ class MLBusinessFlexCoverCarouselViewCell: UICollectionViewCell {
     
     private lazy var mainContentView: PressableView = {
         let view = PressableView()
-        
         view.translatesAutoresizingMaskIntoConstraints = false
-        
         return view
     }()
 
@@ -54,9 +51,7 @@ class MLBusinessFlexCoverCarouselViewCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         animatesWhenPressed = true
-        
         super.init(frame: frame)
-        
         setup()
         setupConstraints()
     }
@@ -80,7 +75,6 @@ class MLBusinessFlexCoverCarouselViewCell: UICollectionViewCell {
         mainContentView.layer.borderWidth = 1.0
         mainContentView.layer.cornerRadius = cornerRadius
         mainContentView.layer.applyShadow(alpha: 0.1, x: 0, y: 2, blur: 4)
-        
         contentView.addSubview(mainContentView)
         mainContentView.addSubview(itemView)
     }
