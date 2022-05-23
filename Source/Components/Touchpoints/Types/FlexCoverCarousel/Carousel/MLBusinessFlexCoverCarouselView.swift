@@ -86,7 +86,6 @@ public class MLBusinessFlexCoverCarouselView: UIView {
     func update(with model: MLBusinessFlexCoverCarouselModel) {
         self.model = model
         
-        //setLayoutAnimators(from: model.carouselAnimation)
         collectionViewHeightConstraint?.constant = getMaxItemHeight()
         collectionView.reloadData()
     }
@@ -96,9 +95,9 @@ public class MLBusinessFlexCoverCarouselView: UIView {
     }
     
     private func getItemCardWidth() -> CGFloat {
-        let cardWith = UIScreen.main.bounds.width - collectionViewDelegate.leftCellPeekWidth - collectionViewDelegate.rightCellPeekWidth - 16
+        let cardWidth = UIScreen.main.bounds.width - collectionViewDelegate.leftCellPeekWidth - collectionViewDelegate.rightCellPeekWidth - 16
 
-        return (cardWith < defaultCardWidth) ? defaultCardWidth : cardWith
+        return (cardWidth < defaultCardWidth) ? defaultCardWidth : cardWidth
     }
             
     private func setupView() {
@@ -106,7 +105,6 @@ public class MLBusinessFlexCoverCarouselView: UIView {
         collectionViewDelegate.edgeInset = 16
         collectionView.configureForPeekingDelegate()
         translatesAutoresizingMaskIntoConstraints = false
-        
         addSubview(collectionView)
     }
     
@@ -122,24 +120,6 @@ public class MLBusinessFlexCoverCarouselView: UIView {
         ])
     }
         
-    private func setLayoutAnimators(from model: MLBusinessCoverCarouselAnimation?) {
-        let shouldAnimateAlpha = model?.alphaAnimation ?? false
-        let shouldAnimateScale = model?.scaleAnimation ?? false
-
-        
-        var animators: [MLBusinessLayoutAttributeAnimator] = []
-        
-        if shouldAnimateAlpha {
-            animators.append(MLBusinessAlphaLayoutAttributeAnimator(factor: 0.7))
-        }
-        
-        if shouldAnimateScale {
-            animators.append(MLBusinessScaleLayoutAttributeAnimator(factor: 0.95))
-            layout.minimumLineSpacing = 0.5
-        }
-        
-        layout.layoutAttributeAnimators = animators
-    }
 }
 
 extension MLBusinessFlexCoverCarouselView: UICollectionViewDataSource {
@@ -174,7 +154,6 @@ extension MLBusinessFlexCoverCarouselView: CarouselCollectionViewDelegateDelegat
     }
     
     func carouselDelegate(_ carouselDelegate: CarouselCollectionViewDelegate, didSelectItemAt indexPath: IndexPath) {
-
         delegate?.coverCarouselView(self, didSelect:items[indexPath.item], at: indexPath.item)
     }
 }

@@ -50,7 +50,6 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
     private let mainCardContainerView: UIView = {
         let view = UIView(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
-       
         return view
     }()
         
@@ -100,23 +99,6 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         rightBottomInfo.layer.cornerRadius = 8
         return rightBottomInfo
     }()
-    
-    private let gradientContainer: UIView = {
-        let containerView = UIView(frame: .zero)
-        containerView.translatesAutoresizingMaskIntoConstraints = false
-
-        return containerView
-    }()
-
-    private let defaultGradientLayer: CAGradientLayer = {
-        let layer = CAGradientLayer()
-        layer.colors = [UIColor(red: 0.122, green: 0.161, blue: 0.239, alpha: 1).cgColor, UIColor(red: 0.122, green: 0.161, blue: 0.239, alpha: 0).cgColor]
-        layer.locations = [0, 1]
-        layer.startPoint = CGPoint(x: 0.25, y: 0.5)
-        layer.endPoint = CGPoint(x: 0.75, y: 0.5)
-        layer.transform = CATransform3DMakeAffineTransform(CGAffineTransform(a: 0, b: 1, c: -1, d: 0, tx: 1, ty: 0))
-        return layer
-    }()
 
     private func createMainTitleTop(with text: String?, color: String?) {
         guard let mainTitleTopText = text else { return }
@@ -134,7 +116,6 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         guard let mainDescription = text else { return }
         mainDescriptionLabel.text = mainDescription
         mainDescriptionLabel.textColor = color?.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.blackColor
-        
     }
     
     private func createPillLabel(with text: String?, color: String?) {
@@ -148,7 +129,6 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
     }
     
     private func createGradientView() {
-
         let viewAux = UIView()
         viewAux.frame =  CGRect(x: 0, y: 0, width: 500, height: 104)
         let gradientLayer = CAGradientLayer()
@@ -158,14 +138,12 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
           ]
         viewAux.layer.insertSublayer(gradientLayer, at: 0)
         addSubview(viewAux)
-        
         NSLayoutConstraint.activate([
             viewAux.trailingAnchor.constraint(equalTo: coverImageView.trailingAnchor),
             viewAux.leadingAnchor.constraint(equalTo: coverImageView.leadingAnchor),
             viewAux.bottomAnchor.constraint(equalTo: coverImageView.bottomAnchor),
             viewAux.centerXAnchor.constraint(equalTo: coverImageView.centerXAnchor)
         ])
-        
     }
     
     private func createLogoView(imageName: String?) {
@@ -220,7 +198,6 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         createMainSection(with: item)
         createPillSecttion(with: item)
 
-        
         if let logos = item.logos {
             logoImageView.isHidden = false
             createLogoSection(with: item)

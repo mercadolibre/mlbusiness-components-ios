@@ -18,7 +18,6 @@ class MLBusinessTouchpointsFlexCoverCarouselView: MLBusinessTouchpointsBaseView 
 
     required init?(configuration: Codable?) {
         super.init(configuration: configuration)
-        
         setup()
         setupConstraints()
     }
@@ -59,12 +58,10 @@ class MLBusinessTouchpointsFlexCoverCarouselView: MLBusinessTouchpointsBaseView 
         collectionView.collectionViewDelegate.cellSpacing = 8
         collectionView.collectionViewDelegate.leftCellPeekWidth = insets.left
         collectionView.collectionViewDelegate.rightCellPeekWidth = insets.right
-        
     }
         
     override func getTouchpointViewHeight(with data: Codable?, topInset: CGFloat, bottomInset: CGFloat) -> CGFloat {
         guard let model = data as? MLBusinessFlexCoverCarouselModel else { return 0 }
-        
         return collectionView.getMaxItemHeight() + topInset + bottomInset
     }
     
