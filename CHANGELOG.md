@@ -1,3 +1,7 @@
+# v1.38.0
+🚀 1.38.0 🚀
+- Fix size of text in Touchpoints full card type
+
 # v1.37.0
 🚀 1.37.0 🚀
 - Fix card spaces in touchpoints full card type
