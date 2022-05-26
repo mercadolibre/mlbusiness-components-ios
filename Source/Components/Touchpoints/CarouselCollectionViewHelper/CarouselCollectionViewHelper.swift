@@ -7,15 +7,15 @@
 
 import UIKit
 
-@objc internal protocol CarouselCollectionViewDelegateDelegate: NSObjectProtocol {
+@objc internal protocol CarouselCollectionViewHelperDelegate: NSObjectProtocol {
     // Will be called when the current active index is changing
-    @objc optional func carouselDelegate(_ carouselDelegate: CarouselCollectionViewDelegate, isChangingIndexTo index: Int, distance: CGFloat)
+    @objc optional func carouselDelegate(_ carouselDelegate: CarouselCollectionViewHelper, isChangingIndexTo index: Int, distance: CGFloat)
     // Will be called when the user taps on a cell at a specific index path
-    @objc optional func carouselDelegate(_ carouselDelegate: CarouselCollectionViewDelegate, didSelectItemAt indexPath: IndexPath)
-    @objc optional func carouselDelegateDidScrollToItem(_ carouselDelegate: CarouselCollectionViewDelegate)
+    @objc optional func carouselDelegate(_ carouselDelegate: CarouselCollectionViewHelper, didSelectItemAt indexPath: IndexPath)
+    @objc optional func carouselDelegateDidScrollToItem(_ carouselDelegate: CarouselCollectionViewHelper)
 }
 
-internal class CarouselCollectionViewDelegate: NSObject {
+internal class CarouselCollectionViewHelper: NSObject {
     internal var edgeInset: CGFloat
     internal var cellSpacing: CGFloat
     internal var leftCellPeekWidth: CGFloat
@@ -26,7 +26,7 @@ internal class CarouselCollectionViewDelegate: NSObject {
     internal let scrollDirection: UICollectionView.ScrollDirection
     internal var currentActiveIndex: Int = 0
 
-    internal weak var delegate: CarouselCollectionViewDelegateDelegate?
+    internal weak var delegate: CarouselCollectionViewHelperDelegate?
 
     internal let feedbackGenerator = UIImpactFeedbackGenerator(style: .light)
 
@@ -96,7 +96,7 @@ internal class CarouselCollectionViewDelegate: NSObject {
     }
 }
 
-extension CarouselCollectionViewDelegate: UICollectionViewDelegateFlowLayout {
+extension CarouselCollectionViewHelper: UICollectionViewDelegateFlowLayout {
     func scrollViewDidEndDecelerating(_: UIScrollView) {
         delegate?.carouselDelegateDidScrollToItem?(self)
     }

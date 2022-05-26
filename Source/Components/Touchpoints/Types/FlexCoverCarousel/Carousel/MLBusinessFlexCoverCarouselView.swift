@@ -30,8 +30,8 @@ public class MLBusinessFlexCoverCarouselView: UIView {
         return layout
     }()
     
-    lazy var collectionViewDelegate: CarouselCollectionViewDelegate = {
-        let delegate = CarouselCollectionViewDelegate()
+    lazy var collectionViewDelegate: CarouselCollectionViewHelper = {
+        let delegate = CarouselCollectionViewHelper()
         delegate.delegate = self
         return delegate
     }()
@@ -137,12 +137,13 @@ extension MLBusinessFlexCoverCarouselView: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension MLBusinessFlexCoverCarouselView: CarouselCollectionViewDelegateDelegate {
+extension MLBusinessFlexCoverCarouselView: CarouselCollectionViewHelperDelegate {
     
-    func carouselDelegateDidScrollToItem(_ carouselDelegate: CarouselCollectionViewDelegate) {
+    func carouselDelegateDidScrollToItem(_ carouselDelegate: CarouselCollectionViewHelper) {
+        delegate?.coverCarouselView(self, didFinishScrolling: items)
     }
     
-    func carouselDelegate(_ carouselDelegate: CarouselCollectionViewDelegate, didSelectItemAt indexPath: IndexPath) {
+    func carouselDelegate(_ carouselDelegate: CarouselCollectionViewHelper, didSelectItemAt indexPath: IndexPath) {
         delegate?.coverCarouselView(self, didSelect:items[indexPath.item], at: indexPath.item)
     }
 }

@@ -150,14 +150,14 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
     }
     
     private func createMainSection(with item: MLBusinessFlexCoverCarouselItemModel) {
-        createMainTitleTop(with: item.getTitle()?.text, color: item.getTitle()?.textColor)
-        createMainSubtitle(with: item.getSubtitle()?.text, color: item.getSubtitle()?.textColor)
-        createMainDescription(with: item.getMainDescription()?.text, color: item.getMainDescription()?.textColor)
+        createMainTitleTop(with: item.title?.text, color: item.title?.textColor)
+        createMainSubtitle(with: item.subtitle?.text, color: item.title?.textColor)
+        createMainDescription(with: item.mainDescription?.text, color: item.mainDescription?.textColor)
     }
     
     private func createPillSecttion(with item: MLBusinessFlexCoverCarouselItemModel) {
-        createPillView(color: item.getPill()?.backgroundColor)
-        createPillLabel(with: item.getPill()?.text, color: item.getPill()?.textColor)
+        createPillView(color: item.pill?.backgroundColor)
+        createPillLabel(with: item.pill?.text, color: item.pill?.textColor)
     }
     
     private func createLogoSection(with item: MLBusinessFlexCoverCarouselItemModel) {

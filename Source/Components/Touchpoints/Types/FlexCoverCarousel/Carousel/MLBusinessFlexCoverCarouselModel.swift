@@ -7,7 +7,7 @@
 
 import Foundation
 
-class MLBusinessFlexCoverCarouselModel: NSObject, Codable{
+struct MLBusinessFlexCoverCarouselModel: Codable{
     
     public let items: [MLBusinessFlexCoverCarouselItemModel]
     

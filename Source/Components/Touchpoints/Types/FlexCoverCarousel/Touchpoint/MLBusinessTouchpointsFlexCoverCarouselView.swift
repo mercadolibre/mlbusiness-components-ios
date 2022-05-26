@@ -66,11 +66,11 @@ class MLBusinessTouchpointsFlexCoverCarouselView: MLBusinessTouchpointsBaseView 
 
 extension MLBusinessTouchpointsFlexCoverCarouselView: MLBusinessFlexCoverCarouselViewDelegate {
     public func coverCarouselView(_: MLBusinessFlexCoverCarouselView, didSelect item: MLBusinessFlexCoverCarouselItemModel, at index: Int) {
-        guard let link = item.link else { return }
-        delegate?.trackTap(with: index, deeplink: link, trackingId: "")
+        guard let link = item.link, let trackId = item.tracking?.trackingId else { return }
+        delegate?.trackTap(with: index, deeplink: link, trackingId: trackId)
     }
     
     public func coverCarouselView(_: MLBusinessFlexCoverCarouselView, didFinishScrolling visibleItems: [MLBusinessFlexCoverCarouselItemModel]?) {
-        
+        delegate?.trackPrints(prints: visibleItems)
     }
 }
