@@ -15,3 +15,9 @@ struct MLBusinessFlexCoverCarouselModel: Codable{
         self.items = items
     }
 }
+
+extension MLBusinessFlexCoverCarouselModel: ComponentTrackable {
+    func getTrackables() -> [Trackable]? {
+        items
+    }
+}
