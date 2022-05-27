@@ -30,10 +30,10 @@ public class MLBusinessFlexCoverCarouselView: UIView {
         return layout
     }()
     
-    lazy var collectionViewDelegate: CarouselCollectionViewHelper = {
-        let delegate = CarouselCollectionViewHelper()
-        delegate.delegate = self
-        return delegate
+    lazy var collectionViewHelper: CarouselCollectionViewHelper = {
+        let helper = CarouselCollectionViewHelper()
+        helper.delegate = self
+        return helper
     }()
     
     private lazy var collectionView: UICollectionView = {
@@ -86,14 +86,14 @@ public class MLBusinessFlexCoverCarouselView: UIView {
     }
     
     private func getItemCardWidth() -> CGFloat {
-        let cardWidth = UIScreen.main.bounds.width - collectionViewDelegate.leftCellPeekWidth - collectionViewDelegate.rightCellPeekWidth - 16
+        let cardWidth = UIScreen.main.bounds.width - collectionViewHelper.leftCellPeekWidth - collectionViewHelper.rightCellPeekWidth - 16
 
         return (cardWidth < defaultCardWidth) ? defaultCardWidth : cardWidth
     }
             
     private func setupView() {
-        collectionView.delegate = collectionViewDelegate
-        collectionViewDelegate.edgeInset = 16
+        collectionView.delegate = collectionViewHelper
+        collectionViewHelper.edgeInset = 16
         collectionView.configureForPeekingDelegate()
         translatesAutoresizingMaskIntoConstraints = false
         addSubview(collectionView)

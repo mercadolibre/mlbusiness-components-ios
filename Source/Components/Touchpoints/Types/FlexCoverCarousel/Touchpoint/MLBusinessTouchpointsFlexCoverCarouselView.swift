@@ -52,10 +52,10 @@ class MLBusinessTouchpointsFlexCoverCarouselView: MLBusinessTouchpointsBaseView 
                                   right: CGFloat(truncating: additionalInsets["right"] as? NSNumber ?? 0))
         topConstraint?.constant = insets.top
         bottomConstraint?.constant = -insets.bottom
-        collectionView.collectionViewDelegate.edgeInset = insets.left
-        collectionView.collectionViewDelegate.cellSpacing = 8
-        collectionView.collectionViewDelegate.leftCellPeekWidth = insets.left
-        collectionView.collectionViewDelegate.rightCellPeekWidth = insets.right
+        collectionView.collectionViewHelper.edgeInset = insets.left
+        collectionView.collectionViewHelper.cellSpacing = 8
+        collectionView.collectionViewHelper.leftCellPeekWidth = insets.left
+        collectionView.collectionViewHelper.rightCellPeekWidth = insets.right
     }
         
     override func getTouchpointViewHeight(with data: Codable?, topInset: CGFloat, bottomInset: CGFloat) -> CGFloat {
