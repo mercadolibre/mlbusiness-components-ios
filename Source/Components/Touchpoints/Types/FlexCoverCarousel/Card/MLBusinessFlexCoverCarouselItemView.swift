@@ -42,13 +42,13 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         return logoView
     }()
     
-    private let mainCardContainerView: UIView = {
+    private lazy var mainCardContainerView: UIView = {
         let view = UIView(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
         
-    private let mainTitleTopLabel: UILabel = {
+    private lazy var mainTitleTopLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.numberOfLines = 1
         label.font = MLStyleSheetManager.styleSheet.boldSystemFont(ofSize: CGFloat(kMLFontsSizeSmall))
@@ -58,7 +58,7 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         return label
     }()
     
-    private let mainDescriptionLabel: UILabel = {
+    private lazy var mainDescriptionLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.numberOfLines = 2
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -68,7 +68,7 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         return label
     }()
     
-    private let mainSubtitleLabel: UILabel = {
+    private lazy var mainSubtitleLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -78,7 +78,7 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         return label
     }()
     
-    private let pillLabel: UILabel = {
+    private lazy var pillLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -88,7 +88,7 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         return label
     }()
     
-    private let bottomPillView: UIView = {
+    private lazy var bottomPillView: UIView = {
         let rightBottomInfo = UIView(frame: .zero)
         rightBottomInfo.translatesAutoresizingMaskIntoConstraints = false
         rightBottomInfo.layer.cornerRadius = 8
@@ -206,10 +206,6 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         prepareForReuse()
     }
     
-    static func height(for model: MLBusinessFlexCoverCarouselItemModel) -> CGFloat {
-        return 0
-    }
-    
     private func setupView() {
         translatesAutoresizingMaskIntoConstraints = false
         layer.masksToBounds = true
@@ -229,6 +225,11 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
     private func setupConstraints() {
         
         NSLayoutConstraint.activate([
+            alphaOverlayView.topAnchor.constraint(equalTo: topAnchor),
+            alphaOverlayView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            alphaOverlayView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            alphaOverlayView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            
             coverImageView.topAnchor.constraint(equalTo: topAnchor),
             coverImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             coverImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
