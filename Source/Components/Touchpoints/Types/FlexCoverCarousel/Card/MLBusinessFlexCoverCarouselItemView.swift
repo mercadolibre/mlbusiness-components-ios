@@ -142,6 +142,8 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
     }
     
     private func createLogoView(imageName: String?) {
+        //TODO: Considerar los casos cuando tenemos type text en los logos. - Factory
+        
         if let imageName = imageName {
             imageProvider.getImage(key: imageName) { [weak self] image in
                 self?.logoImageView.image = image
@@ -202,7 +204,6 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
     }
     
     public func clear() {
-        coverImageView.image = nil
         prepareForReuse()
     }
     
@@ -273,5 +274,6 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
     
     public func prepareForReuse() {
         coverImageView.image = nil
+        logoImageView.image = nil
     }
 }
