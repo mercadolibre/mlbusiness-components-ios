@@ -14,7 +14,10 @@ extension UICollectionView {
         showsVerticalScrollIndicator = false
         isPagingEnabled = false
         // Keeping this to support older versions
-        let layout = collectionViewLayout as! UICollectionViewFlowLayout
+        guard let layout = collectionViewLayout as? UICollectionViewFlowLayout else {
+            return
+        }
+        
         layout.scrollDirection = scrollDirection
     }
 }
