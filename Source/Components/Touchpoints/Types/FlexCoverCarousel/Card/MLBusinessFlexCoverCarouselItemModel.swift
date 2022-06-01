@@ -8,7 +8,7 @@
 import Foundation
 
 
-public class MLBusinessFlexCoverCarouselItemModel: NSObject, Codable {
+public struct MLBusinessFlexCoverCarouselItemModel: Codable {
     public let link: String?
     public let backgroundColor: String?
     public let logos: [FlexCoverCarouselLogo]?
