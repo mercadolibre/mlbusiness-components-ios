@@ -33,12 +33,8 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
     private lazy var logoImageView: UIImageView = {
         let logoView = UIImageView()
         logoView.translatesAutoresizingMaskIntoConstraints = false
-        logoView.backgroundColor = .white
         logoView.clipsToBounds = true
         logoView.contentMode = .scaleAspectFill
-        logoView.layer.borderWidth = 1.0
-        logoView.layer.borderColor = UIColor.white.cgColor
-        logoView.layer.cornerRadius = 20
         return logoView
     }()
     
@@ -90,6 +86,7 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
     
     private lazy var bottomPillView: UIView = {
         let rightBottomInfo = UIView(frame: .zero)
+        rightBottomInfo.layer.borderWidth = 1
         rightBottomInfo.translatesAutoresizingMaskIntoConstraints = false
         rightBottomInfo.layer.cornerRadius = 8
         return rightBottomInfo
@@ -113,14 +110,18 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         mainDescriptionLabel.textColor = color?.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.blackColor
     }
     
-    private func createPillLabel(with text: String?, color: String?) {
-        guard let pillDescription = text else { return }
-        pillLabel.text = pillDescription
-        pillLabel.textColor = color?.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.whiteColor
+    private func createPillLabel(with pill: FlexCoverCarouselPill?) {
+        guard let text = pill?.text, let textColor = pill?.textColor else { return }
+        pillLabel.text = pill?.text
+        pillLabel.textColor = textColor.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.whiteColor
     }
     
-    private func createPillView(color: String?) {
-        bottomPillView.backgroundColor =  color?.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.whiteColor
+    private func createPillView(with pill: FlexCoverCarouselPill?) {
+        guard let backgroundColor = pill?.backgroundColor, let borderColor = pill?.borderColor else { return }
+        let borderUiColor = borderColor.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.whiteColor
+        
+        bottomPillView.backgroundColor =  backgroundColor.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.whiteColor
+        bottomPillView.layer.borderColor = borderUiColor.cgColor
     }
     
     private func createGradientView() {
@@ -151,6 +152,20 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         }
     }
     
+    public func setLogoView(with logoStyle: FlexCoverCarouselLogoStyle?){
+        guard let width = logoStyle?.width, let height = logoStyle?.height, let border = logoStyle?.border, let backgroundColor = logoStyle?.backgroundColor, let borderColor = logoStyle?.borderColor else { return }
+        
+        logoImageView.backgroundColor = backgroundColor.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.whiteColor
+        logoImageView.layer.borderColor = borderColor.hexaToUIColor().cgColor
+        logoImageView.layer.borderWidth = CGFloat(border)
+        logoImageView.layer.cornerRadius = CGFloat(width)/2
+        
+        NSLayoutConstraint.activate([
+            logoImageView.heightAnchor.constraint(equalToConstant: CGFloat(width)),
+            logoImageView.widthAnchor.constraint(equalToConstant: CGFloat(height)),
+        ])
+    }
+    
     private func createMainSection(with item: MLBusinessFlexCoverCarouselItemModel) {
         createMainTitleTop(with: item.title?.text, color: item.title?.textColor)
         createMainSubtitle(with: item.subtitle?.text, color: item.title?.textColor)
@@ -158,8 +173,8 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
     }
     
     private func createPillSecttion(with item: MLBusinessFlexCoverCarouselItemModel) {
-        createPillView(color: item.pill?.backgroundColor)
-        createPillLabel(with: item.pill?.text, color: item.pill?.textColor)
+        createPillView(with: item.pill)
+        createPillLabel(with: item.pill)
     }
     
     private func createLogoSection(with item: MLBusinessFlexCoverCarouselItemModel) {
@@ -196,6 +211,7 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         if let logos = item.logos {
             logoImageView.isHidden = false
             createLogoSection(with: item)
+            setLogoView(with: item.logos?.first?.style)
         }
     }
     
@@ -267,8 +283,6 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
 
             logoImageView.bottomAnchor.constraint(equalTo: mainTitleTopLabel.topAnchor, constant: -12),
             logoImageView.leadingAnchor.constraint(equalTo: mainTitleTopLabel.leadingAnchor),
-            logoImageView.heightAnchor.constraint(equalToConstant: 40),
-            logoImageView.widthAnchor.constraint(equalToConstant: 40),
         ])
     }
     
