@@ -1,3 +1,6 @@
+# sin publicar
+- Fix FlexCoverCarousel support ui parameters from backend.
+
 # v1.39.0
 🚀 1.39.0 🚀
 - Added FlexCoverCarousel component in Touchpoint.
