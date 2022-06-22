@@ -1,4 +1,5 @@
-# Sin Publicar
+# v1.39.0
+🚀 1.39.0 🚀
 - Added FlexCoverCarousel component in Touchpoint.
 
 # v1.38.0
