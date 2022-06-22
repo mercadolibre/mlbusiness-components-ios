@@ -33,11 +33,8 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
     private lazy var logoImageView: UIImageView = {
         let logoView = UIImageView()
         logoView.translatesAutoresizingMaskIntoConstraints = false
-        logoView.backgroundColor = .white
         logoView.clipsToBounds = true
         logoView.contentMode = .scaleAspectFill
-        logoView.layer.borderWidth = 1.0
-        logoView.layer.borderColor = UIColor.white.cgColor
         return logoView
     }()
     
