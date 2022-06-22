@@ -1,3 +1,6 @@
+# Sin Publicar
+- Added FlexCoverCarousel component in Touchpoint.
+
 # v1.38.0
 🚀 1.38.0 🚀
 - Fix size of text in Touchpoints full card type
