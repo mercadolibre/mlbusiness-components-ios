@@ -174,11 +174,6 @@ extension CarouselCollectionViewHelper: UICollectionViewDelegateFlowLayout {
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.row == currentActiveIndex {
-            delegate?.carouselDelegate?(self, didSelectItemAt: indexPath)
-        } else {
-            currentActiveIndex = indexPath.row
-            collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-        }
+        delegate?.carouselDelegate?(self, didSelectItemAt: indexPath)
     }
 }
