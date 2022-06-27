@@ -48,9 +48,14 @@ public struct FlexCoverCarouselItemText: Codable {
 }
 
 public struct FlexCoverCarouselLogo: Codable {
-    public let type: String?
+    public let type: FlexCoverCarouselLogoType
     public let image: String?
     public let style: FlexCoverCarouselLogoStyle?
+}
+
+public enum FlexCoverCarouselLogoType: String, Codable {
+    case image
+    case text
 }
 
 public struct FlexCoverCarouselLogoStyle: Codable {
