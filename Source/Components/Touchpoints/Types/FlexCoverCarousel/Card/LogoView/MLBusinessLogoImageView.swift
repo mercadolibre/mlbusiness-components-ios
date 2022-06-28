@@ -8,12 +8,13 @@
 import Foundation
 import MLUI
 
-class MlBusinessLogoImageView: MlBusinessLogoAbstractView {
+class MLBusinessLogoImageView: MlBusinessLogoAbstractView {
     var imageProvider: MLBusinessImageProvider
     
     override init(with data: FlexCoverCarouselLogo, imageProvider: MLBusinessImageProvider? = nil) {
         self.imageProvider = imageProvider ?? MLBusinessURLImageProvider()
         super.init(with: data, imageProvider: imageProvider)
+        setUpView()
     }
     
     required init?(coder: NSCoder) {
@@ -28,7 +29,7 @@ class MlBusinessLogoImageView: MlBusinessLogoAbstractView {
         return logoView
     }()
     
-    override func setUpView() {
+    func setUpView() {
         addSubview(logoImageView)
         updateViewData()
     }

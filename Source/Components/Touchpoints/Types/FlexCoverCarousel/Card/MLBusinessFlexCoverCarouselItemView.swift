@@ -25,7 +25,8 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         let stackView = UIStackView(frame: .zero)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.distribution = .equalSpacing
-        stackView.spacing = 10
+        stackView.alignment = UIStackView.Alignment.center
+        stackView.spacing = 28
         stackView.axis = .horizontal
         return stackView
     }()
@@ -159,17 +160,15 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
     }
     
     private func createLogoView(logos: [FlexCoverCarouselLogo]) {
-        //TODO: Considerar los casos cuando tenemos type text en los logos. - Factory
         for logo in logos {
             let logoView = MLBusinessFlexCoverCarouselLogoViewFactory.provide(logo: logo)
-           
             logoStackView.addArrangedSubview(logoView)
+
             NSLayoutConstraint.activate([
-                logoStackView.widthAnchor.constraint(equalTo: logoView.widthAnchor),
                 logoStackView.heightAnchor.constraint(equalTo: logoView.heightAnchor),
                 logoStackView.leadingAnchor.constraint(equalTo: mainDescriptionLabel.leadingAnchor),
                 logoStackView.bottomAnchor.constraint(equalTo: mainTitleTopLabel.topAnchor, constant: -12),
-                logoStackView.topAnchor.constraint(lessThanOrEqualTo: topAnchor, constant: 14)
+                logoStackView.topAnchor.constraint(equalTo: topAnchor, constant: 16)
             ])
         }
     }
@@ -217,7 +216,7 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         createMainSection(with: item)
         createPillSecttion(with: item)
         createLogoSection(with: item)
-        
+ 
     }
     
     public func setHighlighted(_ highlighted: Bool) {
@@ -242,6 +241,8 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         addSubview(mainSubtitleLabel)
         addSubview(mainDescriptionLabel)
         addSubview(logoStackView)
+        
+
     }
     
     private func setupConstraints() {
@@ -285,10 +286,12 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
             pillLabel.centerYAnchor.constraint(equalTo: bottomPillView.centerYAnchor),
             pillLabel.leadingAnchor.constraint(equalTo: bottomPillView.leadingAnchor, constant: 6),
             pillLabel.trailingAnchor.constraint(equalTo: bottomPillView.trailingAnchor, constant: -6),
+            
         ])
     }
     
     public func prepareForReuse() {
         coverImageView.image = nil
+        logoStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
     }
 }

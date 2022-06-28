@@ -8,13 +8,12 @@
 import Foundation
 
 struct MLBusinessFlexCoverCarouselLogoViewFactory {
-    
     static func provide(logo: FlexCoverCarouselLogo) -> MlBusinessLogoAbstractView {
         switch logo.type {
         case .image:
-            return MlBusinessLogoImageView(with: logo)
+            return MLBusinessLogoImageView(with: logo)
         case .text:
-            return MlBusinessLogoImageView(with: logo)
+            return MLBusinessLogoTextView(with: logo)
         }
     }
 
