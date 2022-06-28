@@ -35,22 +35,21 @@ class MLBusinessLogoImageView: MlBusinessLogoAbstractView {
     }
     
     private func updateViewData() {
-        guard let imageName = data.image, let logoStyle = self.data.style ,let width = logoStyle.width, let height = logoStyle.height, let borderWidth = logoStyle.border, let backgroundColor = logoStyle.backgroundColor, let borderColor = logoStyle.borderColor else { return }
+        guard let imageName = data.image else { return }
+        let style = data.style
         
         imageProvider.getImage(key: imageName) { [weak self] image in
             self?.logoImageView.image = image
         }
         
-        guard let logoStyle = self.data.style ,let width = logoStyle.width, let height = logoStyle.height, let borderWidth = logoStyle.border, let backgroundColor = logoStyle.backgroundColor, let borderColor = logoStyle.borderColor else { return }
-        
-        logoImageView.backgroundColor = backgroundColor.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.whiteColor
-        logoImageView.layer.borderColor = borderColor.hexaToUIColor().cgColor
-        logoImageView.layer.borderWidth = CGFloat(borderWidth)
-        logoImageView.layer.cornerRadius = CGFloat(width)/2
+        logoImageView.backgroundColor =  style?.backgroundColor?.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.whiteColor
+        logoImageView.layer.borderColor = style?.borderColor?.hexaToUIColor().cgColor ?? MLStyleSheetManager.styleSheet.greyColor.cgColor
+        logoImageView.layer.borderWidth = CGFloat(style?.border ?? 1)
+        logoImageView.layer.cornerRadius = CGFloat(style?.width ?? 40)/2
         
         NSLayoutConstraint.activate([
-            logoImageView.heightAnchor.constraint(equalToConstant: CGFloat(width)),
-            logoImageView.widthAnchor.constraint(equalToConstant: CGFloat(height)),
+            logoImageView.heightAnchor.constraint(equalToConstant: CGFloat(style?.width ?? 40)),
+            logoImageView.widthAnchor.constraint(equalToConstant: CGFloat(style?.height ?? 40)),
         ])
     }
 }

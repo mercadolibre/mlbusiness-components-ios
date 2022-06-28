@@ -24,7 +24,7 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
     private let logoStackView: UIStackView = {
         let stackView = UIStackView(frame: .zero)
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.alignment = UIStackView.Alignment.center
+        stackView.alignment = .center
         stackView.spacing = 28
         stackView.axis = .horizontal
         return stackView

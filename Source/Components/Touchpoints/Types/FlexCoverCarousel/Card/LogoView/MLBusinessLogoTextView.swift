@@ -42,18 +42,20 @@ class MLBusinessLogoTextView: MlBusinessLogoAbstractView {
     }
     
     private func updateViewData() {
-        guard let labelText = data.label?.text, let textColor = data.label?.textColor, let logoStyle = self.data.style ,let width = logoStyle.width, let height = logoStyle.height, let borderWidth = logoStyle.border, let backgroundColor = logoStyle.backgroundColor, let borderColor = logoStyle.borderColor else { return }
+        guard let labelText = data.label?.text else { return }
+        let style = data.style
+        let label = data.label
                 
         mainLabel.text = labelText
-        mainLabel.textColor = textColor.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.darkGreyColor
-        logoLabelView.backgroundColor = backgroundColor.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.whiteColor
-        logoLabelView.layer.borderColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.55).cgColor
-        logoLabelView.layer.borderWidth = CGFloat(borderWidth)
-        logoLabelView.layer.cornerRadius = CGFloat(width)/2
+        mainLabel.textColor = label?.textColor?.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.darkGreyColor
+        logoLabelView.backgroundColor = style?.backgroundColor?.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.whiteColor
+        logoLabelView.layer.borderColor = style?.borderColor?.hexaToUIColor().cgColor ?? MLStyleSheetManager.styleSheet.greyColor.cgColor
+        logoLabelView.layer.borderWidth = CGFloat(style?.border ?? 1)
+        logoLabelView.layer.cornerRadius = CGFloat(style?.width ?? 40)/2
         
         NSLayoutConstraint.activate([
-            logoLabelView.heightAnchor.constraint(equalToConstant: CGFloat(width)),
-            logoLabelView.widthAnchor.constraint(equalToConstant: CGFloat(height)),
+            logoLabelView.heightAnchor.constraint(equalToConstant: CGFloat(style?.height ?? 40)),
+            logoLabelView.widthAnchor.constraint(equalToConstant: CGFloat(style?.width ?? 40)),
             mainLabel.centerXAnchor.constraint(equalTo: logoLabelView.centerXAnchor),
             mainLabel.centerYAnchor.constraint(equalTo: logoLabelView.centerYAnchor),
             mainLabel.heightAnchor.constraint(equalToConstant: 16),
