@@ -9,8 +9,8 @@ import Foundation
 import MLUI
 
 class MLBusinessLogoTextView: MlBusinessLogoAbstractView {
-    override init(with data: FlexCoverCarouselLogo, imageProvider: MLBusinessImageProvider? = nil) {
-        super.init(with: data, imageProvider: imageProvider)
+    override init(with data: FlexCoverCarouselLogo) {
+        super.init(with: data)
         setUpView()
     }
     
