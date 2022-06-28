@@ -1,4 +1,5 @@
-# sin publicar
+# v1.40.0
+🚀 1.40.0 🚀
 - Fix FlexCoverCarousel support ui parameters from backend.
 
 # v1.39.0
