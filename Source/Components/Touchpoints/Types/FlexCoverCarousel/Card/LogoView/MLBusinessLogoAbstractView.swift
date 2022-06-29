@@ -10,7 +10,7 @@ import Foundation
 class MlBusinessLogoAbstractView: UIView {
     let data: FlexCoverCarouselLogo
         
-    init(with data: FlexCoverCarouselLogo) {
+    init(with data: FlexCoverCarouselLogo, imageProvider: MLBusinessImageProvider = MLBusinessURLImageProvider()) {
         self.data = data
         super.init(frame: .zero)
     }

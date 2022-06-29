@@ -30,7 +30,7 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         return stackView
     }()
     
-    var containerView: UIView = {
+    private lazy var containerView: UIView = {
         let view = UIView(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.clipsToBounds = false

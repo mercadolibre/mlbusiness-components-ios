@@ -9,9 +9,10 @@ import Foundation
 import MLUI
 
 class MLBusinessLogoImageView: MlBusinessLogoAbstractView {
-    let imageProvider = MLBusinessURLImageProvider()
+    var imageProvider: MLBusinessImageProvider
     
-    override init(with data: FlexCoverCarouselLogo) {
+    override init(with data: FlexCoverCarouselLogo, imageProvider: MLBusinessImageProvider = MLBusinessURLImageProvider()) {
+        self.imageProvider = imageProvider
         super.init(with: data)
         setUpView()
     }
@@ -28,27 +29,26 @@ class MLBusinessLogoImageView: MlBusinessLogoAbstractView {
         return logoView
     }()
     
-    func setUpView() {
+    private func setUpView() {
         addSubview(logoImageView)
         updateViewData()
     }
     
     private func updateViewData() {
         guard let imageName = data.image else { return }
-        let style = data.style
         
         imageProvider.getImage(key: imageName) { [weak self] image in
             self?.logoImageView.image = image
         }
         
-        logoImageView.backgroundColor =  style?.backgroundColor?.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.whiteColor
-        logoImageView.layer.borderColor = style?.borderColor?.hexaToUIColor().cgColor ?? MLStyleSheetManager.styleSheet.greyColor.cgColor
-        logoImageView.layer.borderWidth = CGFloat(style?.border ?? 1)
-        logoImageView.layer.cornerRadius = CGFloat(style?.width ?? 40)/2
+        logoImageView.backgroundColor =  data.style?.backgroundColor?.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.whiteColor
+        logoImageView.layer.borderColor = data.style?.borderColor?.hexaToUIColor().cgColor ?? MLStyleSheetManager.styleSheet.greyColor.cgColor
+        logoImageView.layer.borderWidth = CGFloat(data.style?.border ?? 1)
+        logoImageView.layer.cornerRadius = CGFloat(data.style?.width ?? 40)/2
         
         NSLayoutConstraint.activate([
-            logoImageView.heightAnchor.constraint(equalToConstant: CGFloat(style?.width ?? 40)),
-            logoImageView.widthAnchor.constraint(equalToConstant: CGFloat(style?.height ?? 40)),
+            logoImageView.heightAnchor.constraint(equalToConstant: CGFloat(data.style?.width ?? 40)),
+            logoImageView.widthAnchor.constraint(equalToConstant: CGFloat(data.style?.height ?? 40)),
         ])
     }
 }

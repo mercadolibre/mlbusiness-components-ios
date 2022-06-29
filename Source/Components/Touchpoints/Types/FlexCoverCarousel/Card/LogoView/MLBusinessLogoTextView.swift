@@ -9,7 +9,7 @@ import Foundation
 import MLUI
 
 class MLBusinessLogoTextView: MlBusinessLogoAbstractView {
-    override init(with data: FlexCoverCarouselLogo) {
+    override init(with data: FlexCoverCarouselLogo, imageProvider: MLBusinessImageProvider) {
         super.init(with: data)
         setUpView()
     }
@@ -35,7 +35,7 @@ class MLBusinessLogoTextView: MlBusinessLogoAbstractView {
         return label
     }()
     
-    func setUpView() {
+    private func setUpView() {
         addSubview(logoLabelView)
         addSubview(mainLabel)
         updateViewData()
@@ -43,19 +43,17 @@ class MLBusinessLogoTextView: MlBusinessLogoAbstractView {
     
     private func updateViewData() {
         guard let labelText = data.label?.text else { return }
-        let style = data.style
-        let label = data.label
                 
         mainLabel.text = labelText
-        mainLabel.textColor = label?.textColor?.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.darkGreyColor
-        logoLabelView.backgroundColor = style?.backgroundColor?.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.whiteColor
-        logoLabelView.layer.borderColor = style?.borderColor?.hexaToUIColor().cgColor ?? MLStyleSheetManager.styleSheet.greyColor.cgColor
-        logoLabelView.layer.borderWidth = CGFloat(style?.border ?? 1)
-        logoLabelView.layer.cornerRadius = CGFloat(style?.width ?? 40)/2
+        mainLabel.textColor = data.label?.textColor?.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.darkGreyColor
+        logoLabelView.backgroundColor = data.style?.backgroundColor?.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.whiteColor
+        logoLabelView.layer.borderColor = data.style?.borderColor?.hexaToUIColor().cgColor ?? MLStyleSheetManager.styleSheet.greyColor.cgColor
+        logoLabelView.layer.borderWidth = CGFloat(data.style?.border ?? 1)
+        logoLabelView.layer.cornerRadius = CGFloat(data.style?.width ?? 40)/2
         
         NSLayoutConstraint.activate([
-            logoLabelView.heightAnchor.constraint(equalToConstant: CGFloat(style?.height ?? 40)),
-            logoLabelView.widthAnchor.constraint(equalToConstant: CGFloat(style?.width ?? 40)),
+            logoLabelView.heightAnchor.constraint(equalToConstant: CGFloat(data.style?.height ?? 40)),
+            logoLabelView.widthAnchor.constraint(equalToConstant: CGFloat(data.style?.width ?? 40)),
             mainLabel.centerXAnchor.constraint(equalTo: logoLabelView.centerXAnchor),
             mainLabel.centerYAnchor.constraint(equalTo: logoLabelView.centerYAnchor),
             mainLabel.heightAnchor.constraint(equalToConstant: 16),
