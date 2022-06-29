@@ -1,4 +1,5 @@
-# sin publicar
+# v1.41.0
+🚀 1.41.0 🚀
 - Added support for multiple logos in Touchpoint FlexCoverCarousel.
 - Fix behaviour when tapping on partially visible cards in Touchpoint.
 
