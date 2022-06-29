@@ -8,12 +8,14 @@
 import Foundation
 import MLUI
 
-class MLBusinessLogoImageView: MlBusinessLogoAbstractView {
-    var imageProvider: MLBusinessImageProvider
+class MLBusinessLogoImageView: UIView {
+    private let imageProvider: MLBusinessImageProvider
+    private let data: FlexCoverCarouselLogo
     
-    override init(with data: FlexCoverCarouselLogo, imageProvider: MLBusinessImageProvider = MLBusinessURLImageProvider()) {
+    init(with data: FlexCoverCarouselLogo, imageProvider: MLBusinessImageProvider = MLBusinessURLImageProvider()) {
         self.imageProvider = imageProvider
-        super.init(with: data)
+        self.data = data
+        super.init(frame: .zero)
         setUpView()
     }
     
