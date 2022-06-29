@@ -21,6 +21,22 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         return view
     }()
     
+    private let logoStackView: UIStackView = {
+        let stackView = UIStackView(frame: .zero)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.alignment = .center
+        stackView.spacing = 28
+        stackView.axis = .horizontal
+        return stackView
+    }()
+    
+    private lazy var containerView: UIView = {
+        let view = UIView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.clipsToBounds = false
+        return view
+    }()
+    
     private lazy var coverImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -29,15 +45,7 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
-    
-    private lazy var logoImageView: UIImageView = {
-        let logoView = UIImageView()
-        logoView.translatesAutoresizingMaskIntoConstraints = false
-        logoView.clipsToBounds = true
-        logoView.contentMode = .scaleAspectFill
-        return logoView
-    }()
-    
+        
     private lazy var mainCardContainerView: UIView = {
         let view = UIView(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -142,29 +150,19 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         ])
     }
     
-    private func createLogoView(imageName: String?) {
-        //TODO: Considerar los casos cuando tenemos type text en los logos. - Factory
-        
-        if let imageName = imageName {
-            imageProvider.getImage(key: imageName) { [weak self] image in
-                self?.logoImageView.image = image
-            }
+    private func createLogoView(logos: [FlexCoverCarouselLogo]) {
+        for logo in logos {
+            let logoView = MLBusinessFlexCoverCarouselLogoViewFactory.provide(logo: logo)
+            let constant = (logo.style?.height ?? 0) + 12
+            logoStackView.addArrangedSubview(logoView)
+            
+            NSLayoutConstraint.activate([
+                logoStackView.heightAnchor.constraint(equalTo: logoView.heightAnchor),
+                logoStackView.bottomAnchor.constraint(equalTo: mainTitleTopLabel.topAnchor, constant: -CGFloat(constant))
+            ])
         }
     }
     
-    public func setLogoView(with logoStyle: FlexCoverCarouselLogoStyle?){
-        guard let width = logoStyle?.width, let height = logoStyle?.height, let border = logoStyle?.border, let backgroundColor = logoStyle?.backgroundColor, let borderColor = logoStyle?.borderColor else { return }
-        
-        logoImageView.backgroundColor = backgroundColor.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.whiteColor
-        logoImageView.layer.borderColor = borderColor.hexaToUIColor().cgColor
-        logoImageView.layer.borderWidth = CGFloat(border)
-        logoImageView.layer.cornerRadius = CGFloat(width)/2
-        
-        NSLayoutConstraint.activate([
-            logoImageView.heightAnchor.constraint(equalToConstant: CGFloat(width)),
-            logoImageView.widthAnchor.constraint(equalToConstant: CGFloat(height)),
-        ])
-    }
     
     private func createMainSection(with item: MLBusinessFlexCoverCarouselItemModel) {
         createMainTitleTop(with: item.title?.text, color: item.title?.textColor)
@@ -178,7 +176,7 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
     }
     
     private func createLogoSection(with item: MLBusinessFlexCoverCarouselItemModel) {
-        createLogoView(imageName: item.logos?[0].image)
+        createLogoView(logos: item.logos ?? [])
     }
         
     public init(with imageProvider: MLBusinessImageProvider? = nil) {
@@ -207,12 +205,8 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
     
         createMainSection(with: item)
         createPillSecttion(with: item)
-
-        if let logos = item.logos {
-            logoImageView.isHidden = false
-            createLogoSection(with: item)
-            setLogoView(with: item.logos?.first?.style)
-        }
+        createLogoSection(with: item)
+ 
     }
     
     public func setHighlighted(_ highlighted: Bool) {
@@ -224,19 +218,20 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
     }
     
     private func setupView() {
+        
         translatesAutoresizingMaskIntoConstraints = false
         layer.masksToBounds = true
         addSubview(coverImageView)
         addSubview(mainCardContainerView)
         createGradientView()
-        addSubview(logoImageView)
         addSubview(alphaOverlayView)
         addSubview(bottomPillView)
         bottomPillView.addSubview(pillLabel)
-        logoImageView.isHidden = true
         addSubview(mainTitleTopLabel)
         addSubview(mainSubtitleLabel)
         addSubview(mainDescriptionLabel)
+        addSubview(containerView)
+        containerView.addSubview(logoStackView)
     }
     
     private func setupConstraints() {
@@ -280,14 +275,17 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
             pillLabel.centerYAnchor.constraint(equalTo: bottomPillView.centerYAnchor),
             pillLabel.leadingAnchor.constraint(equalTo: bottomPillView.leadingAnchor, constant: 6),
             pillLabel.trailingAnchor.constraint(equalTo: bottomPillView.trailingAnchor, constant: -6),
-
-            logoImageView.bottomAnchor.constraint(equalTo: mainTitleTopLabel.topAnchor, constant: -12),
-            logoImageView.leadingAnchor.constraint(equalTo: mainTitleTopLabel.leadingAnchor),
+            
+            logoStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            logoStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+            
+            containerView.leadingAnchor.constraint(equalTo: mainTitleTopLabel.leadingAnchor),
+            containerView.trailingAnchor.constraint(equalTo: mainTitleTopLabel.trailingAnchor),
         ])
     }
     
     public func prepareForReuse() {
         coverImageView.image = nil
-        logoImageView.image = nil
+        logoStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
     }
 }
