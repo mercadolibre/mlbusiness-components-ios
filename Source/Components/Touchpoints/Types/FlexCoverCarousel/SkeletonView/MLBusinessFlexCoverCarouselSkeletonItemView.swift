@@ -9,8 +9,7 @@ import Foundation
 import MLUI
 
 public class MLBusinessFlexCoverCarouselSkeletonItemView: UIView {
-    private let containerHeight: CGFloat = 89
-    
+
     private lazy var logoView: UIView = {
         let logoView = UIView()
         logoView.clipsToBounds = false
@@ -25,7 +24,6 @@ public class MLBusinessFlexCoverCarouselSkeletonItemView: UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.clipsToBounds = false
         view.backgroundColor = UIColor(red: 0.961, green: 0.961, blue: 0.961, alpha: 1)
-        
         return view
     }()
     
@@ -92,8 +90,7 @@ public class MLBusinessFlexCoverCarouselSkeletonItemView: UIView {
     }
         
     private func createGradientView() {
-        let viewAux = UIView()
-        viewAux.frame =  CGRect(x: 0, y: 0, width: 500, height: 104)
+        let viewAux = UIView(frame: CGRect(x: 0, y: 0, width: 500, height: 104))
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = viewAux.bounds
         gradientLayer.colors = [UIColor(red: 0, green: 0, blue: 0, alpha: 0).cgColor, UIColor(red: 0, green: 0, blue: 0, alpha: 1).cgColor]
@@ -129,7 +126,7 @@ public class MLBusinessFlexCoverCarouselSkeletonItemView: UIView {
             
             mainCardContainerView.leadingAnchor.constraint(equalTo: leadingAnchor),
             mainCardContainerView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            mainCardContainerView.heightAnchor.constraint(equalToConstant: self.containerHeight),
+            mainCardContainerView.heightAnchor.constraint(equalToConstant: 89),
             mainCardContainerView.bottomAnchor.constraint(equalTo: bottomAnchor),
 
             logoView.heightAnchor.constraint(equalToConstant: 40),
