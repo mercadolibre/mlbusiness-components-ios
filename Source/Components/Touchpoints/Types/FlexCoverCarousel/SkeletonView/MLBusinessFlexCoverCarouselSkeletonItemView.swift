@@ -129,7 +129,7 @@ public class MLBusinessFlexCoverCarouselSkeletonItemView: UIView {
             
             mainCardContainerView.leadingAnchor.constraint(equalTo: leadingAnchor),
             mainCardContainerView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            mainCardContainerView.heightAnchor.constraint(equalToConstant: MLBusinessFlexCoverCarouselSkeletonItemView.containerHeight),
+            mainCardContainerView.heightAnchor.constraint(equalToConstant: self.containerHeight),
             mainCardContainerView.bottomAnchor.constraint(equalTo: bottomAnchor),
 
             logoView.heightAnchor.constraint(equalToConstant: 40),
