@@ -1,3 +1,6 @@
+# sin publicar
+- Added Skeleton View for Touchpoint FlexCoverCarousel.
+
 # v1.41.0
 🚀 1.41.0 🚀
 - Added support for multiple logos in Touchpoint FlexCoverCarousel.
