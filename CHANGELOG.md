@@ -1,3 +1,6 @@
+# sin publicar
+- Fix in how FlexCoverCarousel Cells were reusing data.
+
 # v1.41.0
 🚀 1.41.0 🚀
 - Added support for multiple logos in Touchpoint FlexCoverCarousel.
