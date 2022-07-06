@@ -9,7 +9,7 @@ import Foundation
 import MLUI
 
 public class MLBusinessFlexCoverCarouselSkeletonItemView: UIView {
-    static let containerHeight: CGFloat = 89
+    private let containerHeight: CGFloat = 89
     
     private lazy var logoView: UIView = {
         let logoView = UIView()
