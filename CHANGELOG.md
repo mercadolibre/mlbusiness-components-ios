@@ -1,4 +1,5 @@
 # sin publicar
+- Fix in how FlexCoverCarousel Cells were reusing data.
 - Added Skeleton View for Touchpoint FlexCoverCarousel.
 
 # v1.41.0
