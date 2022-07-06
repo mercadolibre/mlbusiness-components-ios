@@ -287,5 +287,9 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
     public func prepareForReuse() {
         coverImageView.image = nil
         logoStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        mainSubtitleLabel.text = nil
+        mainDescriptionLabel.text = nil
+        mainTitleTopLabel.text = nil
+        pillLabel.text = nil
     }
 }
