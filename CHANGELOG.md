@@ -1,4 +1,8 @@
 # sin publicar
+- Changed MLBusinessItemDescriptionView title number of lines to 3
+
+# v1.42.0
+🚀 1.42.0 🚀
 - Fix in how FlexCoverCarousel Cells were reusing data.
 - Added Skeleton View for Touchpoint FlexCoverCarousel.
 
