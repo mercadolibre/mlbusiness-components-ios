@@ -39,7 +39,7 @@ public final class MLBusinessItemDescriptionView: UIView {
 private extension MLBusinessItemDescriptionView {
     
     private func update() {
-        titleLabel?.text = "45% OFF en envíos de millones de productos de menos de $ 5.500"
+        titleLabel?.text = viewData?.getTitle()
         if let url = viewData?.getIconImageURL() {
             iconImageView?.setRemoteImage(imageUrl: url, success: { [weak self] loadedImage in
                 self?.setupImageView(image: loadedImage)
