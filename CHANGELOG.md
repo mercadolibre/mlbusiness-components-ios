@@ -1,3 +1,6 @@
+# sin publicar
+- Fix FlexCoverCarousel cards when receiving nil in text parameters.
+
 # v1.42.0
 🚀 1.42.0 🚀
 - Fix in how FlexCoverCarousel Cells were reusing data.
