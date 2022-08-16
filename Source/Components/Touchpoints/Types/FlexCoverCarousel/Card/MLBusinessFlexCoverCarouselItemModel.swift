@@ -43,8 +43,8 @@ extension MLBusinessFlexCoverCarouselItemModel: Trackable {
 }
 
 public struct FlexCoverCarouselItemText: Codable {
-    public let text: String
-    public let textColor: String
+    public let text: String?
+    public let textColor: String?
 }
 
 public struct FlexCoverCarouselLogo: Codable {
