@@ -1,4 +1,5 @@
 # sin publicar
+- Changed MLBusinessItemDescriptionView title number of lines to 3
 - Fix FlexCoverCarousel cards when receiving nil in text parameters.
 
 # v1.42.0
