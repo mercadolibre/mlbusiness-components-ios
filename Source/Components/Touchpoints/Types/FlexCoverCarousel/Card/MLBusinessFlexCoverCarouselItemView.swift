@@ -9,6 +9,7 @@ import UIKit
 import MLUI
 
 public class MLBusinessFlexCoverCarouselItemView: UIView {
+    fileprivate enum Layout {}
     static let coverHeight: CGFloat = 104
     static let containerHeight: CGFloat = 56
     var imageProvider: MLBusinessImageProvider
@@ -103,33 +104,36 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
     private func createMainTitleTop(with text: String?, color: String?) {
         guard let mainTitleTopText = text else { return }
         mainTitleTopLabel.text = mainTitleTopText
-        mainTitleTopLabel.textColor = color?.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.blackColor
+        mainTitleTopLabel.textColor = getLabelUIColor(color)
     }
     
     private func createMainSubtitle(with text: String?, color: String?) {
         guard let mainSubtitleText = text else { return }
         mainSubtitleLabel.text = mainSubtitleText
-        mainSubtitleLabel.textColor = color?.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.blackColor
+        mainSubtitleLabel.textColor = getLabelUIColor(color)
     }
     
     private func createMainDescription(with text: String?, color: String?) {
         guard let mainDescription = text else { return }
         mainDescriptionLabel.text = mainDescription
-        mainDescriptionLabel.textColor = color?.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.blackColor
+        mainDescriptionLabel.textColor = getLabelUIColor(color)
     }
     
     private func createPillLabel(with pill: FlexCoverCarouselPill?) {
-        guard let text = pill?.text, let textColor = pill?.textColor else { return }
-        pillLabel.text = pill?.text
-        pillLabel.textColor = textColor.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.whiteColor
+        guard let pillText = pill?.text else { return }
+        pillLabel.text = pillText
+        pillLabel.textColor = getLabelUIColor(pill?.textColor)
+        pillLabel.isHidden = false
     }
     
     private func createPillView(with pill: FlexCoverCarouselPill?) {
-        guard let backgroundColor = pill?.backgroundColor, let borderColor = pill?.borderColor else { return }
-        let borderUiColor = borderColor.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.whiteColor
+        let backgroundColor = pill?.backgroundColor ?? Layout.Color.defaultPillColor
+        let borderColor = pill?.borderColor ?? Layout.Color.defaultPillColor
+        let borderUiColor = borderColor.hexaToUIColor()
         
-        bottomPillView.backgroundColor =  backgroundColor.hexaToUIColor() ?? MLStyleSheetManager.styleSheet.whiteColor
+        bottomPillView.backgroundColor =  backgroundColor.hexaToUIColor()
         bottomPillView.layer.borderColor = borderUiColor.cgColor
+        bottomPillView.isHidden = false
     }
     
     private func createGradientView() {
@@ -163,20 +167,32 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         }
     }
     
-    
     private func createMainSection(with item: MLBusinessFlexCoverCarouselItemModel) {
         createMainTitleTop(with: item.title?.text, color: item.title?.textColor)
-        createMainSubtitle(with: item.subtitle?.text, color: item.title?.textColor)
+        createMainSubtitle(with: item.subtitle?.text, color: item.subtitle?.textColor)
         createMainDescription(with: item.mainDescription?.text, color: item.mainDescription?.textColor)
     }
     
     private func createPillSecttion(with item: MLBusinessFlexCoverCarouselItemModel) {
+        guard let textPill = item.pill?.text, !textPill.isEmpty else {
+            bottomPillView.isHidden = true
+            pillLabel.isHidden = true
+            return
+        }
+        
         createPillView(with: item.pill)
         createPillLabel(with: item.pill)
     }
     
     private func createLogoSection(with item: MLBusinessFlexCoverCarouselItemModel) {
         createLogoView(logos: item.logos ?? [])
+    }
+    
+    private func getLabelUIColor(_ textColor: String?) -> UIColor {
+        if let color = textColor, !color.isEmpty{
+            return color.hexaToUIColor()
+        }
+        return MLStyleSheetManager.styleSheet.whiteColor
     }
         
     public init(with imageProvider: MLBusinessImageProvider? = nil) {
@@ -291,5 +307,11 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         mainDescriptionLabel.text = nil
         mainTitleTopLabel.text = nil
         pillLabel.text = nil
+    }
+}
+
+extension MLBusinessFlexCoverCarouselItemView.Layout {
+    enum Color {
+        static var defaultPillColor = "#009EE3"
     }
 }
