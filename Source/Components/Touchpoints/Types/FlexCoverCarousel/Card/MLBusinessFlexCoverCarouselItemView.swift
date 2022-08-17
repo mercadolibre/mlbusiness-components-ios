@@ -9,6 +9,7 @@ import UIKit
 import MLUI
 
 public class MLBusinessFlexCoverCarouselItemView: UIView {
+    fileprivate enum Layout {}
     static let coverHeight: CGFloat = 104
     static let containerHeight: CGFloat = 56
     var imageProvider: MLBusinessImageProvider
@@ -126,8 +127,8 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
     }
     
     private func createPillView(with pill: FlexCoverCarouselPill?) {
-        let backgroundColor = pill?.backgroundColor ?? "#009EE3"
-        let borderColor = pill?.borderColor ?? "#009EE3"
+        let backgroundColor = pill?.backgroundColor ?? Layout.Color.defaultPillColor
+        let borderColor = pill?.borderColor ?? Layout.Color.defaultPillColor
         let borderUiColor = borderColor.hexaToUIColor()
         
         bottomPillView.backgroundColor =  backgroundColor.hexaToUIColor()
@@ -173,13 +174,14 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
     }
     
     private func createPillSecttion(with item: MLBusinessFlexCoverCarouselItemModel) {
-        if item.pill?.text != nil && item.pill?.text != "" {
-            createPillView(with: item.pill)
-            createPillLabel(with: item.pill)
-        } else {
+        guard let textPill = item.pill?.text, !textPill.isEmpty else {
             bottomPillView.isHidden = true
             pillLabel.isHidden = true
+            return
         }
+        
+        createPillView(with: item.pill)
+        createPillLabel(with: item.pill)
     }
     
     private func createLogoSection(with item: MLBusinessFlexCoverCarouselItemModel) {
@@ -305,5 +307,11 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         mainDescriptionLabel.text = nil
         mainTitleTopLabel.text = nil
         pillLabel.text = nil
+    }
+}
+
+extension MLBusinessFlexCoverCarouselItemView.Layout {
+    enum Color {
+        static var defaultPillColor = "#009EE3"
     }
 }
