@@ -1,3 +1,7 @@
+## [Unreleased]
+### Fixed
+- Fix issue in tracking print for component FlexCoverCarousel
+
 # v1.43.1
 🚀 1.43.1 🚀
 - Changed MLBusinessItemDescriptionView title number of lines to 3
