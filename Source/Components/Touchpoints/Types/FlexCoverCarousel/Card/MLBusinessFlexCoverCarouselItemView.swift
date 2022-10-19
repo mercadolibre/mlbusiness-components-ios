@@ -22,6 +22,14 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         return view
     }()
     
+    private lazy var gradientView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var gradientLayer = CAGradientLayer()
+    
     private let logoStackView: UIStackView = {
         let stackView = UIStackView(frame: .zero)
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -51,6 +59,13 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         let view = UIView(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
+    }()
+    
+    private lazy var headerContainer: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
     }()
         
     private lazy var mainTitleTopLabel: UILabel = {
@@ -105,12 +120,16 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         guard let mainTitleTopText = text else { return }
         mainTitleTopLabel.text = mainTitleTopText
         mainTitleTopLabel.textColor = getLabelUIColor(color)
+        headerContainer.addArrangedSubview(mainTitleTopLabel)
     }
     
     private func createMainSubtitle(with text: String?, color: String?) {
-        guard let mainSubtitleText = text else { return }
+        guard let mainSubtitleText = text,
+              mainSubtitleText != "",
+              mainSubtitleText != " " else { return }
         mainSubtitleLabel.text = mainSubtitleText
         mainSubtitleLabel.textColor = getLabelUIColor(color)
+        headerContainer.addArrangedSubview(mainSubtitleLabel)
     }
     
     private func createMainDescription(with text: String?, color: String?) {
@@ -137,32 +156,26 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
     }
     
     private func createGradientView() {
-        let viewAux = UIView()
-        viewAux.frame =  CGRect(x: 0, y: 0, width: 500, height: 104)
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = viewAux.bounds
-        gradientLayer.colors = [UIColor(red: 0.122, green: 0.161, blue: 0.239, alpha: 0).cgColor,
-            UIColor(red: 0.122, green: 0.161, blue: 0.239, alpha: 1).cgColor
-          ]
-        viewAux.layer.insertSublayer(gradientLayer, at: 0)
-        addSubview(viewAux)
-        NSLayoutConstraint.activate([
-            viewAux.trailingAnchor.constraint(equalTo: coverImageView.trailingAnchor),
-            viewAux.leadingAnchor.constraint(equalTo: coverImageView.leadingAnchor),
-            viewAux.bottomAnchor.constraint(equalTo: coverImageView.bottomAnchor),
-            viewAux.centerXAnchor.constraint(equalTo: coverImageView.centerXAnchor)
-        ])
+        let start = UIColor(red: 0.122, green: 0.161, blue: 0.239, alpha: 0)
+        let end = UIColor(red: 0.122, green: 0.161, blue: 0.239, alpha: 1)
+        
+        gradientLayer.frame = gradientView.bounds
+        gradientLayer.colors = [start.cgColor, end.cgColor]
+
+        if gradientLayer.superlayer == nil {
+            gradientView.layer.insertSublayer(gradientLayer, at: 0)
+        }
     }
     
     private func createLogoView(logos: [FlexCoverCarouselLogo]) {
         for logo in logos {
             let logoView = MLBusinessFlexCoverCarouselLogoViewFactory.provide(logo: logo)
-            let constant = (logo.style?.height ?? 0) + 12
+            let constant = (logo.style?.height ?? 0) + 48
             logoStackView.addArrangedSubview(logoView)
             
             NSLayoutConstraint.activate([
                 logoStackView.heightAnchor.constraint(equalTo: logoView.heightAnchor),
-                logoStackView.bottomAnchor.constraint(equalTo: mainTitleTopLabel.topAnchor, constant: -CGFloat(constant))
+                logoStackView.bottomAnchor.constraint(equalTo: mainDescriptionLabel.topAnchor, constant: -CGFloat(constant))
             ])
         }
     }
@@ -238,13 +251,13 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
         layer.masksToBounds = true
         addSubview(coverImageView)
+        coverImageView.addSubview(gradientView)
         addSubview(mainCardContainerView)
         createGradientView()
         addSubview(alphaOverlayView)
         addSubview(bottomPillView)
         bottomPillView.addSubview(pillLabel)
-        addSubview(mainTitleTopLabel)
-        addSubview(mainSubtitleLabel)
+        addSubview(headerContainer)
         addSubview(mainDescriptionLabel)
         addSubview(containerView)
         containerView.addSubview(logoStackView)
@@ -263,28 +276,27 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
             coverImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
             coverImageView.heightAnchor.constraint(equalToConstant: MLBusinessFlexCoverCarouselItemView.coverHeight),
             
+            gradientView.bottomAnchor.constraint(equalTo: mainCardContainerView.topAnchor),
+            gradientView.leadingAnchor.constraint(equalTo: coverImageView.leadingAnchor),
+            gradientView.trailingAnchor.constraint(equalTo: coverImageView.trailingAnchor),
+            gradientView.heightAnchor.constraint(equalToConstant: 40),
+            
             mainCardContainerView.topAnchor.constraint(equalTo: coverImageView.bottomAnchor),
             mainCardContainerView.bottomAnchor.constraint(equalTo: bottomAnchor),
             mainCardContainerView.leadingAnchor.constraint(equalTo: coverImageView.leadingAnchor),
             mainCardContainerView.trailingAnchor.constraint(equalTo: trailingAnchor),
             mainCardContainerView.heightAnchor.constraint(equalToConstant:MLBusinessFlexCoverCarouselItemView.containerHeight),
             
-            mainTitleTopLabel.bottomAnchor.constraint(equalTo: mainDescriptionLabel.topAnchor, constant: -12),
-            mainTitleTopLabel.leadingAnchor.constraint(equalTo: coverImageView.leadingAnchor, constant: 16),
-            mainTitleTopLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            mainTitleTopLabel.heightAnchor.constraint(equalToConstant: 18),
+            headerContainer.bottomAnchor.constraint(equalTo: mainDescriptionLabel.topAnchor, constant: -2),
+            headerContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            headerContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
-            mainSubtitleLabel.topAnchor.constraint(equalTo: mainTitleTopLabel.bottomAnchor),
-            mainSubtitleLabel.leadingAnchor.constraint(equalTo: mainTitleTopLabel.leadingAnchor),
-            mainSubtitleLabel.trailingAnchor.constraint(equalTo: mainTitleTopLabel.trailingAnchor),
-            mainSubtitleLabel.heightAnchor.constraint(equalToConstant: 6),
-            
-            mainDescriptionLabel.leadingAnchor.constraint(equalTo: mainTitleTopLabel.leadingAnchor),
-            mainDescriptionLabel.trailingAnchor.constraint(equalTo: mainTitleTopLabel.trailingAnchor),
+            mainDescriptionLabel.leadingAnchor.constraint(equalTo: headerContainer.leadingAnchor),
+            mainDescriptionLabel.trailingAnchor.constraint(equalTo: headerContainer.trailingAnchor),
             mainDescriptionLabel.heightAnchor.constraint(equalToConstant: 28),
-            mainDescriptionLabel.bottomAnchor.constraint(equalTo: bottomPillView.topAnchor, constant: -8),
+            mainDescriptionLabel.bottomAnchor.constraint(equalTo: bottomPillView.topAnchor, constant: -4),
             
-            bottomPillView.leadingAnchor.constraint(equalTo: mainTitleTopLabel.leadingAnchor),
+            bottomPillView.leadingAnchor.constraint(equalTo: headerContainer.leadingAnchor),
             bottomPillView.bottomAnchor.constraint(equalTo: mainCardContainerView.bottomAnchor, constant: -12),
             bottomPillView.heightAnchor.constraint(equalToConstant: 16),
 
@@ -295,14 +307,20 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
             logoStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
             logoStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
             
-            containerView.leadingAnchor.constraint(equalTo: mainTitleTopLabel.leadingAnchor),
-            containerView.trailingAnchor.constraint(equalTo: mainTitleTopLabel.trailingAnchor),
+            containerView.leadingAnchor.constraint(equalTo: headerContainer.leadingAnchor),
+            containerView.trailingAnchor.constraint(equalTo: headerContainer.trailingAnchor),
         ])
+    }
+    
+    public override func layoutSublayers(of layer: CALayer) {
+        super.layoutSublayers(of: layer)
+        gradientLayer.frame = gradientView.bounds
     }
     
     public func prepareForReuse() {
         coverImageView.image = nil
         logoStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        headerContainer.arrangedSubviews.forEach { $0.removeFromSuperview() }
         mainSubtitleLabel.text = nil
         mainDescriptionLabel.text = nil
         mainTitleTopLabel.text = nil
