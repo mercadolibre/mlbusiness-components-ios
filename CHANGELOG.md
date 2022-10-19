@@ -1,4 +1,5 @@
-## [Unreleased]
+# v1.44.0
+🚀 1.44.0 🚀
 ### Fixed
 - Fix issue in tracking print for component FlexCoverCarousel
 
