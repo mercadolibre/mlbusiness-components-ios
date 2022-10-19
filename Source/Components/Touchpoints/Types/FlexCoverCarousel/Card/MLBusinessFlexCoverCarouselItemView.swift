@@ -92,7 +92,7 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         let label = UILabel(frame: .zero)
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = MLStyleSheetManager.styleSheet.semiboldSystemFont(ofSize: CGFloat(6.0))
+        label.font = MLStyleSheetManager.styleSheet.semiboldSystemFont(ofSize: CGFloat(8.0))
         label.textAlignment = .left
         label.textColor = MLStyleSheetManager.styleSheet.whiteColor
         return label
@@ -120,6 +120,7 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         guard let mainTitleTopText = text else { return }
         mainTitleTopLabel.text = mainTitleTopText
         mainTitleTopLabel.textColor = getLabelUIColor(color)
+        mainTitleTopLabel.setLineHeight(18)
         headerContainer.addArrangedSubview(mainTitleTopLabel)
     }
     
@@ -287,7 +288,7 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
             mainCardContainerView.trailingAnchor.constraint(equalTo: trailingAnchor),
             mainCardContainerView.heightAnchor.constraint(equalToConstant:MLBusinessFlexCoverCarouselItemView.containerHeight),
             
-            headerContainer.bottomAnchor.constraint(equalTo: mainDescriptionLabel.topAnchor, constant: -2),
+            headerContainer.bottomAnchor.constraint(equalTo: mainDescriptionLabel.topAnchor, constant: -4),
             headerContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             headerContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
