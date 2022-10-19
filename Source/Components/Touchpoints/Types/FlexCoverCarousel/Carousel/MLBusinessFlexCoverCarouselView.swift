@@ -140,7 +140,7 @@ extension MLBusinessFlexCoverCarouselView: UICollectionViewDelegateFlowLayout {
 extension MLBusinessFlexCoverCarouselView: CarouselCollectionViewHelperDelegate {
     
     func carouselDelegateDidScrollToItem(_ carouselDelegate: CarouselCollectionViewHelper) {
-        delegate?.coverCarouselView(self, didFinishScrolling: items)
+        delegate?.coverCarouselView(self, didFinishScrolling: visibleItems)
     }
     
     func carouselDelegate(_ carouselDelegate: CarouselCollectionViewHelper, didSelectItemAt indexPath: IndexPath) {
