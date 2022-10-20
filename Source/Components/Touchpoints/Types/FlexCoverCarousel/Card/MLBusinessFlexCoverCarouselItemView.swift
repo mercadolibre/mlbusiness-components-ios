@@ -126,8 +126,7 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
     
     private func createMainSubtitle(with text: String?, color: String?) {
         guard let mainSubtitleText = text,
-              mainSubtitleText != "",
-              mainSubtitleText != " " else { return }
+              !mainSubtitleText.isEmpty else { return }
         mainSubtitleLabel.text = mainSubtitleText
         mainSubtitleLabel.textColor = getLabelUIColor(color)
         headerContainer.addArrangedSubview(mainSubtitleLabel)
