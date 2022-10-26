@@ -1,3 +1,9 @@
+
+## [Unreleased]
+
+### Added
+- Title position dynamic on FlexCoverCarousel
+
 # v1.44.0
 🚀 1.44.0 🚀
 ### Fixed
@@ -5,7 +11,6 @@
 
 ### Modified
 - Gradient height changes on FlexCoverCarousel
-- Title position dynamic on FlexCoverCarousel
 - Paddings changes
 
 # v1.43.1
