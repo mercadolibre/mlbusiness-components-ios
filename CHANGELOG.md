@@ -1,6 +1,6 @@
 
-## [Unreleased]
-
+# v1.45.0
+🚀 1.45.0 🚀
 ### Added
 - Title position dynamic on FlexCoverCarousel
 
