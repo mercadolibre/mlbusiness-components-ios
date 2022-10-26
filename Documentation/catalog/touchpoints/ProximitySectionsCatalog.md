@@ -486,6 +486,168 @@
 }
 ```
 
+##### Otro Ejemplo Util
+
+![Grabación de pantalla 2022-10-26 a la(s) 14 21 14](https://user-images.githubusercontent.com/97110592/198094213-175ba440-4d5f-45ef-8e1f-74480c60ac59.gif)
+
+```
+  "type": "HYBRID_CAROUSEL",
+  "id": "test_hybrid_carousel",
+  "content": {
+    "items": [
+      {
+        "type": "DEFAULT",
+        "content": {
+          "top_image": "https://i.ibb.co/N2rkn9K/Captura-de-Pantalla-2020-07-30-a-la-s-02-27-45.png",
+          "top_image_accessory": "discounts_payers_hc_closed_tag_mla",
+          "top_image_status": "OPEN",
+          "middle_subtitle": "Club de la Birra",
+          "middle_title": "Restaurante",
+          "bottom_primary_label": "15%",
+          "bottom_secondary_label": "OFF",
+          "bottom_label_status": "OPEN"
+        },
+        "link": "mercadopago://discount_center_payers/detail?campaign_id=1048784&user_level=4&mcc=561013&sections=%5B%7B%22id%22%3A%22header%22%2C%22type%22%3A%22header%22%2C%22content%22%3A%7B%22logo%22%3A%22https%3A%2F%2Fmla-s1-p.mlstatic.com%2F952848-MLA41109062105_032020-O.jpg%22%2C%22title%22%3A%2220%25%20OFF%22%2C%22subtitle%22%3A%22El%20Noble%22%2C%22level%22%3A%7B%22icon%22%3A%22discount_payers_black_check%22%2C%22label%22%3A%22NIVEL%201%22%2C%22format%22%3A%7B%22text_color%22%3A%22%23000000%22%2C%22background_color%22%3A%22%23EDEDED%22%7D%7D%7D%7D%5D&distance=427&coupon_used=false&status=FULL&store_id=12934127#from=/home_wallet/discount_center",
+        "tracking": {
+          "tracking_id": "1048784",
+          "event_data": {
+            "amount": 99999999,
+            "amount_type": "percent",
+            "availability": "full",
+            "blocked": false,
+            "category": "Comida rápida",
+            "coupon_used": false,
+            "distance": 427,
+            "has_logo": true,
+            "index": 0,
+            "level": 1,
+            "mcc": "561013",
+            "name": "El Noble",
+            "position": 0,
+            "priority": 7,
+            "store_id": 12934127,
+            "tracking_id": "1048784"
+          }
+        }
+      },
+        {
+        "type": "DEFAULT",
+        "content": {
+          "top_image": "https://i.ibb.co/N2rkn9K/Captura-de-Pantalla-2020-07-30-a-la-s-02-27-45.png",
+          "top_image_accessory": "https://i.ibb.co/QY2xvkC/icon20-Whatsapp-Ios-3x.png",
+          "middle_subtitle": "Club de la Birra",
+          "middle_title": "Restaurante",
+          "bottom_primary_label": "R$ 15",
+          "bottom_info": {
+            "icon": "https://i.ibb.co/QY2xvkC/icon20-Whatsapp-Ios-2x.png",
+            "label": "NIVEL 5",
+            "format": {
+              "text_color": "#00a650",
+              "background_color": "#00FFFFFF"
+            }
+          }
+        },
+        "link": "mercadopago://discount_center_payers/detail?campaign_id=1048971&user_level=4&mcc=621102&sections=%5B%7B%22id%22%3A%22header%22%2C%22type%22%3A%22header%22%2C%22content%22%3A%7B%22logo%22%3A%22https%3A%2F%2Fmla-s1-p.mlstatic.com%2F665036-MLA41364219464_042020-O.jpg%22%2C%22title%22%3A%2225%25%20OFF%22%2C%22subtitle%22%3A%22K24%22%2C%22level%22%3A%7B%22icon%22%3A%22discount_payers_black_check%22%2C%22label%22%3A%22NIVEL%201%22%2C%22format%22%3A%7B%22text_color%22%3A%22%23000000%22%2C%22background_color%22%3A%22%23EDEDED%22%7D%7D%7D%7D%5D&distance=2410&coupon_used=false&status=FULL&store_id=31210462#from=/home_wallet/discount_center",
+        "tracking": {
+          "tracking_id": "1048787",
+          "event_data": {
+            "amount": 50,
+            "amount_type": "percent",
+            "availability": "full",
+            "blocked": false,
+            "category": "Almacén / Kiosco",
+            "coupon_used": false,
+            "distance": 2410,
+            "has_logo": true,
+            "index": 4,
+            "level": 1,
+            "mcc": "621102",
+            "name": "K24",
+            "position": 4,
+            "priority": 7,
+            "store_id": 31210462,
+            "tracking_id": "1048971"
+          }
+        }
+      },
+      {
+        "type": "DEFAULT",
+        "content": {
+          "top_image": "https://i.ibb.co/N2rkn9K/Captura-de-Pantalla-2020-07-30-a-la-s-02-27-45.png",
+          "top_image_accessory": "https://i.ibb.co/QY2xvkC/icon20-Whatsapp-Ios-3x.png",
+          "middle_subtitle": "Club de la Birra",
+          "middle_title": "Restaurante"
+        },
+        "link": "mercadopago://discount_center_payers/detail?campaign_id=1049300&user_level=4&mcc=477310&sections=%5B%7B%22id%22%3A%22header%22%2C%22type%22%3A%22header%22%2C%22content%22%3A%7B%22logo%22%3A%22https%3A%2F%2Fmla-s2-p.mlstatic.com%2F796321-MLA41164832890_032020-O.jpg%22%2C%22title%22%3A%2220%25%20OFF%22%2C%22subtitle%22%3A%22Farmacia%20Azul%22%2C%22level%22%3A%7B%22icon%22%3A%22discount_payers_black_check%22%2C%22label%22%3A%22NIVEL%201%22%2C%22format%22%3A%7B%22text_color%22%3A%22%23000000%22%2C%22background_color%22%3A%22%23EDEDED%22%7D%7D%7D%7D%5D&distance=1918&coupon_used=false&status=FULL&store_id=30859042#from=/home_wallet/discount_center",
+        "tracking": {
+          "tracking_id": "1049300",
+          "event_data": {
+            "amount": 200,
+            "amount_type": "percent",
+            "availability": "full",
+            "blocked": false,
+            "category": "Salud / Farmacia",
+            "coupon_used": false,
+            "distance": 1918,
+            "has_logo": true,
+            "index": 1,
+            "level": 1,
+            "mcc": "477310",
+            "name": "Farmacia Azul",
+            "position": 1,
+            "priority": 9,
+            "store_id": 30859042,
+            "tracking_id": "1049300"
+          }
+        }
+      },
+      {
+        "type": "VIEW_MORE",
+        "content": {
+          "main_image": "https://i.ibb.co/GkLzZSC/Captura-de-Pantalla-2020-07-30-a-la-s-02-23-03.png",
+          "main_title": {
+            "label": "Ver más",
+            "format": {
+              "text_color": "#009ee3",
+              "background_color": "#00FFFFFF"
+            }
+          }
+        },
+        "link": "mercadopago://discount_center_payers/list?cluster_id=campanas_delivery_ss&skeleton_id=list#from=/discount_center_payers/list",
+        "tracking": {
+          "tracking_id": "1048788",
+          "event_data": {
+            "amount": 100,
+            "amount_type": "percent",
+            "availability": "full",
+            "blocked": false,
+            "category": "Carnicería",
+            "coupon_used": false,
+            "distance": 8760,
+            "has_logo": true,
+            "index": 5,
+            "level": 1,
+            "mcc": "621013",
+            "name": "Tienda de carnes",
+            "position": 5,
+            "priority": 7,
+            "store_id": 31292638,
+            "tracking_id": "1048708"
+          }
+        }
+      }
+    ],
+    "tracking": {
+      "id": "mp_home",
+      "type": "GRID",
+      "info_adicional": "Valor de la info adicional"
+    },
+    "format": {
+      "margin": 16
+    }
+  }
+```
+
 ### 4. GRID
 
 <img width="314" alt="Captura de Pantalla 2022-10-26 a la(s) 09 56 57" src="https://user-images.githubusercontent.com/97110592/198031708-14d02cfe-5027-465c-8e83-0a76d1cf5710.png">
@@ -521,7 +683,65 @@
 
 ### 5. CAROUSEL
 
-![RPReplay_Final1666786954](https://user-images.githubusercontent.com/97110592/198030091-dabf20ea-7fa3-40c9-9fc1-80684e2d0389.gif)
+|type: "FULL"|
+|----|
+|![RPReplay_Final1666786954](https://user-images.githubusercontent.com/97110592/198030091-dabf20ea-7fa3-40c9-9fc1-80684e2d0389.gif)|
+
+
+
+```
+{
+   "id":"test",
+   "type":"CAROUSEL",
+   "content":{
+      "items":[
+         {
+            "image":"https://http2.mlstatic.com/D_NQ_NP_975465-MLA49366730590_032022-P.jpg",
+            "link":"mercadopago://discount_center_payers/list?product_type=delivery&from=home_mp&dynamic_categories=milanesas&skeleton_id=delivery_marketplace#from=/home_wallet/discount_center",
+            "title":"Milanesas",
+            "title_format":{
+               "color":"#ffffff",
+               "size":16,
+               "weight":"semibold"
+            },
+            "tracking":{
+               "tracking_id":"milanesas"
+            },
+            "type":"FULL"
+         },
+         {
+            "image":"https://http2.mlstatic.com/D_NQ_NP_712272-MLA49325654560_032022-P.jpg",
+            "link":"mercadopago://discount_center_payers/list?product_type=delivery&from=home_mp&dynamic_categories=pizza&skeleton_id=delivery_marketplace#from=/home_wallet/discount_center",
+            "title":"Pizza",
+            "title_format":{
+               "color":"#ffffff",
+               "size":16,
+               "weight":"semibold"
+            },
+            "tracking":{
+               "tracking_id":"pizza"
+            },
+            "type":"FULL"
+         },
+         {
+            "image":"https://http2.mlstatic.com/D_NQ_NP_603130-MLA49366948142_032022-P.jpg",
+            "link":"mercadopago://discount_center_payers/list?product_type=delivery&from=home_mp&dynamic_categories=sushi&skeleton_id=delivery_marketplace#from=/home_wallet/discount_center",
+            "title":"Sushi",
+            "title_format":{
+               "color":"#ffffff",
+               "size":16,
+               "weight":"semibold"
+            },
+            "tracking":{
+               "tracking_id":"sushi"
+            },
+            "type":"FULL"
+         }
+      ]
+   }
+}
+```
+  
 
 ```
 {
