@@ -6,6 +6,9 @@
 
 ### 1. FLEX_COVER_CAROUSEL
 
+![RPReplay_Final1666785864](https://user-images.githubusercontent.com/97110592/198023680-bad4475f-aef5-4886-bb0d-ad1934dc057f.gif)
+
+
 ```
       {
          "ordinal":3,
@@ -286,6 +289,8 @@
 
 ### 2. COVER_CAROUSEL
 
+![Grabación de pantalla 2022-10-26 a la(s) 09 32 26](https://user-images.githubusercontent.com/97110592/198027069-5c89085f-796c-4ac5-b0c1-c9e9dc239003.gif)
+
 ```
 {
   "id": "cover_carousel",
@@ -390,6 +395,8 @@
 
 ### 3. HYBRID_CAROUSEL
 
+![Grabación de pantalla 2022-10-26 a la(s) 09 52 06](https://user-images.githubusercontent.com/97110592/198030873-6a481158-81f8-41bc-96ab-d3f55697acd8.gif)
+
 ```
 {
   "type": "HYBRID_CAROUSEL",
@@ -481,6 +488,8 @@
 
 ### 4. GRID
 
+<img width="314" alt="Captura de Pantalla 2022-10-26 a la(s) 09 56 57" src="https://user-images.githubusercontent.com/97110592/198031708-14d02cfe-5027-465c-8e83-0a76d1cf5710.png">
+
 ```
 {
   "type": "grid",
@@ -511,6 +520,8 @@
 ```
 
 ### 5. CAROUSEL
+
+![RPReplay_Final1666786954](https://user-images.githubusercontent.com/97110592/198030091-dabf20ea-7fa3-40c9-9fc1-80684e2d0389.gif)
 
 ```
 {
