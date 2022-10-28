@@ -650,42 +650,264 @@
 
 ### 4. GRID
 
-<img width="314" alt="Captura de Pantalla 2022-10-26 a la(s) 09 56 57" src="https://user-images.githubusercontent.com/97110592/198031708-14d02cfe-5027-465c-8e83-0a76d1cf5710.png">
+![Captura de Pantalla 2022-10-27 a la(s) 17 46 16](https://user-images.githubusercontent.com/97110592/198394674-40db2257-7170-40dd-8a3a-5d1583e6daba.png)
 
 ```
 {
-  "type": "grid",
-  "id": "test",
-  "tracking": {
-    "id": "test",
-    "type": "grid",
-    "extra_data": "data"
-  },
-  "content": {
-    "items": [
-      {
-        "image": "https://mla-s1-p.mlstatic.com/952848-MLA41109062105_032020-O.jpg",
-        "link": "mercadopago://discount_center_payers/detail?campaign_id=1048784\u0026user_level=1\u0026mcc=561013\u0026sections=%5B%7B%22id%22%3A%22header%22%2C%22type%22%3A%22header%22%2C%22content%22%3A%7B%22logo%22%3A%22https%3A%2F%2Fmla-s1-p.mlstatic.com%2F952848-MLA41109062105_032020-O.jpg%22%2C%22title%22%3A%2220%25%20OFF%22%2C%22subtitle%22%3A%22El%20Noble%22%7D%7D%5D\u0026distance=427\u0026coupon_used=false\u0026status=FULL\u0026store_id=12934127#from=/home_wallet/discount_center",
-        "subtitle": "20% OFF",
-        "title": "Hasta",
-        "tracking": {
-          "tracking_id": "1048784",
-          "event_data": {
-            "blocked": false,
-            "name": "El Noble",
-            "tracking_id": "1048784"
-          }
-        }
-      },
-    ]}
+   "additional_edge_insets":{
+      "bottom":16,
+      "left":32,
+      "right":32,
+      "top":16
+   },
+   "content":{
+      "items":[
+         {
+            "image":"https://http2.mlstatic.com/D_NQ_NP_751512-MLA46389335473_062021-O.jpg",
+            "link":"mercadopago://proximity_marketplace/store?campaign_id=10406142&user_level=1&from=home_mp#from=/home_wallet/discount_center",
+            "subtitle":"$ 80",
+            "title":"HASTA",
+            "tracking":{
+               "event_data":{
+                  "tracking_id":"10406142"
+               },
+               "tracking_id":"10406142"
+            }
+         },
+         {
+            "image":"https://http2.mlstatic.com/D_NQ_NP_688322-MLA45005020616_022021-O.jpg",
+            "link":"mercadopago://proximity_marketplace/store?campaign_id=10406096&user_level=1&from=home_mp#from=/home_wallet/discount_center",
+            "subtitle":"$ 80",
+            "title":"HASTA",
+            "tracking":{
+               "event_data":{
+                  "tracking_id":"10406096"
+               },
+               "tracking_id":"10406096"
+            }
+         },
+         {
+            "image":"https://http2.mlstatic.com/D_NQ_NP_711816-MLA51986787984_102022-O.jpg",
+            "link":"mercadopago://proximity_marketplace/store?campaign_id=10406099&user_level=1&from=home_mp#from=/home_wallet/discount_center",
+            "subtitle":"$ 40",
+            "title":"HASTA",
+            "tracking":{
+               "event_data":{
+                  "tracking_id":"10406099"
+               },
+               "tracking_id":"10406099"
+            }
+         },
+         {
+            "image":"https://http2.mlstatic.com/D_NQ_NP_829187-MLA51633862018_092022-O.jpg",
+            "link":"mercadopago://proximity_marketplace/store?campaign_id=10406142&user_level=1&from=home_mp#from=/home_wallet/discount_center",
+            "subtitle":"$ 80",
+            "title":"HASTA",
+            "tracking":{
+               "event_data":{
+                  "tracking_id":"10406142"
+               },
+               "tracking_id":"10406142"
+            }
+         },
+         {
+            "image":"https://http2.mlstatic.com/D_NQ_NP_746321-MLA50778028992_072022-O.jpg",
+            "link":"mercadopago://proximity_marketplace/store?campaign_id=10406096&user_level=1&from=home_mp#from=/home_wallet/discount_center",
+            "subtitle":"$ 80",
+            "title":"HASTA",
+            "tracking":{
+               "event_data":{
+                  "tracking_id":"10406096"
+               },
+               "tracking_id":"10406096"
+            }
+         },
+         {
+            "image":"https://http2.mlstatic.com/D_NQ_NP_869062-MLA51736902421_092022-O.jpg",
+            "link":"mercadopago://proximity_marketplace/store?campaign_id=10406099&user_level=1&from=home_mp#from=/home_wallet/discount_center",
+            "subtitle":"$ 40",
+            "title":"HASTA",
+            "tracking":{
+               "event_data":{
+                  "tracking_id":"10406099"
+               },
+               "tracking_id":"10406099"
+            }
+         }
+      ]
+   },
+   "id":"mp_home",
+   "type":"GRID"
 }
 ```
 
 ### 5. CAROUSEL
+  
+![Grabación de pantalla 2022-10-27 a la(s) 16 16 54](https://user-images.githubusercontent.com/97110592/198384797-e1cedc55-e31c-4b22-8a76-4dd476113f49.gif)
+
+
+```
+            {
+                "id": "mp_home",
+                "type": "CAROUSEL"
+                "event_data":
+                {},
+                "experiments":
+                {},
+                "footer":
+                {
+                    "accessibility_text": "Acceder a todos los descuentos",
+                    "label": "Ver tudo",
+                    "link": "mercadopago://discount_center_payers/list?from=home_mp#from=/home_wallet/discount_center"
+                },
+                "title": "Encontre lojas",
+                "touchpoint":
+                {
+                    "additional_edge_insets":
+                    {
+                        "bottom": 16,
+                        "left": 32,
+                        "right": 16,
+                        "top": 16
+                    },
+                    "content":
+                    {
+                        "items":
+                        [
+                            {
+                                "background_color": "#ffffff",
+                                "distance_icon": "discount_payers_icon_location",
+                                "image": "https://mla-s2-p.mlstatic.com/952355-MLA43021457837_082020-O.jpg",
+                                "link": "mercadopago://discount_center_payers/list?skeleton_id=list&cluster_id=all_stores_rank&dynamic_categories=supermarket&dynamic_discount=true&from=home_mp#from=/home_wallet/discount_center",
+                                "main_label": "R$ 7",
+                                "subtitle": "Ver mais",
+                                "subtitle_format":
+                                {
+                                    "color": "#009EE3",
+                                    "size": 14,
+                                    "weight": "semibold"
+                                },
+                                "text_color": "#000000",
+                                "title": "Supermercados",
+                                "top_label": "ATÉ",
+                                "tracking":
+                                {
+                                    "tracking_id": "supermarket"
+                                }
+                            },
+                            {
+                                "background_color": "#ffffff",
+                                "distance_icon": "discount_payers_icon_location",
+                                "image": "https://mla-s2-p.mlstatic.com/809528-MLA43021457803_082020-O.jpg",
+                                "link": "mercadopago://discount_center_payers/list?skeleton_id=list&cluster_id=all_stores_rank&dynamic_categories=gastronomy&dynamic_discount=true&from=home_mp#from=/home_wallet/discount_center",
+                                "main_label": "R$ 7",
+                                "subtitle": "Ver mais",
+                                "subtitle_format":
+                                {
+                                    "color": "#009EE3",
+                                    "size": 14,
+                                    "weight": "semibold"
+                                },
+                                "text_color": "#000000",
+                                "title": "Restaurantes",
+                                "top_label": "ATÉ",
+                                "tracking":
+                                {
+                                    "tracking_id": "gastronomy"
+                                }
+                            },
+                            {
+                                "background_color": "#ffffff",
+                                "distance_icon": "discount_payers_icon_location",
+                                "image": "https://mla-s1-p.mlstatic.com/643677-MLA43021534656_082020-O.jpg",
+                                "link": "mercadopago://discount_center_payers/list?skeleton_id=list&cluster_id=all_stores_rank&dynamic_categories=bars&dynamic_discount=true&from=home_mp#from=/home_wallet/discount_center",
+                                "main_label": "R$ 5",
+                                "subtitle": "Ver mais",
+                                "subtitle_format":
+                                {
+                                    "color": "#009EE3",
+                                    "size": 14,
+                                    "weight": "semibold"
+                                },
+                                "text_color": "#000000",
+                                "title": "Bares",
+                                "top_label": "ATÉ",
+                                "tracking":
+                                {
+                                    "tracking_id": "bars"
+                                }
+                            },
+                            {
+                                "background_color": "#ffffff",
+                                "distance_icon": "discount_payers_icon_location",
+                                "image": "https://mla-s1-p.mlstatic.com/971671-MLA43021534702_082020-O.jpg",
+                                "link": "mercadopago://discount_center_payers/list?skeleton_id=list&cluster_id=all_stores_rank&dynamic_categories=pharmacies&dynamic_discount=true&from=home_mp#from=/home_wallet/discount_center",
+                                "main_label": "R$ 7",
+                                "subtitle": "Ver mais",
+                                "subtitle_format":
+                                {
+                                    "color": "#009EE3",
+                                    "size": 14,
+                                    "weight": "semibold"
+                                },
+                                "text_color": "#000000",
+                                "title": "Farmácias",
+                                "top_label": "ATÉ",
+                                "tracking":
+                                {
+                                    "tracking_id": "pharmacies"
+                                }
+                            },
+                            {
+                                "background_color": "#ffffff",
+                                "distance_icon": "discount_payers_icon_location",
+                                "image": "https://mla-s1-p.mlstatic.com/881532-MLA43021457863_082020-O.jpg",
+                                "link": "mercadopago://discount_center_payers/list?skeleton_id=list&cluster_id=all_stores_rank&dynamic_categories=hair&dynamic_discount=true&from=home_mp#from=/home_wallet/discount_center",
+                                "main_label": "R$ 10",
+                                "subtitle": "Ver mais",
+                                "subtitle_format":
+                                {
+                                    "color": "#009EE3",
+                                    "size": 14,
+                                    "weight": "semibold"
+                                },
+                                "text_color": "#000000",
+                                "title": "Cabeleireiros",
+                                "top_label": "ATÉ",
+                                "tracking":
+                                {
+                                    "tracking_id": "hair"
+                                }
+                            },
+                            {
+                                "background_color": "#ffffff",
+                                "distance_icon": "discount_payers_icon_location",
+                                "image": "https://mla-s2-p.mlstatic.com/885019-MLA43021457848_082020-O.jpg",
+                                "link": "mercadopago://discount_center_payers/list?skeleton_id=list&cluster_id=all_stores_rank&dynamic_categories=pets&dynamic_discount=true&from=home_mp#from=/home_wallet/discount_center",
+                                "main_label": "R$ 7",
+                                "subtitle": "Ver mais",
+                                "subtitle_format":
+                                {
+                                    "color": "#009EE3",
+                                    "size": 14,
+                                    "weight": "semibold"
+                                },
+                                "text_color": "#000000",
+                                "title": "Pets",
+                                "top_label": "ATÉ",
+                                "tracking":
+                                {
+                                    "tracking_id": "pets"
+                                }
+                            }
+                        ]
+                    },
+                }
+```
 
 |type: "FULL"|
 |----|
-|![RPReplay_Final1666786954](https://user-images.githubusercontent.com/97110592/198030091-dabf20ea-7fa3-40c9-9fc1-80684e2d0389.gif)|
+|![Captura de Pantalla 2022-10-27 a la(s) 17 12 14](https://user-images.githubusercontent.com/97110592/198388832-04c3734b-9db8-431d-9db0-f2389fb9a9ae.png)|
 
 
 
@@ -739,40 +961,5 @@
          }
       ]
    }
-}
-```
-  
-
-```
-{
-  "id": "test",
-  "type": "CAROUSEL",
-  "content": {
-    "items": [
-      {
-        "image":"https://mla-s1-p.mlstatic.com/952848-MLA41109062105_032020-O.jpg",
-        "link":"mercadopago://discount_center_payers/list#from=/home_wallet/discount_center",
-        "subtitle":"Ver más",
-        "title":"Farmacias",
-        "text_color":"#ffEEff",
-        "main_label": "20%",
-        "top_label": "hasta",
-        "right_label": "OFF",
-        "background_color":"#23395D",
-        "image_format":{
-          "overlay":false
-        },
-        "title_format":{
-          "size":14,
-          "color":"#008000",
-          "weight":"semibold"
-        },
-        "subtitle_format":{
-          "size":14,
-          "color":"#008000",
-          "weight":"semibold"
-        }
-      },
-    ]}
 }
 ```
