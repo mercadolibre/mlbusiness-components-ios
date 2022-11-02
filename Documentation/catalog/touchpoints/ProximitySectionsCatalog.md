@@ -1,4 +1,4 @@
-#  Proximity Sections Catalog
+#  Proximity Touchpoints Catalog
 
 
 ## Secciones disponibles para MLBusinessComponents
@@ -10,14 +10,16 @@
 
 
 ```
-      {
-         "ordinal":3,
+{
+         "ordinal":4,
          "id":"discount_center",
          "type":"DISCOUNT_CENTER",
          "partial":false,
          "content":{
             "event_data":{
-               
+               "items":[
+                  
+               ]
             },
             "experiments":{
                
@@ -25,26 +27,22 @@
             "title":"Comprá con descuento",
             "touchpoint":{
                "additional_edge_insets":{
-                  "top":12,
-                  "left":16,
                   "bottom":12,
-                  "right":104
+                  "left":16,
+                  "right":104,
+                  "top":12
                },
                "content":{
                   "items":[
                      {
                         "background_color":"#1F293D",
-                        "main_description":{
-                           "text":"¡Ahora podés pedir delivery! Descubrí\ntodos los restaurantes y pedí comida",
-                           "text_color":"#ffffff"
-                        },
-                        "image_header":"https://http2.mlstatic.com/D_NQ_NP_628579-MLA50020932540_052022-F.jpg",
-                        "link":"mercadopago://discount_center_payers/list?product_type=delivery&from=home_mp&skeleton_id=delivery_marketplace#from=/home_wallet/discount_center",
+                        "image_header":"https://http2.mlstatic.com/D_NQ_NP_714132-MLA50020932827_052022-F.jpg",
+                        "link":"mercadopago://discount_center_payers/list?product_type=dt_discount_center&from=home_mp#from=/home_wallet/discount_center",
                         "logos":[
                            {
-                              "image":"https://http2.mlstatic.com/D_NQ_NP_694762-MLA49855163400_052022-F.jpg",
+                              "image":"https://http2.mlstatic.com/D_NQ_NP_785777-MLA51900707788_102022-F.jpg",
                               "style":{
-                                 "background_color":"#aaaa",
+                                 "background_color":"#AAAAAA",
                                  "border":1,
                                  "border_color":"#F5F5F5",
                                  "height":40,
@@ -53,40 +51,55 @@
                               "type":"image"
                            }
                         ],
+                        "main_description":{
+                           "text":"Conocé todas las promociones en pagos con QR y tiendas online.",
+                           "text_color":"#FFFFFF"
+                        },
                         "pill":{
-                           "background_color":"#FF656F",
-                           "border_color":"#FF656F",
-                           "text":"DELIVERY",
-                           "text_color":"#ffffff"
+                           "background_color":"#009EE3",
+                           "border_color":"#009EE3",
+                           "text":"DESCUENTOS",
+                           "text_color":"#FFFFFF"
                         },
                         "subtitle":{
-                           "text":"Compra mínima $500",
-                           "text_color":"#ffffff"
+                           "text":"",
+                           "text_color":"#FFFFFF"
                         },
                         "title":{
-                           "text":"$300 OFF",
-                           "text_color":"#ffffff"
+                           "text":"Ahorrá en tus compras",
+                           "text_color":"#FFFFFF"
                         },
                         "tracking":{
-                           "tracking_id":"delivery_generic1",
                            "event_data":{
-                              "index":"1"
-                           }
-                        }
+                              "header":"https://http2.mlstatic.com/D_NQ_NP_714132-MLA50020932827_052022-F.jpg",
+                              "index":0,
+                              "link":"mercadopago://discount_center_payers/list?product_type=dt_discount_center&from=home_mp#from=/home_wallet/discount_center",
+                              "logos":[
+                                 {
+                                    "type":"image",
+                                    "value":"https://http2.mlstatic.com/D_NQ_NP_785777-MLA51900707788_102022-F.jpg"
+                                 }
+                              ],
+                              "main_description":"Conocé todas las promociones en pagos con QR y tiendas online.",
+                              "pill_text":"DESCUENTOS",
+                              "source":"static",
+                              "subtitle":"",
+                              "title":"Ahorrá en tus compras",
+                              "tracking_id":"discount_qr_id_null"
+                           },
+                           "tracking_id":"discount_qr_id_null"
+                        },
+                        "type":"PROXIMITY"
                      },
                      {
                         "background_color":"#1F293D",
-                        "main_description":{
-                           "text":"Los Mejores descuentos en locales\ncerca tuyo",
-                           "text_color":"#ffffff"
-                        },
-                        "image_header":"https://http2.mlstatic.com/D_NQ_NP_714132-MLA50020932827_052022-F.jpg",
-                        "link":"mercadopago://discount_center_payers/list?additional_info=shortcuts&from=home_mp#from=/home_wallet/shortcuts",
+                        "image_header":"https://http2.mlstatic.com/D_NQ_NP_742844-MLA51482500651_092022-O.jpg",
+                        "link":"mercadopago://webview/?use_web_title=false&loading_mode=none&authentication_mode=required&toolbar_elevation=none&hides_bottom_bar=true&OPV=fend&url=https%3A%2F%2Fwww.mercadopago.com.ar%2Fdt%2Fvdp%2Fqr%2F10404536%3Ffrom%3Dhome_mp%23from%3D%2Fhome_wallet%2Fdiscount_center",
                         "logos":[
                            {
-                              "image":"https://http2.mlstatic.com/D_NQ_NP_898315-MLA49855154775_052022-F.jpg",
+                              "image":"https://http2.mlstatic.com/D_NQ_NP_912491-MLA43823686206_102020-O.jpg",
                               "style":{
-                                 "background_color":"#aaaa",
+                                 "background_color":"#AAAAAA",
                                  "border":1,
                                  "border_color":"#F5F5F5",
                                  "height":40,
@@ -95,118 +108,56 @@
                               "type":"image"
                            }
                         ],
-                        "pill":{
-                           "background_color":"#009EE3",
-                           "border_color":"#009EE3",
-                           "text":"PAGO CON QR",
-                           "text_color":"#ffffff"
-                        },
-                        "subtitle":{
-                           "text":"*Válido hasta el 30/5",
-                           "text_color":"#ffffff"
-                        },
-                        "title":{
-                           "text":"Hasta 40% OFF",
-                           "text_color":"#ffffff"
-                        },
-                        "tracking":{
-                           "tracking_id":"delivery_generic2"
-                        }
-                     },
-                     {
-                        "background_color":"#1F293D",
                         "main_description":{
-                           "text":"Los Mejores descuentos en locales\ncerca tuyo",
-                           "text_color":"#ffffff"
+                           "text":"En Pinturerias Sagitario pagá con QR y ahorrá dinero.",
+                           "text_color":"#FFFFFF"
                         },
-                        "image_header":"https://http2.mlstatic.com/D_NQ_NP_714132-MLA50020932827_052022-F.jpg",
-                        "link":"mercadopago://discount_center_payers/list?additional_info=shortcuts&from=home_mp#from=/home_wallet/shortcuts",
-                        "logos":[
-                           {
-                              "image":"https://http2.mlstatic.com/D_NQ_NP_898315-MLA49855154775_052022-F.jpg",
-                              "style":{
-                                 "background_color":"#aaaa",
-                                 "border":1,
-                                 "border_color":"#F5F5F5",
-                                 "height":40,
-                                 "width":40
-                              },
-                              "type":"image"
-                           }
-                        ],
                         "pill":{
                            "background_color":"#009EE3",
                            "border_color":"#009EE3",
                            "text":"PAGO CON QR",
-                           "text_color":"#ffffff"
+                           "text_color":"#FFFFFF"
                         },
                         "subtitle":{
-                           "text":"*Válido hasta el 30/5",
-                           "text_color":"#ffffff"
+                           "text":"Sin tope",
+                           "text_color":"#FFFFFF"
                         },
                         "title":{
-                           "text":"Hasta 40% OFF",
-                           "text_color":"#ffffff"
+                           "text":"20% OFF",
+                           "text_color":"#FFFFFF"
                         },
                         "tracking":{
-                           "tracking_id":"delivery_generic3"
-                        }
-                     },
-                     {
-                        "background_color":"#1F293D",
-                        "main_description":{
-                           "text":"Los Mejores descuentos en locales\ncerca tuyo",
-                           "text_color":"#ffffff"
-                        },
-                        "image_header":"https://http2.mlstatic.com/D_NQ_NP_714132-MLA50020932827_052022-F.jpg",
-                        "link":"mercadopago://discount_center_payers/list?additional_info=shortcuts&from=home_mp#from=/home_wallet/shortcuts",
-                        "logos":[
-                           {
-                              "image":"https://http2.mlstatic.com/D_NQ_NP_898315-MLA49855154775_052022-F.jpg",
-                              "style":{
-                                 "background_color":"#aaaa",
-                                 "border":1,
-                                 "border_color":"#F5F5F5",
-                                 "height":40,
-                                 "width":40
-                              },
-                              "type":"image"
-                           }
-                        ],
-                        "pill":{
-                           "background_color":"#009EE3",
-                           "border_color":"#009EE3",
-                           "text":"PAGO CON QR",
-                           "text_color":"#ffffff"
-                        },
-                        "subtitle":{
-                           "text":"*Válido hasta el 30/5",
-                           "text_color":"#ffffff"
-                        },
-                        "title":{
-                           "text":"Hasta 40% OFF",
-                           "text_color":"#ffffff"
-                        },
-                        "tracking":{
-                           "tracking_id":"delivery_generic4",
                            "event_data":{
-                              "index":"4"
-                           }
-                        }
+                              "brand_id":"971",
+                              "header":"https://http2.mlstatic.com/D_NQ_NP_742844-MLA51482500651_092022-O.jpg",
+                              "index":1,
+                              "link":"mercadopago://webview/?use_web_title=false&loading_mode=none&authentication_mode=required&toolbar_elevation=none&hides_bottom_bar=true&OPV=fend&url=https%3A%2F%2Fwww.mercadopago.com.ar%2Fdt%2Fvdp%2Fqr%2F10404536%3Ffrom%3Dhome_mp%23from%3D%2Fhome_wallet%2Fdiscount_center",
+                              "logos":[
+                                 {
+                                    "type":"image",
+                                    "value":"https://http2.mlstatic.com/D_NQ_NP_912491-MLA43823686206_102020-O.jpg"
+                                 }
+                              ],
+                              "main_description":"En Pinturerias Sagitario pagá con QR y ahorrá dinero.",
+                              "pill_text":"PAGO CON QR",
+                              "source":"search",
+                              "subtitle":"Sin tope",
+                              "title":"20% OFF",
+                              "tracking_id":"tracking_best_brand_971"
+                           },
+                           "tracking_id":"tracking_best_brand_971"
+                        },
+                        "type":"BEST_BRAND"
                      },
                      {
                         "background_color":"#1F293D",
-                        "main_description":{
-                           "text":"Los Mejores descuentos en locales\ncerca tuyo",
-                           "text_color":"#ffffff"
-                        },
-                        "image_header":"https://http2.mlstatic.com/D_NQ_NP_714132-MLA50020932827_052022-F.jpg",
-                        "link":"mercadopago://discount_center_payers/list?additional_info=shortcuts&from=home_mp#from=/home_wallet/shortcuts",
+                        "image_header":"https://http2.mlstatic.com/D_NQ_NP_998355-MLA44401093231_122020-O.jpg",
+                        "link":"mercadopago://webview/?use_web_title=false&loading_mode=none&authentication_mode=required&toolbar_elevation=none&hides_bottom_bar=true&OPV=fend&url=https%3A%2F%2Fwww.mercadopago.com.ar%2Fdt%2Fvdp%2Fqr%2F10395775%3Ffrom%3Dhome_mp%23from%3D%2Fhome_wallet%2Fdiscount_center",
                         "logos":[
                            {
-                              "image":"https://http2.mlstatic.com/D_NQ_NP_898315-MLA49855154775_052022-F.jpg",
+                              "image":"https://http2.mlstatic.com/D_NQ_NP_979650-MLA43199979170_082020-O.jpg",
                               "style":{
-                                 "background_color":"#aaaa",
+                                 "background_color":"#AAAAAA",
                                  "border":1,
                                  "border_color":"#F5F5F5",
                                  "height":40,
@@ -215,40 +166,56 @@
                               "type":"image"
                            }
                         ],
+                        "main_description":{
+                           "text":"Pagando con QR en Rex tenés los mejores beneficios.",
+                           "text_color":"#FFFFFF"
+                        },
                         "pill":{
                            "background_color":"#009EE3",
                            "border_color":"#009EE3",
                            "text":"PAGO CON QR",
-                           "text_color":"#ffffff"
+                           "text_color":"#FFFFFF"
                         },
                         "subtitle":{
-                           "text":"*Válido hasta el 30/5",
-                           "text_color":"#ffffff"
+                           "text":"Sin tope",
+                           "text_color":"#FFFFFF"
                         },
                         "title":{
-                           "text":"Hasta 40% OFF",
-                           "text_color":"#ffffff"
+                           "text":"20% OFF",
+                           "text_color":"#FFFFFF"
                         },
                         "tracking":{
-                           "tracking_id":"delivery_generic5",
                            "event_data":{
-                              "index":"5"
-                           }
-                        }
+                              "brand_id":"434",
+                              "header":"https://http2.mlstatic.com/D_NQ_NP_998355-MLA44401093231_122020-O.jpg",
+                              "index":2,
+                              "link":"mercadopago://webview/?use_web_title=false&loading_mode=none&authentication_mode=required&toolbar_elevation=none&hides_bottom_bar=true&OPV=fend&url=https%3A%2F%2Fwww.mercadopago.com.ar%2Fdt%2Fvdp%2Fqr%2F10395775%3Ffrom%3Dhome_mp%23from%3D%2Fhome_wallet%2Fdiscount_center",
+                              "logos":[
+                                 {
+                                    "type":"image",
+                                    "value":"https://http2.mlstatic.com/D_NQ_NP_979650-MLA43199979170_082020-O.jpg"
+                                 }
+                              ],
+                              "main_description":"Pagando con QR en Rex tenés los mejores beneficios.",
+                              "pill_text":"PAGO CON QR",
+                              "source":"search",
+                              "subtitle":"Sin tope",
+                              "title":"20% OFF",
+                              "tracking_id":"tracking_best_brand_434"
+                           },
+                           "tracking_id":"tracking_best_brand_434"
+                        },
+                        "type":"BEST_BRAND"
                      },
                      {
                         "background_color":"#1F293D",
-                        "main_description":{
-                           "text":"Los Mejores descuentos en locales\ncerca tuyo",
-                           "text_color":"#ffffff"
-                        },
-                        "image_header":"https://http2.mlstatic.com/D_NQ_NP_714132-MLA50020932827_052022-F.jpg",
-                        "link":"mercadopago://discount_center_payers/list?additional_info=shortcuts&from=home_mp#from=/home_wallet/shortcuts",
+                        "image_header":"https://http2.mlstatic.com/D_NQ_NP_987986-MLA48926319419_012022-O.jpg",
+                        "link":"mercadopago://webview/?use_web_title=false&loading_mode=none&authentication_mode=required&toolbar_elevation=none&hides_bottom_bar=true&OPV=fend&url=https%3A%2F%2Fwww.mercadopago.com.ar%2Fdt%2Fvdp%2Fqr%2F10424828%3Ffrom%3Dhome_mp%23from%3D%2Fhome_wallet%2Fdiscount_center",
                         "logos":[
                            {
-                              "image":"https://http2.mlstatic.com/D_NQ_NP_898315-MLA49855154775_052022-F.jpg",
+                              "image":"https://http2.mlstatic.com/D_NQ_NP_637468-MLA48813279282_012022-O.jpg",
                               "style":{
-                                 "background_color":"#aaaa",
+                                 "background_color":"#AAAAAA",
                                  "border":1,
                                  "border_color":"#F5F5F5",
                                  "height":40,
@@ -257,26 +224,104 @@
                               "type":"image"
                            }
                         ],
+                        "main_description":{
+                           "text":"Ahora, si pagás con QR en Mostaza, tenés descuento.",
+                           "text_color":"#FFFFFF"
+                        },
                         "pill":{
                            "background_color":"#009EE3",
                            "border_color":"#009EE3",
                            "text":"PAGO CON QR",
-                           "text_color":"#ffffff"
+                           "text_color":"#FFFFFF"
                         },
                         "subtitle":{
-                           "text":"*Válido hasta el 30/5",
-                           "text_color":"#ffffff"
+                           "text":"Tope de descuento $ 300",
+                           "text_color":"#FFFFFF"
                         },
                         "title":{
-                           "text":"Hasta 40% OFF",
-                           "text_color":"#ffffff"
+                           "text":"10% OFF",
+                           "text_color":"#FFFFFF"
                         },
                         "tracking":{
-                           "tracking_id":"delivery_generic6",
                            "event_data":{
-                              "index":"6"
+                              "brand_id":"72",
+                              "header":"https://http2.mlstatic.com/D_NQ_NP_987986-MLA48926319419_012022-O.jpg",
+                              "index":3,
+                              "link":"mercadopago://webview/?use_web_title=false&loading_mode=none&authentication_mode=required&toolbar_elevation=none&hides_bottom_bar=true&OPV=fend&url=https%3A%2F%2Fwww.mercadopago.com.ar%2Fdt%2Fvdp%2Fqr%2F10424828%3Ffrom%3Dhome_mp%23from%3D%2Fhome_wallet%2Fdiscount_center",
+                              "logos":[
+                                 {
+                                    "type":"image",
+                                    "value":"https://http2.mlstatic.com/D_NQ_NP_637468-MLA48813279282_012022-O.jpg"
+                                 }
+                              ],
+                              "main_description":"Ahora, si pagás con QR en Mostaza, tenés descuento.",
+                              "pill_text":"PAGO CON QR",
+                              "source":"search",
+                              "subtitle":"Tope de descuento $ 300",
+                              "title":"10% OFF",
+                              "tracking_id":"tracking_best_brand_72"
+                           },
+                           "tracking_id":"tracking_best_brand_72"
+                        },
+                        "type":"BEST_BRAND"
+                     },
+                     {
+                        "background_color":"#1F293D",
+                        "image_header":"https://http2.mlstatic.com/D_NQ_NP_793559-MLA51336786233_082022-O.jpg",
+                        "link":"mercadopago://webview/?use_web_title=false&loading_mode=none&authentication_mode=required&toolbar_elevation=none&hides_bottom_bar=true&OPV=fend&url=https%3A%2F%2Fwww.mercadopago.com.ar%2Fdt%2Fvdp%2Fqr%2F10424258%3Ffrom%3Dhome_mp%23from%3D%2Fhome_wallet%2Fdiscount_center",
+                        "logos":[
+                           {
+                              "image":"https://http2.mlstatic.com/D_NQ_NP_913264-MLA51336738526_082022-O.jpg",
+                              "style":{
+                                 "background_color":"#AAAAAA",
+                                 "border":1,
+                                 "border_color":"#F5F5F5",
+                                 "height":40,
+                                 "width":40
+                              },
+                              "type":"image"
                            }
-                        }
+                        ],
+                        "main_description":{
+                           "text":"Cargá en Gulf Oil pagando con QR y ahorrá dinero.",
+                           "text_color":"#FFFFFF"
+                        },
+                        "pill":{
+                           "background_color":"#009EE3",
+                           "border_color":"#009EE3",
+                           "text":"PAGO CON QR",
+                           "text_color":"#FFFFFF"
+                        },
+                        "subtitle":{
+                           "text":"Tope de descuento $ 150",
+                           "text_color":"#FFFFFF"
+                        },
+                        "title":{
+                           "text":"10% OFF",
+                           "text_color":"#FFFFFF"
+                        },
+                        "tracking":{
+                           "event_data":{
+                              "brand_id":"822",
+                              "header":"https://http2.mlstatic.com/D_NQ_NP_793559-MLA51336786233_082022-O.jpg",
+                              "index":4,
+                              "link":"mercadopago://webview/?use_web_title=false&loading_mode=none&authentication_mode=required&toolbar_elevation=none&hides_bottom_bar=true&OPV=fend&url=https%3A%2F%2Fwww.mercadopago.com.ar%2Fdt%2Fvdp%2Fqr%2F10424258%3Ffrom%3Dhome_mp%23from%3D%2Fhome_wallet%2Fdiscount_center",
+                              "logos":[
+                                 {
+                                    "type":"image",
+                                    "value":"https://http2.mlstatic.com/D_NQ_NP_913264-MLA51336738526_082022-O.jpg"
+                                 }
+                              ],
+                              "main_description":"Cargá en Gulf Oil pagando con QR y ahorrá dinero.",
+                              "pill_text":"PAGO CON QR",
+                              "source":"search",
+                              "subtitle":"Tope de descuento $ 150",
+                              "title":"10% OFF",
+                              "tracking_id":"tracking_best_brand_822"
+                           },
+                           "tracking_id":"tracking_best_brand_822"
+                        },
+                        "type":"BEST_BRAND"
                      }
                   ]
                },
