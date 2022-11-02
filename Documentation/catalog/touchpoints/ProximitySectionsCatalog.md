@@ -6,7 +6,7 @@
 
 ### 1. FLEX_COVER_CAROUSEL
 
-![Uploading Grabación de pantalla 2022-11-02 a la(s) 09.26.59.gif…]()
+![Grabación de pantalla 2022-11-02 a la(s) 09 26 59](https://user-images.githubusercontent.com/97110592/199589850-035beb30-46fe-40cc-afd6-a9d8b5a64d26.gif)
 
 
 ```
