@@ -6,7 +6,7 @@
 
 ### 1. FLEX_COVER_CAROUSEL
 
-![RPReplay_Final1666785864](https://user-images.githubusercontent.com/97110592/198023680-bad4475f-aef5-4886-bb0d-ad1934dc057f.gif)
+![Uploading Grabación de pantalla 2022-11-02 a la(s) 09.26.59.gif…]()
 
 
 ```
