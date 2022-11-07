@@ -18,17 +18,16 @@ class DynamicCoverCarouselData: NSObject, MLBusinessTouchpointsData {
     }
     
     func getTouchpointContent() -> [String : Any] {
-        let topContent = MLBusinessContentDynamicCarouselContentModel(type: "badge", content: "Cierra pronto", color: "white", background: nil, compressible: nil)
-        let leftContent = MLBusinessContentDynamicCarouselContentModel(type: "text", content: "Sushi pop", color: "#ffffff", background: nil, compressible: false)
-        let rightContent1 = MLBusinessContentDynamicCarouselContentModel(type: "image", content: "instore_review_filled_star", color: "#009EE3", background: nil, compressible: false)
-        let rightContent2 = MLBusinessContentDynamicCarouselContentModel(type: "text", content: "4.7", color: "#ffffff", background: nil, compressible: false)
-        let mainDescription1 = MLBusinessContentDynamicCarouselContentModel(type: "text", content: "30-45 min", color: "#ffffff", background: nil, compressible: false)
-        let mainDescription2 = MLBusinessContentDynamicCarouselContentModel(type: "text", content: ".", color: "#ffffff", background: nil, compressible: false)
-        let mainDescription3 = MLBusinessContentDynamicCarouselContentModel(type: "text", content: "Envío gratis", color: "#ffffff", background: nil, compressible: false)
+        let topContent = MLBusinessDynamicCarouselContentModel(type: "badge", content: "Cierra pronto", color: "white", background: nil, compressible: nil)
+        let leftContent = MLBusinessDynamicCarouselContentModel(type: "text", content: "Sushi pop", color: "#ffffff", background: nil, compressible: false)
+        let rightContent1 = MLBusinessDynamicCarouselContentModel(type: "image", content: "instore_review_filled_star", color: "#009EE3", background: nil, compressible: false)
+        let rightContent2 = MLBusinessDynamicCarouselContentModel(type: "text", content: "4.7", color: "#ffffff", background: nil, compressible: false)
+        let mainDescription1 = MLBusinessDynamicCarouselContentModel(type: "text", content: "30-45 min", color: "#ffffff", background: nil, compressible: false)
+        let mainDescription2 = MLBusinessDynamicCarouselContentModel(type: "text", content: ".", color: "#ffffff", background: nil, compressible: false)
+        let mainDescription3 = MLBusinessDynamicCarouselContentModel(type: "text", content: "Envío gratis", color: "#ffffff", background: nil, compressible: false)
         let footerContent = MLBusinessDynamicCoverCarouselFooterModel(backgroundColor: "#FF656F", text: "Hasta 17% off", textColor: "#ffffff")
         
-        let item = MLBusinessDynamicCoverCarouselItemModel(type: "landscape",
-                                                           backgroundColor: nil,
+        let item = MLBusinessDynamicCoverCarouselItemModel(backgroundColor: nil,
                                                            imageHeader: "bnbn",
                                                            link: ",m,nm,n",
                                                            topContent: [topContent],

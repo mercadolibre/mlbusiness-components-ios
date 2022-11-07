@@ -65,8 +65,6 @@ class MLBusinessDynamicCoverCarouselViewCell: UICollectionViewCell {
             itemView.leftAnchor.constraint(equalTo: mainContentView.leftAnchor),
             itemView.rightAnchor.constraint(equalTo: mainContentView.rightAnchor),
             itemView.bottomAnchor.constraint(equalTo: mainContentView.bottomAnchor),
-            itemView.heightAnchor.constraint(equalToConstant: 100),
-            itemView.widthAnchor.constraint(equalToConstant: 100)
         ])
     }
     

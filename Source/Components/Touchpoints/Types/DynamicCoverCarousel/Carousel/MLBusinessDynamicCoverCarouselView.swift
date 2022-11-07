@@ -17,7 +17,8 @@ public class MLBusinessDynamicCoverCarouselView: UIView {
     private var model: MLBusinessDynamicCoverCarouselModel?
     private var items: [MLBusinessDynamicCoverCarouselItemModel] { return model?.items ?? [] }
     private var defaultCardWidth: CGFloat = 240
-    private var defaultCardHeight: CGFloat = 160
+    private var defaultCardHeight: CGFloat = 156
+    private var maxItemHeight: CGFloat = 156
     public weak var delegate: MLBusinessDynamicCoverCarouselViewDelegate?
 
     private lazy var collectionViewHelper: CarouselCollectionViewHelper = {
@@ -66,13 +67,12 @@ public class MLBusinessDynamicCoverCarouselView: UIView {
     public func update(with model: MLBusinessDynamicCoverCarouselModel?) {
         self.model = model
         collectionViewHeightConstraint?.constant = getMaxItemHeight()
+        configureCard(cardType: model?.type ?? "landscape")
         collectionView.reloadData()
     }
     
     private func getMaxItemHeight() -> CGFloat {
-        return (getItemCardWidth() * defaultCardHeight) / self.defaultCardWidth
-        
-        return CGFloat(MLBusinessDynamicCoverCarouselConstants.card.peakWidthLandscape)
+        return maxItemHeight
     }
     
     private func getItemCardWidth() -> CGFloat {
@@ -81,17 +81,14 @@ public class MLBusinessDynamicCoverCarouselView: UIView {
         return (cardWidth < defaultCardWidth) ? defaultCardWidth : cardWidth
     }
 
-    public func setupView() {
+    private func setupView() {
         collectionView.delegate = collectionViewHelper
-        collectionViewHelper.edgeInset = 16
         collectionView.configureForPeekingDelegate()
         translatesAutoresizingMaskIntoConstraints = false
         addSubview(collectionView)
     }
     
     private func setupConstraints() {
-        collectionViewHeightConstraint = collectionView.heightAnchor.constraint(equalToConstant: getMaxItemHeight())
-        collectionViewHeightConstraint?.isActive = true
 
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: topAnchor),
@@ -99,6 +96,35 @@ public class MLBusinessDynamicCoverCarouselView: UIView {
             collectionView.rightAnchor.constraint(equalTo: rightAnchor),
             collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
+    }
+    
+    private func configureCard(cardType: String){
+        switch cardType {
+        case "landscape":
+            setupCollectionView(peekWidth: getPeekWidth(offset: MLBusinessDynamicCoverCarouselConstants.card.peakWidthLandscape),
+                                maxHeightCard: MLBusinessDynamicCoverCarouselConstants.card.itemMaxHeightLandscape,
+                                edgeInset: MLBusinessDynamicCoverCarouselConstants.card.landscapeInset)
+        case "portait":
+            setupCollectionView(peekWidth: getPeekWidth(offset: MLBusinessDynamicCoverCarouselConstants.card.peakWidthPortait),
+                                maxHeightCard: MLBusinessDynamicCoverCarouselConstants.card.itemMaxHeightPortait,
+                                edgeInset: MLBusinessDynamicCoverCarouselConstants.card.portaitInset)
+        default:
+            setupCollectionView(peekWidth: getPeekWidth(offset: MLBusinessDynamicCoverCarouselConstants.card.peakWidthLandscape),
+                                maxHeightCard: MLBusinessDynamicCoverCarouselConstants.card.itemMaxHeightLandscape,
+                                edgeInset: MLBusinessDynamicCoverCarouselConstants.card.landscapeInset)
+        }
+    }
+    
+    private func getPeekWidth(offset: Float) -> CGFloat {
+        return UIScreen.main.bounds.width * CGFloat(offset)
+    }
+    
+    private func setupCollectionView(peekWidth: CGFloat, maxHeightCard: Float ,edgeInset: CGFloat = 16.0 ) {
+        collectionViewHelper.rightCellPeekWidth = peekWidth
+        collectionViewHelper.edgeInset = edgeInset
+        self.maxItemHeight = CGFloat(maxHeightCard)
+        collectionViewHeightConstraint = collectionView.heightAnchor.constraint(equalToConstant: getMaxItemHeight())
+        collectionViewHeightConstraint?.isActive = true
     }
 }
 
