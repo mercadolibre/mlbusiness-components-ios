@@ -8,29 +8,24 @@
 import Foundation
 
 public struct MLBusinessDynamicCoverCarouselItemModel: Codable {
-    private let type: String
     private let backgroundColor: String?
     private let imageHeader: String
     private let link: String
-    private let topContent: [MLBusinessContentDynamicCarouselContentModel]?
-    private let leftContent: [MLBusinessContentDynamicCarouselContentModel]?
-    private let rightContent: [MLBusinessContentDynamicCarouselContentModel]?
-    private let mainDescription: [MLBusinessContentDynamicCarouselContentModel]?
+    private let topContent: [MLBusinessDynamicCarouselContentModel]?
+    private let leftContent: [MLBusinessDynamicCarouselContentModel]?
+    private let rightContent: [MLBusinessDynamicCarouselContentModel]?
+    private let mainDescription: [MLBusinessDynamicCarouselContentModel]?
     private let footerContent: MLBusinessDynamicCoverCarouselFooterModel?
-    private let tracking: MLBusinessItemModelTracking?
     
-    public init(type: String,
-                backgroundColor: String?,
+    public init(backgroundColor: String?,
                 imageHeader: String,
                 link: String,
-                topContent: [MLBusinessContentDynamicCarouselContentModel]?,
-                leftContent: [MLBusinessContentDynamicCarouselContentModel]?,
-                rightContent: [MLBusinessContentDynamicCarouselContentModel]?,
-                mainDescription: [MLBusinessContentDynamicCarouselContentModel]?,
-                footerContent: MLBusinessDynamicCoverCarouselFooterModel?,
-                tracking: MLBusinessItemModelTracking?) {
+                topContent: [MLBusinessDynamicCarouselContentModel]?,
+                leftContent: [MLBusinessDynamicCarouselContentModel]?,
+                rightContent: [MLBusinessDynamicCarouselContentModel]?,
+                mainDescription: [MLBusinessDynamicCarouselContentModel]?,
+                footerContent: MLBusinessDynamicCoverCarouselFooterModel?) {
         
-        self.type = type
         self.backgroundColor = backgroundColor
         self.imageHeader = imageHeader
         self.link = link
@@ -38,17 +33,6 @@ public struct MLBusinessDynamicCoverCarouselItemModel: Codable {
         self.leftContent = leftContent
         self.rightContent = rightContent
         self.mainDescription = mainDescription
-        self.tracking = tracking
         self.footerContent = footerContent
-    }
-}
-
-extension MLBusinessDynamicCoverCarouselItemModel: Trackable {
-    var trackingId: String? {
-        return tracking?.trackingId
-    }
-    
-    var eventData: MLBusinessCodableDictionary? {
-        return tracking?.eventData
     }
 }

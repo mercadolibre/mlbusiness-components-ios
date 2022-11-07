@@ -45,11 +45,9 @@ class MLBusinessTouchpointsDynamicCoverCarouselView: MLBusinessTouchpointsBaseVi
 }
 
 extension MLBusinessTouchpointsDynamicCoverCarouselView: MLBusinessDynamicCoverCarouselViewDelegate {
-    func coverCarouselView(_: MLBusinessDynamicCoverCarouselView, didSelect item: MLBusinessDynamicCoverCarouselItemModel, at index: Int) {
-        <#code#>
+    func dynamicCoverCarouselView(_: MLBusinessDynamicCoverCarouselView, didSelect item: MLBusinessDynamicCoverCarouselItemModel, at index: Int) {
     }
     
-    func coverCarouselView(_: MLBusinessDynamicCoverCarouselView, didFinishScrolling visibleItems: [MLBusinessDynamicCoverCarouselItemModel]?) {
-        <#code#>
+    func dynamicCoverCarouselView(_: MLBusinessDynamicCoverCarouselView, didFinishScrolling visibleItems: [MLBusinessDynamicCoverCarouselItemModel]?) {
     }
 }

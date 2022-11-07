@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct MLBusinessContentDynamicCarouselContentModel: Codable {
+public struct MLBusinessDynamicCarouselContentModel: Codable {
     private let type: String
     private let content: String
     private let color: String

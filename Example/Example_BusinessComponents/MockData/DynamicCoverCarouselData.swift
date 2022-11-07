@@ -29,16 +29,16 @@ class DynamicCoverCarouselData: NSObject, MLBusinessTouchpointsData {
         
         let item = MLBusinessDynamicCoverCarouselItemModel(type: "landscape",
                                                            backgroundColor: nil,
-                                                           imageHeader: "",
-                                                           link: "",
+                                                           imageHeader: "bnbn",
+                                                           link: ",m,nm,n",
                                                            topContent: [topContent],
                                                            leftContent: [leftContent],
                                                            rightContent: [rightContent1, rightContent2],
                                                            mainDescription: [mainDescription1, mainDescription2, mainDescription3],
-                                                           footerContent: footerContent,
-                                                           tracking: nil)
+                                                           footerContent: footerContent)
         
-        let carouselModel = MLBusinessDynamicCoverCarouselModel(items: [item, item, item])
+        let carouselModel = MLBusinessDynamicCoverCarouselModel(type: "landscape", items: [item, item, item])
+        
         return carouselModel.asDictionary()
     }
 }
