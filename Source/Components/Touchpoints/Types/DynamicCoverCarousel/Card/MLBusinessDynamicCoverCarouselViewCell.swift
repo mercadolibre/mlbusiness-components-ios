@@ -72,10 +72,10 @@ class MLBusinessDynamicCoverCarouselViewCell: UICollectionViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-//        itemView.clear()
+        itemView.clear()
     }
 
-    func update(with content: MLBusinessDynamicCoverCarouselItemModel) {
-//        itemView.update(with: content)
+    public func update(with content: MLBusinessDynamicCoverCarouselItemModel) {
+        itemView.update(with: content)
     }
 }

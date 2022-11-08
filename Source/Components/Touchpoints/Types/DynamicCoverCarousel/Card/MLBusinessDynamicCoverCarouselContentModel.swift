@@ -8,11 +8,11 @@
 import Foundation
 
 public struct MLBusinessDynamicCarouselContentModel: Codable {
-    private let type: String
-    private let content: String
-    private let color: String
-    private let background: String?
-    private let compressible: Bool?
+    public let type: String
+    public let content: String
+    public let color: String
+    public let background: String?
+    public let compressible: Bool?
     
     public init(type: String,
                 content: String,

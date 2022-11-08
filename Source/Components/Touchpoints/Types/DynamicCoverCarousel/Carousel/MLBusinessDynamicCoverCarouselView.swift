@@ -17,7 +17,6 @@ public class MLBusinessDynamicCoverCarouselView: UIView {
     private var model: MLBusinessDynamicCoverCarouselModel?
     private var items: [MLBusinessDynamicCoverCarouselItemModel] { return model?.items ?? [] }
     private var defaultCardWidth: CGFloat = 240
-    private var defaultCardHeight: CGFloat = 156
     private var maxItemHeight: CGFloat = 156
     public weak var delegate: MLBusinessDynamicCoverCarouselViewDelegate?
 
@@ -64,23 +63,6 @@ public class MLBusinessDynamicCoverCarouselView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func update(with model: MLBusinessDynamicCoverCarouselModel?) {
-        self.model = model
-        collectionViewHeightConstraint?.constant = getMaxItemHeight()
-        configureCard(cardType: model?.type ?? "landscape")
-        collectionView.reloadData()
-    }
-    
-    private func getMaxItemHeight() -> CGFloat {
-        return maxItemHeight
-    }
-    
-    private func getItemCardWidth() -> CGFloat {
-        let cardWidth = UIScreen.main.bounds.width - collectionViewHelper.leftCellPeekWidth - collectionViewHelper.rightCellPeekWidth - 16
-
-        return (cardWidth < defaultCardWidth) ? defaultCardWidth : cardWidth
-    }
-
     private func setupView() {
         collectionView.delegate = collectionViewHelper
         collectionView.configureForPeekingDelegate()
@@ -96,6 +78,23 @@ public class MLBusinessDynamicCoverCarouselView: UIView {
             collectionView.rightAnchor.constraint(equalTo: rightAnchor),
             collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
+    }
+    
+    public func update(with model: MLBusinessDynamicCoverCarouselModel?) {
+        self.model = model
+        collectionViewHeightConstraint?.constant = getMaxItemHeight()
+        configureCard(cardType: model?.type ?? "landscape")
+        collectionView.reloadData()
+    }
+    
+    private func getMaxItemHeight() -> CGFloat {
+        return maxItemHeight
+    }
+    
+    private func getItemCardWidth() -> CGFloat {
+        let cardWidth = UIScreen.main.bounds.width - collectionViewHelper.leftCellPeekWidth - collectionViewHelper.rightCellPeekWidth - 16
+
+        return (cardWidth < defaultCardWidth) ? defaultCardWidth : cardWidth
     }
     
     private func configureCard(cardType: String){
