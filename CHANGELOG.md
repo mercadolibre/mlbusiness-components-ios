@@ -1,3 +1,8 @@
+## [Unreleased]
+
+### Changed
+- Updated FlexCoverCarousel padding values.
+
 ## [1.45.0] - 2022-10-26
 ### Added
 - Title position dynamic on FlexCoverCarousel
