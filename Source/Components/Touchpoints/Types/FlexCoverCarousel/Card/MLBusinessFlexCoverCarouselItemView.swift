@@ -39,13 +39,6 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         return stackView
     }()
     
-    private lazy var containerView: UIView = {
-        let view = UIView(frame: .zero)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.clipsToBounds = false
-        return view
-    }()
-    
     private lazy var coverImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
