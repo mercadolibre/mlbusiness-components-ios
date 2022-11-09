@@ -1,9 +1,14 @@
+## [Unreleased]
+
+### Changed
+- Updated FlexCoverCarousel padding values.
+
 # v1.44.0
 🚀 1.44.0 🚀
 ### Fixed
 - Fix issue in tracking print for component FlexCoverCarousel
 
-### Modified
+### Changed
 - Gradient height changes on FlexCoverCarousel
 - Title position dynamic on FlexCoverCarousel
 - Paddings changes

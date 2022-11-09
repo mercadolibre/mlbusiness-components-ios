@@ -170,13 +170,7 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
     private func createLogoView(logos: [FlexCoverCarouselLogo]) {
         for logo in logos {
             let logoView = MLBusinessFlexCoverCarouselLogoViewFactory.provide(logo: logo)
-            let constant = (logo.style?.height ?? 0) + 48
             logoStackView.addArrangedSubview(logoView)
-            
-            NSLayoutConstraint.activate([
-                logoStackView.heightAnchor.constraint(equalTo: logoView.heightAnchor),
-                logoStackView.bottomAnchor.constraint(equalTo: mainDescriptionLabel.topAnchor, constant: -CGFloat(constant))
-            ])
         }
     }
     
@@ -247,7 +241,6 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
     }
     
     private func setupView() {
-        
         translatesAutoresizingMaskIntoConstraints = false
         layer.masksToBounds = true
         addSubview(coverImageView)
@@ -259,12 +252,10 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         bottomPillView.addSubview(pillLabel)
         addSubview(headerContainer)
         addSubview(mainDescriptionLabel)
-        addSubview(containerView)
-        containerView.addSubview(logoStackView)
+        addSubview(logoStackView)
     }
     
     private func setupConstraints() {
-        
         NSLayoutConstraint.activate([
             alphaOverlayView.topAnchor.constraint(equalTo: topAnchor),
             alphaOverlayView.bottomAnchor.constraint(equalTo: bottomAnchor),
@@ -288,8 +279,8 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
             mainCardContainerView.heightAnchor.constraint(equalToConstant:MLBusinessFlexCoverCarouselItemView.containerHeight),
             
             headerContainer.bottomAnchor.constraint(equalTo: mainDescriptionLabel.topAnchor, constant: -4),
-            headerContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            headerContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            headerContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
+            headerContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
             
             mainDescriptionLabel.leadingAnchor.constraint(equalTo: headerContainer.leadingAnchor),
             mainDescriptionLabel.trailingAnchor.constraint(equalTo: headerContainer.trailingAnchor),
@@ -304,11 +295,9 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
             pillLabel.leadingAnchor.constraint(equalTo: bottomPillView.leadingAnchor, constant: 6),
             pillLabel.trailingAnchor.constraint(equalTo: bottomPillView.trailingAnchor, constant: -6),
             
-            logoStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            logoStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
-            
-            containerView.leadingAnchor.constraint(equalTo: headerContainer.leadingAnchor),
-            containerView.trailingAnchor.constraint(equalTo: headerContainer.trailingAnchor),
+            logoStackView.leadingAnchor.constraint(equalTo: headerContainer.leadingAnchor),
+            logoStackView.topAnchor.constraint(equalTo: topAnchor, constant: 12),
+            logoStackView.bottomAnchor.constraint(lessThanOrEqualTo: mainDescriptionLabel.topAnchor, constant: -48)
         ])
     }
     
