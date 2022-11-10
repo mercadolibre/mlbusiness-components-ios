@@ -172,7 +172,7 @@ class MLBusinessDynamicCoverCarouselItemView: UIView {
     public func update(with content: MLBusinessDynamicCoverCarouselItemModel){
         var mainStackViewBottomConstraint = mainStackView.bottomAnchor.constraint(equalTo: footerView.topAnchor, constant: 10)
         
-        if let cover = content.imageHeader{
+        if let cover = content.imageHeader {
             imageProvider.getImage(key: cover) { [weak self] image in
                 self?.backgroundImageView.image = image
             }
