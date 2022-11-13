@@ -19,7 +19,13 @@ class MLBusinessDynamicCoverCarouselItemView: UIView {
     private var content: MLBusinessDynamicCoverCarouselItemModel?
     private let itemConstants = MLBusinessDynamicCoverCarouselConstants.Item.self
     
-    var imageProvider = MLBusinessURLImageProvider()
+    var imageProvider: MLBusinessImageProvider {
+        didSet {
+            mainDescriptionLeftView.imageProvider = imageProvider
+            mainDescriptionRightView.imageProvider = imageProvider
+            mainSecondaryDescriptionView.imageProvider = imageProvider
+        }
+    }
     
     private lazy var backgroundImageView: UIImageView = {
         let image = UIImageView()
@@ -66,29 +72,31 @@ class MLBusinessDynamicCoverCarouselItemView: UIView {
         return stackView
     }()
     
-    private lazy var middleContentStackView: UIStackView = {
+    private lazy var mainDescriptionStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.spacing = 10
         stackView.axis = .horizontal
         return stackView
     }()
     
-    private lazy var leftContentLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = MLStyleSheetManager.styleSheet.semiboldSystemFont(ofSize: CGFloat(kMLFontsSizeSmall))
-        label.textColor = MLStyleSheetManager.styleSheet.blackColor
-        label.numberOfLines = 1
-        label.isAccessibilityElement = false
-        return label
+    private lazy var mainDescriptionLeftView: MLBusinessMultipleDescriptionView = {
+        let view = MLBusinessMultipleDescriptionView(with: imageProvider)
+        return view
     }()
     
-    private lazy var mainContentStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .horizontal
-        return stackView
+    private lazy var mainDescriptionRightView: MLBusinessMultipleDescriptionView = {
+        let view = MLBusinessMultipleDescriptionView(with: imageProvider)
+        return view
     }()
+    
+    private lazy var mainSecondaryDescriptionView: MLBusinessMultipleDescriptionView = {
+        let view = MLBusinessMultipleDescriptionView(with: imageProvider)
+        return view
+    }()
+    
+    private var mainStackViewBottomConstraint = NSLayoutConstraint()
+    private var mainConstraints: [NSLayoutConstraint] = []
         
     private lazy var gradientLayer = CAGradientLayer()
     
@@ -96,7 +104,8 @@ class MLBusinessDynamicCoverCarouselItemView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public init() {
+    public init(with imageProvider: MLBusinessImageProvider? = nil) {
+        self.imageProvider = imageProvider ?? MLBusinessURLImageProvider()
         super.init(frame: .zero)
         setup()
         setupConstraints()
@@ -107,23 +116,17 @@ class MLBusinessDynamicCoverCarouselItemView: UIView {
         footerView.addSubview(footerLabel)
         addSubview(footerView)
         addSubview(gradientView)
-        mainStackView.addArrangedSubview(middleContentStackView)
-        mainStackView.addArrangedSubview(mainContentStackView)
         addSubview(mainStackView)
         updateGradientView()
     }
     
     private func setupConstraints(){
+        
         NSLayoutConstraint.activate([
             footerView.heightAnchor.constraint(equalToConstant: 22),
             footerView.leadingAnchor.constraint(equalTo: leadingAnchor),
             footerView.trailingAnchor.constraint(equalTo: trailingAnchor),
             footerView.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ])
-        
-        NSLayoutConstraint.activate([
-            middleContentStackView.heightAnchor.constraint(equalToConstant: 20),
-            mainContentStackView.heightAnchor.constraint(equalToConstant: 15)
         ])
         
         NSLayoutConstraint.activate([
@@ -148,8 +151,15 @@ class MLBusinessDynamicCoverCarouselItemView: UIView {
         
         NSLayoutConstraint.activate([
             mainStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
-            mainStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
+            mainStackView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -12)
         ])
+        
+        mainConstraints = [
+            mainDescriptionStackView.heightAnchor.constraint(equalToConstant: 20),
+            mainSecondaryDescriptionView.heightAnchor.constraint(equalToConstant: 15),
+        ]
+    
+        mainStackViewBottomConstraint = mainStackView.bottomAnchor.constraint(equalTo: footerView.topAnchor, constant: 10)
     }
     
     private func updateGradientView() {
@@ -170,7 +180,6 @@ class MLBusinessDynamicCoverCarouselItemView: UIView {
     }
     
     public func update(with content: MLBusinessDynamicCoverCarouselItemModel){
-        var mainStackViewBottomConstraint = mainStackView.bottomAnchor.constraint(equalTo: footerView.topAnchor, constant: 10)
         
         if let cover = content.imageHeader {
             imageProvider.getImage(key: cover) { [weak self] image in
@@ -185,14 +194,24 @@ class MLBusinessDynamicCoverCarouselItemView: UIView {
             mainStackViewBottomConstraint.constant = -8
         }
         
-        if let mainDescription = content.mainDescription {
-            leftContentLabel.text = mainDescription.first?.content
-            leftContentLabel.textColor = mainDescription.first?.color.hexaToUIColor()
-            leftContentLabel.textColor = .white
-            leftContentLabel.setLineHeight(20)
-            middleContentStackView.addArrangedSubview(leftContentLabel)
+        if let mainDescriptionLeft = content.mainDescriptionLeft {
+            mainDescriptionLeftView.update(with: mainDescriptionLeft, size: "MEDIUM")
         }
         
+        if let mainDescriptionRight = content.mainDescriptionRight {
+            mainDescriptionRightView.update(with: mainDescriptionRight)
+        }
+        
+        if let secondaryDescription = content.mainSecondaryDescription {
+            mainSecondaryDescriptionView.update(with: secondaryDescription, size: "SMALL")
+        }
+        
+        mainDescriptionStackView.addArrangedSubview(mainDescriptionLeftView)
+        mainDescriptionStackView.addArrangedSubview(mainDescriptionRightView)
+        mainStackView.addArrangedSubview(mainDescriptionStackView)
+        mainStackView.addArrangedSubview(mainSecondaryDescriptionView)
+        
+        NSLayoutConstraint.activate(mainConstraints)
         mainStackViewBottomConstraint.isActive = true
     }
     

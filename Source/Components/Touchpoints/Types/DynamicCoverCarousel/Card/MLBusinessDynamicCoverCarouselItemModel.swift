@@ -11,17 +11,19 @@ public struct MLBusinessDynamicCoverCarouselItemModel: Codable {
     public let backgroundColor: String?
     public let imageHeader: String?
     public let link: String
-    public let topContent: [MLBusinessDynamicCarouselContentModel]?
-    public let mainDescription: [MLBusinessDynamicCarouselContentModel]?
-    public let mainSecondaryDescription: [MLBusinessDynamicCarouselContentModel]?
+    public let topContent: [MLBusinessMultipleDescriptionModel]?
+    public let mainDescriptionLeft: [MLBusinessMultipleDescriptionModel]?
+    public let mainDescriptionRight: [MLBusinessMultipleDescriptionModel]?
+    public let mainSecondaryDescription: [MLBusinessMultipleDescriptionModel]?
     public let footerContent: MLBusinessDynamicCoverCarouselFooterModel?
     
     public init(backgroundColor: String?,
                 imageHeader: String,
                 link: String,
-                topContent: [MLBusinessDynamicCarouselContentModel]?,
-                mainDescription: [MLBusinessDynamicCarouselContentModel]?,
-                mainSecondaryDescription: [MLBusinessDynamicCarouselContentModel]?,
+                topContent: [MLBusinessMultipleDescriptionModel]?,
+                mainDescriptionLeft: [MLBusinessMultipleDescriptionModel]?,
+                mainDescriptionRight: [MLBusinessMultipleDescriptionModel]?,
+                mainSecondaryDescription: [MLBusinessMultipleDescriptionModel]?,
                 footerContent: MLBusinessDynamicCoverCarouselFooterModel?) {
         
         self.backgroundColor = backgroundColor
@@ -29,7 +31,8 @@ public struct MLBusinessDynamicCoverCarouselItemModel: Codable {
         self.link = link
         self.topContent = topContent
         self.mainSecondaryDescription = mainSecondaryDescription
-        self.mainDescription = mainDescription
+        self.mainDescriptionLeft = mainDescriptionLeft
+        self.mainDescriptionRight = mainDescriptionRight
         self.footerContent = footerContent
     }
 }

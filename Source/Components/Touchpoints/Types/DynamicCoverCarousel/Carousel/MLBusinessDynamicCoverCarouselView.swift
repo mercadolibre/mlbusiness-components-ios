@@ -13,6 +13,7 @@ public protocol MLBusinessDynamicCoverCarouselViewDelegate: class {
 }
 
 public class MLBusinessDynamicCoverCarouselView: UIView {
+    private var imageProvider: MLBusinessImageProvider?
     private var collectionViewHeightConstraint: NSLayoutConstraint?
     private var model: MLBusinessDynamicCoverCarouselModel?
     private var items: [MLBusinessDynamicCoverCarouselItemModel] { return model?.items ?? [] }
@@ -53,7 +54,9 @@ public class MLBusinessDynamicCoverCarouselView: UIView {
         return collectionView.indexPathsForVisibleItems.compactMap({ items[$0.item] })
     }
     
-    public init() {
+    public init(imageProvider: MLBusinessImageProvider? = nil) {
+        self.imageProvider = imageProvider
+
         super.init(frame: .zero)
         setupView()
         setupConstraints()
@@ -82,7 +85,6 @@ public class MLBusinessDynamicCoverCarouselView: UIView {
     
     public func update(with model: MLBusinessDynamicCoverCarouselModel?) {
         self.model = model
-        collectionViewHeightConstraint?.constant = getMaxItemHeight()
         configureCard(cardType: model?.type ?? "landscape")
         collectionView.reloadData()
     }
@@ -118,8 +120,9 @@ public class MLBusinessDynamicCoverCarouselView: UIView {
         return UIScreen.main.bounds.width * CGFloat(offset)
     }
     
-    private func setupCollectionView(peekWidth: CGFloat, maxHeightCard: Float ,edgeInset: CGFloat = 16.0 ) {
-        collectionViewHelper.rightCellPeekWidth = peekWidth
+    private func setupCollectionView(peekWidth: CGFloat, maxHeightCard: Float, edgeInset: CGFloat = 16.0 ) {
+        collectionViewHeightConstraint?.constant = getMaxItemHeight()
+        collectionViewHelper.rightCellPeekWidth = (model?.items.count == 1) ? 0 : peekWidth
         collectionViewHelper.edgeInset = edgeInset
         self.maxItemHeight = CGFloat(maxHeightCard)
         collectionViewHeightConstraint = collectionView.heightAnchor.constraint(equalToConstant: getMaxItemHeight())
@@ -138,6 +141,7 @@ extension MLBusinessDynamicCoverCarouselView: UICollectionViewDataSource {
         else {
             return MLBusinessDynamicCoverCarouselViewCell()
         }
+        cell.imageProvider = imageProvider
         cell.update(with: content)
         return cell
     }

@@ -10,7 +10,7 @@ import UIKit
 
 class MLBusinessDynamicCoverCarouselViewCell: UICollectionViewCell {
     private let cornerRadius: CGFloat = 6
-
+    
     private lazy var mainContentView: PressableView = {
         let view = PressableView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -25,6 +25,14 @@ class MLBusinessDynamicCoverCarouselViewCell: UICollectionViewCell {
         view.layer.cornerRadius = cornerRadius
         return view
     }()
+    
+    var imageProvider: MLBusinessImageProvider? {
+        didSet {
+            if let imageProvider = imageProvider {
+                itemView.imageProvider = imageProvider
+            }
+        }
+    }
     
     // MARK: - Internal properties
 
