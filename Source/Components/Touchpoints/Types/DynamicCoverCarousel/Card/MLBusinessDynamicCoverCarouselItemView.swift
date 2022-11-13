@@ -43,6 +43,14 @@ class MLBusinessDynamicCoverCarouselItemView: UIView {
         return view
     }()
     
+    private lazy var topContentView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.spacing = 5
+        stackView.axis = .horizontal
+        return stackView
+    }()
+    
     private lazy var footerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -116,6 +124,9 @@ class MLBusinessDynamicCoverCarouselItemView: UIView {
         footerView.addSubview(footerLabel)
         addSubview(footerView)
         addSubview(gradientView)
+        addSubview(topContentView)
+        mainStackView.addArrangedSubview(mainDescriptionStackView)
+        mainStackView.addArrangedSubview(mainSecondaryDescriptionView)
         addSubview(mainStackView)
         updateGradientView()
     }
@@ -154,12 +165,13 @@ class MLBusinessDynamicCoverCarouselItemView: UIView {
             mainStackView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -12)
         ])
         
-        mainConstraints = [
+        NSLayoutConstraint.activate([
             mainDescriptionStackView.heightAnchor.constraint(equalToConstant: 20),
             mainSecondaryDescriptionView.heightAnchor.constraint(equalToConstant: 15),
-        ]
+        ])
     
         mainStackViewBottomConstraint = mainStackView.bottomAnchor.constraint(equalTo: footerView.topAnchor, constant: 10)
+        mainStackViewBottomConstraint.isActive = true
     }
     
     private func updateGradientView() {
@@ -180,6 +192,19 @@ class MLBusinessDynamicCoverCarouselItemView: UIView {
     }
     
     public func update(with content: MLBusinessDynamicCoverCarouselItemModel){
+        
+        if let badge = content.topContent {
+            for badge in badge {
+                let view = UIView()
+                view.translatesAutoresizingMaskIntoConstraints = false
+                view.backgroundColor = badge.getBackgraundColor()?.hexaToUIColor()
+                view.layer.cornerRadius = 5
+                guard let content = badge.getContent() else { return }
+                let viewContent = MLBusinessMultipleDescriptionView(with: imageProvider)
+                viewContent.update(with: content, size: "SMALL")
+                view.addSubview(viewContent)
+            }
+        }
         
         if let cover = content.imageHeader {
             imageProvider.getImage(key: cover) { [weak self] image in
@@ -208,11 +233,6 @@ class MLBusinessDynamicCoverCarouselItemView: UIView {
         
         mainDescriptionStackView.addArrangedSubview(mainDescriptionLeftView)
         mainDescriptionStackView.addArrangedSubview(mainDescriptionRightView)
-        mainStackView.addArrangedSubview(mainDescriptionStackView)
-        mainStackView.addArrangedSubview(mainSecondaryDescriptionView)
-        
-        NSLayoutConstraint.activate(mainConstraints)
-        mainStackViewBottomConstraint.isActive = true
     }
     
     public func clear() {

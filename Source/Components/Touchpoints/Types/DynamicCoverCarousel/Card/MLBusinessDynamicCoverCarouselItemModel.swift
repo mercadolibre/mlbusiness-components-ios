@@ -11,7 +11,7 @@ public struct MLBusinessDynamicCoverCarouselItemModel: Codable {
     public let backgroundColor: String?
     public let imageHeader: String?
     public let link: String
-    public let topContent: [MLBusinessMultipleDescriptionModel]?
+    public let topContent: [MLBusinessDynamicCarouselBadgeModel]?
     public let mainDescriptionLeft: [MLBusinessMultipleDescriptionModel]?
     public let mainDescriptionRight: [MLBusinessMultipleDescriptionModel]?
     public let mainSecondaryDescription: [MLBusinessMultipleDescriptionModel]?
@@ -20,7 +20,7 @@ public struct MLBusinessDynamicCoverCarouselItemModel: Codable {
     public init(backgroundColor: String?,
                 imageHeader: String,
                 link: String,
-                topContent: [MLBusinessMultipleDescriptionModel]?,
+                topContent: [MLBusinessDynamicCarouselBadgeModel]?,
                 mainDescriptionLeft: [MLBusinessMultipleDescriptionModel]?,
                 mainDescriptionRight: [MLBusinessMultipleDescriptionModel]?,
                 mainSecondaryDescription: [MLBusinessMultipleDescriptionModel]?,
