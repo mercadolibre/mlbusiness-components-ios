@@ -18,7 +18,7 @@ public class MLBusinessDynamicCoverCarouselView: UIView {
     private var model: MLBusinessDynamicCoverCarouselModel?
     private var items: [MLBusinessDynamicCoverCarouselItemModel] { return model?.items ?? [] }
     private var defaultCardWidth: CGFloat = 240
-    private var maxItemHeight: CGFloat = 156
+    private var itemHeight: CGFloat = 156
     public weak var delegate: MLBusinessDynamicCoverCarouselViewDelegate?
 
     private lazy var collectionViewHelper: CarouselCollectionViewHelper = {
@@ -38,14 +38,9 @@ public class MLBusinessDynamicCoverCarouselView: UIView {
         collectionView.dataSource = self
         return collectionView
     }()
-    
-    var contentInset: UIEdgeInsets = .zero {
-        didSet {
-            collectionView.contentInset = contentInset
-        }
-    }
  
     public var shouldHighlightItems = true
+    
     public var scrollView: UIScrollView {
         return collectionView
     }
@@ -90,13 +85,17 @@ public class MLBusinessDynamicCoverCarouselView: UIView {
     }
     
     private func getMaxItemHeight() -> CGFloat {
-        return maxItemHeight
+        return itemHeight
     }
     
     private func getItemCardWidth() -> CGFloat {
         let cardWidth = UIScreen.main.bounds.width - collectionViewHelper.leftCellPeekWidth - collectionViewHelper.rightCellPeekWidth - 16
 
         return (cardWidth < defaultCardWidth) ? defaultCardWidth : cardWidth
+    }
+
+    private func getPeekWidth(offset: Float) -> CGFloat {
+        return UIScreen.main.bounds.width * CGFloat(offset)
     }
     
     private func configureCard(cardType: String){
@@ -116,15 +115,11 @@ public class MLBusinessDynamicCoverCarouselView: UIView {
         }
     }
     
-    private func getPeekWidth(offset: Float) -> CGFloat {
-        return UIScreen.main.bounds.width * CGFloat(offset)
-    }
-    
     private func setupCollectionView(peekWidth: CGFloat, maxHeightCard: Float, edgeInset: CGFloat = 16.0 ) {
         collectionViewHeightConstraint?.constant = getMaxItemHeight()
         collectionViewHelper.rightCellPeekWidth = (model?.items.count == 1) ? 0 : peekWidth
         collectionViewHelper.edgeInset = edgeInset
-        self.maxItemHeight = CGFloat(maxHeightCard)
+        itemHeight = CGFloat(maxHeightCard)
         collectionViewHeightConstraint = collectionView.heightAnchor.constraint(equalToConstant: getMaxItemHeight())
         collectionViewHeightConstraint?.isActive = true
     }

@@ -8,14 +8,14 @@
 import Foundation
 
 public struct MLBusinessDynamicCoverCarouselItemModel: Codable {
-    public let backgroundColor: String?
-    public let imageHeader: String?
-    public let link: String
-    public let topContent: [MLBusinessDynamicCarouselBadgeModel]?
-    public let mainDescriptionLeft: [MLBusinessMultipleDescriptionModel]?
-    public let mainDescriptionRight: [MLBusinessMultipleDescriptionModel]?
-    public let mainSecondaryDescription: [MLBusinessMultipleDescriptionModel]?
-    public let footerContent: MLBusinessDynamicCoverCarouselFooterModel?
+    let backgroundColor: String?
+    let imageHeader: String?
+    let link: String
+    let topContent: [MLBusinessDynamicCarouselBadgeModel]?
+    let mainDescriptionLeft: [MLBusinessMultipleDescriptionModel]?
+    let mainDescriptionRight: [MLBusinessMultipleDescriptionModel]?
+    let mainSecondaryDescription: [MLBusinessMultipleDescriptionModel]?
+    let footerContent: MLBusinessDynamicCoverCarouselFooterModel?
     
     public init(backgroundColor: String?,
                 imageHeader: String,

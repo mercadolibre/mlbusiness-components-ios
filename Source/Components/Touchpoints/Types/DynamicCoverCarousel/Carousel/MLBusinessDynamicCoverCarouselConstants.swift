@@ -20,11 +20,5 @@ enum MLBusinessDynamicCoverCarouselConstants {
     enum Item {
         static let backgroundColor = String("#EEEEEE")
         static let footerBackgroundColor = String("#000000")
-//        static let horizontalSpacing = CGFloat(8)
-//        static let verticalSpacing = CGFloat(8)
-//        static let logoBottomSpacing = CGFloat(4)
-//        static let logoTopSpacing = CGFloat(8)
-//        static let logoHorizontalSpacing = CGFloat(8)
-//        static let logoHeight = CGFloat(32)
     }
 }

@@ -8,9 +8,9 @@
 import Foundation
 
 public struct MLBusinessDynamicCoverCarouselFooterModel: Codable {
-    public let backgroundColor: String?
-    public let text: String?
-    public let textColor: String?
+    let backgroundColor: String?
+    let text: String?
+    let textColor: String?
     
     public init(backgroundColor: String?,
                 text: String?,

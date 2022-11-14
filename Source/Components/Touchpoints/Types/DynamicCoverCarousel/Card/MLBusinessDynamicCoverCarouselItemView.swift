@@ -9,12 +9,6 @@ import Foundation
 import UIKit
 import MLUI
 
-private enum ContentType: String {
-     case badge = "badge"
-     case text = "text"
-     case image = "image"
-}
-
 class MLBusinessDynamicCoverCarouselItemView: UIView {
     private var content: MLBusinessDynamicCoverCarouselItemModel?
     private let itemConstants = MLBusinessDynamicCoverCarouselConstants.Item.self

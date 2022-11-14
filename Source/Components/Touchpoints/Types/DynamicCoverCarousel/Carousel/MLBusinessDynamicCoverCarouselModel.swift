@@ -8,9 +8,9 @@
 import Foundation
 
 public struct MLBusinessDynamicCoverCarouselModel: Codable {
-    public let type: String?
+    let type: String?
     
-    public let items: [MLBusinessDynamicCoverCarouselItemModel]
+    let items: [MLBusinessDynamicCoverCarouselItemModel]
     
     public init(type: String?,
                 items: [MLBusinessDynamicCoverCarouselItemModel]){
