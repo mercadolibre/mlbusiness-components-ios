@@ -43,7 +43,7 @@ class MLBusinessDynamicCoverCarouselItemView: UIView {
         return view
     }()
     
-    private lazy var topContentView: UIStackView = {
+    private lazy var topContentStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.spacing = 5
@@ -124,7 +124,7 @@ class MLBusinessDynamicCoverCarouselItemView: UIView {
         footerView.addSubview(footerLabel)
         addSubview(footerView)
         addSubview(gradientView)
-        addSubview(topContentView)
+        addSubview(topContentStackView)
         mainStackView.addArrangedSubview(mainDescriptionStackView)
         mainStackView.addArrangedSubview(mainSecondaryDescriptionView)
         addSubview(mainStackView)
@@ -132,6 +132,11 @@ class MLBusinessDynamicCoverCarouselItemView: UIView {
     }
     
     private func setupConstraints(){
+        
+        NSLayoutConstraint.activate([
+            topContentStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
+            topContentStackView.topAnchor.constraint(equalTo: topAnchor, constant: 12)
+        ])
         
         NSLayoutConstraint.activate([
             footerView.heightAnchor.constraint(equalToConstant: 22),
@@ -198,11 +203,18 @@ class MLBusinessDynamicCoverCarouselItemView: UIView {
                 let view = UIView()
                 view.translatesAutoresizingMaskIntoConstraints = false
                 view.backgroundColor = badge.getBackgraundColor()?.hexaToUIColor()
-                view.layer.cornerRadius = 5
+                view.layer.cornerRadius = 2
                 guard let content = badge.getContent() else { return }
                 let viewContent = MLBusinessMultipleDescriptionView(with: imageProvider)
                 viewContent.update(with: content, size: "SMALL")
                 view.addSubview(viewContent)
+                NSLayoutConstraint.activate([
+                    viewContent.topAnchor.constraint(equalTo: view.topAnchor, constant: 3),
+                    viewContent.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 6),
+                    viewContent.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -6),
+                    viewContent.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -3)
+                ])
+                topContentStackView.addArrangedSubview(view)
             }
         }
         
