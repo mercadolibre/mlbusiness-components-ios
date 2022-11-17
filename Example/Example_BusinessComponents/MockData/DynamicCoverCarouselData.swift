@@ -18,22 +18,22 @@ class DynamicCoverCarouselData: NSObject, MLBusinessTouchpointsData {
     }
     
     func getTouchpointContent() -> [String : Any] {
-        let topContent = MLBusinessDynamicCarouselContentModel(type: "badge", content: "Cierra pronto", color: "white", background: nil, compressible: nil)
-        let leftContent = MLBusinessDynamicCarouselContentModel(type: "text", content: "Sushi pop", color: "#ffffff", background: nil, compressible: false)
-        let rightContent1 = MLBusinessDynamicCarouselContentModel(type: "image", content: "instore_review_filled_star", color: "#009EE3", background: nil, compressible: false)
-        let rightContent2 = MLBusinessDynamicCarouselContentModel(type: "text", content: "4.7", color: "#ffffff", background: nil, compressible: false)
-        let mainDescription1 = MLBusinessDynamicCarouselContentModel(type: "text", content: "30-45 min", color: "#ffffff", background: nil, compressible: false)
-        let mainDescription2 = MLBusinessDynamicCarouselContentModel(type: "text", content: ".", color: "#ffffff", background: nil, compressible: false)
-        let mainDescription3 = MLBusinessDynamicCarouselContentModel(type: "text", content: "Envío gratis", color: "#ffffff", background: nil, compressible: false)
+        let topContentImage = MLBusinessMultipleDescriptionModel(type: "image", content: "discount_payers_icon_rating", color: "#FF7733")
+        let topContentText = MLBusinessMultipleDescriptionModel(type: "text", content: "4.3", color: "#FF7733", style: MlBusinessMultipleDescriptionStyleModel(fontWeight: "semibold"))
+        let topContent = MLBusinessDynamicCarouselBadgeModel(backgroundColor: "#FFF2EB", content: [topContentImage, topContentText])
+        let leftContent = MLBusinessMultipleDescriptionModel(type: "text", content: "Sushi pop", color: "#ffffff", compressible: false)
+        let mainDescription1 = MLBusinessMultipleDescriptionModel(type: "text", content: "30-45 min", color: "#ffffff", compressible: false)
+        let mainDescription2 = MLBusinessMultipleDescriptionModel(type: "text", content: ".", color: "#ffffff", compressible: false)
+        let mainDescription3 = MLBusinessMultipleDescriptionModel(type: "text", content: "Envío gratis", color: "#ffffff", compressible: false)
         let footerContent = MLBusinessDynamicCoverCarouselFooterModel(backgroundColor: "#FF656F", text: "Hasta 17% off", textColor: "#ffffff")
         
         let item = MLBusinessDynamicCoverCarouselItemModel(backgroundColor: nil,
-                                                           imageHeader: "bnbn",
+                                                           imageHeader: "https://http2.mlstatic.com/D_NQ_NP_999357-MLA51851081854_102022-F.jpg",
                                                            link: ",m,nm,n",
                                                            topContent: [topContent],
-                                                           leftContent: [leftContent],
-                                                           rightContent: [rightContent1, rightContent2],
-                                                           mainDescription: [mainDescription1, mainDescription2, mainDescription3],
+                                                           mainDescriptionLeft: [leftContent],
+                                                           mainDescriptionRight: [topContentImage, topContentText],
+                                                           mainSecondaryDescription: [mainDescription1, mainDescription2, mainDescription3],
                                                            footerContent: footerContent)
         
         let carouselModel = MLBusinessDynamicCoverCarouselModel(type: "landscape", items: [item, item, item])
