@@ -84,7 +84,7 @@ public class MLBusinessDynamicCoverCarouselView: UIView {
         collectionView.reloadData()
     }
     
-    private func getMaxItemHeight() -> CGFloat {
+    func getMaxItemHeight() -> CGFloat {
         return itemHeight
     }
     

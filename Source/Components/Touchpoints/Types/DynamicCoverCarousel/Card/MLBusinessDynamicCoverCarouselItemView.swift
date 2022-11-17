@@ -51,7 +51,11 @@ class MLBusinessDynamicCoverCarouselItemView: UIView {
         view.backgroundColor = itemConstants.footerBackgroundColor.hexaToUIColor()
         view.clipsToBounds = true
         view.layer.cornerRadius = 6
-        view.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+        if #available(iOS 11.0, *) {
+            view.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+        } else {
+            // Fallback on earlier versions
+        }
         return view
     }()
     
@@ -68,7 +72,6 @@ class MLBusinessDynamicCoverCarouselItemView: UIView {
     private lazy var mainStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.distribution = .equalSpacing
         stackView.spacing = 2
         stackView.axis = .vertical
         return stackView
@@ -77,7 +80,7 @@ class MLBusinessDynamicCoverCarouselItemView: UIView {
     private lazy var mainDescriptionStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.spacing = 10
+        stackView.spacing = 8
         stackView.axis = .horizontal
         return stackView
     }()
@@ -129,6 +132,7 @@ class MLBusinessDynamicCoverCarouselItemView: UIView {
         
         NSLayoutConstraint.activate([
             topContentStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
+            topContentStackView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -12),
             topContentStackView.topAnchor.constraint(equalTo: topAnchor, constant: 12)
         ])
         
@@ -224,21 +228,26 @@ class MLBusinessDynamicCoverCarouselItemView: UIView {
             footerLabel.text = footer.text
             mainStackViewBottomConstraint.constant = -8
         }
-        
+                
         if let mainDescriptionLeft = content.mainDescriptionLeft {
             mainDescriptionLeftView.update(with: mainDescriptionLeft, size: "MEDIUM")
+            mainDescriptionStackView.addArrangedSubview(mainDescriptionLeftView)
         }
         
         if let mainDescriptionRight = content.mainDescriptionRight {
             mainDescriptionRightView.update(with: mainDescriptionRight)
+            let view = UIView()
+            view.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview(mainDescriptionRightView)
+            mainDescriptionRightView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+            mainDescriptionRightView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+            mainDescriptionRightView.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor).isActive = true
+            mainDescriptionStackView.addArrangedSubview(view)
         }
         
         if let secondaryDescription = content.mainSecondaryDescription {
             mainSecondaryDescriptionView.update(with: secondaryDescription, size: "SMALL")
         }
-        
-        mainDescriptionStackView.addArrangedSubview(mainDescriptionLeftView)
-        mainDescriptionStackView.addArrangedSubview(mainDescriptionRightView)
     }
     
     public func clear() {

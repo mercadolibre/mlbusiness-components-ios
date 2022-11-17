@@ -37,6 +37,12 @@ class MLBusinessTouchpointsDynamicCoverCarouselView: MLBusinessTouchpointsBaseVi
         ])
     }
     
+    
+    override func getTouchpointViewHeight(with data: Codable?, topInset: CGFloat, bottomInset: CGFloat) -> CGFloat {
+        guard let model = data as? MLBusinessDynamicCoverCarouselModel else { return 0 }
+        return collectionView.getMaxItemHeight() + topInset + bottomInset
+    }
+    
     override func update(with configuration: Codable?) {
         guard let model = configuration as? MLBusinessDynamicCoverCarouselModel else { return }
         self.model = model

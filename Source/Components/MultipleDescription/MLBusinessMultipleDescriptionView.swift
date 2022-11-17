@@ -9,7 +9,7 @@ import Foundation
 import MLUI
 
 public class MLBusinessMultipleDescriptionView: UIView {
-    private let defaultKey = "Default"
+    private let defaultSizeKey = "Default"
 
     private let multipleDescriptionStackView: UIStackView = {
         let stackView = UIStackView(frame: .zero)
@@ -53,7 +53,7 @@ public class MLBusinessMultipleDescriptionView: UIView {
     public func update(with model: [MLBusinessMultipleDescriptionModel], size: String? = nil) {
         multipleDescriptionStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         for item in model {
-            let size = size ?? defaultKey
+            let size = size ?? defaultSizeKey
             let itemContent = item.getContent()
             let itemColor = item.getColor()?.hexaToUIColor()
             let itemStyle = item.getStyle()
@@ -90,7 +90,6 @@ public class MLBusinessMultipleDescriptionView: UIView {
         label.textAlignment = .left
         label.text = text
         label.textColor = textColor
-//        label.setContentHuggingPriority(.required, for: .horizontal)
 
         if compressible == true {
             label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
@@ -99,9 +98,9 @@ public class MLBusinessMultipleDescriptionView: UIView {
     }
     
     private func getFont(with weight: String?, and size: String?) -> UIFont {
-        let size = size ?? defaultKey
+        let size = size ?? defaultSizeKey
         let fontSize = getFontSize(size)
-        let fontWeight = weight ?? defaultKey
+        let fontWeight = weight ?? defaultSizeKey
         switch fontWeight.uppercased() {
         case "BOLD":
             return MLStyleSheetManager.styleSheet.boldSystemFont(ofSize: fontSize)
