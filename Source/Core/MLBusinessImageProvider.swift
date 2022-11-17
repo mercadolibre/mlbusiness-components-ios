@@ -9,4 +9,6 @@ import Foundation
 
 public protocol MLBusinessImageProvider: class {
     func getImage(key: String, completion: @escaping (UIImage?) -> Void)
+    
+    func getGIFImage(key: String, completion: @escaping (UIImage?) -> Void)
 }
