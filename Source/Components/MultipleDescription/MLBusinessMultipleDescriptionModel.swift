@@ -52,7 +52,8 @@ import Foundation
     }
 }
 
-public class MlBusinessMultipleDescriptionStyleModel: NSObject, Codable, MlBusinessMultipleDescriptionStyleData {
+public class MlBusinessMultipleDescriptionStyleModel: NSObject, Codable {
+    
     private let fontWeight: String?
 
     public init(fontWeight: String?) {
@@ -62,12 +63,4 @@ public class MlBusinessMultipleDescriptionStyleModel: NSObject, Codable, MlBusin
     public func getFontWeight() -> String? {
         fontWeight
     }
-}
-
-public protocol MlBusinessMultipleDescriptionStyleData {
-    func getFontWeight() -> String?
-}
-
-extension MlBusinessMultipleDescriptionStyleData {
-    public func getStyle() -> MlBusinessMultipleDescriptionStyleModel? { return nil }
 }
