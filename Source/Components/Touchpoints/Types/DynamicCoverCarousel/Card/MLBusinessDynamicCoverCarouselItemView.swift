@@ -101,7 +101,7 @@ class MLBusinessDynamicCoverCarouselItemView: UIView {
     }()
     
     private var mainStackViewBottomConstraint = NSLayoutConstraint()
-    private var mainConstraints: [NSLayoutConstraint] = []
+    private var footerLabelConstraints: [NSLayoutConstraint] = []
         
     private lazy var gradientLayer = CAGradientLayer()
     
@@ -118,7 +118,6 @@ class MLBusinessDynamicCoverCarouselItemView: UIView {
     
     private func setup(){
         addSubview(backgroundImageView)
-        footerView.addSubview(footerLabel)
         addSubview(footerView)
         addSubview(gradientView)
         addSubview(topContentStackView)
@@ -143,12 +142,12 @@ class MLBusinessDynamicCoverCarouselItemView: UIView {
             footerView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
         
-        NSLayoutConstraint.activate([
+        footerLabelConstraints = [
             footerLabel.heightAnchor.constraint(equalToConstant: 22),
             footerLabel.centerXAnchor.constraint(equalTo: footerView.centerXAnchor),
             footerLabel.centerYAnchor.constraint(equalTo: footerView.centerYAnchor)
-        ])
-        
+        ]
+                
         NSLayoutConstraint.activate([
             gradientView.bottomAnchor.constraint(equalTo: footerView.topAnchor),
             gradientView.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -195,25 +194,10 @@ class MLBusinessDynamicCoverCarouselItemView: UIView {
     }
     
     public func update(with content: MLBusinessDynamicCoverCarouselItemModel){
+        clear()
         
-        if let badge = content.topContent {
-            for badge in badge {
-                let view = UIView()
-                view.translatesAutoresizingMaskIntoConstraints = false
-                view.backgroundColor = badge.getBackgraundColor()?.hexaToUIColor()
-                view.layer.cornerRadius = 2
-                guard let content = badge.getContent() else { return }
-                let viewContent = MLBusinessMultipleDescriptionView(with: imageProvider)
-                viewContent.update(with: content, size: "SMALL")
-                view.addSubview(viewContent)
-                NSLayoutConstraint.activate([
-                    viewContent.topAnchor.constraint(equalTo: view.topAnchor, constant: 3),
-                    viewContent.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 6),
-                    viewContent.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -6),
-                    viewContent.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -3)
-                ])
-                topContentStackView.addArrangedSubview(view)
-            }
+        if let badges = content.topContent {
+            buildTopContent(with: badges)
         }
         
         if let cover = content.imageHeader {
@@ -226,6 +210,8 @@ class MLBusinessDynamicCoverCarouselItemView: UIView {
             footerView.backgroundColor = footer.backgroundColor?.hexaToUIColor()
             footerLabel.textColor = footer.textColor?.hexaToUIColor()
             footerLabel.text = footer.text
+            footerView.addSubview(footerLabel)
+            NSLayoutConstraint.activate(footerLabelConstraints)
             mainStackViewBottomConstraint.constant = -8
         }
                 
@@ -235,14 +221,7 @@ class MLBusinessDynamicCoverCarouselItemView: UIView {
         }
         
         if let mainDescriptionRight = content.mainDescriptionRight {
-            mainDescriptionRightView.update(with: mainDescriptionRight)
-            let view = UIView()
-            view.translatesAutoresizingMaskIntoConstraints = false
-            view.addSubview(mainDescriptionRightView)
-            mainDescriptionRightView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-            mainDescriptionRightView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-            mainDescriptionRightView.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor).isActive = true
-            mainDescriptionStackView.addArrangedSubview(view)
+            buildMainDescriptionRight(with: mainDescriptionRight)
         }
         
         if let secondaryDescription = content.mainSecondaryDescription {
@@ -250,7 +229,49 @@ class MLBusinessDynamicCoverCarouselItemView: UIView {
         }
     }
     
+    private func buildTopContent(with badges: [MLBusinessDynamicCarouselBadgeModel]) {
+        for badge in badges {
+            let view = UIView()
+            view.translatesAutoresizingMaskIntoConstraints = false
+            view.backgroundColor = badge.getBackgraundColor()?.hexaToUIColor()
+            view.layer.cornerRadius = 2
+            guard let content = badge.getContent() else { return }
+            let viewContent = MLBusinessMultipleDescriptionView(with: imageProvider)
+            viewContent.update(with: content, size: "SMALL")
+            view.addSubview(viewContent)
+            NSLayoutConstraint.activate([
+                viewContent.topAnchor.constraint(equalTo: view.topAnchor, constant: 3),
+                viewContent.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 6),
+                viewContent.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -6),
+                viewContent.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -3)
+            ])
+            
+            topContentStackView.addArrangedSubview(view)
+        }
+        
+        topContentStackView.layoutIfNeeded()
+    }
+    
+    private func buildMainDescriptionRight (with mainDescriptionRight: [MLBusinessMultipleDescriptionModel]){
+        mainDescriptionRightView.update(with: mainDescriptionRight)
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(mainDescriptionRightView)
+        NSLayoutConstraint.activate([
+            mainDescriptionRightView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            mainDescriptionRightView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            mainDescriptionRightView.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor)
+        ])
+
+        mainDescriptionStackView.addArrangedSubview(view)
+    }
+    
     public func clear() {
         backgroundImageView.image = nil
+        topContentStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        mainDescriptionStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        mainStackViewBottomConstraint.constant = 10
+        footerView.subviews.forEach { $0.removeFromSuperview() }
+        footerView.backgroundColor = itemConstants.footerBackgroundColor.hexaToUIColor()
     }
 }

@@ -10,7 +10,7 @@ import Foundation
 public struct MLBusinessDynamicCoverCarouselItemModel: Codable {
     let backgroundColor: String?
     let imageHeader: String?
-    let link: String
+    let link: String?
     let topContent: [MLBusinessDynamicCarouselBadgeModel]?
     let mainDescriptionLeft: [MLBusinessMultipleDescriptionModel]?
     let mainDescriptionRight: [MLBusinessMultipleDescriptionModel]?
@@ -34,5 +34,9 @@ public struct MLBusinessDynamicCoverCarouselItemModel: Codable {
         self.mainDescriptionLeft = mainDescriptionLeft
         self.mainDescriptionRight = mainDescriptionRight
         self.footerContent = footerContent
+    }
+    
+    public func getLink() -> String? {
+        return link
     }
 }

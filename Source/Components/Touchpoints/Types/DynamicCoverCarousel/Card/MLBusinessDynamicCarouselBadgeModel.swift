@@ -8,8 +8,8 @@
 import Foundation
 
 public struct MLBusinessDynamicCarouselBadgeModel: Codable {
-    private let backgroundColor: String?
-    private let content: [MLBusinessMultipleDescriptionModel]?
+    let backgroundColor: String?
+    let content: [MLBusinessMultipleDescriptionModel]?
     
     public init(backgroundColor: String?,
                 content: [MLBusinessMultipleDescriptionModel]?) {
