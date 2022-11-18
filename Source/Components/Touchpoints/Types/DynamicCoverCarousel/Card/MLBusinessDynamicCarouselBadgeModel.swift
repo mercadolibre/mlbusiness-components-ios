@@ -17,7 +17,7 @@ public struct MLBusinessDynamicCarouselBadgeModel: Codable {
         self.content = content
     }
     
-    public func getBackgraundColor() -> String? {
+    public func getBackgroundColor() -> String? {
         return backgroundColor
     }
     

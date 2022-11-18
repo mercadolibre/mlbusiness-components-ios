@@ -233,7 +233,7 @@ class MLBusinessDynamicCoverCarouselItemView: UIView {
         for badge in badges {
             let view = UIView()
             view.translatesAutoresizingMaskIntoConstraints = false
-            view.backgroundColor = badge.getBackgraundColor()?.hexaToUIColor()
+            view.backgroundColor = badge.getBackgroundColor()?.hexaToUIColor()
             view.layer.cornerRadius = 2
             guard let content = badge.getContent() else { return }
             let viewContent = MLBusinessMultipleDescriptionView(with: imageProvider)
