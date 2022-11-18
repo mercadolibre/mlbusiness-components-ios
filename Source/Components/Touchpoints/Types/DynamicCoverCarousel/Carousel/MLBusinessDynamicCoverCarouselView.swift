@@ -116,11 +116,10 @@ public class MLBusinessDynamicCoverCarouselView: UIView {
     }
     
     private func setupCollectionView(peekWidth: CGFloat, maxHeightCard: Float, edgeInset: CGFloat = 16.0 ) {
-        collectionViewHeightConstraint?.constant = getMaxItemHeight()
         collectionViewHelper.rightCellPeekWidth = (model?.getItems().count == 1) ? 0 : peekWidth
         collectionViewHelper.edgeInset = edgeInset
         itemHeight = CGFloat(maxHeightCard)
-        collectionViewHeightConstraint = collectionView.heightAnchor.constraint(equalToConstant: getMaxItemHeight())
+        collectionViewHeightConstraint = collectionView.heightAnchor.constraint(equalToConstant: itemHeight)
         collectionViewHeightConstraint?.isActive = true
     }
 }

@@ -15,7 +15,6 @@ public struct MLBusinessDynamicCoverCarouselFooterModel: Codable {
     public init(backgroundColor: String?,
                 text: String?,
                 textColor: String?) {
-        
         self.backgroundColor = backgroundColor
         self.text = text
         self.textColor = textColor

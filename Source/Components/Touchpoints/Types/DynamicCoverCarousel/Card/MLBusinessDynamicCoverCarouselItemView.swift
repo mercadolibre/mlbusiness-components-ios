@@ -53,9 +53,8 @@ class MLBusinessDynamicCoverCarouselItemView: UIView {
         view.layer.cornerRadius = 6
         if #available(iOS 11.0, *) {
             view.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
-        } else {
-            // Fallback on earlier versions
         }
+        
         return view
     }()
     
