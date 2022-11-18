@@ -64,7 +64,7 @@ public class MLBusinessMultipleDescriptionView: UIView {
                 imageView.heightAnchor.constraint(equalToConstant: getImageSize(size)).isActive = true
                 imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor).isActive = true
             case "text":
-                let label = createMainDescriptionLabel(with: itemContent, textColor: itemColor, itemStyle: itemStyle , fontSize: size)
+                let label = createMainDescriptionLabel(with: itemContent, textColor: itemColor, itemStyle: itemStyle, fontSize: size)
                 multipleDescriptionStackView.addArrangedSubview(label)
             default:
                 break
@@ -83,7 +83,7 @@ public class MLBusinessMultipleDescriptionView: UIView {
         return imageView
     }
     
-    private func createMainDescriptionLabel(with text: String, textColor: UIColor?, compressible: Bool? = false, itemStyle: MlBusinessMultipleDescriptionStyleModel? = nil, fontSize: String) -> UILabel{
+    private func createMainDescriptionLabel(with text: String, textColor: UIColor?, compressible: Bool? = false, itemStyle: MlBusinessMultipleDescriptionStyleModel? = nil, fontSize: String) -> UILabel {
         let label = UILabel(frame: .zero)
         label.numberOfLines = 1
         label.font = getFont(with: itemStyle?.getFontWeight(), and: fontSize)
@@ -91,7 +91,7 @@ public class MLBusinessMultipleDescriptionView: UIView {
         label.text = text
         label.textColor = textColor
 
-        if compressible == true {
+        if compressible ?? false {
             label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         }
         return label

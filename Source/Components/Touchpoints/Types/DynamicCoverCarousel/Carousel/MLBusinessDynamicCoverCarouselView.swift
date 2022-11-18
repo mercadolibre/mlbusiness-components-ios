@@ -16,7 +16,7 @@ public class MLBusinessDynamicCoverCarouselView: UIView {
     private var imageProvider: MLBusinessImageProvider?
     private var collectionViewHeightConstraint: NSLayoutConstraint?
     private var model: MLBusinessDynamicCoverCarouselModel?
-    private var items: [MLBusinessDynamicCoverCarouselItemModel] { return model?.items ?? [] }
+    private var items: [MLBusinessDynamicCoverCarouselItemModel] { return model?.getItems() ?? [] }
     private var defaultCardWidth: CGFloat = 240
     private var itemHeight: CGFloat = 156
     public weak var delegate: MLBusinessDynamicCoverCarouselViewDelegate?
@@ -80,7 +80,7 @@ public class MLBusinessDynamicCoverCarouselView: UIView {
     
     public func update(with model: MLBusinessDynamicCoverCarouselModel?) {
         self.model = model
-        configureCard(cardType: model?.type ?? "landscape")
+        configureCard(cardType: model?.getType() ?? "landscape")
         collectionView.reloadData()
     }
     
@@ -117,7 +117,7 @@ public class MLBusinessDynamicCoverCarouselView: UIView {
     
     private func setupCollectionView(peekWidth: CGFloat, maxHeightCard: Float, edgeInset: CGFloat = 16.0 ) {
         collectionViewHeightConstraint?.constant = getMaxItemHeight()
-        collectionViewHelper.rightCellPeekWidth = (model?.items.count == 1) ? 0 : peekWidth
+        collectionViewHelper.rightCellPeekWidth = (model?.getItems().count == 1) ? 0 : peekWidth
         collectionViewHelper.edgeInset = edgeInset
         itemHeight = CGFloat(maxHeightCard)
         collectionViewHeightConstraint = collectionView.heightAnchor.constraint(equalToConstant: getMaxItemHeight())
@@ -131,7 +131,7 @@ extension MLBusinessDynamicCoverCarouselView: UICollectionViewDataSource {
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let content = model?.items[indexPath.row],
+        guard let content = model?.getItems()[indexPath.row],
               let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MLBusinessDynamicCoverCarouselViewCell.reuseIdentifier, for: indexPath) as? MLBusinessDynamicCoverCarouselViewCell
         else {
             return MLBusinessDynamicCoverCarouselViewCell()

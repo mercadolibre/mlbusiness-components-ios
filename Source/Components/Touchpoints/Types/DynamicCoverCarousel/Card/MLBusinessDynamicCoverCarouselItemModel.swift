@@ -8,14 +8,14 @@
 import Foundation
 
 public struct MLBusinessDynamicCoverCarouselItemModel: Codable {
-    let backgroundColor: String?
-    let imageHeader: String?
-    let link: String?
-    let topContent: [MLBusinessDynamicCarouselBadgeModel]?
-    let mainDescriptionLeft: [MLBusinessMultipleDescriptionModel]?
-    let mainDescriptionRight: [MLBusinessMultipleDescriptionModel]?
-    let mainSecondaryDescription: [MLBusinessMultipleDescriptionModel]?
-    let footerContent: MLBusinessDynamicCoverCarouselFooterModel?
+    private let backgroundColor: String?
+    private let imageHeader: String?
+    private let link: String?
+    private let topContent: [MLBusinessDynamicCarouselBadgeModel]?
+    private let mainDescriptionLeft: [MLBusinessMultipleDescriptionModel]?
+    private let mainDescriptionRight: [MLBusinessMultipleDescriptionModel]?
+    private let mainSecondaryDescription: [MLBusinessMultipleDescriptionModel]?
+    private let footerContent: MLBusinessDynamicCoverCarouselFooterModel?
     
     public init(backgroundColor: String?,
                 imageHeader: String,
@@ -36,7 +36,35 @@ public struct MLBusinessDynamicCoverCarouselItemModel: Codable {
         self.footerContent = footerContent
     }
     
+    public func getBackgroundColor() -> String? {
+        return backgroundColor
+    }
+    
+    public func getImageHeader() -> String? {
+        return imageHeader
+    }
+    
     public func getLink() -> String? {
         return link
+    }
+    
+    public func getTopContent() -> [MLBusinessDynamicCarouselBadgeModel]? {
+        return topContent
+    }
+    
+    public func getMainDescriptionLeft() -> [MLBusinessMultipleDescriptionModel]? {
+        return mainDescriptionLeft
+    }
+    
+    public func getMainDescriptionRight() -> [MLBusinessMultipleDescriptionModel]? {
+        return mainDescriptionRight
+    }
+    
+    public func getMainSecondaryDescription() -> [MLBusinessMultipleDescriptionModel]? {
+        return mainSecondaryDescription
+    }
+    
+    public func getFooterContent() -> MLBusinessDynamicCoverCarouselFooterModel? {
+        return footerContent
     }
 }

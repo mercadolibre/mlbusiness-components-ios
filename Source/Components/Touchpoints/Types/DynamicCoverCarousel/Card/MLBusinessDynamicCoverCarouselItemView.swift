@@ -196,35 +196,35 @@ class MLBusinessDynamicCoverCarouselItemView: UIView {
     public func update(with content: MLBusinessDynamicCoverCarouselItemModel){
         clear()
         
-        if let badges = content.topContent {
+        if let badges = content.getTopContent() {
             buildTopContent(with: badges)
         }
         
-        if let cover = content.imageHeader {
+        if let cover = content.getImageHeader() {
             imageProvider.getImage(key: cover) { [weak self] image in
                 self?.backgroundImageView.image = image
             }
         }
         
-        if let footer = content.footerContent {
-            footerView.backgroundColor = footer.backgroundColor?.hexaToUIColor()
-            footerLabel.textColor = footer.textColor?.hexaToUIColor()
-            footerLabel.text = footer.text
+        if let footer = content.getFooterContent() {
+            footerView.backgroundColor = footer.getBackgroundColor()?.hexaToUIColor()
+            footerLabel.textColor = footer.getTextColor()?.hexaToUIColor()
+            footerLabel.text = footer.getText()
             footerView.addSubview(footerLabel)
             NSLayoutConstraint.activate(footerLabelConstraints)
             mainStackViewBottomConstraint.constant = -8
         }
                 
-        if let mainDescriptionLeft = content.mainDescriptionLeft {
+        if let mainDescriptionLeft = content.getMainDescriptionLeft() {
             mainDescriptionLeftView.update(with: mainDescriptionLeft, size: "MEDIUM")
             mainDescriptionStackView.addArrangedSubview(mainDescriptionLeftView)
         }
         
-        if let mainDescriptionRight = content.mainDescriptionRight {
+        if let mainDescriptionRight = content.getMainDescriptionRight() {
             buildMainDescriptionRight(with: mainDescriptionRight)
         }
         
-        if let secondaryDescription = content.mainSecondaryDescription {
+        if let secondaryDescription = content.getMainSecondaryDescription() {
             mainSecondaryDescriptionView.update(with: secondaryDescription, size: "SMALL")
         }
     }
