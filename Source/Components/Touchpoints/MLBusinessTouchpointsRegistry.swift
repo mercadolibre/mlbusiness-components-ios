@@ -22,7 +22,6 @@ class MLBusinessTouchpointsRegistry: MLBusinessTouchpointsRegistryProtocol {
         register(type: "HYBRID_CAROUSEL", mapper: MLBusinessMapper<MLBusinessHybridCarouselModel>(), view: MLBusinessHybridCarouselView.self)
         register(type: "MULTIPLE_ROW", mapper: MLBusinessMapper<MLBusinessTouchpointsMultipleRowModel>(), view: MLBusinessTouchpointsMultipleRowView.self)
         register(type: "COVER_CAROUSEL", mapper: MLBusinessMapper<MLBusinessCoverCarouselModel>(), view: MLBusinessTouchpointsCoverCarouselView.self)
-        register(type: "DYNAMIC_COVER_CAROUSEL", mapper: MLBusinessMapper<MLBusinessDynamicCoverCarouselModel>(), view: MLBusinessTouchpointsDynamicCoverCarouselView.self)
         register(type: "FLEX_COVER_CAROUSEL", mapper: MLBusinessMapper<MLBusinessFlexCoverCarouselModel>(), view: MLBusinessTouchpointsFlexCoverCarouselView.self)
     }
 

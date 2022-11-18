@@ -32,7 +32,7 @@ import Foundation
         self.content = data.getContent()
         self.color = data.getColor()
         self.compressible = false
-        self.style = data.getStyle()
+        self.style = nil
     }
     
     public func getType() -> String {

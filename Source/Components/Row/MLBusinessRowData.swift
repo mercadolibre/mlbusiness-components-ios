@@ -48,7 +48,3 @@ import Foundation
     @objc func getText() -> String
     @objc func getTextColor() -> String?
 }
-
-extension MLBusinessRowMainDescriptionData {
-    func getStyle() -> MlBusinessMultipleDescriptionStyleModel? { return nil }
-}
