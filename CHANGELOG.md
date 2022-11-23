@@ -1,3 +1,7 @@
+## [Unreleased]
+### Added
+- Add "Dynamic cover carousel" component
+
 ## [1.46.0] - 2022-11-09
 ### Changed
 - Updated FlexCoverCarousel padding values.
