@@ -16,15 +16,17 @@ public struct MLBusinessDynamicCoverCarouselItemModel: Codable {
     private let mainDescriptionRight: [MLBusinessMultipleDescriptionModel]?
     private let mainSecondaryDescription: [MLBusinessMultipleDescriptionModel]?
     private let footerContent: MLBusinessDynamicCoverCarouselFooterModel?
+    private let tracking: MLBusinessItemModelTracking?
     
     public init(backgroundColor: String?,
-                imageHeader: String,
-                link: String,
+                imageHeader: String?,
+                link: String?,
                 topContent: [MLBusinessDynamicCarouselBadgeModel]?,
                 mainDescriptionLeft: [MLBusinessMultipleDescriptionModel]?,
                 mainDescriptionRight: [MLBusinessMultipleDescriptionModel]?,
                 mainSecondaryDescription: [MLBusinessMultipleDescriptionModel]?,
-                footerContent: MLBusinessDynamicCoverCarouselFooterModel?) {
+                footerContent: MLBusinessDynamicCoverCarouselFooterModel?,
+                tracking: MLBusinessItemModelTracking?) {
         
         self.backgroundColor = backgroundColor
         self.imageHeader = imageHeader
@@ -34,6 +36,7 @@ public struct MLBusinessDynamicCoverCarouselItemModel: Codable {
         self.mainDescriptionLeft = mainDescriptionLeft
         self.mainDescriptionRight = mainDescriptionRight
         self.footerContent = footerContent
+        self.tracking = tracking
     }
     
     public func getBackgroundColor() -> String? {
@@ -66,5 +69,23 @@ public struct MLBusinessDynamicCoverCarouselItemModel: Codable {
     
     public func getFooterContent() -> MLBusinessDynamicCoverCarouselFooterModel? {
         return footerContent
+    }
+    
+    public func getTrackingId() -> String? {
+        return trackingId
+    }
+    
+    public func getEventData() -> [String : Any]? {
+        return eventData?.rawValue
+    }
+}
+
+extension MLBusinessDynamicCoverCarouselItemModel: Trackable {
+    var trackingId: String? {
+        return tracking?.trackingId
+    }
+    
+    var eventData: MLBusinessCodableDictionary? {
+        return tracking?.eventData
     }
 }

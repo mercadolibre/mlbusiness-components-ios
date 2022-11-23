@@ -27,3 +27,9 @@ public struct MLBusinessDynamicCoverCarouselModel: Codable {
         return items
     }
 }
+
+extension MLBusinessDynamicCoverCarouselModel: ComponentTrackable {
+    func getTrackables() -> [Trackable]? {
+        return items
+    }
+}

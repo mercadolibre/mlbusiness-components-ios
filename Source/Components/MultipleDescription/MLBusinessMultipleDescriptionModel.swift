@@ -47,6 +47,10 @@ import Foundation
         return color
     }
     
+    public func getCompressible() -> Bool? {
+        return compressible
+    }
+    
     public func getStyle() -> MlBusinessMultipleDescriptionStyleModel? {
         return style
     }
