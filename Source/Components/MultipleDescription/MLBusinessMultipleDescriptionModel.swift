@@ -19,7 +19,7 @@ import Foundation
                 content: String,
                 color: String?,
                 compressible: Bool? = false,
-                style: MlBusinessMultipleDescriptionStyleModel? = MlBusinessMultipleDescriptionStyleModel(fontWeight: nil)) {
+                style: MlBusinessMultipleDescriptionStyleModel? = nil) {
         self.type = type
         self.content = content
         self.color = color

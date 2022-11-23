@@ -41,7 +41,6 @@ class MLBusinessDynamicCoverCarouselItemView: UIView {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.spacing = 5
-        stackView.axis = .horizontal
         return stackView
     }()
     
@@ -80,7 +79,6 @@ class MLBusinessDynamicCoverCarouselItemView: UIView {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.spacing = 8
-        stackView.axis = .horizontal
         return stackView
     }()
     
