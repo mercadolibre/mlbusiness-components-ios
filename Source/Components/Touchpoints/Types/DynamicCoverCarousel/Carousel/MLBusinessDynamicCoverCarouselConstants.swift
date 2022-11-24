@@ -8,7 +8,7 @@
 import Foundation
 
 enum MLBusinessDynamicCoverCarouselConstants {
-    enum card {
+    enum Card {
         static let peakWidthLandscape = Float(0.20)
         static let landscapeInset = CGFloat(16)
         static let itemMaxHeightLandscape = Float(156)
