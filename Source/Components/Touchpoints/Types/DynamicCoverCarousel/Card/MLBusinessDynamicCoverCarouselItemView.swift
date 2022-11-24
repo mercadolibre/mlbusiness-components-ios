@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import MLUI
 
-class MLBusinessDynamicCoverCarouselItemView: UIView {
+public class MLBusinessDynamicCoverCarouselItemView: UIView {
     private var content: MLBusinessDynamicCoverCarouselItemModel?
     private let itemConstants = MLBusinessDynamicCoverCarouselConstants.Item.self
     
@@ -185,7 +185,7 @@ class MLBusinessDynamicCoverCarouselItemView: UIView {
         }
     }
     
-    override func layoutSublayers(of layer: CALayer) {
+    public override func layoutSublayers(of layer: CALayer) {
         super.layoutSublayers(of: layer)
         gradientLayer.frame = gradientView.bounds
     }
