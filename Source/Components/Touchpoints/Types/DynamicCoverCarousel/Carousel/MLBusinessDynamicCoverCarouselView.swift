@@ -101,17 +101,17 @@ public class MLBusinessDynamicCoverCarouselView: UIView {
     private func configureCard(cardType: String){
         switch cardType {
         case "landscape":
-            setupCollectionView(peekWidth: getPeekWidth(offset: MLBusinessDynamicCoverCarouselConstants.card.peakWidthLandscape),
-                                maxHeightCard: MLBusinessDynamicCoverCarouselConstants.card.itemMaxHeightLandscape,
-                                edgeInset: MLBusinessDynamicCoverCarouselConstants.card.landscapeInset)
+            setupCollectionView(peekWidth: getPeekWidth(offset: MLBusinessDynamicCoverCarouselConstants.Card.peakWidthLandscape),
+                                maxHeightCard: MLBusinessDynamicCoverCarouselConstants.Card.itemMaxHeightLandscape,
+                                edgeInset: MLBusinessDynamicCoverCarouselConstants.Card.landscapeInset)
         case "portait":
-            setupCollectionView(peekWidth: getPeekWidth(offset: MLBusinessDynamicCoverCarouselConstants.card.peakWidthPortait),
-                                maxHeightCard: MLBusinessDynamicCoverCarouselConstants.card.itemMaxHeightPortait,
-                                edgeInset: MLBusinessDynamicCoverCarouselConstants.card.portaitInset)
+            setupCollectionView(peekWidth: getPeekWidth(offset: MLBusinessDynamicCoverCarouselConstants.Card.peakWidthPortait),
+                                maxHeightCard: MLBusinessDynamicCoverCarouselConstants.Card.itemMaxHeightPortait,
+                                edgeInset: MLBusinessDynamicCoverCarouselConstants.Card.portaitInset)
         default:
-            setupCollectionView(peekWidth: getPeekWidth(offset: MLBusinessDynamicCoverCarouselConstants.card.peakWidthLandscape),
-                                maxHeightCard: MLBusinessDynamicCoverCarouselConstants.card.itemMaxHeightLandscape,
-                                edgeInset: MLBusinessDynamicCoverCarouselConstants.card.landscapeInset)
+            setupCollectionView(peekWidth: getPeekWidth(offset: MLBusinessDynamicCoverCarouselConstants.Card.peakWidthLandscape),
+                                maxHeightCard: MLBusinessDynamicCoverCarouselConstants.Card.itemMaxHeightLandscape,
+                                edgeInset: MLBusinessDynamicCoverCarouselConstants.Card.landscapeInset)
         }
     }
     
