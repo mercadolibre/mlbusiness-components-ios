@@ -1,4 +1,4 @@
-## [Unreleased]
+## [1.46.0] - 2022-11-25
 ### Added
 - Add "Dynamic cover carousel" component
 
