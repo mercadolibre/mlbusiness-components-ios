@@ -90,6 +90,7 @@ public class MLBusinessMultipleDescriptionView: UIView {
         label.textAlignment = .left
         label.text = text
         label.textColor = textColor
+        label.accessibilityLabel = AccessibilityUtils.formatCurrencyForAccessibility(with: text)
 
         if compressible ?? false {
             label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
