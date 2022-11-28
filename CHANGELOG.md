@@ -1,6 +1,7 @@
 ## [Unreleased]
 ### Added
 - Add "Dynamic cover carousel" component
+- Se realizan ajustes de accesibilidad en la MultipleDescriptionView para que la moneda sea interpretada como "peso" o "real" por el VoiceOver y no como "dolar".
 
 ## [1.46.0] - 2022-11-09
 ### Changed
