@@ -35,13 +35,14 @@ class RowData: NSObject, MLBusinessRowData {
                 RowMainDescriptionData(type: "text", content: "598m", color: "#737373"),
                 RowMainDescriptionData(type: "text", content: " · ", color: "#737373"),
                 RowMainDescriptionData(type: "image", content: "https://i.ibb.co/prSV6dY/estrella-android.png", color: "#737373"),
-                RowMainDescriptionData(type: "text", content: "4.3 (24)", color: "#737373"),]
+                RowMainDescriptionData(type: "text", content: "4.3 (24)", color: "#737373"),
+        ]
     }
     
     func getMainSecondaryDescription() -> [MLBusinessMultipleDescriptionModel]? {
         
         return [MLBusinessMultipleDescriptionModel(type: "image", content: "https://i.ibb.co/bWSWDHc/icon-delivery-android.png", color: "#00a650"),
-            MLBusinessMultipleDescriptionModel(type: "text", content: "Envío", color: "#00a650"),
+            MLBusinessMultipleDescriptionModel(type: "text", content: "Compra mínima $ 2.500", color: "#333333"),
             MLBusinessMultipleDescriptionModel(type: "text", content: " · ", color: "#00a650"),
             MLBusinessMultipleDescriptionModel(type: "image", content: "https://i.ibb.co/n8gJqYk/icon-pickup-android.png", color: "#00a650"),
             MLBusinessMultipleDescriptionModel(type: "text", content: "Retiro", color: "#00a650"),]
