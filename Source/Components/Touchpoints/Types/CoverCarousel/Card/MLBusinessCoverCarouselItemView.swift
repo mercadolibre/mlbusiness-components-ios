@@ -8,9 +8,19 @@
 import UIKit
 import MLUI
 
+enum GifState {
+    case playing
+    case stoped
+    case loading
+}
+
 public class MLBusinessCoverCarouselItemView: UIView {
     static let coverHeight: CGFloat = 100
     private let mapper: MLBusinessCoverCarouselItemContentModelMapperProtocol
+    private let gifImageProvider = MLBusinessURLImageProvider()
+    private var model: MLBusinessCoverCarouselItemContentModel?
+    private var gifState: GifState = .stoped
+    
     
     private lazy var alphaOverlayView: UIView = {
         let view = UIView()
@@ -22,8 +32,19 @@ public class MLBusinessCoverCarouselItemView: UIView {
         return view
     }()
     
-    private lazy var coverImageView: UIImageView = {
-        let imageView = UIImageView()
+    private let mainTitleLabel: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.numberOfLines = 2
+        label.font = MLStyleSheetManager.styleSheet.boldSystemFont(ofSize: CGFloat(kMLFontsSizeMedium))
+        label.textAlignment = .left
+        label.textColor = MLStyleSheetManager.styleSheet.whiteColor
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    
+    private lazy var coverImageView: ImagePlaybackView = {
+        let imageView = ImagePlaybackView()
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.backgroundColor = MLStyleSheetManager.styleSheet.lightGreyColor
@@ -49,6 +70,8 @@ public class MLBusinessCoverCarouselItemView: UIView {
             
         super.init(frame: .zero)
         
+        mainTitleLabel.text = "PRUEBA TEXTO SOBRE ANIMACION"
+        
         setupView()
         setupConstraints()
     }
@@ -60,22 +83,65 @@ public class MLBusinessCoverCarouselItemView: UIView {
     public func update(with item: MLBusinessCoverCarouselItemContentModel) {
         clear()
         
-        if let cover = item.cover {
-            imageProvider.getImage(key: cover) { [weak self] image in
-                self?.coverImageView.image = image
-            }
-        }
+        model = item
+        setImageWEBview()
         
         let rowModel = mapper.map(from: item)
         rowView.update(with: rowModel)
     }
+    
+//    public func setStaticImage() {
+//        if let cover = self.model?.cover {
+//            imageProvider.getImage(key: cover) { [weak self] image in
+//                self?.coverImageView.image = image
+//                self?.gifState = .stoped
+//            }
+//        }
+//    }
+//
+    public func setImageWEBview() {
+        
+        if let cover = self.model?.cover, let url = URL(string: cover){
+            gifImageProvider.loadFileAsync(url: url, completion:{
+                path, error in
+                
+                print("PDF File downloaded to : \(path!)")
+                if let path = path, let url = URL(string: path){
+                    self.coverImageView.loadImage(from: url)
+                }
+                
+            } )
+        }
+        
+    }
+    
+//    public func setGifImage() {
+//
+//        if let cover = self.model?.cover {
+//
+//
+//
+//            gifImageProvider.getGIFImage(key: cover) { [weak self] image in
+//                self?.coverImageView.image = image
+//                self?.gifState = .playing
+//            }
+//        }
+//    }
+    
+//    public func changeState() {
+//        if gifState == .playing {
+//            setStaticImage()
+//        } else {
+//            setGifImage()
+//        }
+//    }
     
     public func setHighlighted(_ highlighted: Bool) {
         self.alphaOverlayView.isHidden = !highlighted
     }
     
     public func clear() {
-        coverImageView.image = nil
+        //coverImageView.removeFromSuperview()
         rowView.prepareForReuse()
     }
     
@@ -99,6 +165,7 @@ public class MLBusinessCoverCarouselItemView: UIView {
         addSubview(alphaOverlayView)
         addSubview(coverImageView)
         addSubview(rowView)
+        addSubview(mainTitleLabel)
     }
     
     private func setupConstraints() {
@@ -122,6 +189,13 @@ public class MLBusinessCoverCarouselItemView: UIView {
             rowView.leadingAnchor.constraint(equalTo: leadingAnchor),
             rowView.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
+        
+        
+        NSLayoutConstraint.activate([
+            mainTitleLabel.centerXAnchor.constraint(equalTo: coverImageView.centerXAnchor),
+            mainTitleLabel.centerYAnchor.constraint(equalTo: coverImageView.centerYAnchor),
+        ])
+        
     }
 }
 

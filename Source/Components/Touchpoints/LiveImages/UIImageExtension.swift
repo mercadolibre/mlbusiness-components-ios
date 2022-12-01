@@ -80,7 +80,7 @@ extension UIImage {
         delay = delayObject as! Double
         
         if delay < 0.1 {
-            delay = 0.1
+            delay = 0.05
         }
         
         return delay

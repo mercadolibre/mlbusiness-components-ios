@@ -11,4 +11,6 @@ public protocol MLBusinessImageProvider: class {
     func getImage(key: String, completion: @escaping (UIImage?) -> Void)
     
     func getGIFImage(key: String, completion: @escaping (UIImage?) -> Void)
+    
+    func loadFileAsync(url: URL, completion: @escaping (String?, Error?) -> Void)
 }

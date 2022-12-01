@@ -73,6 +73,10 @@ class MLBusinessCoverCarouselViewCell: UICollectionViewCell {
     func update(with content: MLBusinessCoverCarouselItemContentModel) {
         itemView.update(with: content)
     }
+    
+    public func changeAnimationState() {
+        //itemView.changeState()
+    }
 
     private func setup() {
         mainContentView.layer.borderColor = UIColor(white: 155.0/255.0, alpha: 0.1).cgColor
