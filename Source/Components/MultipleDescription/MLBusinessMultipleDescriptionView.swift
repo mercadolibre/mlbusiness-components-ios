@@ -10,7 +10,7 @@ import MLUI
 
 public class MLBusinessMultipleDescriptionView: UIView {
     private let defaultSizeKey = "Default"
-    
+
     private let multipleDescriptionStackView: UIStackView = {
         let stackView = UIStackView(frame: .zero)
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -56,6 +56,7 @@ public class MLBusinessMultipleDescriptionView: UIView {
             let size = size ?? defaultSizeKey
             let itemContent = item.getContent()
             let itemColor = item.getColor()?.hexaToUIColor()
+            let itemStyle = item.getStyle()
             switch item.getType().lowercased() {
             case "image":
                 let imageView = createMainDescriptionImage(with: itemContent, imageColor: itemColor)
@@ -63,7 +64,7 @@ public class MLBusinessMultipleDescriptionView: UIView {
                 imageView.heightAnchor.constraint(equalToConstant: getImageSize(size)).isActive = true
                 imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor).isActive = true
             case "text":
-                let label = createMainDescriptionLabel(with: itemContent, textColor: itemColor, fontSize: size)
+                let label = createMainDescriptionLabel(with: itemContent, textColor: itemColor, itemStyle: itemStyle, fontSize: size)
                 multipleDescriptionStackView.addArrangedSubview(label)
             default:
                 break
@@ -82,14 +83,33 @@ public class MLBusinessMultipleDescriptionView: UIView {
         return imageView
     }
     
-    private func createMainDescriptionLabel(with text: String, textColor: UIColor?, fontSize: String) -> UILabel{
+    private func createMainDescriptionLabel(with text: String, textColor: UIColor?, compressible: Bool? = false, itemStyle: MlBusinessMultipleDescriptionStyleModel? = nil, fontSize: String) -> UILabel {
         let label = UILabel(frame: .zero)
         label.numberOfLines = 1
-        label.font = MLStyleSheetManager.styleSheet.regularSystemFont(ofSize: getFontSize(fontSize))
+        label.font = getFont(with: itemStyle?.getFontWeight(), and: fontSize)
         label.textAlignment = .left
         label.text = text
         label.textColor = textColor
+        label.accessibilityLabel = AccessibilityUtils.formatCurrencyForAccessibility(with: text)
+
+        if compressible ?? false {
+            label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        }
         return label
+    }
+    
+    private func getFont(with weight: String?, and size: String?) -> UIFont {
+        let size = size ?? defaultSizeKey
+        let fontSize = getFontSize(size)
+        let fontWeight = weight ?? defaultSizeKey
+        switch fontWeight.uppercased() {
+        case "BOLD":
+            return MLStyleSheetManager.styleSheet.boldSystemFont(ofSize: fontSize)
+        case "SEMIBOLD":
+            return MLStyleSheetManager.styleSheet.semiboldSystemFont(ofSize: fontSize)
+        default:
+            return MLStyleSheetManager.styleSheet.regularSystemFont(ofSize: fontSize)
+        }
     }
     
     private func getFontSize(_ size: String) -> CGFloat {
