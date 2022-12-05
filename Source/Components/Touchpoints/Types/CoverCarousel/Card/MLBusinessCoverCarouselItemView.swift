@@ -133,6 +133,7 @@ public class MLBusinessCoverCarouselItemView: UIView {
             self.coverImageView.loadImage(from: url)
             print("START LOADING")
         }
+        coverImageView.isHidden = true
 //
 //        if let cover = self.model?.cover, let url = URL(string: cover){
 //
@@ -240,7 +241,8 @@ extension MLBusinessCoverCarouselItemView: WKNavigationDelegate {
     
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         print("FINISH LOADING")
-        thumbnailImageView.isHidden = false
+        thumbnailImageView.isHidden = true
+        coverImageView.isHidden = false
     }
     
     
