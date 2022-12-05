@@ -7,6 +7,7 @@
 
 import UIKit
 import MLUI
+import WebKit
 
 enum GifState {
     case playing
@@ -45,14 +46,37 @@ public class MLBusinessCoverCarouselItemView: UIView {
     
     private lazy var coverImageView: ImagePlaybackView = {
         let imageView = ImagePlaybackView()
-        
+
+        imageView.webview.navigationDelegate = self
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.backgroundColor = MLStyleSheetManager.styleSheet.lightGreyColor
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
-        
+
         return imageView
     }()
+    
+//    private lazy var coverImageView: UIImageView = {
+//        let imageView = UIImageView()
+//
+//        imageView.translatesAutoresizingMaskIntoConstraints = false
+//        imageView.backgroundColor = MLStyleSheetManager.styleSheet.lightGreyColor
+//        imageView.clipsToBounds = true
+//        imageView.contentMode = .scaleAspectFill
+//
+//        return imageView
+//    }()
+    
+        private lazy var thumbnailImageView: UIImageView = {
+            let imageView = UIImageView()
+    
+            imageView.translatesAutoresizingMaskIntoConstraints = false
+            imageView.backgroundColor = MLStyleSheetManager.styleSheet.lightGreyColor
+            imageView.clipsToBounds = true
+            imageView.contentMode = .scaleAspectFill
+    
+            return imageView
+        }()
     
     private lazy var rowView: MLBusinessRowView = {
         return MLBusinessRowView()
@@ -84,35 +108,40 @@ public class MLBusinessCoverCarouselItemView: UIView {
         clear()
         
         model = item
-        setImageWEBview()
+        setStaticImage()
         
         let rowModel = mapper.map(from: item)
         rowView.update(with: rowModel)
     }
     
-//    public func setStaticImage() {
-//        if let cover = self.model?.cover {
-//            imageProvider.getImage(key: cover) { [weak self] image in
-//                self?.coverImageView.image = image
-//                self?.gifState = .stoped
-//            }
-//        }
-//    }
-//
+    public func setStaticImage() {
+        if let cover = self.model?.cover {
+            imageProvider.getImage(key: cover) { [weak self] image in
+                self?.thumbnailImageView.image = image
+                self?.gifState = .stoped
+            }
+        }
+        coverImageView.isHidden = true
+        
+        setImageWEBview()
+    }
+
     public func setImageWEBview() {
         
         if let cover = self.model?.cover, let url = URL(string: cover){
-            gifImageProvider.loadFileAsync(url: url, completion:{
-                path, error in
-                
-                print("PDF File downloaded to : \(path!)")
-                if let path = path, let url = URL(string: path){
-                    self.coverImageView.loadImage(from: url)
-                }
-                
-            } )
+            
+            self.coverImageView.loadImage(from: url)
+            print("START LOADING")
         }
-        
+//
+//        if let cover = self.model?.cover, let url = URL(string: cover){
+//
+//            gifImageProvider.getGIFImage(key: cover) { [weak self] image in
+//                            self?.coverImageView.image = image
+//                            self?.gifState = .playing
+//            }
+//
+//        }
     }
     
 //    public func setGifImage() {
@@ -166,6 +195,7 @@ public class MLBusinessCoverCarouselItemView: UIView {
         addSubview(coverImageView)
         addSubview(rowView)
         addSubview(mainTitleLabel)
+        addSubview(thumbnailImageView)
     }
     
     private func setupConstraints() {
@@ -184,6 +214,13 @@ public class MLBusinessCoverCarouselItemView: UIView {
         ])
         
         NSLayoutConstraint.activate([
+            thumbnailImageView.topAnchor.constraint(equalTo: topAnchor),
+            thumbnailImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            thumbnailImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            thumbnailImageView.heightAnchor.constraint(equalToConstant: MLBusinessCoverCarouselItemView.coverHeight)
+        ])
+        
+        NSLayoutConstraint.activate([
             rowView.topAnchor.constraint(equalTo: coverImageView.bottomAnchor),
             rowView.bottomAnchor.constraint(equalTo: bottomAnchor),
             rowView.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -197,5 +234,15 @@ public class MLBusinessCoverCarouselItemView: UIView {
         ])
         
     }
+}
+
+extension MLBusinessCoverCarouselItemView: WKNavigationDelegate {
+    
+    public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        print("FINISH LOADING")
+        thumbnailImageView.isHidden = false
+    }
+    
+    
 }
 

@@ -16,6 +16,7 @@ public protocol MLBusinessCoverCarouselViewDelegate: class {
 public class MLBusinessCoverCarouselView: UIView {
     private var imageProvider: MLBusinessImageProvider?
     private var collectionViewHeightConstraint: NSLayoutConstraint?
+    private var currentFocusCell: MLBusinessCoverCarouselViewCell?
     
     private var model: MLBusinessCoverCarouselModel?
 
@@ -30,13 +31,18 @@ public class MLBusinessCoverCarouselView: UIView {
         return layout
     }()
     
+    lazy var collectionViewHelper: CarouselCollectionViewHelper = {
+        let helper = CarouselCollectionViewHelper()
+        helper.delegate = self
+        return helper
+    }()
+    
     private lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.decelerationRate = .fast
         collectionView.backgroundColor = .clear
-        collectionView.contentInset = .init(top: 0, left: 16, bottom: 0, right: 16)
         collectionView.alwaysBounceHorizontal = true
         collectionView.clipsToBounds = false
         collectionView.showsHorizontalScrollIndicator = false
@@ -45,7 +51,7 @@ public class MLBusinessCoverCarouselView: UIView {
         collectionView.register(MLBusinessCoverCarouselViewCell.self,
                                 forCellWithReuseIdentifier: MLBusinessCoverCarouselViewCell.reuseIdentifier)
         collectionView.dataSource = self
-        collectionView.delegate = self
+        collectionView.delegate = collectionViewHelper
         
         return collectionView
     }()
@@ -56,7 +62,7 @@ public class MLBusinessCoverCarouselView: UIView {
         }
     }
     
-    var cardWidth: CGFloat = UIScreen.main.bounds.width - 32
+    var cardWidth: CGFloat = UIScreen.main.bounds.width - 60
     
     public weak var delegate: MLBusinessCoverCarouselViewDelegate?
     
@@ -68,6 +74,12 @@ public class MLBusinessCoverCarouselView: UIView {
     
     public var visibleItems: [MLBusinessCoverCarouselItemModel]? {
         return collectionView.indexPathsForVisibleItems.compactMap({ items[$0.item] })
+    }
+    
+    private func getItemCardWidth() -> CGFloat {
+        let cardWidth = UIScreen.main.bounds.width - collectionViewHelper.leftCellPeekWidth - collectionViewHelper.rightCellPeekWidth - 32
+
+        return cardWidth
     }
     
     public init(with imageProvider: MLBusinessImageProvider? = nil) {
@@ -96,6 +108,8 @@ public class MLBusinessCoverCarouselView: UIView {
     }
     
     private func setupView() {
+        collectionViewHelper.edgeInset = 16
+        collectionView.configureForPeekingDelegate()
         translatesAutoresizingMaskIntoConstraints = false
         
         addSubview(collectionView)
@@ -173,10 +187,29 @@ extension MLBusinessCoverCarouselView: UICollectionViewDelegate {
     private func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
         return shouldHighlightItems
     }
+    
+    func carouselDelegateDidScrollToItem(_ carouselDelegate: CarouselCollectionViewHelper) {
+        var currentIndex = IndexPath(indexes: [0,collectionViewHelper.currentActiveIndex])
+        
+//        if let cell = currentFocusCell {
+//            cell.changeAnimationState()
+//            currentFocusCell = self.collectionView.cellForItem(at: currentIndex) as? MLBusinessCoverCarouselViewCell
+//            currentFocusCell?.changeAnimationState()
+//        } else {
+//            let firstIndex = IndexPath(indexes: [0,0])
+//            currentFocusCell = self.collectionView.cellForItem(at: firstIndex) as? MLBusinessCoverCarouselViewCell
+//            currentFocusCell?.changeAnimationState()
+//        }
+    }
+    
 }
 
 extension MLBusinessCoverCarouselView: UIScrollViewDelegate {
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         delegate?.coverCarouselView(self, didFinishScrolling: visibleItems)
     }
+}
+
+extension MLBusinessCoverCarouselView: CarouselCollectionViewHelperDelegate {
+    
 }

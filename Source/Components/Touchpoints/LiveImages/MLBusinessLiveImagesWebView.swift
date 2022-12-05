@@ -36,7 +36,7 @@ class ViewController: UIViewController {
 
 class ImagePlaybackView: UIView {
     
-    private let webview = WKWebView()
+    let webview = WKWebView()
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
