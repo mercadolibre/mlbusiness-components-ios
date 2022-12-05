@@ -41,11 +41,11 @@ class RowData: NSObject, MLBusinessRowData {
     
     func getMainSecondaryDescription() -> [MLBusinessMultipleDescriptionModel]? {
         
-        return [MLBusinessMultipleDescriptionModel(type: "image", content: "https://i.ibb.co/bWSWDHc/icon-delivery-android.png", color: "#00a650"),
-            MLBusinessMultipleDescriptionModel(type: "text", content: "Compra mínima $ 2.500", color: "#333333"),
-            MLBusinessMultipleDescriptionModel(type: "text", content: " · ", color: "#00a650"),
-            MLBusinessMultipleDescriptionModel(type: "image", content: "https://i.ibb.co/n8gJqYk/icon-pickup-android.png", color: "#00a650"),
-            MLBusinessMultipleDescriptionModel(type: "text", content: "Retiro", color: "#00a650"),]
+        return [MLBusinessMultipleDescriptionModel(type: "image", content: "https://i.ibb.co/bWSWDHc/icon-delivery-android.png", color: "#00a650", accessibilityDescription: nil),
+                MLBusinessMultipleDescriptionModel(type: "text", content: "Compra mínima $ 2.500", color: "#333333", accessibilityDescription: "La compra minima es de $2500 "),
+                MLBusinessMultipleDescriptionModel(type: "text", content: " · ", color: "#00a650", accessibilityDescription: nil),
+            MLBusinessMultipleDescriptionModel(type: "image", content: "https://i.ibb.co/n8gJqYk/icon-pickup-android.png", color: "#00a650", accessibilityDescription: nil),
+            MLBusinessMultipleDescriptionModel(type: "text", content: "Retiro", color: "#00a650", accessibilityDescription: nil)]
     }
     
     func getStatusDescription() -> [MLBusinessMultipleDescriptionModel]? {
@@ -176,7 +176,7 @@ class ClosedRowData: RowData {
     }
     
     override func getStatusDescription() -> [MLBusinessMultipleDescriptionModel]? {
-        return [MLBusinessMultipleDescriptionModel(type: "text", content: "Cerrado · Abre el lunes", color: "#FF7733")]
+        return [MLBusinessMultipleDescriptionModel(type: "text", content: "Cerrado · Abre el lunes", color: "#FF7733", accessibilityDescription: nil)]
     }
     
     override func getRightLabelStatus() -> String? {
