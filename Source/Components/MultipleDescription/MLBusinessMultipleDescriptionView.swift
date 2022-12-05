@@ -57,6 +57,7 @@ public class MLBusinessMultipleDescriptionView: UIView {
             let itemContent = item.getContent()
             let itemColor = item.getColor()?.hexaToUIColor()
             let itemStyle = item.getStyle()
+            let itemAccessibilityDescription = item.getAccessibilityDescription()
             switch item.getType().lowercased() {
             case "image":
                 let imageView = createMainDescriptionImage(with: itemContent, imageColor: itemColor)
@@ -64,7 +65,7 @@ public class MLBusinessMultipleDescriptionView: UIView {
                 imageView.heightAnchor.constraint(equalToConstant: getImageSize(size)).isActive = true
                 imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor).isActive = true
             case "text":
-                let label = createMainDescriptionLabel(with: itemContent, textColor: itemColor, itemStyle: itemStyle, fontSize: size)
+                let label = createMainDescriptionLabel(with: itemContent, textColor: itemColor, itemStyle: itemStyle, fontSize: size, accessibilityDescription: itemAccessibilityDescription)
                 multipleDescriptionStackView.addArrangedSubview(label)
             default:
                 break
@@ -83,14 +84,16 @@ public class MLBusinessMultipleDescriptionView: UIView {
         return imageView
     }
     
-    private func createMainDescriptionLabel(with text: String, textColor: UIColor?, compressible: Bool? = false, itemStyle: MlBusinessMultipleDescriptionStyleModel? = nil, fontSize: String) -> UILabel {
+    private func createMainDescriptionLabel(with text: String, textColor: UIColor?, compressible: Bool? = false, itemStyle: MlBusinessMultipleDescriptionStyleModel? = nil, fontSize: String,
+                                            accessibilityDescription: String?) -> UILabel {
+        let accessibilityLabel = accessibilityDescription ?? text
         let label = UILabel(frame: .zero)
         label.numberOfLines = 1
         label.font = getFont(with: itemStyle?.getFontWeight(), and: fontSize)
         label.textAlignment = .left
         label.text = text
         label.textColor = textColor
-        label.accessibilityLabel = AccessibilityUtils.formatCurrencyForAccessibility(with: text)
+        label.accessibilityLabel = AccessibilityUtils.formatCurrencyForAccessibility(with: accessibilityLabel)
 
         if compressible ?? false {
             label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
