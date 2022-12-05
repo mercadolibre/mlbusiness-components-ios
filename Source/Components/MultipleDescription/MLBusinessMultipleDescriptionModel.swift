@@ -14,17 +14,20 @@ import Foundation
     private let color: String?
     private let compressible: Bool?
     private let style: MlBusinessMultipleDescriptionStyleModel?
+    private let accessibilityDescription: String?
 
     public init(type: String,
                 content: String,
                 color: String?,
                 compressible: Bool? = false,
-                style: MlBusinessMultipleDescriptionStyleModel? = nil) {
+                style: MlBusinessMultipleDescriptionStyleModel? = nil,
+                accessibilityDescription: String?) {
         self.type = type
         self.content = content
         self.color = color
         self.compressible = compressible
         self.style = style
+        self.accessibilityDescription = accessibilityDescription
     }
     
     public init(data: MLBusinessRowMainDescriptionData) {
@@ -33,6 +36,7 @@ import Foundation
         self.color = data.getColor()
         self.compressible = false
         self.style = nil
+        self.accessibilityDescription = nil
     }
     
     public func getType() -> String {
@@ -53,6 +57,10 @@ import Foundation
     
     public func getStyle() -> MlBusinessMultipleDescriptionStyleModel? {
         return style
+    }
+    
+    public func getAccessibilityDescription() -> String? {
+        return accessibilityDescription
     }
 }
 
