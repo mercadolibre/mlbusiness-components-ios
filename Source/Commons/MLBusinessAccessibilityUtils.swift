@@ -15,7 +15,7 @@ struct AccessibilityUtils {
         } else if string.contains("$") {
             return string.formatPesoCurrencyForAccessibility()
         } else {
-            return nil
+            return string
         }
     }
 }
