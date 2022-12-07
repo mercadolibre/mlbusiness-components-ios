@@ -1,3 +1,8 @@
+## [Unreleased]
+### Modified
+- FlexCoverCarousel - Se unifica el color del gradiente con respecto del sólido que lo continúa.
+- FlexCoverCarousel - Se soporta que la card solo tenga imagen 
+
 ## [1.48.0] - 2022-11-30
 ### Modified
 - Se realizan ajustes de accesibilidad en la MultipleDescriptionView para que la moneda sea interpretada como "peso" o "real" por el VoiceOver y no como "dolar".
