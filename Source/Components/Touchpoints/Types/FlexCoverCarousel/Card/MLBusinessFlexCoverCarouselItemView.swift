@@ -156,12 +156,10 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         let color = colorString?.hexaToUIColor()
         let startColor = color?.withAlphaComponent(0)
         let endColor = color?.withAlphaComponent(1)
-        let defaultStartColor = defaultGradientColor
-        let defaultEndColor = defaultGradientColor.withAlphaComponent(1)
         
         gradientLayer.frame = gradientView.bounds
-        gradientLayer.colors = [startColor?.cgColor ?? defaultStartColor,
-                                endColor?.cgColor ?? defaultEndColor]
+        gradientLayer.colors = [startColor?.cgColor ?? defaultGradientColor,
+                                endColor?.cgColor ?? defaultGradientColor.withAlphaComponent(1)]
 
         if gradientLayer.superlayer == nil {
             gradientView.layer.insertSublayer(gradientLayer, at: 0)
