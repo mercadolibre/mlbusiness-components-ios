@@ -12,6 +12,7 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
     fileprivate enum Layout {}
     static let coverHeight: CGFloat = 104
     static let containerHeight: CGFloat = 56
+    let defaultGradientColor = UIColor(red: 0.122, green: 0.161, blue: 0.239, alpha: 0)
     var imageProvider: MLBusinessImageProvider
     
     private lazy var alphaOverlayView: UIView = {
@@ -108,6 +109,9 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         rightBottomInfo.layer.cornerRadius = 8
         return rightBottomInfo
     }()
+    
+    private lazy var mainCardDefaultHeightConstraint = mainCardContainerView.heightAnchor.constraint(equalToConstant:MLBusinessFlexCoverCarouselItemView.containerHeight)
+    
 
     private func createMainTitleTop(with text: String?, color: String?) {
         guard let mainTitleTopText = text else { return }
@@ -148,12 +152,15 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         bottomPillView.isHidden = false
     }
     
-    private func createGradientView() {
-        let start = UIColor(red: 0.122, green: 0.161, blue: 0.239, alpha: 0)
-        let end = UIColor(red: 0.122, green: 0.161, blue: 0.239, alpha: 1)
+    private func createGradientView(with color: UIColor? ) {
+        let startColor = color?.withAlphaComponent(0)
+        let endColor = color?.withAlphaComponent(1)
+        let defaultStartColor = defaultGradientColor
+        let defaultEndColor = defaultGradientColor.withAlphaComponent(1)
         
         gradientLayer.frame = gradientView.bounds
-        gradientLayer.colors = [start.cgColor, end.cgColor]
+        gradientLayer.colors = [startColor?.cgColor ?? defaultStartColor,
+                                endColor?.cgColor ?? defaultEndColor]
 
         if gradientLayer.superlayer == nil {
             gradientView.layer.insertSublayer(gradientLayer, at: 0)
@@ -215,8 +222,13 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
             }
         }
         
-        if let colorString = item.backgroundColor {
-            mainCardContainerView.backgroundColor =  colorString.hexaToUIColor()
+        if let colorString = item.backgroundColor, colorString != "" {
+            let color = colorString.hexaToUIColor()
+            mainCardDefaultHeightConstraint.constant = MLBusinessFlexCoverCarouselItemView.containerHeight
+            createGradientView(with: color)
+            mainCardContainerView.backgroundColor = color
+        } else {
+            mainCardDefaultHeightConstraint.constant = 0
         }
     
         createMainSection(with: item)
@@ -239,7 +251,6 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         addSubview(coverImageView)
         coverImageView.addSubview(gradientView)
         addSubview(mainCardContainerView)
-        createGradientView()
         addSubview(alphaOverlayView)
         addSubview(bottomPillView)
         bottomPillView.addSubview(pillLabel)
@@ -269,7 +280,7 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
             mainCardContainerView.bottomAnchor.constraint(equalTo: bottomAnchor),
             mainCardContainerView.leadingAnchor.constraint(equalTo: coverImageView.leadingAnchor),
             mainCardContainerView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            mainCardContainerView.heightAnchor.constraint(equalToConstant:MLBusinessFlexCoverCarouselItemView.containerHeight),
+            mainCardDefaultHeightConstraint,
             
             headerContainer.bottomAnchor.constraint(equalTo: mainDescriptionLabel.topAnchor, constant: -4),
             headerContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
@@ -307,6 +318,7 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         mainDescriptionLabel.text = nil
         mainTitleTopLabel.text = nil
         pillLabel.text = nil
+        gradientLayer.superlayer?.sublayers?.remove(at: 0)
     }
 }
 
