@@ -271,4 +271,9 @@ public class MLBusinessDynamicCoverCarouselItemView: UIView {
         footerView.subviews.forEach { $0.removeFromSuperview() }
         footerView.backgroundColor = itemConstants.footerBackgroundColor.hexaToUIColor()
     }
+    
+    
+    public func applyAlphaBackgroundImageView(alpha: CGFloat) {
+        backgroundImageView.alpha = alpha
+    }
 }
