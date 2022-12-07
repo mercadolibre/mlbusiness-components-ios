@@ -152,7 +152,8 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         bottomPillView.isHidden = false
     }
     
-    private func createGradientView(with color: UIColor? ) {
+    private func createGradientView(with colorString: String? ) {
+        let color = colorString.hexaToUIColor()
         let startColor = color?.withAlphaComponent(0)
         let endColor = color?.withAlphaComponent(1)
         let defaultStartColor = defaultGradientColor
@@ -223,9 +224,8 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         }
         
         if let colorString = item.backgroundColor, colorString != "" {
-            let color = colorString.hexaToUIColor()
             mainCardDefaultHeightConstraint.constant = MLBusinessFlexCoverCarouselItemView.containerHeight
-            createGradientView(with: color)
+            createGradientView(with: colorString)
             mainCardContainerView.backgroundColor = color
         } else {
             mainCardDefaultHeightConstraint.constant = 0
