@@ -225,7 +225,6 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         
         if let colorString = item.backgroundColor,
             !colorString.isEmpty {
-            mainCardDefaultHeightConstraint.constant = MLBusinessFlexCoverCarouselItemView.containerHeight
             createGradientView(with: colorString)
             mainCardContainerView.backgroundColor = colorString.hexaToUIColor()
         } else {
@@ -320,6 +319,7 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         mainTitleTopLabel.text = nil
         pillLabel.text = nil
         gradientLayer.superlayer?.sublayers?.remove(at: 0)
+        mainCardDefaultHeightConstraint.constant = MLBusinessFlexCoverCarouselItemView.containerHeight
     }
 }
 
