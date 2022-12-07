@@ -223,7 +223,8 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
             }
         }
         
-        if let colorString = item.backgroundColor, colorString != "" {
+        if let colorString = item.backgroundColor,
+            !colorString.isEmpty {
             mainCardDefaultHeightConstraint.constant = MLBusinessFlexCoverCarouselItemView.containerHeight
             createGradientView(with: colorString)
             mainCardContainerView.backgroundColor = colorString.hexaToUIColor()
