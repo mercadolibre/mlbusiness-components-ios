@@ -10,6 +10,7 @@ import Foundation
 public struct MLBusinessDynamicCoverCarouselItemModel: Codable {
     private let backgroundColor: String?
     private let imageHeader: String?
+    private let coverMultimedia: MLBusinessLiveImagesModel?
     private let link: String?
     private let topContent: [MLBusinessDynamicCarouselBadgeModel]?
     private let mainDescriptionLeft: [MLBusinessMultipleDescriptionModel]?
@@ -20,6 +21,7 @@ public struct MLBusinessDynamicCoverCarouselItemModel: Codable {
     
     public init(backgroundColor: String?,
                 imageHeader: String?,
+                coverMultimedia: MLBusinessLiveImagesModel?,
                 link: String?,
                 topContent: [MLBusinessDynamicCarouselBadgeModel]?,
                 mainDescriptionLeft: [MLBusinessMultipleDescriptionModel]?,
@@ -30,6 +32,7 @@ public struct MLBusinessDynamicCoverCarouselItemModel: Codable {
         
         self.backgroundColor = backgroundColor
         self.imageHeader = imageHeader
+        self.coverMultimedia = coverMultimedia
         self.link = link
         self.topContent = topContent
         self.mainSecondaryDescription = mainSecondaryDescription
@@ -45,6 +48,10 @@ public struct MLBusinessDynamicCoverCarouselItemModel: Codable {
     
     public func getImageHeader() -> String? {
         return imageHeader
+    }
+    
+    public func getCoverMultimedia() -> MLBusinessLiveImagesModel? {
+        return coverMultimedia
     }
     
     public func getLink() -> String? {

@@ -18,11 +18,12 @@ public class MLBusinessDynamicCoverCarouselItemView: UIView {
             mainDescriptionLeftView.imageProvider = imageProvider
             mainDescriptionRightView.imageProvider = imageProvider
             mainSecondaryDescriptionView.imageProvider = imageProvider
+            backgroundImageView.imageProvider = imageProvider
         }
     }
-    
-    private lazy var backgroundImageView: UIImageView = {
-        let image = UIImageView()
+        
+    private lazy var backgroundImageView: MLBusinessLiveImagesView = {
+        let image = MLBusinessLiveImagesView()
         image.translatesAutoresizingMaskIntoConstraints = false
         image.backgroundColor = itemConstants.backgroundColor.hexaToUIColor()
         image.contentMode = .scaleAspectFill
@@ -197,11 +198,13 @@ public class MLBusinessDynamicCoverCarouselItemView: UIView {
             buildTopContent(with: badges)
         }
         
-        if let cover = content.getImageHeader() {
-            imageProvider.getImage(key: cover) { [weak self] image in
-                self?.backgroundImageView.image = image
-            }
-        }
+        
+        //Para probar
+        let coverMedia = MLBusinessLiveImagesModel(thumbnail: "https://http2.mlstatic.com/D_NQ_NP_838939-MLA49387076396_032022-F.jpg", mediaLink: "https://http2.mlstatic.com/storage/pm-media/delivery-media/webp/sellers/1/burger-x-0184ee54-4ee0-77b1-9a55-8a945c7fe90a.webp")
+        
+        backgroundImageView.update(coverMedia: coverMedia, cover: content.getImageHeader())
+        backgroundImageView.playAnimation()
+        
         
         if let footer = content.getFooterContent() {
             footerView.backgroundColor = footer.getBackgroundColor()?.hexaToUIColor()
@@ -264,7 +267,6 @@ public class MLBusinessDynamicCoverCarouselItemView: UIView {
     }
     
     public func clear() {
-        backgroundImageView.image = nil
         topContentStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         mainDescriptionStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         mainStackViewBottomConstraint.constant = 10
