@@ -10,19 +10,15 @@ import UIKit
 import WebKit
 
 
-protocol MLBusinessLiveImagesWebViewDelegate {
-    func didFinishLoadingWebView()
-}
-
 class MLBusinessLiveImagesWebView: UIView {
+    
+    var liveImageDelegate: LiveImageViewModelDelegate?
     
     private lazy var webview: WKWebView = {
         let view = WKWebView()
         view.navigationDelegate = self
         return view
     }()
-    
-    var delegate: MLBusinessLiveImagesWebViewDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
@@ -97,8 +93,23 @@ class MLBusinessLiveImagesWebView: UIView {
             let s = html.replacingOccurrences(of: "[URL]", with: url)
             webview.loadHTMLString(s, baseURL: nil)
     }
+    
+    func clear() {
+        HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
+        
+        WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
+            records.forEach { record in
+                WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {})
+            }
+        }
+    }
+    
 }
 
 extension MLBusinessLiveImagesWebView: WKNavigationDelegate {
-        
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        liveImageDelegate?.changeState(to: .playing)
+    }
 }
+

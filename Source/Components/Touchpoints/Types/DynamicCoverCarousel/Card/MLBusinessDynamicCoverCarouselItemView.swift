@@ -198,14 +198,8 @@ public class MLBusinessDynamicCoverCarouselItemView: UIView {
             buildTopContent(with: badges)
         }
         
-        
-        //Para probar
-        let coverMedia = MLBusinessLiveImagesModel(thumbnail: "https://http2.mlstatic.com/D_NQ_NP_838939-MLA49387076396_032022-F.jpg", mediaLink: "https://http2.mlstatic.com/storage/pm-media/delivery-media/webp/sellers/1/burger-x-0184ee54-4ee0-77b1-9a55-8a945c7fe90a.webp")
-        
-        backgroundImageView.update(coverMedia: coverMedia, cover: content.getImageHeader())
-        backgroundImageView.playAnimation()
-        
-        
+        backgroundImageView.update(coverMedia: content.getCoverMultimedia(), cover: content.getImageHeader())
+            
         if let footer = content.getFooterContent() {
             footerView.backgroundColor = footer.getBackgroundColor()?.hexaToUIColor()
             footerLabel.textColor = footer.getTextColor()?.hexaToUIColor()

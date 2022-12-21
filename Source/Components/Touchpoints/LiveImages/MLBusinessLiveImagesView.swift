@@ -16,17 +16,22 @@ enum MLBusinessLiveImagesState {
 protocol MLBusinessLiveImagesHelper {
     func playAnimation()
     func stopAnimation()
-    func changeState()
 }
 
 class MLBusinessLiveImagesView: UIView {
     
-    var imageProvider: MLBusinessImageProvider
+    var imageProvider: MLBusinessImageProvider {
+        didSet {
+            viewModel.imageProvider = imageProvider
+        }
+    }
     var liveImageState: MLBusinessLiveImagesState = .stoped
+    var viewModel = MLBusinessLiveImagesViewModel()
     
     public init(with imageProvider: MLBusinessImageProvider? = nil) {
         self.imageProvider = imageProvider ?? MLBusinessURLImageProvider()
         super.init(frame: .zero)
+        viewModel.delegate = self
         setup()
         setupConstraints()
     }
@@ -40,6 +45,9 @@ class MLBusinessLiveImagesView: UIView {
         isUserInteractionEnabled = false
         addSubview(thumbnailImage)
         addSubview(liveImage)
+        
+        liveImage.isHidden = viewModel.shouldHideAnimation(state: liveImageState)
+        thumbnailImage.isHidden =  viewModel.shouldHideThumbnail(state: liveImageState)
     }
     
     private func setupConstraints() {
@@ -59,7 +67,6 @@ class MLBusinessLiveImagesView: UIView {
         ])
     }
     
-    
     private lazy var thumbnailImage: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -73,73 +80,55 @@ class MLBusinessLiveImagesView: UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
+        view.liveImageDelegate = self
         return view
     }()
     
-    
-    
     func update(coverMedia: MLBusinessLiveImagesModel?, cover: String?){
-        
-        clear()
-        
-        if let coverMedia = coverMedia {
-            setAnimatedImage(media: coverMedia)
-            
-        } else if let cover = cover {
-            imageProvider.getImage(key: cover) { [weak self] image in
-                self?.thumbnailImage.image = image
-            }
-        }
+        viewModel.update(coverMedia: coverMedia, cover: cover)
     }
     
-    private func setAnimatedImage(media: MLBusinessLiveImagesModel) {
-        if let thumbnail = media.getThumbnail(), let media = media.getMediaLink(){
-            imageProvider.getImage(key: thumbnail) { [weak self] image in
-                self?.thumbnailImage.image = image
-            }
-            
-            liveImage.loadImage(from: media)
-        }
+
+}
+
+extension MLBusinessLiveImagesView: MLBusinessLiveImagesHelper {
+    
+    func playAnimation() {
+        
+        changeState(to: .playing)
     }
-           
-    private func clear() {
-        thumbnailImage.image = nil
+    
+    func stopAnimation() {
+        changeState(to: .stoped)
     }
     
 }
 
-extension MLBusinessLiveImagesView: MLBusinessLiveImagesHelper {
-    func changeState() {
-        self.liveImageState = liveImageState == .stoped ? .playing : .stoped
-        playStopLiveImage(liveImageState: liveImageState)
+extension MLBusinessLiveImagesView: LiveImageViewModelDelegate {
+    func setStaticImage(with image: UIImage) {
+        thumbnailImage.image = image
     }
     
-    func playAnimation() {
+    func setAnimatedImage(with url: String) {
+        liveImage.loadImage(from: url)
+    }
+    
+    func changeState(to state: MLBusinessLiveImagesState) {
+        liveImageState = state
         
         UIView.transition(with: self.liveImage,
                                       duration: 1,
                                       options: .transitionCrossDissolve,
                                       animations: {
-            self.liveImage.isHidden = false
-            self.thumbnailImage.isHidden = true
+            self.thumbnailImage.isHidden = self.viewModel.shouldHideThumbnail(state:self.liveImageState)
+            self.liveImage.isHidden = self.viewModel.shouldHideAnimation(state: self.liveImageState)
                                         },
                                       completion: nil)
     }
     
-    func stopAnimation() {
-        thumbnailImage.isHidden = false
-        liveImage.isHidden = true
+    func clear() {
+        thumbnailImage.image = nil
+        liveImage.clear()
     }
-    
-    private func playStopLiveImage(liveImageState: MLBusinessLiveImagesState ) {
-        
-        switch(liveImageState) {
-        case .stoped:
-            stopAnimation()
-        case .playing:
-           playAnimation()
-        }
-        
-    }
-    
+
 }
