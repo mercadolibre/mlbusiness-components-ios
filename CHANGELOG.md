@@ -1,4 +1,4 @@
-## [Unreleased]
+## [1.49.0] - 2022-12-7
 ### Modified
 - FlexCoverCarousel - Se unifica el color del gradiente con respecto del sólido que lo continúa.
 - FlexCoverCarousel - Se soporta que la card solo tenga imagen 
