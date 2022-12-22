@@ -12,10 +12,13 @@ import WebKit
 
 class MLBusinessLiveImagesWebView: UIView {
     
-    var liveImageDelegate: LiveImageViewModelDelegate?
+    weak var liveImageDelegate: LiveImageViewModelDelegate?
     
     private lazy var webview: WKWebView = {
         let view = WKWebView()
+        view.backgroundColor = .white
+        view.scrollView.showsVerticalScrollIndicator = false
+        view.scrollView.showsHorizontalScrollIndicator = false
         view.navigationDelegate = self
         return view
     }()
@@ -23,6 +26,7 @@ class MLBusinessLiveImagesWebView: UIView {
     override init(frame: CGRect) {
         super.init(frame: .zero)
         setup()
+        setupConstraints()
     }
     
     @available(*, unavailable)
@@ -33,19 +37,17 @@ class MLBusinessLiveImagesWebView: UIView {
     private func setup() {
         backgroundColor = .white
         isUserInteractionEnabled = false
-        
-        webview.translatesAutoresizingMaskIntoConstraints = false
-        webview.backgroundColor = .white
-        webview.scrollView.showsVerticalScrollIndicator = false
-        webview.scrollView.showsHorizontalScrollIndicator = false
         addSubview(webview)
+    }
+    
+    private func setupConstraints() {
+        
         NSLayoutConstraint.activate([
             webview.leftAnchor.constraint(equalTo: leftAnchor),
             webview.rightAnchor.constraint(equalTo: rightAnchor),
             webview.topAnchor.constraint(equalTo: topAnchor),
             webview.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
-       
     }
     
     func loadImage(from url: String) {
@@ -90,8 +92,8 @@ class MLBusinessLiveImagesWebView: UIView {
         </html>
         """
 
-            let s = html.replacingOccurrences(of: "[URL]", with: url)
-            webview.loadHTMLString(s, baseURL: nil)
+        let s = html.replacingOccurrences(of: "[URL]", with: url)
+        webview.loadHTMLString(s, baseURL: nil)
     }
     
     func clear() {

@@ -7,23 +7,25 @@
 
 import Foundation
 
-protocol LiveImageViewModelDelegate {
-    
+protocol LiveImageViewModelDelegate: AnyObject {
     func setStaticImage(with image: UIImage)
     func setAnimatedImage(with url: String)
     func changeState(to state: MLBusinessLiveImagesState)
     func clear()
 }
 
-protocol MLBusinessLiveImagesViewModelProtocol {
+protocol MLBusinessLiveImagesViewModelProtocol: AnyObject {
+    var imageProvider: MLBusinessImageProvider { get set }
     var delegate: LiveImageViewModelDelegate? { get set }
     func update(coverMedia: MLBusinessLiveImagesModel?, cover: String?)
+    func shouldHideThumbnail(state: MLBusinessLiveImagesState) -> Bool
+    func shouldHideAnimation(state: MLBusinessLiveImagesState) -> Bool
 }
 
 final class MLBusinessLiveImagesViewModel: MLBusinessLiveImagesViewModelProtocol {
     
-    var delegate: LiveImageViewModelDelegate?
     var imageProvider: MLBusinessImageProvider
+    weak var delegate: LiveImageViewModelDelegate?
     
     public init(imageProvider: MLBusinessImageProvider? = nil) {
         self.imageProvider = imageProvider ?? MLBusinessURLImageProvider()

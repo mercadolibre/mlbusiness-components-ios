@@ -20,18 +20,32 @@ protocol MLBusinessLiveImagesHelper {
 
 class MLBusinessLiveImagesView: UIView {
     
-    var imageProvider: MLBusinessImageProvider {
-        didSet {
-            viewModel.imageProvider = imageProvider
-        }
-    }
+    private var viewModel: MLBusinessLiveImagesViewModelProtocol
     var liveImageState: MLBusinessLiveImagesState = .stoped
-    var viewModel = MLBusinessLiveImagesViewModel()
     
-    public init(with imageProvider: MLBusinessImageProvider? = nil) {
-        self.imageProvider = imageProvider ?? MLBusinessURLImageProvider()
+    private lazy var thumbnailImage: UIImageView = {
+        let image = UIImageView()
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.contentMode = .scaleAspectFill
+        image.clipsToBounds = true
+        return image
+    }()
+    
+    private lazy var liveImage: MLBusinessLiveImagesWebView = {
+        let view = MLBusinessLiveImagesWebView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.contentMode = .scaleAspectFill
+        view.clipsToBounds = true
+        view.liveImageDelegate = self
+        return view
+    }()
+    
+    public init(with imageProvider: MLBusinessImageProvider? = nil, viewModel: MLBusinessLiveImagesViewModelProtocol = MLBusinessLiveImagesViewModel()) {
+        self.viewModel = viewModel
         super.init(frame: .zero)
-        viewModel.delegate = self
+        self.viewModel.delegate = self
+        self.viewModel.imageProvider = imageProvider ?? MLBusinessURLImageProvider()
+        
         setup()
         setupConstraints()
     }
@@ -66,42 +80,21 @@ class MLBusinessLiveImagesView: UIView {
             thumbnailImage.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
-    
-    private lazy var thumbnailImage: UIImageView = {
-        let image = UIImageView()
-        image.translatesAutoresizingMaskIntoConstraints = false
-        image.contentMode = .scaleAspectFill
-        image.clipsToBounds = true
-        return image
-    }()
-    
-    private lazy var liveImage: MLBusinessLiveImagesWebView = {
-        let view = MLBusinessLiveImagesWebView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.contentMode = .scaleAspectFill
-        view.clipsToBounds = true
-        view.liveImageDelegate = self
-        return view
-    }()
-    
+ 
     func update(coverMedia: MLBusinessLiveImagesModel?, cover: String?){
         viewModel.update(coverMedia: coverMedia, cover: cover)
     }
-    
-
 }
 
 extension MLBusinessLiveImagesView: MLBusinessLiveImagesHelper {
     
     func playAnimation() {
-        
         changeState(to: .playing)
     }
     
     func stopAnimation() {
         changeState(to: .stoped)
     }
-    
 }
 
 extension MLBusinessLiveImagesView: LiveImageViewModelDelegate {
@@ -120,8 +113,8 @@ extension MLBusinessLiveImagesView: LiveImageViewModelDelegate {
                                       duration: 1,
                                       options: .transitionCrossDissolve,
                                       animations: {
-            self.thumbnailImage.isHidden = self.viewModel.shouldHideThumbnail(state:self.liveImageState)
-            self.liveImage.isHidden = self.viewModel.shouldHideAnimation(state: self.liveImageState)
+                                        self.thumbnailImage.isHidden = self.viewModel.shouldHideThumbnail(state:self.liveImageState)
+                                        self.liveImage.isHidden = self.viewModel.shouldHideAnimation(state: self.liveImageState)
                                         },
                                       completion: nil)
     }
@@ -130,5 +123,4 @@ extension MLBusinessLiveImagesView: LiveImageViewModelDelegate {
         thumbnailImage.image = nil
         liveImage.clear()
     }
-
 }
