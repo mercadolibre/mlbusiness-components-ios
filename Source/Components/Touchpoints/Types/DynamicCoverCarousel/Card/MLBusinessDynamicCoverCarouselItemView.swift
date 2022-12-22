@@ -18,12 +18,11 @@ public class MLBusinessDynamicCoverCarouselItemView: UIView {
             mainDescriptionLeftView.imageProvider = imageProvider
             mainDescriptionRightView.imageProvider = imageProvider
             mainSecondaryDescriptionView.imageProvider = imageProvider
-            backgroundImageView.imageProvider = imageProvider
         }
     }
         
     private lazy var backgroundImageView: MLBusinessLiveImagesView = {
-        let image = MLBusinessLiveImagesView()
+        let image = MLBusinessLiveImagesView(with: imageProvider)
         image.translatesAutoresizingMaskIntoConstraints = false
         image.backgroundColor = itemConstants.backgroundColor.hexaToUIColor()
         image.contentMode = .scaleAspectFill
