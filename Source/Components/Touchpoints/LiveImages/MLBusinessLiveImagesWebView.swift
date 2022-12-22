@@ -16,6 +16,7 @@ class MLBusinessLiveImagesWebView: UIView {
     
     private lazy var webview: WKWebView = {
         let view = WKWebView()
+        view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
         view.scrollView.showsVerticalScrollIndicator = false
         view.scrollView.showsHorizontalScrollIndicator = false
@@ -35,13 +36,11 @@ class MLBusinessLiveImagesWebView: UIView {
     }
     
     private func setup() {
-        backgroundColor = .white
         isUserInteractionEnabled = false
         addSubview(webview)
     }
     
     private func setupConstraints() {
-        
         NSLayoutConstraint.activate([
             webview.leftAnchor.constraint(equalTo: leftAnchor),
             webview.rightAnchor.constraint(equalTo: rightAnchor),
@@ -49,7 +48,7 @@ class MLBusinessLiveImagesWebView: UIView {
             webview.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
-    
+        
     func loadImage(from url: String) {
         let html = """
         <html>
