@@ -173,6 +173,7 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
     private func createLogoView(logos: [FlexCoverCarouselLogo]) {
         for logo in logos {
             let logoView = MLBusinessFlexCoverCarouselLogoViewFactory.provide(logo: logo)
+            logoView.isAccessibilityElement = false
             logoStackView.addArrangedSubview(logoView)
         }
     }
