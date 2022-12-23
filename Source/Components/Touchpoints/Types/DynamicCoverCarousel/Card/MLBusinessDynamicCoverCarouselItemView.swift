@@ -20,9 +20,9 @@ public class MLBusinessDynamicCoverCarouselItemView: UIView {
             mainSecondaryDescriptionView.imageProvider = imageProvider
         }
     }
-    
-    private lazy var backgroundImageView: UIImageView = {
-        let image = UIImageView()
+        
+    private lazy var backgroundImageView: MLBusinessLiveImagesView = {
+        let image = MLBusinessLiveImagesView(with: imageProvider)
         image.translatesAutoresizingMaskIntoConstraints = false
         image.backgroundColor = itemConstants.backgroundColor.hexaToUIColor()
         image.contentMode = .scaleAspectFill
@@ -197,12 +197,8 @@ public class MLBusinessDynamicCoverCarouselItemView: UIView {
             buildTopContent(with: badges)
         }
         
-        if let cover = content.getImageHeader() {
-            imageProvider.getImage(key: cover) { [weak self] image in
-                self?.backgroundImageView.image = image
-            }
-        }
-        
+        backgroundImageView.update(coverMedia: content.getCoverMultimedia(), cover: content.getImageHeader())
+            
         if let footer = content.getFooterContent() {
             footerView.backgroundColor = footer.getBackgroundColor()?.hexaToUIColor()
             footerLabel.textColor = footer.getTextColor()?.hexaToUIColor()
@@ -264,7 +260,6 @@ public class MLBusinessDynamicCoverCarouselItemView: UIView {
     }
     
     public func clear() {
-        backgroundImageView.image = nil
         topContentStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         mainDescriptionStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         mainStackViewBottomConstraint.constant = 10

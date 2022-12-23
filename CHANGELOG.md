@@ -1,6 +1,7 @@
 ## [Unreleased]
 ### Added
 - Se implementa accesibilidad a FlexCoverCarousel
+- Se agrega soporte para imagenes animadas en DynamicCoverCarousel.
 
 ## [1.49.0] - 2022-12-7
 ### Modified
