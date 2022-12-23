@@ -46,6 +46,7 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         imageView.backgroundColor = MLStyleSheetManager.styleSheet.lightGreyColor
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
+        imageView.isAccessibilityElement = false
         return imageView
     }()
         
