@@ -1,3 +1,7 @@
+## [Unpublished] 
+### Added
+- Se agrega soporte para imagenes animadas en DynamicCoverCarousel.
+
 ## [1.49.0] - 2022-12-7
 ### Modified
 - FlexCoverCarousel - Se unifica el color del gradiente con respecto del sólido que lo continúa.
