@@ -46,6 +46,7 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         imageView.backgroundColor = MLStyleSheetManager.styleSheet.lightGreyColor
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
+        imageView.accessibilityTraits = .none
         imageView.isAccessibilityElement = false
         return imageView
     }()
@@ -175,6 +176,7 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         for logo in logos {
             let logoView = MLBusinessFlexCoverCarouselLogoViewFactory.provide(logo: logo)
             logoView.isAccessibilityElement = false
+            logoView.accessibilityTraits = .none
             logoStackView.addArrangedSubview(logoView)
         }
     }
