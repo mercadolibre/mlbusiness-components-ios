@@ -1,3 +1,7 @@
+## [Unreleased]
+### Fixed
+- Default value multimediaCover en DynamicCoverCarousel.
+
 ## [1.49.1] - 2022-12-26
 ### Added
 - Se agrega soporte para imagenes animadas en DynamicCoverCarousel.
