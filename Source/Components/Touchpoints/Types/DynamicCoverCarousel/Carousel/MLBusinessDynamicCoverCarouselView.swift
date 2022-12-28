@@ -153,8 +153,8 @@ extension MLBusinessDynamicCoverCarouselView: UICollectionViewDataSource {
         }
         cell.imageProvider = imageProvider
         cell.update(with: content)
-        
-        if indexPath.row == 0 && indexPath.row == collectionViewHelper.currentActiveIndex {
+
+        if indexPath == IndexPath(indexes: [0,1]) && IndexPath(indexes: [0,0]) == IndexPath(indexes: [0,collectionViewHelper.currentActiveIndex]) {
             prepareAnimation()
         }
         

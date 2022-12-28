@@ -116,7 +116,11 @@ extension MLBusinessLiveImagesView: LiveImageViewModelDelegate {
     }
     
     func changeState(to state: MLBusinessLiveImagesState) {
-        liveImageState = state
+        if liveImageState == .playing && state == .stoped {
+            liveImageState = .readyToPlay
+        } else {
+            liveImageState = state
+        }
     }
     
     func clear() {

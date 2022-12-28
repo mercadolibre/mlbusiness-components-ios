@@ -40,22 +40,20 @@ final class MLBusinessLiveImagesViewModel: MLBusinessLiveImagesViewModelProtocol
         delegate?.clear()
         
         if let coverMedia = coverMedia {
-            
             if let thumbnail = coverMedia.getThumbnail(), let url = coverMedia.getMediaLink() {
                 isStaticImage = false
-                loadStaticImage(key: thumbnail)
+                loadImage(key: thumbnail)
                 self.delegate?.setAnimatedImage(with: url)
             }
             
         } else if let cover = cover {
             isStaticImage = true
-            loadStaticImage(key: cover)
+            loadImage(key: cover)
         }
     }
     
-    private func loadStaticImage(key: String) {
+    private func loadImage(key: String) {
         imageProvider.getImage(key: key, completion:{ [weak self] image in
-            
             if let image = image {
                 self?.delegate?.setStaticImage(with: image)
                 self?.delegate?.changeState(to: .stoped)
@@ -78,10 +76,9 @@ final class MLBusinessLiveImagesViewModel: MLBusinessLiveImagesViewModelProtocol
         }
     }
         
-    private func showAnimatedImage(shouldDelay: Bool) {
+    private func showAnimatedImage(shouldDelay: Bool, delayTime: CGFloat = 1.0) {
         if shouldDelay {
-            let delaySecs = 1.0
-            DispatchQueue.main.asyncAfter(deadline: .now() + delaySecs) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + delayTime) {
                 self.startAnimation()
             }
         } else {
@@ -93,5 +90,4 @@ final class MLBusinessLiveImagesViewModel: MLBusinessLiveImagesViewModelProtocol
         self.delegate?.changeState(to: .playing)
         self.delegate?.transitionView()
     }
-
 }
