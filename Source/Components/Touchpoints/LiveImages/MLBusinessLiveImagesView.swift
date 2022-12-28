@@ -11,11 +11,12 @@ import WebKit
 enum MLBusinessLiveImagesState {
     case playing
     case stoped
+    case readyToPlay
 }
 
 protocol MLBusinessLiveImagesHelper {
-    func playAnimation()
-    func stopAnimation()
+    func play()
+    func pause()
 }
 
 class MLBusinessLiveImagesView: UIView {
@@ -60,8 +61,8 @@ class MLBusinessLiveImagesView: UIView {
         addSubview(thumbnailImage)
         addSubview(liveImage)
         
-        liveImage.isHidden = viewModel.shouldHideAnimation(state: liveImageState)
-        thumbnailImage.isHidden =  viewModel.shouldHideThumbnail(state: liveImageState)
+        liveImage.isHidden = true
+        thumbnailImage.isHidden =  false
     }
     
     private func setupConstraints() {
@@ -88,16 +89,24 @@ class MLBusinessLiveImagesView: UIView {
 
 extension MLBusinessLiveImagesView: MLBusinessLiveImagesHelper {
     
-    func playAnimation() {
-        changeState(to: .playing)
+    func play() {
+        viewModel.prepareForPlaying(state: liveImageState)
     }
     
-    func stopAnimation() {
+    func pause() {
         changeState(to: .stoped)
+        transitionView()
     }
 }
 
 extension MLBusinessLiveImagesView: LiveImageViewModelDelegate {
+    
+    func transitionView() {
+        
+        self.thumbnailImage.isHidden = self.viewModel.shouldHideThumbnail(state:self.liveImageState)
+        self.liveImage.isHidden = self.viewModel.shouldHideAnimation(state: self.liveImageState)
+    }
+        
     func setStaticImage(with image: UIImage) {
         thumbnailImage.image = image
     }
@@ -108,18 +117,10 @@ extension MLBusinessLiveImagesView: LiveImageViewModelDelegate {
     
     func changeState(to state: MLBusinessLiveImagesState) {
         liveImageState = state
-        
-        UIView.transition(with: self.liveImage,
-                                      duration: 1,
-                                      options: .transitionCrossDissolve,
-                                      animations: {
-                                        self.thumbnailImage.isHidden = self.viewModel.shouldHideThumbnail(state:self.liveImageState)
-                                        self.liveImage.isHidden = self.viewModel.shouldHideAnimation(state: self.liveImageState)
-                                        },
-                                      completion: nil)
     }
     
     func clear() {
+        liveImageState = .stoped
         thumbnailImage.image = nil
         liveImage.clear()
     }

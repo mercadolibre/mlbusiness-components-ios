@@ -87,3 +87,13 @@ class MLBusinessDynamicCoverCarouselViewCell: UICollectionViewCell {
         itemView.update(with: content)
     }
 }
+
+extension MLBusinessDynamicCoverCarouselViewCell: MLBusinessLiveImagesHelper {
+    func play() {
+        itemView.play()
+    }
+    
+    func pause() {
+        itemView.pause()
+    }
+}

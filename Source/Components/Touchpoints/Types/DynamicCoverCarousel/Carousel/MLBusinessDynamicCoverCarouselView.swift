@@ -19,6 +19,7 @@ public class MLBusinessDynamicCoverCarouselView: UIView {
     private var items: [MLBusinessDynamicCoverCarouselItemModel] { return model?.getItems() ?? [] }
     private var defaultCardWidth: CGFloat = 240
     private var itemHeight: CGFloat = 156
+    private var auxCell: MLBusinessDynamicCoverCarouselViewCell?
     public weak var delegate: MLBusinessDynamicCoverCarouselViewDelegate?
 
     private lazy var collectionViewHelper: CarouselCollectionViewHelper = {
@@ -80,6 +81,7 @@ public class MLBusinessDynamicCoverCarouselView: UIView {
     
     public func update(with model: MLBusinessDynamicCoverCarouselModel?) {
         self.model = model
+        self.auxCell = nil
         configureCard(cardType: model?.getType() ?? "landscape")
         collectionView.reloadData()
     }
@@ -122,6 +124,20 @@ public class MLBusinessDynamicCoverCarouselView: UIView {
         collectionViewHeightConstraint = collectionView.heightAnchor.constraint(equalToConstant: itemHeight)
         collectionViewHeightConstraint?.isActive = true
     }
+    
+    private func prepareAnimation() {
+        let currentIndex = IndexPath(indexes: [0,collectionViewHelper.currentActiveIndex])
+        let currentCell = collectionView.cellForItem(at: currentIndex) as? MLBusinessDynamicCoverCarouselViewCell
+        
+        if let auxCell = auxCell {
+            auxCell.pause()
+            currentCell?.play()
+            self.auxCell = currentCell
+        } else {
+            self.auxCell = currentCell
+            self.auxCell?.play()
+        }
+    }
 }
 
 extension MLBusinessDynamicCoverCarouselView: UICollectionViewDataSource {
@@ -137,6 +153,11 @@ extension MLBusinessDynamicCoverCarouselView: UICollectionViewDataSource {
         }
         cell.imageProvider = imageProvider
         cell.update(with: content)
+        
+        if indexPath.row == 0 && indexPath.row == collectionViewHelper.currentActiveIndex {
+            prepareAnimation()
+        }
+        
         return cell
     }
 }
@@ -150,10 +171,10 @@ extension MLBusinessDynamicCoverCarouselView: UICollectionViewDelegateFlowLayout
 extension MLBusinessDynamicCoverCarouselView: CarouselCollectionViewHelperDelegate {
     func carouselDelegateDidScrollToItem(_ carouselDelegate: CarouselCollectionViewHelper) {
         delegate?.dynamicCoverCarouselView(self, didFinishScrolling: visibleItems)
+        prepareAnimation()
     }
     
     func carouselDelegate(_ carouselDelegate: CarouselCollectionViewHelper, didSelectItemAt indexPath: IndexPath) {
         delegate?.dynamicCoverCarouselView(self, didSelect:items[indexPath.item], at: indexPath.item)
     }
 }
-

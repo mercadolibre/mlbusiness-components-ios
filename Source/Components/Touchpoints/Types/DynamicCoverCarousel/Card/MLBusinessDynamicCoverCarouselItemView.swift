@@ -272,3 +272,13 @@ public class MLBusinessDynamicCoverCarouselItemView: UIView {
         backgroundImageView.alpha = alpha
     }
 }
+
+extension MLBusinessDynamicCoverCarouselItemView: MLBusinessLiveImagesHelper {
+    func play() {
+        backgroundImageView.play()
+    }
+    
+    func pause() {
+        backgroundImageView.pause()
+    }
+}
