@@ -96,13 +96,7 @@ class MLBusinessLiveImagesWebView: UIView {
     }
     
     func clear() {
-        HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
-        
-        WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
-            records.forEach { record in
-                WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {})
-            }
-        }
+        webview.loadHTMLString("", baseURL: nil)
     }
     
 }
@@ -110,7 +104,7 @@ class MLBusinessLiveImagesWebView: UIView {
 extension MLBusinessLiveImagesWebView: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        liveImageDelegate?.changeState(to: .playing)
+        liveImageDelegate?.changeState(to: .readyToPlay)
     }
 }
 
