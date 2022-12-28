@@ -1,3 +1,7 @@
+## [Unreleased]
+### Added
+- Se implementa accesibilidad a FlexCoverCarousel
+
 ## [1.49.2] - 2022-12-27
 ### Fixed
 - Default value multimediaCover en DynamicCoverCarousel.

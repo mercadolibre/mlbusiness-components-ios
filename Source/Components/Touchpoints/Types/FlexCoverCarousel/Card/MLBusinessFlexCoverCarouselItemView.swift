@@ -46,6 +46,8 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         imageView.backgroundColor = MLStyleSheetManager.styleSheet.lightGreyColor
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
+        imageView.accessibilityTraits = .none
+        imageView.isAccessibilityElement = false
         return imageView
     }()
         
@@ -69,6 +71,7 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         label.textAlignment = .left
         label.textColor = MLStyleSheetManager.styleSheet.whiteColor
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.isAccessibilityElement = false
         return label
     }()
     
@@ -79,6 +82,7 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         label.font = MLStyleSheetManager.styleSheet.regularSystemFont(ofSize: CGFloat(kMLFontsSizeXXSmall))
         label.textAlignment = .left
         label.textColor = MLStyleSheetManager.styleSheet.whiteColor
+        label.isAccessibilityElement = false
         return label
     }()
     
@@ -89,6 +93,7 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         label.font = MLStyleSheetManager.styleSheet.semiboldSystemFont(ofSize: CGFloat(8.0))
         label.textAlignment = .left
         label.textColor = MLStyleSheetManager.styleSheet.whiteColor
+        label.isAccessibilityElement = false
         return label
     }()
     
@@ -99,6 +104,7 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
         label.font = MLStyleSheetManager.styleSheet.semiboldSystemFont(ofSize: CGFloat(11.0))
         label.textAlignment = .center
         label.textColor = MLStyleSheetManager.styleSheet.whiteColor
+        label.isAccessibilityElement = false
         return label
     }()
     
@@ -169,6 +175,8 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
     private func createLogoView(logos: [FlexCoverCarouselLogo]) {
         for logo in logos {
             let logoView = MLBusinessFlexCoverCarouselLogoViewFactory.provide(logo: logo)
+            logoView.isAccessibilityElement = false
+            logoView.accessibilityTraits = .none
             logoStackView.addArrangedSubview(logoView)
         }
     }
@@ -214,6 +222,7 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
     
     public func update(with item: MLBusinessFlexCoverCarouselItemModel) {
         clear()
+        setupAccessibility(with: item)
         
         if let cover = item.imageHeader{
             imageProvider.getImage(key: cover) { [weak self] image in
@@ -324,5 +333,37 @@ public class MLBusinessFlexCoverCarouselItemView: UIView {
 extension MLBusinessFlexCoverCarouselItemView.Layout {
     enum Color {
         static var defaultPillColor = "#009EE3"
+    }
+}
+
+extension MLBusinessFlexCoverCarouselItemView {
+    private func setupAccessibility(with item: MLBusinessFlexCoverCarouselItemModel) {
+        if let accessibilityDescription = buildAccessibilityDescription(with: item) {
+            isAccessibilityElement = true
+            accessibilityTraits = item.link != nil ? .button : .staticText
+            accessibilityLabel = accessibilityDescription
+        } else {
+            isAccessibilityElement = false
+        }
+    }
+    
+    private func buildAccessibilityDescription(with item: MLBusinessFlexCoverCarouselItemModel) -> String? {
+        var alternateAccessibilityDescriptionArray = [String]()
+        
+        if let accessibilityDescription = item.accessibilityDescription {
+            return accessibilityDescription
+        }
+        
+        if let pillLabel = item.pill?.text { alternateAccessibilityDescriptionArray.append(pillLabel) }
+
+        if let title = item.title?.text { alternateAccessibilityDescriptionArray.append(AccessibilityUtils.formatCurrencyForAccessibility(with: title) ?? title) }
+
+        if let subtitle = item.subtitle?.text { alternateAccessibilityDescriptionArray.append(AccessibilityUtils.formatCurrencyForAccessibility(with: subtitle) ?? subtitle) }
+        
+        if let mainDescription = item.mainDescription?.text { alternateAccessibilityDescriptionArray.append(AccessibilityUtils.formatCurrencyForAccessibility(with: mainDescription) ?? mainDescription) }
+
+        let alternateAccessibilityDescription = alternateAccessibilityDescriptionArray.joined(separator: ". ")
+
+        return alternateAccessibilityDescriptionArray.isEmpty ? nil : alternateAccessibilityDescription
     }
 }
