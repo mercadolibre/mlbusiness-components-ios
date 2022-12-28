@@ -21,7 +21,7 @@ public struct MLBusinessDynamicCoverCarouselItemModel: Codable {
     
     public init(backgroundColor: String?,
                 imageHeader: String?,
-                multimediaCover: MLBusinessLiveImagesModel?,
+                multimediaCover: MLBusinessLiveImagesModel? = nil,
                 link: String?,
                 topContent: [MLBusinessDynamicCarouselBadgeModel]?,
                 mainDescriptionLeft: [MLBusinessMultipleDescriptionModel]?,
