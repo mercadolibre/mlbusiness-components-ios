@@ -1,3 +1,7 @@
+## [Unreleased] 
+### Added
+- LiveImages cuenta con play/pause de las animacion segun estado de foco del carousel.
+
 ## [1.49.2] - 2022-12-27
 ### Fixed
 - Default value multimediaCover en DynamicCoverCarousel.
