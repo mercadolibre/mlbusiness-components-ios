@@ -20,7 +20,17 @@ public struct MLBusinessFlexCoverCarouselItemModel: Codable {
     public let tracking: MLBusinessItemModelTracking?
     public let accessibilityDescription: String?
 
-    public init (title: FlexCoverCarouselItemText?, subtitle: FlexCoverCarouselItemText?, mainDescription: FlexCoverCarouselItemText? ,pill: FlexCoverCarouselPill?, imageHeader: String?,  link: String?, textColor: String?, backgroundColor: String?, logos: [FlexCoverCarouselLogo], tracking: MLBusinessItemModelTracking?, accessibilityDescription: String?) {
+    public init (title: FlexCoverCarouselItemText?,
+                 subtitle: FlexCoverCarouselItemText?,
+                 mainDescription: FlexCoverCarouselItemText?,
+                 pill: FlexCoverCarouselPill?,
+                 imageHeader: String?,
+                 link: String?,
+                 textColor: String?,
+                 backgroundColor: String?,
+                 logos: [FlexCoverCarouselLogo],
+                 tracking: MLBusinessItemModelTracking?,
+                 accessibilityDescription: String?) {
         self.title = title
         self.subtitle = subtitle
         self.mainDescription = mainDescription
