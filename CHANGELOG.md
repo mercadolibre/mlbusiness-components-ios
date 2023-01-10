@@ -1,3 +1,7 @@
+## [Unreleased]
+### Fixed
+- Issue en LiveImages que hacia que se vean de manera incorrecta algunas animaciones.
+
 ## [1.50.0] - 2022-12-28
 ### Added
 - LiveImages cuenta con play/pause de las animacion segun estado de foco del carousel.
