@@ -12,6 +12,7 @@ enum MLBusinessLiveImagesState {
     case playing
     case stoped
     case readyToPlay
+    case bloqued
 }
 
 protocol MLBusinessLiveImagesHelper {
@@ -94,16 +95,13 @@ extension MLBusinessLiveImagesView: MLBusinessLiveImagesHelper {
     }
     
     func pause() {
-        changeState(to: .stoped)
-        transitionView()
+        viewModel.prepareForStoping(state: liveImageState)
     }
 }
 
 extension MLBusinessLiveImagesView: LiveImageViewModelDelegate {
     
     func transitionView() {
-        
-        self.thumbnailImage.isHidden = self.viewModel.shouldHideThumbnail(state:self.liveImageState)
         self.liveImage.isHidden = self.viewModel.shouldHideAnimation(state: self.liveImageState)
     }
         
@@ -124,8 +122,9 @@ extension MLBusinessLiveImagesView: LiveImageViewModelDelegate {
     }
     
     func clear() {
-        liveImageState = .stoped
+        liveImageState = .bloqued
         thumbnailImage.image = nil
+        liveImage.isHidden = true
         liveImage.clear()
     }
 }
