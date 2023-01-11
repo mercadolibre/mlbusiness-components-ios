@@ -96,7 +96,7 @@ class MLBusinessLiveImagesWebView: UIView {
     }
     
     func clear() {
-        webview.loadHTMLString("", baseURL: nil)
+        //TODO: implementar clear webview sin anular estados.
     }
     
 }

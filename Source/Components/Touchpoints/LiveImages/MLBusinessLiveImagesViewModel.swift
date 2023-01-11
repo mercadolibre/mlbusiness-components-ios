@@ -18,36 +18,34 @@ protocol LiveImageViewModelDelegate: AnyObject {
 protocol MLBusinessLiveImagesViewModelProtocol: AnyObject {
     var imageProvider: MLBusinessImageProvider { get set }
     var delegate: LiveImageViewModelDelegate? { get set }
-    var isStaticImage: Bool { get set }
     func update(coverMedia: MLBusinessLiveImagesModel?, cover: String?)
-    func shouldHideThumbnail(state: MLBusinessLiveImagesState) -> Bool
     func shouldHideAnimation(state: MLBusinessLiveImagesState) -> Bool
     func prepareForPlaying(state: MLBusinessLiveImagesState)
+    func prepareForStoping(state: MLBusinessLiveImagesState)
 }
 
 final class MLBusinessLiveImagesViewModel: MLBusinessLiveImagesViewModelProtocol {
-    var isStaticImage: Bool
     var imageProvider: MLBusinessImageProvider
     weak var delegate: LiveImageViewModelDelegate?
+    private var delayWork: DispatchWorkItem?
     
-    public init(imageProvider: MLBusinessImageProvider? = nil, isStaticImage: Bool = true) {
+    public init(imageProvider: MLBusinessImageProvider? = nil) {
         self.imageProvider = imageProvider ?? MLBusinessURLImageProvider()
-        self.isStaticImage = isStaticImage
     }
-    
+
     func update(coverMedia: MLBusinessLiveImagesModel?, cover: String?) {
         
         delegate?.clear()
         
         if let coverMedia = coverMedia {
             if let thumbnail = coverMedia.getThumbnail(), let url = coverMedia.getMediaLink() {
-                isStaticImage = false
                 loadImage(key: thumbnail)
+                self.delegate?.changeState(to: .stoped)
                 self.delegate?.setAnimatedImage(with: url)
             }
             
         } else if let cover = cover {
-            isStaticImage = true
+            self.delegate?.changeState(to: .bloqued)
             loadImage(key: cover)
         }
     }
@@ -56,31 +54,39 @@ final class MLBusinessLiveImagesViewModel: MLBusinessLiveImagesViewModelProtocol
         imageProvider.getImage(key: key, completion:{ [weak self] image in
             if let image = image {
                 self?.delegate?.setStaticImage(with: image)
-                self?.delegate?.changeState(to: .stoped)
             }
         })
     }
     
-    func shouldHideThumbnail(state: MLBusinessLiveImagesState) -> Bool {
-        return state == .playing
+    func shouldHideAnimation(state: MLBusinessLiveImagesState) -> Bool {
+        return state != .playing
     }
     
-    func shouldHideAnimation(state: MLBusinessLiveImagesState) -> Bool {
-        return !shouldHideThumbnail(state: state)
+    func prepareForStoping(state: MLBusinessLiveImagesState) {
+        if state != .bloqued {
+            delayWork?.cancel()
+            delegate?.changeState(to: .stoped)
+            delegate?.transitionView()
+        }
     }
     
     func prepareForPlaying(state: MLBusinessLiveImagesState) {
-        if !isStaticImage {
+        if state != .bloqued {
             let shouldDelay = state != .readyToPlay
             showAnimatedImage(shouldDelay: shouldDelay)
         }
     }
         
-    private func showAnimatedImage(shouldDelay: Bool, delayTime: CGFloat = 1.0) {
+    private func showAnimatedImage(shouldDelay: Bool, delayTime: CGFloat = 1.5) {
         if shouldDelay {
-            DispatchQueue.main.asyncAfter(deadline: .now() + delayTime) {
+            self.delayWork = DispatchWorkItem(block: {
                 self.startAnimation()
+            })
+
+            if let work = delayWork {
+                DispatchQueue.main.asyncAfter(deadline: .now() + delayTime, execute: work)
             }
+
         } else {
             startAnimation()
         }
