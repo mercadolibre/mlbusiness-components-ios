@@ -27,13 +27,12 @@ protocol MLBusinessLiveImagesViewModelProtocol: AnyObject {
 final class MLBusinessLiveImagesViewModel: MLBusinessLiveImagesViewModelProtocol {
     var imageProvider: MLBusinessImageProvider
     weak var delegate: LiveImageViewModelDelegate?
+    private var delayWork: DispatchWorkItem?
     
     public init(imageProvider: MLBusinessImageProvider? = nil) {
         self.imageProvider = imageProvider ?? MLBusinessURLImageProvider()
     }
-    
-    private var delayWork: DispatchWorkItem?
-    
+
     func update(coverMedia: MLBusinessLiveImagesModel?, cover: String?) {
         
         delegate?.clear()
