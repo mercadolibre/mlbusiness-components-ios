@@ -41,7 +41,7 @@ final class MLBusinessLiveImagesViewModel: MLBusinessLiveImagesViewModelProtocol
             if let thumbnail = coverMedia.getThumbnail(), let url = coverMedia.getMediaLink() {
                 loadImage(key: thumbnail)
                 self.delegate?.changeState(to: .stoped)
-                self.delegate?.setAnimatedImage(with: url)
+                loadAnimatedImage(key: url)
             }
             
         } else if let cover = cover {
@@ -54,6 +54,17 @@ final class MLBusinessLiveImagesViewModel: MLBusinessLiveImagesViewModelProtocol
         imageProvider.getImage(key: key, completion:{ [weak self] image in
             if let image = image {
                 self?.delegate?.setStaticImage(with: image)
+            }
+        })
+    }
+    
+    private func loadAnimatedImage(key: String) {
+        
+        MLBusinessLiveImagesProvider.shared.getLiveImageData(from: key, completion: {
+            [weak self] data in
+            
+            DispatchQueue.main.async {
+                self?.delegate?.setAnimatedImage(with: data?.base64EncodedString() ?? "")
             }
         })
     }
