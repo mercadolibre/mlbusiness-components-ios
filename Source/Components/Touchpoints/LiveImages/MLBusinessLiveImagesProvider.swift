@@ -30,7 +30,9 @@ class MLBusinessLiveImagesProvider {
         let downloadTask = URLSession.shared.dataTask(with: urlRequest, completionHandler: {
             [weak self] data, response, error in
             
-            guard let data = data, error == nil, let response = response, ((response as? HTTPURLResponse)?.statusCode ?? 500) < 300 else {
+            guard let data = data, error == nil,
+                  let response = response as? HTTPURLResponse,
+                  response.statusCode < 300 else {
                 completion(nil)
                 return
             }
