@@ -41,11 +41,11 @@ final class MLBusinessLiveImagesViewModel: MLBusinessLiveImagesViewModelProtocol
             if let thumbnail = coverMedia.getThumbnail(), let url = coverMedia.getMediaLink() {
                 loadImage(key: thumbnail)
                 self.delegate?.changeState(to: .stoped)
-                self.delegate?.setAnimatedImage(with: url)
+                loadAnimatedImage(key: url)
             }
             
         } else if let cover = cover {
-            self.delegate?.changeState(to: .bloqued)
+            self.delegate?.changeState(to: .blocked)
             loadImage(key: cover)
         }
     }
@@ -58,12 +58,27 @@ final class MLBusinessLiveImagesViewModel: MLBusinessLiveImagesViewModelProtocol
         })
     }
     
+    private func loadAnimatedImage(key: String) {
+        
+        MLBusinessLiveImagesProvider.shared.getLiveImageData(from: key, completion: {
+            [weak self] data in
+            
+            DispatchQueue.main.async {
+                if let dataEncoded = data?.base64EncodedString() {
+                    self?.delegate?.setAnimatedImage(with: dataEncoded)
+                } else {
+                    self?.delegate?.changeState(to: .blocked)
+                }
+            }
+        })
+    }
+    
     func shouldHideAnimation(state: MLBusinessLiveImagesState) -> Bool {
         return state != .playing
     }
     
     func prepareForStoping(state: MLBusinessLiveImagesState) {
-        if state != .bloqued {
+        if state != .blocked {
             delayWork?.cancel()
             delegate?.changeState(to: .stoped)
             delegate?.transitionView()
@@ -71,7 +86,7 @@ final class MLBusinessLiveImagesViewModel: MLBusinessLiveImagesViewModelProtocol
     }
     
     func prepareForPlaying(state: MLBusinessLiveImagesState) {
-        if state != .bloqued {
+        if state != .blocked {
             let shouldDelay = state != .readyToPlay
             showAnimatedImage(shouldDelay: shouldDelay)
         }

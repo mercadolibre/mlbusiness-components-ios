@@ -1,3 +1,7 @@
+## [Unreleased]
+## Added
+- Manejo de cache para LiveImages
+
 ## [1.51.0] - 2023-01-11
 ### Fixed
 - Issue en LiveImages que hacia que se vean de manera incorrecta algunas animaciones.
