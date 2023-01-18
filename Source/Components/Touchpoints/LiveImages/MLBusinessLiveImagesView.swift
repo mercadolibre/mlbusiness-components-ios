@@ -12,7 +12,7 @@ enum MLBusinessLiveImagesState {
     case playing
     case stoped
     case readyToPlay
-    case bloqued
+    case blocked
 }
 
 protocol MLBusinessLiveImagesHelper {
@@ -122,7 +122,7 @@ extension MLBusinessLiveImagesView: LiveImageViewModelDelegate {
     }
     
     func clear() {
-        liveImageState = .bloqued
+        liveImageState = .blocked
         thumbnailImage.image = nil
         liveImage.isHidden = true
         liveImage.clear()

@@ -21,7 +21,7 @@ class MLBusinessLiveImagesProvider {
             return
         }
         
-        guard let url = URL(string: key)else {
+        guard let url = URL(string: key) else {
             completion(nil)
             return
         }
