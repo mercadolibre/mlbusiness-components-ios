@@ -1,4 +1,4 @@
-## [Unreleased]
+## [1.52.0] - 2023-01-18
 ## Added
 - Manejo de cache para LiveImages
 
