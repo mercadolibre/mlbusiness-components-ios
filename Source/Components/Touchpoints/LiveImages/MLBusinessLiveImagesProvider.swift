@@ -44,7 +44,5 @@ class MLBusinessLiveImagesProvider {
         })
         
         downloadTask.resume()
-    }
-    
-    
+    }  
 }
