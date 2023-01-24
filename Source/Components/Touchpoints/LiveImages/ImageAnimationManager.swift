@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol LiveImageViewModelDelegate: AnyObject {
+protocol ImageAnimationManagerDelegate: AnyObject {
     func setStaticImage(with image: UIImage)
     func setAnimatedImage(with url: String)
     func changeState(to state: MLBusinessLiveImagesState)
@@ -15,18 +15,18 @@ protocol LiveImageViewModelDelegate: AnyObject {
     func clear()
 }
 
-protocol MLBusinessLiveImagesViewModelProtocol: AnyObject {
+protocol ImageAnimationManagerProtocol: AnyObject {
     var imageProvider: MLBusinessImageProvider { get set }
-    var delegate: LiveImageViewModelDelegate? { get set }
+    var delegate: ImageAnimationManagerDelegate? { get set }
     func update(coverMedia: MLBusinessLiveImagesModel?, cover: String?)
     func shouldHideAnimation(state: MLBusinessLiveImagesState) -> Bool
-    func prepareForPlaying(state: MLBusinessLiveImagesState)
-    func prepareForStoping(state: MLBusinessLiveImagesState)
+    func play(currentState: MLBusinessLiveImagesState)
+    func stop(currentState: MLBusinessLiveImagesState)
 }
 
-final class MLBusinessLiveImagesViewModel: MLBusinessLiveImagesViewModelProtocol {
+final class ImageAnimationManager: ImageAnimationManagerProtocol {
     var imageProvider: MLBusinessImageProvider
-    weak var delegate: LiveImageViewModelDelegate?
+    weak var delegate: ImageAnimationManagerDelegate?
     private var delayWork: DispatchWorkItem?
     
     public init(imageProvider: MLBusinessImageProvider? = nil) {
@@ -40,7 +40,7 @@ final class MLBusinessLiveImagesViewModel: MLBusinessLiveImagesViewModelProtocol
         if let coverMedia = coverMedia {
             if let thumbnail = coverMedia.getThumbnail(), let url = coverMedia.getMediaLink() {
                 loadImage(key: thumbnail)
-                self.delegate?.changeState(to: .stoped)
+                self.delegate?.changeState(to: .paused)
                 loadAnimatedImage(key: url)
             }
             
@@ -77,17 +77,17 @@ final class MLBusinessLiveImagesViewModel: MLBusinessLiveImagesViewModelProtocol
         return state != .playing
     }
     
-    func prepareForStoping(state: MLBusinessLiveImagesState) {
-        if state != .blocked {
+    func stop(currentState: MLBusinessLiveImagesState) {
+        if currentState != .blocked {
             delayWork?.cancel()
-            delegate?.changeState(to: .stoped)
+            delegate?.changeState(to: .paused)
             delegate?.transitionView()
         }
     }
     
-    func prepareForPlaying(state: MLBusinessLiveImagesState) {
-        if state != .blocked {
-            let shouldDelay = state != .readyToPlay
+    func play(currentState: MLBusinessLiveImagesState) {
+        if currentState != .blocked {
+            let shouldDelay = currentState != .download_success
             showAnimatedImage(shouldDelay: shouldDelay)
         }
     }

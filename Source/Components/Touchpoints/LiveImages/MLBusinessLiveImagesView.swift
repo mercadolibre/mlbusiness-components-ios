@@ -6,12 +6,11 @@
 //
 
 import Foundation
-import WebKit
 
 enum MLBusinessLiveImagesState {
     case playing
-    case stoped
-    case readyToPlay
+    case paused
+    case download_success
     case blocked
 }
 
@@ -20,10 +19,15 @@ protocol MLBusinessLiveImagesHelper {
     func pause()
 }
 
+class MLBusinessLiveImagesCellView: UICollectionViewCell, MLBusinessLiveImagesHelper {
+    func play() {}
+    func pause() {}
+}
+
 class MLBusinessLiveImagesView: UIView {
     
-    private var viewModel: MLBusinessLiveImagesViewModelProtocol
-    var liveImageState: MLBusinessLiveImagesState = .stoped
+    private var viewModel: ImageAnimationManagerProtocol
+    var liveImageState: MLBusinessLiveImagesState = .paused
     
     private lazy var thumbnailImage: UIImageView = {
         let image = UIImageView()
@@ -42,7 +46,7 @@ class MLBusinessLiveImagesView: UIView {
         return view
     }()
     
-    public init(with imageProvider: MLBusinessImageProvider? = nil, viewModel: MLBusinessLiveImagesViewModelProtocol = MLBusinessLiveImagesViewModel()) {
+    public init(with imageProvider: MLBusinessImageProvider? = nil, viewModel: ImageAnimationManagerProtocol = ImageAnimationManager()) {
         self.viewModel = viewModel
         super.init(frame: .zero)
         self.viewModel.delegate = self
@@ -91,15 +95,15 @@ class MLBusinessLiveImagesView: UIView {
 extension MLBusinessLiveImagesView: MLBusinessLiveImagesHelper {
     
     func play() {
-        viewModel.prepareForPlaying(state: liveImageState)
+        viewModel.play(currentState: liveImageState)
     }
     
     func pause() {
-        viewModel.prepareForStoping(state: liveImageState)
+        viewModel.stop(currentState: liveImageState)
     }
 }
 
-extension MLBusinessLiveImagesView: LiveImageViewModelDelegate {
+extension MLBusinessLiveImagesView: ImageAnimationManagerDelegate {
     
     func transitionView() {
         self.liveImage.isHidden = self.viewModel.shouldHideAnimation(state: self.liveImageState)
@@ -114,8 +118,8 @@ extension MLBusinessLiveImagesView: LiveImageViewModelDelegate {
     }
     
     func changeState(to state: MLBusinessLiveImagesState) {
-        if liveImageState == .playing && state == .stoped {
-            liveImageState = .readyToPlay
+        if liveImageState == .playing && state == .paused {
+            liveImageState = .download_success
         } else {
             liveImageState = state
         }
