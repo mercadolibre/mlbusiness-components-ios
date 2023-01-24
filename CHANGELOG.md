@@ -1,3 +1,7 @@
+## [Unpublished]
+## Changed
+- (LiveImages) Se cambia parte de la arquitectura para que sea consistente en mobile.
+
 ## [1.52.0] - 2023-01-18
 ## Added
 - Manejo de cache para LiveImages
