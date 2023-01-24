@@ -26,7 +26,7 @@ class MLBusinessLiveImagesCellView: UICollectionViewCell, MLBusinessLiveImagesHe
 
 class MLBusinessLiveImagesView: UIView {
     
-    private var viewModel: ImageAnimationManagerProtocol
+    private var imageAnimationManager: ImageAnimationManagerProtocol
     var liveImageState: MLBusinessLiveImagesState = .paused
     
     private lazy var thumbnailImage: UIImageView = {
@@ -46,11 +46,11 @@ class MLBusinessLiveImagesView: UIView {
         return view
     }()
     
-    public init(with imageProvider: MLBusinessImageProvider? = nil, viewModel: ImageAnimationManagerProtocol = ImageAnimationManager()) {
-        self.viewModel = viewModel
+    public init(with imageProvider: MLBusinessImageProvider? = nil, imageAnimationManager: ImageAnimationManagerProtocol = ImageAnimationManager()) {
+        self.imageAnimationManager = imageAnimationManager
         super.init(frame: .zero)
-        self.viewModel.delegate = self
-        self.viewModel.imageProvider = imageProvider ?? MLBusinessURLImageProvider()
+        self.imageAnimationManager.delegate = self
+        self.imageAnimationManager.imageProvider = imageProvider ?? MLBusinessURLImageProvider()
         
         setup()
         setupConstraints()
@@ -88,25 +88,25 @@ class MLBusinessLiveImagesView: UIView {
     }
  
     func update(coverMedia: MLBusinessLiveImagesModel?, cover: String?){
-        viewModel.update(coverMedia: coverMedia, cover: cover)
+        imageAnimationManager.update(coverMedia: coverMedia, cover: cover)
     }
 }
 
 extension MLBusinessLiveImagesView: MLBusinessLiveImagesHelper {
     
     func play() {
-        viewModel.play(currentState: liveImageState)
+        imageAnimationManager.play(currentState: liveImageState)
     }
     
     func pause() {
-        viewModel.stop(currentState: liveImageState)
+        imageAnimationManager.stop(currentState: liveImageState)
     }
 }
 
 extension MLBusinessLiveImagesView: ImageAnimationManagerDelegate {
     
     func transitionView() {
-        self.liveImage.isHidden = self.viewModel.shouldHideAnimation(state: self.liveImageState)
+        self.liveImage.isHidden = self.imageAnimationManager.shouldHideAnimation(state: self.liveImageState)
     }
         
     func setStaticImage(with image: UIImage) {
