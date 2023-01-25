@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class MLBusinessDynamicCoverCarouselViewCell: UICollectionViewCell {
+class MLBusinessDynamicCoverCarouselViewCell: MLBusinessLiveImagesCellView {
     private let cornerRadius: CGFloat = 6
     
     private lazy var mainContentView: PressableView = {
@@ -86,14 +86,14 @@ class MLBusinessDynamicCoverCarouselViewCell: UICollectionViewCell {
     public func update(with content: MLBusinessDynamicCoverCarouselItemModel) {
         itemView.update(with: content)
     }
-}
-
-extension MLBusinessDynamicCoverCarouselViewCell: MLBusinessLiveImagesHelper {
-    func play() {
+    
+    override func play() {
+        super.play()
         itemView.play()
     }
     
-    func pause() {
+    override func pause() {
+        super.play()
         itemView.pause()
     }
 }

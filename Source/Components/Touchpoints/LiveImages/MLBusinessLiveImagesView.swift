@@ -6,12 +6,11 @@
 //
 
 import Foundation
-import WebKit
 
 enum MLBusinessLiveImagesState {
     case playing
-    case stoped
-    case readyToPlay
+    case paused
+    case download_success
     case blocked
 }
 
@@ -20,10 +19,15 @@ protocol MLBusinessLiveImagesHelper {
     func pause()
 }
 
+class MLBusinessLiveImagesCellView: UICollectionViewCell, MLBusinessLiveImagesHelper {
+    func play() {}
+    func pause() {}
+}
+
 class MLBusinessLiveImagesView: UIView {
     
-    private var viewModel: MLBusinessLiveImagesViewModelProtocol
-    var liveImageState: MLBusinessLiveImagesState = .stoped
+    private var imageAnimationManager: ImageAnimationManagerProtocol
+    var liveImageState: MLBusinessLiveImagesState = .paused
     
     private lazy var thumbnailImage: UIImageView = {
         let image = UIImageView()
@@ -42,11 +46,11 @@ class MLBusinessLiveImagesView: UIView {
         return view
     }()
     
-    public init(with imageProvider: MLBusinessImageProvider? = nil, viewModel: MLBusinessLiveImagesViewModelProtocol = MLBusinessLiveImagesViewModel()) {
-        self.viewModel = viewModel
+    public init(with imageProvider: MLBusinessImageProvider? = nil, imageAnimationManager: ImageAnimationManagerProtocol = ImageAnimationManager()) {
+        self.imageAnimationManager = imageAnimationManager
         super.init(frame: .zero)
-        self.viewModel.delegate = self
-        self.viewModel.imageProvider = imageProvider ?? MLBusinessURLImageProvider()
+        self.imageAnimationManager.delegate = self
+        self.imageAnimationManager.imageProvider = imageProvider ?? MLBusinessURLImageProvider()
         
         setup()
         setupConstraints()
@@ -84,25 +88,25 @@ class MLBusinessLiveImagesView: UIView {
     }
  
     func update(coverMedia: MLBusinessLiveImagesModel?, cover: String?){
-        viewModel.update(coverMedia: coverMedia, cover: cover)
+        imageAnimationManager.update(coverMedia: coverMedia, cover: cover)
     }
 }
 
 extension MLBusinessLiveImagesView: MLBusinessLiveImagesHelper {
     
     func play() {
-        viewModel.prepareForPlaying(state: liveImageState)
+        imageAnimationManager.play(currentState: liveImageState)
     }
     
     func pause() {
-        viewModel.prepareForStoping(state: liveImageState)
+        imageAnimationManager.stop(currentState: liveImageState)
     }
 }
 
-extension MLBusinessLiveImagesView: LiveImageViewModelDelegate {
+extension MLBusinessLiveImagesView: ImageAnimationManagerDelegate {
     
     func transitionView() {
-        self.liveImage.isHidden = self.viewModel.shouldHideAnimation(state: self.liveImageState)
+        self.liveImage.isHidden = self.imageAnimationManager.shouldHideAnimation(state: self.liveImageState)
     }
         
     func setStaticImage(with image: UIImage) {
@@ -114,8 +118,8 @@ extension MLBusinessLiveImagesView: LiveImageViewModelDelegate {
     }
     
     func changeState(to state: MLBusinessLiveImagesState) {
-        if liveImageState == .playing && state == .stoped {
-            liveImageState = .readyToPlay
+        if liveImageState == .playing && state == .paused {
+            liveImageState = .download_success
         } else {
             liveImageState = state
         }

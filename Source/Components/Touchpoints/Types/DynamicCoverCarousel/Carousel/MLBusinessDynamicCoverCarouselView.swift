@@ -21,7 +21,8 @@ public class MLBusinessDynamicCoverCarouselView: UIView {
     private var itemHeight: CGFloat = 156
     private var auxCell: MLBusinessDynamicCoverCarouselViewCell?
     public weak var delegate: MLBusinessDynamicCoverCarouselViewDelegate?
-
+    private var multimediaCarousel: MLBusinessMultimediaCarousel
+    
     private lazy var collectionViewHelper: CarouselCollectionViewHelper = {
         let helper = CarouselCollectionViewHelper()
         helper.delegate = self
@@ -39,7 +40,7 @@ public class MLBusinessDynamicCoverCarouselView: UIView {
         collectionView.dataSource = self
         return collectionView
     }()
- 
+    
     public var shouldHighlightItems = true
     
     public var scrollView: UIScrollView {
@@ -52,7 +53,8 @@ public class MLBusinessDynamicCoverCarouselView: UIView {
     
     public init(imageProvider: MLBusinessImageProvider? = nil) {
         self.imageProvider = imageProvider
-
+        self.multimediaCarousel = MLBusinessMultimediaCarouselImplementation()
+        
         super.init(frame: .zero)
         setupView()
         setupConstraints()
@@ -70,7 +72,7 @@ public class MLBusinessDynamicCoverCarouselView: UIView {
     }
     
     private func setupConstraints() {
-
+        
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: topAnchor),
             collectionView.leftAnchor.constraint(equalTo: leftAnchor),
@@ -92,10 +94,10 @@ public class MLBusinessDynamicCoverCarouselView: UIView {
     
     private func getItemCardWidth() -> CGFloat {
         let cardWidth = UIScreen.main.bounds.width - collectionViewHelper.leftCellPeekWidth - collectionViewHelper.rightCellPeekWidth - 16
-
+        
         return (cardWidth < defaultCardWidth) ? defaultCardWidth : cardWidth
     }
-
+    
     private func getPeekWidth(offset: Float) -> CGFloat {
         return UIScreen.main.bounds.width * CGFloat(offset)
     }
@@ -124,20 +126,6 @@ public class MLBusinessDynamicCoverCarouselView: UIView {
         collectionViewHeightConstraint = collectionView.heightAnchor.constraint(equalToConstant: itemHeight)
         collectionViewHeightConstraint?.isActive = true
     }
-    
-    private func prepareAnimation() {
-        let currentIndex = IndexPath(indexes: [0,collectionViewHelper.currentActiveIndex])
-        let currentCell = collectionView.cellForItem(at: currentIndex) as? MLBusinessDynamicCoverCarouselViewCell
-        
-        if let auxCell = auxCell {
-            auxCell.pause()
-            currentCell?.play()
-            self.auxCell = currentCell
-        } else {
-            self.auxCell = currentCell
-            self.auxCell?.play()
-        }
-    }
 }
 
 extension MLBusinessDynamicCoverCarouselView: UICollectionViewDataSource {
@@ -153,10 +141,7 @@ extension MLBusinessDynamicCoverCarouselView: UICollectionViewDataSource {
         }
         cell.imageProvider = imageProvider
         cell.update(with: content)
-
-        if indexPath == IndexPath(indexes: [0,1]) && IndexPath(indexes: [0,0]) == IndexPath(indexes: [0,collectionViewHelper.currentActiveIndex]) {
-            prepareAnimation()
-        }
+        multimediaCarousel.startByPosition(indexPath.row, cell: cell, positionFocused: collectionViewHelper.currentActiveIndex)
         
         return cell
     }
@@ -171,7 +156,11 @@ extension MLBusinessDynamicCoverCarouselView: UICollectionViewDelegateFlowLayout
 extension MLBusinessDynamicCoverCarouselView: CarouselCollectionViewHelperDelegate {
     func carouselDelegateDidScrollToItem(_ carouselDelegate: CarouselCollectionViewHelper) {
         delegate?.dynamicCoverCarouselView(self, didFinishScrolling: visibleItems)
-        prepareAnimation()
+        
+        let currentIndex = IndexPath(indexes: [0,collectionViewHelper.currentActiveIndex])
+        if let currentCell = collectionView.cellForItem(at: currentIndex) as? MLBusinessDynamicCoverCarouselViewCell {
+            multimediaCarousel.playOnFocus(currentCell: currentCell)
+        }
     }
     
     func carouselDelegate(_ carouselDelegate: CarouselCollectionViewHelper, didSelectItemAt indexPath: IndexPath) {
