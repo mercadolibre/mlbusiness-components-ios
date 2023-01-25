@@ -1,4 +1,4 @@
-## [Unpublished]
+## [Unreleased]
 ## Changed
 - (LiveImages) Se cambia parte de la arquitectura para que sea consistente en mobile.
 
