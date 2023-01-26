@@ -7,12 +7,6 @@
 
 import Foundation
 
-enum MLBusinessLiveImagesState {
-    case playing
-    case paused
-    case download_success
-    case blocked
-}
 
 protocol MLBusinessLiveImagesHelper {
     func play()
@@ -27,7 +21,6 @@ class MLBusinessLiveImagesCellView: UICollectionViewCell, MLBusinessLiveImagesHe
 class MLBusinessLiveImagesView: UIView {
     
     private var imageAnimationManager: ImageAnimationManagerProtocol
-    var liveImageState: MLBusinessLiveImagesState = .paused
     
     private lazy var thumbnailImage: UIImageView = {
         let image = UIImageView()
@@ -42,7 +35,7 @@ class MLBusinessLiveImagesView: UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
-        view.liveImageDelegate = self
+        view.imageAnimationManager = self.imageAnimationManager
         return view
     }()
     
@@ -87,7 +80,8 @@ class MLBusinessLiveImagesView: UIView {
         ])
     }
  
-    func update(coverMedia: MLBusinessLiveImagesModel?, cover: String?){
+    func update(coverMedia: MLBusinessLiveImagesModel? = nil, cover: String?){
+        clear()
         imageAnimationManager.update(coverMedia: coverMedia, cover: cover)
     }
 }
@@ -95,18 +89,18 @@ class MLBusinessLiveImagesView: UIView {
 extension MLBusinessLiveImagesView: MLBusinessLiveImagesHelper {
     
     func play() {
-        imageAnimationManager.play(currentState: liveImageState)
+        imageAnimationManager.play()
     }
     
     func pause() {
-        imageAnimationManager.stop(currentState: liveImageState)
+        imageAnimationManager.stop()
     }
 }
 
 extension MLBusinessLiveImagesView: ImageAnimationManagerDelegate {
     
     func transitionView() {
-        self.liveImage.isHidden = self.imageAnimationManager.shouldHideAnimation(state: self.liveImageState)
+        self.liveImage.isHidden = self.imageAnimationManager.shouldHideAnimation()
     }
         
     func setStaticImage(with image: UIImage) {
@@ -117,16 +111,8 @@ extension MLBusinessLiveImagesView: ImageAnimationManagerDelegate {
         liveImage.loadImage(from: url)
     }
     
-    func changeState(to state: MLBusinessLiveImagesState) {
-        if liveImageState == .playing && state == .paused {
-            liveImageState = .download_success
-        } else {
-            liveImageState = state
-        }
-    }
-    
     func clear() {
-        liveImageState = .blocked
+        imageAnimationManager.changeState(to: .blocked)
         thumbnailImage.image = nil
         liveImage.isHidden = true
         liveImage.clear()
