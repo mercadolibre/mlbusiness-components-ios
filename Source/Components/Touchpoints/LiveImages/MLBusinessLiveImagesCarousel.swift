@@ -21,8 +21,7 @@ final class MLBusinessMultimediaCarouselImplementation: MLBusinessMultimediaCaro
     private var currentCellFocused: MLBusinessLiveImagesCellView?
     
     func startByPosition(_ position: Int, cell: MLBusinessLiveImagesCellView, positionFocused: Int) {
-        if position == 0 && 
-        postionFocused == 0 {
+        if position == 0 && positionFocused == 0 {
             playOnFocus(currentCell: cell)
         }
     }
