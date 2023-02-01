@@ -1,3 +1,7 @@
+## [Unreleased]
+## Added
+- (LiveImages) Se agrega validacion para no mostrar imagenes animadas segun estado de bateria y consumo datos.
+
 ## [1.53.0] - 2023-01-26
 ## Changed
 - (LiveImages) Se cambia parte de la arquitectura para que sea consistente en mobile.
