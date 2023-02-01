@@ -12,7 +12,7 @@ import WebKit
 
 class MLBusinessLiveImagesWebView: UIView {
     
-    weak var liveImageDelegate: ImageAnimationManagerDelegate?
+    weak var imageAnimationManager: ImageAnimationManagerProtocol?
     
     private lazy var webview: WKWebView = {
         let view = WKWebView()
@@ -106,7 +106,7 @@ class MLBusinessLiveImagesWebView: UIView {
 extension MLBusinessLiveImagesWebView: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        liveImageDelegate?.changeState(to: .download_success)
+        imageAnimationManager?.changeState(to: .readyToPlay)
     }
 }
 
