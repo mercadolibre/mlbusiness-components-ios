@@ -17,6 +17,6 @@ class MLBusinessBatterySavingUtils {
     }
     
     func setBatteryStatus() {
-        isBatteryLow = UIDevice.current.batteryLevel < 0.2
+        isBatteryLow = UIDevice.current.batteryLevel < 0.15
     }
 }
