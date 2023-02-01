@@ -47,6 +47,7 @@ final class ImageAnimationManager: ImageAnimationManagerProtocol {
     private var delayWork: DispatchWorkItem?
     private var liveImageState: MLBusinessLiveImagesState = .paused
     private var playPending: Bool = false
+    private var model: MLBusinessLiveImagesModel?
         
     private func loadImage(key: String) {
         imageProvider.getImage(key: key, completion:{ [weak self] image in
@@ -94,6 +95,7 @@ final class ImageAnimationManager: ImageAnimationManagerProtocol {
 
     func update(coverMedia: MLBusinessLiveImagesModel?, cover: String?) {
         delegate?.clear()
+        model = coverMedia
         changeState(to: .initMultimedia)
         if let coverMedia = coverMedia,
             let thumbnail = coverMedia.getThumbnail(),
