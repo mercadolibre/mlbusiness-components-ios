@@ -40,8 +40,6 @@ final class MLBusinessMultimediaCarouselImplementation: MLBusinessMultimediaCaro
     
     func restartFocused(_ position: Int, cell: MLBusinessLiveImagesCellView, positionFocused: Int) {
         startByPosition(position, cell: cell, positionFocused: positionFocused)
-        
-        //TODO: updateConfig()
     }
     
     func pauseFocused() {
@@ -53,6 +51,7 @@ final class MLBusinessMultimediaCarouselImplementation: MLBusinessMultimediaCaro
     }
     
     func updateConfig() {
-        //TODO: WifiUtils and BatteryUtils
+        MLBusinessWifiUtils.shared.startMonitoring()
+        MLBusinessBatterySavingUtils.shared.setBatteryStatus()
     }
 }

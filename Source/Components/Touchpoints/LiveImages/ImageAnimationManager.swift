@@ -47,6 +47,7 @@ final class ImageAnimationManager: ImageAnimationManagerProtocol {
     private var delayWork: DispatchWorkItem?
     private var liveImageState: MLBusinessLiveImagesState = .paused
     private var playPending: Bool = false
+    private var model: MLBusinessLiveImagesModel?
         
     private func loadImage(key: String) {
         imageProvider.getImage(key: key, completion:{ [weak self] image in
@@ -94,10 +95,13 @@ final class ImageAnimationManager: ImageAnimationManagerProtocol {
 
     func update(coverMedia: MLBusinessLiveImagesModel?, cover: String?) {
         delegate?.clear()
+        model = coverMedia
         changeState(to: .initMultimedia)
         if let coverMedia = coverMedia,
             let thumbnail = coverMedia.getThumbnail(),
-            let url = coverMedia.getMediaLink() {
+            let url = coverMedia.getMediaLink(),
+            shouldShowAnimation() {
+            
             loadImage(key: thumbnail)
             changeState(to: .paused)
             loadAnimatedImage(key: url)
@@ -143,5 +147,17 @@ final class ImageAnimationManager: ImageAnimationManagerProtocol {
             changeState(to: .playing)
             delegate?.transitionView()
         }
+    }
+    
+    private func shouldShowAnimation() -> Bool {
+        return shouldShowAnimationByLowBattery() && shouldShowAnimationByMobileData()
+    }
+    
+    private func shouldShowAnimationByLowBattery() -> Bool {
+        return model?.shouldIgnoreBattery() ?? false || !MLBusinessBatterySavingUtils.shared.isBatteryLow
+    }
+    
+    private func shouldShowAnimationByMobileData() -> Bool {
+        return model?.shouldIgnoreMobileData() ?? false || MLBusinessWifiUtils.shared.isWifiNetworkConnected
     }
 }

@@ -11,10 +11,14 @@ public struct MLBusinessLiveImagesModel: Codable {
     
     private let thumbnail: String?
     private let mediaLink: String?
+    private let mobileData: Bool?
+    private let batteryIgnore: Bool?
     
-    public init(thumbnail: String?, mediaLink: String?){
+    public init(thumbnail: String?, mediaLink: String?, mobileData: Bool? = false, batteryIgnore: Bool? = false){
         self.thumbnail = thumbnail
         self.mediaLink = mediaLink
+        self.mobileData = mobileData
+        self.batteryIgnore = batteryIgnore
     }
     
     public func getThumbnail() -> String? {
@@ -23,6 +27,14 @@ public struct MLBusinessLiveImagesModel: Codable {
     
     public func getMediaLink() -> String? {
         return mediaLink
+    }
+    
+    public func shouldIgnoreMobileData() -> Bool? {
+        return mobileData
+    }
+    
+    public func shouldIgnoreBattery() -> Bool? {
+        return batteryIgnore
     }
 }
 
