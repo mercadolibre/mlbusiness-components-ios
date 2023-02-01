@@ -106,7 +106,7 @@ class MLBusinessLiveImagesWebView: UIView {
 extension MLBusinessLiveImagesWebView: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        imageAnimationManager?.changeState(to: .ready_to_play)
+        imageAnimationManager?.changeState(to: .readyToPlay)
     }
 }
 

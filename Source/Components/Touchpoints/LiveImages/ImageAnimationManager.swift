@@ -8,13 +8,13 @@
 import Foundation
 
 enum MLBusinessLiveImagesState {
-    case init_multimedia
+    case initMultimedia
     case playing
     case paused
-    case ready_to_play
+    case readyToPlay
     case download
-    case download_failed
-    case download_success
+    case downloadFailed
+    case downloadSuccess
     case blocked
 }
 
@@ -63,10 +63,10 @@ final class ImageAnimationManager: ImageAnimationManagerProtocol {
             
             DispatchQueue.main.async {
                 if let dataEncoded = data?.base64EncodedString() {
-                    self?.changeState(to: .download_success)
+                    self?.changeState(to: .downloadSuccess)
                     self?.delegate?.setAnimatedImage(with: dataEncoded)
                 } else {
-                    self?.changeState(to: .download_failed)
+                    self?.changeState(to: .downloadFailed)
                     self?.changeState(to: .blocked)
                 }
             }
@@ -94,13 +94,13 @@ final class ImageAnimationManager: ImageAnimationManagerProtocol {
 
     func update(coverMedia: MLBusinessLiveImagesModel?, cover: String?) {
         delegate?.clear()
-        changeState(to: .init_multimedia)
-        if let coverMedia = coverMedia {
-            if let thumbnail = coverMedia.getThumbnail(), let url = coverMedia.getMediaLink() {
-                loadImage(key: thumbnail)
-                changeState(to: .paused)
-                loadAnimatedImage(key: url)
-            }
+        changeState(to: .initMultimedia)
+        if let coverMedia = coverMedia,
+            let thumbnail = coverMedia.getThumbnail(),
+            let url = coverMedia.getMediaLink() {
+            loadImage(key: thumbnail)
+            changeState(to: .paused)
+            loadAnimatedImage(key: url)
             
         } else if let cover = cover {
             changeState(to: .blocked)
@@ -124,17 +124,13 @@ final class ImageAnimationManager: ImageAnimationManagerProtocol {
     func play() {
         playPending = true
         if liveImageState != .blocked {
-            if liveImageState != .ready_to_play {
-                delayAnimation()
-            } else {
-                tryPlayingAnimation()
-            }
+            liveImageState != .readyToPlay ? delayAnimation() : tryPlayingAnimation()
         }
     }
         
     func changeState(to state: MLBusinessLiveImagesState) {
         if liveImageState == .playing && state == .paused {
-            liveImageState = .ready_to_play
+            liveImageState = .readyToPlay
         } else {
             liveImageState = state
         }
@@ -143,7 +139,7 @@ final class ImageAnimationManager: ImageAnimationManagerProtocol {
     }
     
     func tryPlayingAnimation() {
-        if playPending && liveImageState == .ready_to_play {
+        if playPending && liveImageState == .readyToPlay {
             changeState(to: .playing)
             delegate?.transitionView()
         }
