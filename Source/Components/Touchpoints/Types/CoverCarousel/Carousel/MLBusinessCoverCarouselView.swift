@@ -170,7 +170,7 @@ extension MLBusinessCoverCarouselView: UICollectionViewDelegate {
         delegate?.coverCarouselView(self, didSelect: items[indexPath.item], at: indexPath.item)
     }
     
-    private func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
+    public func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
         return shouldHighlightItems
     }
 }
