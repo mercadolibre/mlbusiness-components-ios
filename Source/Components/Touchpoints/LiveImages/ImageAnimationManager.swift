@@ -28,6 +28,7 @@ final class ImageAnimationManager: ImageAnimationManagerProtocol {
     var imageProvider: MLBusinessImageProvider
     weak var delegate: ImageAnimationManagerDelegate?
     private var delayWork: DispatchWorkItem?
+    private var model: MLBusinessLiveImagesModel?
     
     public init(imageProvider: MLBusinessImageProvider? = nil) {
         self.imageProvider = imageProvider ?? MLBusinessURLImageProvider()
@@ -36,9 +37,10 @@ final class ImageAnimationManager: ImageAnimationManagerProtocol {
     func update(coverMedia: MLBusinessLiveImagesModel?, cover: String?) {
         
         delegate?.clear()
+        model = coverMedia
         
         if let coverMedia = coverMedia {
-            if let thumbnail = coverMedia.getThumbnail(), let url = coverMedia.getMediaLink() {
+            if let thumbnail = coverMedia.getThumbnail(), let url = coverMedia.getMediaLink(), shouldShowAnimation(){
                 loadImage(key: thumbnail)
                 self.delegate?.changeState(to: .paused)
                 loadAnimatedImage(key: url)
@@ -110,5 +112,17 @@ final class ImageAnimationManager: ImageAnimationManagerProtocol {
     private func startAnimation() {
         self.delegate?.changeState(to: .playing)
         self.delegate?.transitionView()
+    }
+    
+    private func shouldShowAnimation() -> Bool {
+        return shouldShowAnimationByLowBattery() && shouldShowAnimationByMobileData()
+    }
+    
+    private func shouldShowAnimationByLowBattery() -> Bool {
+        return model?.shouldIgnoreBattery() ?? false || !MLBusinessBatterySavingUtils.shared.isBatteryLow
+    }
+    
+    private func shouldShowAnimationByMobileData() -> Bool {
+        return model?.shouldIgnoreMobileData() ?? false || MLBusinessWifiUtils.shared.isWifiNetworkConnected
     }
 }

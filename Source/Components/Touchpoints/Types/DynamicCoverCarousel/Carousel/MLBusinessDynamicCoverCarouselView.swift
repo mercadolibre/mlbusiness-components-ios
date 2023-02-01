@@ -84,6 +84,7 @@ public class MLBusinessDynamicCoverCarouselView: UIView {
     public func update(with model: MLBusinessDynamicCoverCarouselModel?) {
         self.model = model
         self.auxCell = nil
+        multimediaCarousel.updateConfig()
         configureCard(cardType: model?.getType() ?? "landscape")
         collectionView.reloadData()
     }
