@@ -21,6 +21,7 @@ open class MLBusinessLoyaltyRingView: UIView {
     private let fillPercentProgress: Bool
     private weak var ringView: UICircularProgressRing?
     private var tapAction: ((_ deepLink: String) -> Void)?
+    private let imageSize: CGFloat = 46
 
     public init(_ ringViewData: MLBusinessLoyaltyRingData, fillPercentProgress: Bool = true) {
         self.viewData = ringViewData
@@ -48,13 +49,33 @@ extension MLBusinessLoyaltyRingView {
         let button = buildButton()
         self.addSubview(button)
 
-        let ring = RingFactory.create(number: viewData.getRingNumber(), hexaColor: viewData.getRingHexaColor(), percent: viewData.getRingPercentage(), fillPercentage: fillPercentProgress, innerCenterText: String(viewData.getRingNumber()))
+        let ring = RingFactory.create(
+            number: viewData.getRingNumber?() ?? 0,
+            hexaColor: viewData.getRingHexaColor?() ?? "",
+            percent: viewData.getRingPercentage?() ?? 0,
+            fillPercentage: fillPercentProgress,
+            innerCenterText: viewData.getRingNumber?() != nil ? String(viewData.getRingNumber!()) : "")
+        
         self.addSubview(ring)
         self.ringView = ring
         
-        makeConstraints(titleLabel, subtitleLabel, button, ring)
+        let imageUrl = buildImageUrl()
+        self.addSubview(imageUrl)
+        
+        makeConstraints(titleLabel, subtitleLabel, button, ring, imageUrl)
     }
-
+    
+    private func buildImageUrl() -> UIImageView {
+        let icon = UIImageView()
+        icon.layer.cornerRadius =  imageSize / 2
+        icon.layer.masksToBounds = true
+        icon.setRemoteImage(imageUrl: viewData.getImageUrl?() ?? "")
+        icon.translatesAutoresizingMaskIntoConstraints = false
+        icon.contentMode = .scaleAspectFill
+        icon.prepareForAutolayout(.clear)
+        return icon
+    }
+    
     // MARK: Builders.
     private func buildTitle() -> UILabel {
         let titleLabel = UILabel()
@@ -88,12 +109,16 @@ extension MLBusinessLoyaltyRingView {
     }
 
     // MARK: Constraints.
-    func makeConstraints(_ titleLabel: UILabel, _ subtitleLabel: UILabel, _ button: UIButton, _ ring: UICircularProgressRing) {
+    func makeConstraints(_ titleLabel: UILabel, _ subtitleLabel: UILabel, _ button: UIButton, _ ring: UICircularProgressRing, _ img : UIImageView) {
         NSLayoutConstraint.activate([
             ring.topAnchor.constraint(equalTo: topAnchor, constant: verticalMargin),
             ring.leadingAnchor.constraint(equalTo: leadingAnchor),
             ring.widthAnchor.constraint(equalToConstant: ringSize),
             ring.heightAnchor.constraint(equalToConstant: ringSize),
+            img.topAnchor.constraint(equalTo: topAnchor, constant: verticalMargin),
+            img.leadingAnchor.constraint(equalTo: leadingAnchor),
+            img.widthAnchor.constraint(equalToConstant: imageSize),
+            img.heightAnchor.constraint(equalToConstant: imageSize),
             titleLabel.topAnchor.constraint(equalTo: ring.topAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: ring.trailingAnchor, constant: UI.Margin.M_MARGIN),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
@@ -120,6 +145,6 @@ extension MLBusinessLoyaltyRingView {
     }
 
     @objc open func fillPercentProgressWithAnimation(_ duration: TimeInterval = 1.0) {
-        ringView?.startProgress(to: CGFloat(viewData.getRingPercentage()), duration: duration)
+        ringView?.startProgress(to: CGFloat(viewData.getRingPercentage?() ?? 0), duration: duration)
     }
 }

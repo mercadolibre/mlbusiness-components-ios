@@ -40,7 +40,8 @@ extension ViewController {
     private func setupView(_ receiver: MLBusinessLoyaltyBroadcastReceiver) {
         let newRingView = setupRingView(receiver)
         self.ringView = newRingView
-        let dividingLineView = setupDividingLineView(bottomOf: newRingView)
+        let newRingView2 = setupRingView2(bottomOf: newRingView)
+        let dividingLineView = setupDividingLineView(bottomOf: newRingView2)
         let itemDescriptionView = setupItemDescriptionView(bottomOf: dividingLineView)
         let crossSellingBoxView = setupCrossSellingBoxView(bottomOf: itemDescriptionView)
         let discountView = setupDiscountView(numberOfItems: 6, bottomOf: crossSellingBoxView)
@@ -95,6 +96,25 @@ extension ViewController {
         broadcaster.updateInfo(MLBusinessLoyaltyBroadcastData(level: ringData.getRingNumber(),
                                                               percentage: ringData.getRingPercentage(),
                                                               primaryColor: ringData.getRingHexaColor()))
+        
+        return ringView
+    }
+    
+    private func setupRingView2(bottomOf targetView: UIView) -> MLBusinessLoyaltyRingView {
+        let ringData = LoyaltyRingData2()
+        let ringView = MLBusinessLoyaltyRingView(ringData, fillPercentProgress: false)
+        
+        containerView.addSubview(ringView)
+        
+        NSLayoutConstraint.activate([
+            ringView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            ringView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+            ringView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 20)
+        ])
+        
+        ringView.addTapAction { deepLink in
+            print(deepLink)
+        }
         
         return ringView
     }
