@@ -81,8 +81,12 @@ extension MLBusinessLoyaltyRingView {
         let titleLabel = UILabel()
         titleLabel.prepareForAutolayout(.clear)
         titleLabel.numberOfLines = titleNumberOfLines
-        titleLabel.text = viewData.getTitle()
-        titleLabel.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.S_FONT)
+        titleLabel.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.regular)
+        titleLabel.attributedText = viewData.getTitle().convertHtmlToAttributedStringWithCSS(font: UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.regular), csscolor: "white", lineheight: 5, csstextalign: "center")
+//        titleLabel.font = UIFont.ml_regularSystemFont(ofSize: UI.FontSize.S_FONT)
+//        titleLabel.text = viewData.getTitle()
+//                titleLabel.attributedText = viewData.getTitle().htmlAttributedString()
+        NSLog("Fuente nombre: \(String(describing: titleLabel.font))");
         titleLabel.applyBusinessLabelStyle()
         return titleLabel
     }
@@ -93,6 +97,9 @@ extension MLBusinessLoyaltyRingView {
         subtitleLabel.numberOfLines = subtitleNumberOfLines
         subtitleLabel.text = viewData.getSubtitle?() ?? nil
         subtitleLabel.font = UIFont.ml_regularSystemFont(ofSize: UI.FontSize.XS_FONT)
+//        subtitleLabel.font = UIFont.systemFont(ofSize: UI.FontSize.XS_FONT)
+//        printf("Fuente nomre: \(String(describing: subtitleLabel.font))");
+        NSLog("Fuente nombre: \(String(describing: subtitleLabel.font))");
         subtitleLabel.textColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.45)
         return subtitleLabel
     }
@@ -146,5 +153,103 @@ extension MLBusinessLoyaltyRingView {
 
     @objc open func fillPercentProgressWithAnimation(_ duration: TimeInterval = 1.0) {
         ringView?.startProgress(to: CGFloat(viewData.getRingPercentage?() ?? 0), duration: duration)
+    }
+}
+
+//extension String {
+//    func htmlAttributedString() -> NSAttributedString? {
+//        let htmlTemplate = """
+//        <!doctype html>
+//        <html>
+//           <head>
+//              <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+//              <style>
+//                 body {
+//                font-family: .SFUI-Regular;
+//                 }
+//              </style>
+//           </head>
+//           <body>
+//              \(self)
+//           </body>
+//        </html>
+//        """
+//
+//        guard let data = htmlTemplate.data(using: .utf8) else {
+//            return nil
+//        }
+//
+//        guard let attributedString = try? NSAttributedString(
+//            data: data,
+//            options: [.documentType: NSAttributedString.DocumentType.html],
+//            documentAttributes: nil
+//        ) else {
+//            return nil
+//        }
+//
+//        return attributedString
+//    }
+//
+////        let htmlProfileString = "<html><head><style>body {font-family:\"-apple-system\";font-size: 16px;color: #FFFFFF;text-decoration:none;}</style></head><body>" +
+////
+////
+////
+////                                        """
+////                                        ñandú
+////                                        <b> Negrita </b>
+////                                        <strike> Tachado </strike>
+////                                        <strike><strong> Negrita y Tachado </strong></strike>
+////                                        <mark style="background: #27a750 !important; color: #FFF">&nbspFondo verde y letras blancas </mark>
+////                                        <font size="6">&nbspGrande </font>
+////                                        <font size="2">Pequeño </font>
+////                                        <span style="font-size: 22px; color:red; font-weight: bold; font-style: italic;"> italic cursiva roja 22px</span>
+////                                        """
+////
+////
+////
+////
+////                                + "</body></head></html>"
+////
+////                            let htmlData = NSString(string: htmlProfileString).data(using: String.Encoding.unicode.rawValue)
+////
+////                            let options = [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html]
+////
+////                            let attributedString = try! NSAttributedString(data: htmlData!, options: options, documentAttributes: nil)
+////        return attributedString
+////    }
+//}
+
+
+
+extension String {
+    private var convertHtmlToNSAttributedString: NSAttributedString? {
+        guard let data = data(using: .utf8) else {
+            return nil
+        }
+        do {
+            return try NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: String.Encoding.utf8.rawValue], documentAttributes: nil)
+        }
+        catch {
+            print(error.localizedDescription)
+            return nil
+        }
+    }
+
+    public func convertHtmlToAttributedStringWithCSS(font: UIFont?, csscolor: String, lineheight: Int, csstextalign: String) -> NSAttributedString? {
+        guard let font = font else {
+            return convertHtmlToNSAttributedString
+        }
+//        let modifiedString = "<style>body{color: \(csscolor); line-height: \(lineheight)px; text-align: \(csstextalign); }</style>\(self)"
+        let modifiedString = "<style>body{font-family: '\(font.fontName)'; font-size:\(font.pointSize)px; color: \(csscolor); line-height: \(lineheight)px; text-align: \(csstextalign); }</style>\(self)"
+        guard let data = modifiedString.data(using: .utf8) else {
+            return nil
+        }
+        do {
+            return try NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: String.Encoding.utf8.rawValue], documentAttributes: nil)
+        }
+        catch {
+            print(error)
+            return nil
+        }
     }
 }

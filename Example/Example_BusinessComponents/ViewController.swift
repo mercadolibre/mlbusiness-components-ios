@@ -101,7 +101,7 @@ extension ViewController {
     }
     
     private func setupRingView2(bottomOf targetView: UIView) -> MLBusinessLoyaltyRingView {
-        let ringData = LoyaltyRingData2()
+        let ringData = LoyaltyRingData3()
         let ringView = MLBusinessLoyaltyRingView(ringData, fillPercentProgress: false)
         
         containerView.addSubview(ringView)
