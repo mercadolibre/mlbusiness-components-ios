@@ -23,8 +23,8 @@ class LoyaltyRingData: NSObject, MLBusinessLoyaltyRingData {
         return 0.80
     }
 
-    func getTitle() -> String {
-        return "Sumaste 20 Mercado Puntos"
+    func getTitle() -> NSMutableAttributedString {
+        return NSMutableAttributedString(string: "Sumaste 20 Mercado Puntos")
     }
     
     func getSubtitle() -> String {
