@@ -81,10 +81,24 @@ extension MLBusinessLoyaltyRingView {
         let titleLabel = UILabel()
         titleLabel.prepareForAutolayout(.clear)
         titleLabel.numberOfLines = titleNumberOfLines
-        titleLabel.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.regular)
-        titleLabel.attributedText = viewData.getTitle().convertHtmlToAttributedStringWithCSS(font: UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.regular), csscolor: "white", lineheight: 5, csstextalign: "center")
+//        titleLabel.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.regular)
+//        titleLabel.attributedText = viewData.getTitle().convertHtmlToAttributedStringWithCSS(font: UIFont.ml_regularSystemFont(ofSize: UI.FontSize.S_FONT), csscolor: "white", lineheight: 5, csstextalign: "center")
+//        titleLabel.attributedText = viewData.getTitle().UIFont.ml_regularSystemFont(ofSize: UI.FontSize.S_FONT)
 //        titleLabel.font = UIFont.ml_regularSystemFont(ofSize: UI.FontSize.S_FONT)
-//        titleLabel.text = viewData.getTitle()
+//        titleLabel.font = MLStyleSheetManager.styleSheet.regularSystemFont(ofSize: CGFloat(12.0))
+        titleLabel.font = MLStyleSheetManager.styleSheet.regularSystemFont(ofSize: CGFloat(12.0))
+//        titleLabel.attributedText = viewData.getTitle().htmlToAttributedString(withFont: titleLabel.font)
+        titleLabel.attributedText = MLBusinessLoyaltyRingView.htmlToAttributedString(htmlString: viewData.getTitle().string, font: UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.S_FONT), color: UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.45), alignment: .center)
+        
+//        let attributedText = NSMutableAttributedString(string: titleLabel.text!)
+//        attributedText.addAttributes([
+//            NSAttributedString.Key.strikethroughStyle: NSNumber(value: NSUnderlineStyle.single.rawValue),
+//            //            NSAttributedString.Key.foregroundColor: UIColor(hexString: UIColor.blue),
+//        ], range: NSRange(location: 0, length: 5))
+//        titleLabel.attributedText = attributedText
+//        titleLabel.textColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.45)
+//        titleLabel.setLineHeight(12)
+        //        titleLabel.text = viewData.getTitle()
 //                titleLabel.attributedText = viewData.getTitle().htmlAttributedString()
         NSLog("Fuente nombre: \(String(describing: titleLabel.font))");
         titleLabel.applyBusinessLabelStyle()
@@ -143,6 +157,40 @@ extension MLBusinessLoyaltyRingView {
     @objc private func didTapOnButton() {
         tapAction?(viewData.getButtonDeepLink())
     }
+    
+    
+    
+    
+    static func htmlToAttributedString(htmlString: String, font: UIFont, color: UIColor, alignment: NSTextAlignment = .center) -> NSAttributedString {
+
+            let modifiedFont = String(format: "<span style=\"font-family: '\(font.fontName)'; font-size: \(font.pointSize)\">%@</span>", htmlString)
+
+            guard let data = modifiedFont.data(using: .unicode, allowLossyConversion: true) else {
+                return NSAttributedString(string: htmlString)
+            }
+
+            do {
+
+                let paragraphStyle = NSMutableParagraphStyle()
+
+                paragraphStyle.alignment = alignment
+
+                let attrStr = try NSMutableAttributedString(
+                    data: data,
+                    options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html],
+                    documentAttributes: nil
+                )
+
+                let allRange = NSRange(location: 0, length: attrStr.length)
+                attrStr.addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: allRange)
+                attrStr.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: allRange)
+
+                return attrStr
+            } catch {
+                return NSAttributedString(string: htmlString)
+            }
+        }
+
 }
 
 // MARK: Public Methods.
@@ -221,35 +269,50 @@ extension MLBusinessLoyaltyRingView {
 
 
 
-extension String {
-    private var convertHtmlToNSAttributedString: NSAttributedString? {
-        guard let data = data(using: .utf8) else {
-            return nil
-        }
-        do {
-            return try NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: String.Encoding.utf8.rawValue], documentAttributes: nil)
-        }
-        catch {
-            print(error.localizedDescription)
-            return nil
-        }
-    }
+//extension String {
+//    private var convertHtmlToNSAttributedString: NSAttributedString? {
+//        guard let data = data(using: .utf8) else {
+//            return nil
+//        }
+//        do {
+//            return try NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: String.Encoding.utf8.rawValue], documentAttributes: nil)
+//        }
+//        catch {
+//            print(error.localizedDescription)
+//            return nil
+//        }
+//    }
+//
+//    public func convertHtmlToAttributedStringWithCSS(font: UIFont?, csscolor: String, lineheight: Int, csstextalign: String) -> NSAttributedString? {
+//        guard let font = font else {
+//            return convertHtmlToNSAttributedString
+//        }
+////        let modifiedString = "<style>body{}</style>\(self)"
+//        let modifiedString = "<style>body{font-family: '\(font.fontName)'; font-size:\(font.pointSize)px; color: \(csscolor); line-height: \(lineheight)px; text-align: \(csstextalign); }</style>\(self)"
+//        guard let data = modifiedString.data(using: .utf8) else {
+//            return nil
+//        }
+//        do {
+//            return try NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: String.Encoding.utf8.rawValue], documentAttributes: nil)
+//        }
+//        catch {
+//            print(error)
+//            return nil
+//        }
+//    }
+//}
 
-    public func convertHtmlToAttributedStringWithCSS(font: UIFont?, csscolor: String, lineheight: Int, csstextalign: String) -> NSAttributedString? {
-        guard let font = font else {
-            return convertHtmlToNSAttributedString
-        }
-//        let modifiedString = "<style>body{color: \(csscolor); line-height: \(lineheight)px; text-align: \(csstextalign); }</style>\(self)"
-        let modifiedString = "<style>body{font-family: '\(font.fontName)'; font-size:\(font.pointSize)px; color: \(csscolor); line-height: \(lineheight)px; text-align: \(csstextalign); }</style>\(self)"
-        guard let data = modifiedString.data(using: .utf8) else {
-            return nil
-        }
-        do {
-            return try NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: String.Encoding.utf8.rawValue], documentAttributes: nil)
-        }
-        catch {
-            print(error)
-            return nil
-        }
-    }
-}
+//extension NSAttributedString {
+//    func htmlToAttributedString(withFont font: UIFont) -> NSAttributedString? {
+//        let modifiedText = String(format: "<span style=\"font-family: '\(font.fontName)'; font-size: \(font.pointSize)\">%@</span>", self)
+//
+//        guard let data = modifiedText.data(using: .utf8) else { return nil }
+//        do {
+//            return try NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: String.Encoding.utf8.rawValue], documentAttributes: nil)
+//        } catch {
+//            return nil
+//        }
+//    }
+//}
+
+
