@@ -12,7 +12,7 @@ import UIKit
     @objc optional func getRingHexaColor() -> String
     @objc optional func getRingNumber() -> Int
     @objc optional func getRingPercentage() -> Float
-    @objc func getTitle() -> NSMutableAttributedString
+    @objc func getTitle() -> String
     @objc optional func getSubtitle() -> String
     @objc func getButtonTitle() -> String
     @objc func getButtonDeepLink() -> String

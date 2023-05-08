@@ -11,21 +11,16 @@ import MLBusinessComponents
 
 class LoyaltyRingData3: NSObject, MLBusinessLoyaltyRingData {
     
-    func getTitle() -> NSMutableAttributedString {
-//        return
-//        """
-//        Una vez que se acredite
-//        <b> Negrita </b>
-//        <strike> Tachado </strike>
-//        <strike><strong> Negrita y Tachado </strong></strike>
-//        """
-        
-//        return "<b>Titulo</b> <strike> Tachado </strike> Una vez que se acredite tu pago, ganarás 20 puntos."
-        return NSMutableAttributedString(string: "<b>Sumaste</b> <strike>400</strike> puntos. Estás más cerca de ser Meli+.")
+    func getTitle() -> String {
+        return "<b>Sumaste 20 Mercado </b>Puntos"
     }
     
     func getButtonTitle() -> String {
         return "Ver mis beneficios"
+    }
+    
+    func getSubtitle() -> String {
+        return "Una vez que se acredite tu pago, ganarás 20 puntos."
     }
     
     func getButtonDeepLink() -> String {
@@ -33,7 +28,7 @@ class LoyaltyRingData3: NSObject, MLBusinessLoyaltyRingData {
     }
     
     func getImageUrl() -> String{
-        return "https://i.ibb.co/z2Mdv12/Captura-de-pantalla-2023-05-04-a-la-s-14-38-25.jpg"
+        return "https://i.ibb.co/8d2yZtZ/logo.png"
     }
 }
 
