@@ -224,7 +224,7 @@ public class MLBusinessDynamicCoverCarouselItemView: UIView {
         backgroundImageView.update(coverMedia: content.getCoverMultimedia(), cover: content.getImageHeader())
         
         if let topPlainImage = content.getTopPlainImage() {
-x            imageProvider.getImage(key: topPlainImage) { [weak self] image in
+            imageProvider.getImage(key: topPlainImage) { [weak self] image in
                 self?.topPlainImageView.image = image
             }
 
