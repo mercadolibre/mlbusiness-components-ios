@@ -12,24 +12,24 @@ import MLUI
 @objcMembers
 open class MLBusinessLoyaltyRingView: UIView {
     let viewData: MLBusinessLoyaltyRingData
-
+    
     private let verticalMargin: CGFloat = 4
     private let ringSize: CGFloat = 46
     private let buttonHeight: CGFloat = 20
-    private let titleNumberOfLines: Int = 2
+    private let titleNumberOfLines: Int = 3
     private let subtitleNumberOfLines: Int = 0
     private let fillPercentProgress: Bool
     private weak var ringView: UICircularProgressRing?
     private var tapAction: ((_ deepLink: String) -> Void)?
     private let imageSize: CGFloat = 46
-
+    
     public init(_ ringViewData: MLBusinessLoyaltyRingData, fillPercentProgress: Bool = true) {
         self.viewData = ringViewData
         self.fillPercentProgress = fillPercentProgress
         super.init(frame: .zero)
         render()
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -39,23 +39,17 @@ open class MLBusinessLoyaltyRingView: UIView {
 extension MLBusinessLoyaltyRingView {
     private func render() {
         self.prepareForAutolayout()
-
+        
         let titleLabel = buildTitle()
         self.addSubview(titleLabel)
         
         let subtitleLabel = buildSubtitle()
         self.addSubview(subtitleLabel)
-
+        
         let button = buildButton()
         self.addSubview(button)
-
-        let ring = RingFactory.create(
-            number: viewData.getRingNumber?() ?? 0,
-            hexaColor: viewData.getRingHexaColor?() ?? "",
-            percent: viewData.getRingPercentage?() ?? 0,
-            fillPercentage: fillPercentProgress,
-            innerCenterText: viewData.getRingNumber?() != nil ? String(viewData.getRingNumber!()) : "")
         
+        let ring = buildRing()
         self.addSubview(ring)
         self.ringView = ring
         
@@ -69,11 +63,26 @@ extension MLBusinessLoyaltyRingView {
         let icon = UIImageView()
         icon.layer.cornerRadius =  imageSize / 2
         icon.layer.masksToBounds = true
+        icon.isHidden = viewData.getImageUrl?() == nil || viewData.getImageUrl?() == ""
         icon.setRemoteImage(imageUrl: viewData.getImageUrl?() ?? "")
         icon.translatesAutoresizingMaskIntoConstraints = false
         icon.contentMode = .scaleAspectFill
         icon.prepareForAutolayout(.clear)
         return icon
+    }
+    
+    private func buildRing() -> UICircularProgressRing {
+        let ring = RingFactory.create(
+            number: viewData.getRingNumber?() ?? 0,
+            hexaColor: viewData.getRingHexaColor?() ?? "",
+            percent: viewData.getRingPercentage?() ?? 0,
+            fillPercentage: fillPercentProgress,
+            innerCenterText: viewData.getRingNumber?() != nil ? String(viewData.getRingNumber!()) : "")
+        ring.isHidden = viewData.getRingNumber?() == nil ||
+        viewData.getRingHexaColor?() == nil ||
+        viewData.getRingPercentage?() == nil ||
+        viewData.getRingNumber?() == nil
+        return ring
     }
     
     // MARK: Builders.
@@ -112,7 +121,7 @@ extension MLBusinessLoyaltyRingView {
         let boldCloseTagRange = text.mutableString.range(of: "</b>")
         if (boldCloseTagRange.location > boldOpenTagRange.location) {
             uiLabel.font = uiFontNormal
-            text.addAttribute(NSAttributedString.Key.font, value: uiFontBold, range: NSMakeRange(boldOpenTagRange.location, boldCloseTagRange.location))
+            text.addAttribute(NSAttributedString.Key.font, value: uiFontBold, range: NSMakeRange(boldOpenTagRange.location, boldCloseTagRange.location-boldOpenTagRange.location))
             text.replaceCharacters(in: boldOpenTagRange, with: "")
             text.replaceCharacters(in: NSMakeRange(boldCloseTagRange.location - boldOpenTagRange.length, boldCloseTagRange.length), with: "")
         }
@@ -122,41 +131,53 @@ extension MLBusinessLoyaltyRingView {
     private func buildButton() -> UIButton {
         let button = UIButton()
         button.prepareForAutolayout(.clear)
-        button.setTitle(viewData.getButtonTitle(), for: .normal)
+        button.setTitle(viewData.getButtonTitle?() ?? "", for: .normal)
         button.titleLabel?.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.XS_FONT)
         button.setTitleColor(MLStyleSheetManager.styleSheet.secondaryColor, for: .normal)
         button.addTarget(self, action:  #selector(self.didTapOnButton), for: .touchUpInside)
-        button.isHidden = viewData.getButtonTitle() == "" || viewData.getButtonDeepLink() == ""
+        button.isHidden = viewData.getButtonTitle?() == "" || viewData.getButtonTitle?() == nil || viewData.getButtonDeepLink?() == ""
         return button
     }
 
     // MARK: Constraints.
     func makeConstraints(_ titleLabel: UILabel, _ subtitleLabel: UILabel, _ button: UIButton, _ ring: UICircularProgressRing, _ img : UIImageView) {
-        NSLayoutConstraint.activate([
-            ring.topAnchor.constraint(equalTo: topAnchor, constant: verticalMargin),
-            ring.leadingAnchor.constraint(equalTo: leadingAnchor),
-            ring.widthAnchor.constraint(equalToConstant: ringSize),
-            ring.heightAnchor.constraint(equalToConstant: ringSize),
-            img.topAnchor.constraint(equalTo: topAnchor, constant: verticalMargin),
-            img.leadingAnchor.constraint(equalTo: leadingAnchor),
-            img.widthAnchor.constraint(equalToConstant: imageSize),
-            img.heightAnchor.constraint(equalToConstant: imageSize),
-            titleLabel.topAnchor.constraint(equalTo: ring.topAnchor),
-            titleLabel.leadingAnchor.constraint(equalTo: ring.trailingAnchor, constant: UI.Margin.M_MARGIN),
-            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-            subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: UI.Margin.XXXS_MARGIN),
-            subtitleLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            subtitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-            button.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor),
-            button.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            button.heightAnchor.constraint(equalToConstant: buttonHeight),
-            button.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -verticalMargin)
-        ])
+        var constraint = [NSLayoutConstraint]()
+        
+        constraint.append(titleLabel.topAnchor.constraint(equalTo: topAnchor))
+        constraint.append(titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor))
+        constraint.append(subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: UI.Margin.XXXS_MARGIN))
+        constraint.append(subtitleLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor))
+        constraint.append(subtitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor))
+        
+        if ring.isHidden && img.isHidden {
+            constraint.append(titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: UI.Margin.M_MARGIN))
+        } else {
+            constraint.append(ring.topAnchor.constraint(equalTo: topAnchor, constant: verticalMargin))
+            constraint.append(ring.leadingAnchor.constraint(equalTo: leadingAnchor))
+            constraint.append(ring.widthAnchor.constraint(equalToConstant: ringSize))
+            constraint.append(ring.heightAnchor.constraint(equalToConstant: ringSize))
+            constraint.append(img.topAnchor.constraint(equalTo: topAnchor, constant: verticalMargin))
+            constraint.append(img.leadingAnchor.constraint(equalTo: leadingAnchor))
+            constraint.append(img.widthAnchor.constraint(equalToConstant: imageSize))
+            constraint.append(img.heightAnchor.constraint(equalToConstant: imageSize))
+            constraint.append(titleLabel.leadingAnchor.constraint(equalTo: ring.trailingAnchor, constant: UI.Margin.M_MARGIN))
+        }
+        
+        if button.isHidden {
+            constraint.append(subtitleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -verticalMargin))
+        } else {
+            constraint.append(button.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor))
+            constraint.append(button.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor))
+            constraint.append(button.heightAnchor.constraint(equalToConstant: buttonHeight))
+            constraint.append(button.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -verticalMargin))
+        }
+        
+        NSLayoutConstraint.activate(constraint)
     }
 
     // MARK: Tap Selector.
     @objc private func didTapOnButton() {
-        tapAction?(viewData.getButtonDeepLink())
+        tapAction?(viewData.getButtonDeepLink?() ?? "")
     }
 }
 

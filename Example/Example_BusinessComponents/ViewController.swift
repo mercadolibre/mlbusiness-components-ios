@@ -40,8 +40,8 @@ extension ViewController {
     private func setupView(_ receiver: MLBusinessLoyaltyBroadcastReceiver) {
         let newRingView = setupRingView(receiver)
         self.ringView = newRingView
-        let newRingView2 = setupRingView2(bottomOf: newRingView)
-        let dividingLineView = setupDividingLineView(bottomOf: newRingView2)
+        let newImgView2 = setupRingView2(bottomOf: newRingView)
+        let dividingLineView = setupDividingLineView(bottomOf: newImgView2)
         let itemDescriptionView = setupItemDescriptionView(bottomOf: dividingLineView)
         let crossSellingBoxView = setupCrossSellingBoxView(bottomOf: itemDescriptionView)
         let discountView = setupDiscountView(numberOfItems: 6, bottomOf: crossSellingBoxView)

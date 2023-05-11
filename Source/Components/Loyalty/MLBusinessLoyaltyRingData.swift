@@ -14,7 +14,7 @@ import UIKit
     @objc optional func getRingPercentage() -> Float
     @objc func getTitle() -> String
     @objc optional func getSubtitle() -> String
-    @objc func getButtonTitle() -> String
-    @objc func getButtonDeepLink() -> String
+    @objc optional func getButtonTitle() -> String
+    @objc optional func getButtonDeepLink() -> String
     @objc optional func getImageUrl() -> String
 }

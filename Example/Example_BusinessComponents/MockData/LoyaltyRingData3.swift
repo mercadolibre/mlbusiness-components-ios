@@ -12,15 +12,15 @@ import MLBusinessComponents
 class LoyaltyRingData3: NSObject, MLBusinessLoyaltyRingData {
     
     func getTitle() -> String {
-        return "<b>Sumaste 20 Mercado </b>Puntos"
-    }
-    
-    func getButtonTitle() -> String {
-        return "Ver mis beneficios"
+        return "Sumaste 400 puntos. <b>¡Ya sos Nivel6!</b>"
     }
     
     func getSubtitle() -> String {
-        return "Una vez que se acredite tu pago, ganarás 20 puntos."
+        return "Sigue disfrutando de los beneficios."
+    }
+    
+    func getButtonTitle() -> String {
+        return "Consultar mis beneficios"
     }
     
     func getButtonDeepLink() -> String {
