@@ -110,7 +110,6 @@ public class MLBusinessDynamicCoverCarouselItemView: UIView {
     
     private lazy var mainSecondaryDescriptionView: MLBusinessMultipleDescriptionView = {
         let view = MLBusinessMultipleDescriptionView(with: imageProvider)
-        view.backgroundColor = .red
         return view
     }()
     
@@ -225,7 +224,7 @@ public class MLBusinessDynamicCoverCarouselItemView: UIView {
         backgroundImageView.update(coverMedia: content.getCoverMultimedia(), cover: content.getImageHeader())
         
         if let topPlainImage = content.getTopPlainImage() {
-            imageProvider.getImage(key: topPlainImage) { [weak self] image in
+x            imageProvider.getImage(key: topPlainImage) { [weak self] image in
                 self?.topPlainImageView.image = image
             }
 
