@@ -22,9 +22,6 @@ public struct MLBusinessDynamicCoverCarouselItemModel: Codable {
     private let footerSecondaryContent: [MLBusinessMultipleDescriptionModel]?
     private let tracking: MLBusinessItemModelTracking?
     
-    
-    
-    
     public init(backgroundColor: String?,
                 imageHeader: String?,
                 topPlainImage: String?,

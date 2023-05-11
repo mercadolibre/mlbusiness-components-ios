@@ -70,7 +70,6 @@ public class MLBusinessDynamicCoverCarouselItemView: UIView {
         if #available(iOS 11.0, *) {
             view.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         }
-        
         return view
     }()
     
@@ -114,7 +113,6 @@ public class MLBusinessDynamicCoverCarouselItemView: UIView {
         view.backgroundColor = .red
         return view
     }()
-    
     
     // TODO: TERMINAR DE IMPLEMENTAR ESTO
     private lazy var footerSecondaryContentView: MLBusinessMultipleDescriptionView = {
@@ -323,12 +321,12 @@ public class MLBusinessDynamicCoverCarouselItemView: UIView {
         footerView.backgroundColor = itemConstants.footerBackgroundColor.hexaToUIColor()
     }
     
-    
     public func applyAlphaBackgroundImageView(alpha: CGFloat) {
         backgroundImageView.alpha = alpha
     }
 }
 
+// MARK: - MLBusinessLiveImagesHelper
 extension MLBusinessDynamicCoverCarouselItemView: MLBusinessLiveImagesHelper {
     func play() {
         backgroundImageView.play()
