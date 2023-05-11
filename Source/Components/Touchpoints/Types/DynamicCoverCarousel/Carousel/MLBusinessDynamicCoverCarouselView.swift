@@ -113,6 +113,14 @@ public class MLBusinessDynamicCoverCarouselView: UIView {
             setupCollectionView(peekWidth: getPeekWidth(offset: MLBusinessDynamicCoverCarouselConstants.Card.peakWidthPortait),
                                 maxHeightCard: MLBusinessDynamicCoverCarouselConstants.Card.itemMaxHeightPortait,
                                 edgeInset: MLBusinessDynamicCoverCarouselConstants.Card.portaitInset)
+        case "landscape_extended":
+            setupCollectionView(peekWidth: getPeekWidth(offset: MLBusinessDynamicCoverCarouselConstants.Card.peakWidthLandscapeExtended),
+                                maxHeightCard: MLBusinessDynamicCoverCarouselConstants.Card.itemMaxHeightLandscapeExtended,
+                                edgeInset: MLBusinessDynamicCoverCarouselConstants.Card.insetLandscapeExtended)
+        case "landscape_shortened":
+            setupCollectionView(peekWidth: getPeekWidth(offset: MLBusinessDynamicCoverCarouselConstants.Card.peakWidthLandscapeShortened),
+                                maxHeightCard: MLBusinessDynamicCoverCarouselConstants.Card.itemMaxHeightLandscapeShortened,
+                                edgeInset: MLBusinessDynamicCoverCarouselConstants.Card.insetLandscapeShortened)
         default:
             setupCollectionView(peekWidth: getPeekWidth(offset: MLBusinessDynamicCoverCarouselConstants.Card.peakWidthLandscape),
                                 maxHeightCard: MLBusinessDynamicCoverCarouselConstants.Card.itemMaxHeightLandscape,
