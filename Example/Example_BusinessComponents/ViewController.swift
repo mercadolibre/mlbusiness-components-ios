@@ -101,22 +101,22 @@ extension ViewController {
     }
     
     private func setupImageView(bottomOf targetView: UIView) -> MLBusinessLoyaltyRingView {
-        let ringData = LoyaltyImageData()
-        let ringView = MLBusinessLoyaltyRingView(ringData, fillPercentProgress: false)
+        let imgData = LoyaltyImageData()
+        let imgView = MLBusinessLoyaltyRingView(imgData, fillPercentProgress: false)
         
-        containerView.addSubview(ringView)
+        containerView.addSubview(imgView)
         
         NSLayoutConstraint.activate([
-            ringView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
-            ringView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
-            ringView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 20)
+            imgView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            imgView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+            imgView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 20)
         ])
         
-        ringView.addTapAction { deepLink in
+        imgView.addTapAction { deepLink in
             print(deepLink)
         }
         
-        return ringView
+        return imgView
     }
 
     private func setupDividingLineView(bottomOf targetView: UIView) -> UIView {
