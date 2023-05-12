@@ -40,8 +40,8 @@ extension ViewController {
     private func setupView(_ receiver: MLBusinessLoyaltyBroadcastReceiver) {
         let newRingView = setupRingView(receiver)
         self.ringView = newRingView
-        let newImgView2 = setupRingView2(bottomOf: newRingView)
-        let dividingLineView = setupDividingLineView(bottomOf: newImgView2)
+        let newImgView = setupImageView(bottomOf: newRingView)
+        let dividingLineView = setupDividingLineView(bottomOf: newImgView)
         let itemDescriptionView = setupItemDescriptionView(bottomOf: dividingLineView)
         let crossSellingBoxView = setupCrossSellingBoxView(bottomOf: itemDescriptionView)
         let discountView = setupDiscountView(numberOfItems: 6, bottomOf: crossSellingBoxView)
@@ -100,8 +100,8 @@ extension ViewController {
         return ringView
     }
     
-    private func setupRingView2(bottomOf targetView: UIView) -> MLBusinessLoyaltyRingView {
-        let ringData = LoyaltyRingData2()
+    private func setupImageView(bottomOf targetView: UIView) -> MLBusinessLoyaltyRingView {
+        let ringData = LoyaltyImageData()
         let ringView = MLBusinessLoyaltyRingView(ringData, fillPercentProgress: false)
         
         containerView.addSubview(ringView)
