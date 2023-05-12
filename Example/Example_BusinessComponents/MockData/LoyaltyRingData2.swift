@@ -9,7 +9,7 @@
 import UIKit
 import MLBusinessComponents
 
-class LoyaltyRingData3: NSObject, MLBusinessLoyaltyRingData {
+class LoyaltyRingData2: NSObject, MLBusinessLoyaltyRingData {
     
     func getTitle() -> String {
         return "Sumaste 400 puntos. <b>¡Ya sos Nivel6!</b>"

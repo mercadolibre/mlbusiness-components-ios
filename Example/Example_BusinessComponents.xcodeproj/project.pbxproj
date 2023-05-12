@@ -26,7 +26,7 @@
 		4284FE6E2555B40F00F48818 /* CoverCarouselData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4284FE6D2555B40F00F48818 /* CoverCarouselData.swift */; };
 		4284FE702555BD5200F48818 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4284FE6F2555BD5200F48818 /* Helper.swift */; };
 		A82EF2D92C2A892A4253BA89 /* Pods_Example_BusinessComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67CB00EFC55C11D0A04B60BA /* Pods_Example_BusinessComponents.framework */; };
-		ACD03E532A04338F0029D6F3 /* LoyaltyRingData3.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD03E522A04338F0029D6F3 /* LoyaltyRingData3.swift */; };
+		ACD03E532A04338F0029D6F3 /* LoyaltyRingData2.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD03E522A04338F0029D6F3 /* LoyaltyRingData2.swift */; };
 		CE20251324A418FE0071323E /* ActionCardData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE20251224A418FE0071323E /* ActionCardData.swift */; };
 		CEE9F37C232FD72F0000C9CA /* DownloadAppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE9F37B232FD72F0000C9CA /* DownloadAppData.swift */; };
 		CEE9F390233062880000C9CA /* CrossSellingBoxData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE9F38F233062880000C9CA /* CrossSellingBoxData.swift */; };
@@ -56,7 +56,7 @@
 		4284FE6F2555BD5200F48818 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		5A8E99986BC059211F6FE304 /* Pods-Example_BusinessComponents.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example_BusinessComponents.release.xcconfig"; path = "Target Support Files/Pods-Example_BusinessComponents/Pods-Example_BusinessComponents.release.xcconfig"; sourceTree = "<group>"; };
 		67CB00EFC55C11D0A04B60BA /* Pods_Example_BusinessComponents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Example_BusinessComponents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		ACD03E522A04338F0029D6F3 /* LoyaltyRingData3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyRingData3.swift; sourceTree = "<group>"; };
+		ACD03E522A04338F0029D6F3 /* LoyaltyRingData2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyRingData2.swift; sourceTree = "<group>"; };
 		CE20251224A418FE0071323E /* ActionCardData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionCardData.swift; sourceTree = "<group>"; };
 		CEE9F37B232FD72F0000C9CA /* DownloadAppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadAppData.swift; sourceTree = "<group>"; };
 		CEE9F38F233062880000C9CA /* CrossSellingBoxData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossSellingBoxData.swift; sourceTree = "<group>"; };
@@ -125,7 +125,7 @@
 				33ED96B524D142310064E271 /* HybridCarouselData.swift */,
 				4284FE6D2555B40F00F48818 /* CoverCarouselData.swift */,
 				337D483D24E3B3D00019A082 /* MultipleRowData.swift */,
-				ACD03E522A04338F0029D6F3 /* LoyaltyRingData3.swift */,
+				ACD03E522A04338F0029D6F3 /* LoyaltyRingData2.swift */,
 			);
 			path = MockData;
 			sourceTree = "<group>";
@@ -299,7 +299,7 @@
 				CEE9F390233062880000C9CA /* CrossSellingBoxData.swift in Sources */,
 				337D483E24E3B3D10019A082 /* MultipleRowData.swift in Sources */,
 				33ED96B624D142310064E271 /* HybridCarouselData.swift in Sources */,
-				ACD03E532A04338F0029D6F3 /* LoyaltyRingData3.swift in Sources */,
+				ACD03E532A04338F0029D6F3 /* LoyaltyRingData2.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -450,7 +450,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = KTXN9SX9MX;
 				INFOPLIST_FILE = Example_BusinessComponents/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -472,7 +472,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = KTXN9SX9MX;
 				INFOPLIST_FILE = Example_BusinessComponents/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
