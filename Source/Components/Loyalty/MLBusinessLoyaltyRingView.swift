@@ -12,7 +12,7 @@ import MLUI
 @objcMembers
 open class MLBusinessLoyaltyRingView: UIView {
     let viewData: MLBusinessLoyaltyRingData
-    
+
     private let verticalMargin: CGFloat = 4
     private let ringSize: CGFloat = 46
     private let buttonHeight: CGFloat = 20
@@ -22,14 +22,14 @@ open class MLBusinessLoyaltyRingView: UIView {
     private weak var ringView: UICircularProgressRing?
     private var tapAction: ((_ deepLink: String) -> Void)?
     private let imageSize: CGFloat = 46
-    
+
     public init(_ ringViewData: MLBusinessLoyaltyRingData, fillPercentProgress: Bool = true) {
         self.viewData = ringViewData
         self.fillPercentProgress = fillPercentProgress
         super.init(frame: .zero)
         render()
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -39,16 +39,16 @@ open class MLBusinessLoyaltyRingView: UIView {
 extension MLBusinessLoyaltyRingView {
     private func render() {
         self.prepareForAutolayout()
-        
+
         let titleLabel = buildTitle()
         self.addSubview(titleLabel)
         
         let subtitleLabel = buildSubtitle()
         self.addSubview(subtitleLabel)
-        
+
         let button = buildButton()
         self.addSubview(button)
-        
+
         let ring = buildRing()
         self.addSubview(ring)
         self.ringView = ring
@@ -114,7 +114,7 @@ extension MLBusinessLoyaltyRingView {
         subtitleLabel.textColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.45)
         return subtitleLabel
     }
-    
+
     private func setBold(uiLabel: UILabel, string: String?, uiFontNormal: UIFont, uiFontBold:UIFont){
         let text = NSMutableAttributedString(string: string ?? "")
         let boldOpenTagRange = text.mutableString.range(of: "<b>")
@@ -142,13 +142,11 @@ extension MLBusinessLoyaltyRingView {
     // MARK: Constraints.
     func makeConstraints(_ titleLabel: UILabel, _ subtitleLabel: UILabel, _ button: UIButton, _ ring: UICircularProgressRing, _ img : UIImageView) {
         var constraint = [NSLayoutConstraint]()
-        
         constraint.append(titleLabel.topAnchor.constraint(equalTo: topAnchor))
         constraint.append(titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor))
         constraint.append(subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: UI.Margin.XXXS_MARGIN))
         constraint.append(subtitleLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor))
         constraint.append(subtitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor))
-        
         if ring.isHidden && img.isHidden {
             constraint.append(titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: UI.Margin.M_MARGIN))
         } else {
@@ -162,7 +160,6 @@ extension MLBusinessLoyaltyRingView {
             constraint.append(img.heightAnchor.constraint(equalToConstant: imageSize))
             constraint.append(titleLabel.leadingAnchor.constraint(equalTo: ring.trailingAnchor, constant: UI.Margin.M_MARGIN))
         }
-        
         if button.isHidden {
             constraint.append(subtitleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -verticalMargin))
         } else {
@@ -171,7 +168,6 @@ extension MLBusinessLoyaltyRingView {
             constraint.append(button.heightAnchor.constraint(equalToConstant: buttonHeight))
             constraint.append(button.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -verticalMargin))
         }
-        
         NSLayoutConstraint.activate(constraint)
     }
 
