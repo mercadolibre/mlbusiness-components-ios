@@ -4,7 +4,5 @@
 <dict>
 	<key>BuildSystemType</key>
 	<string>Latest</string>
-	<key>IDEWorkspaceSharedSettings_AutocreateContextsIfNeeded</key>
-	<true/>
 </dict>
 </plist>
