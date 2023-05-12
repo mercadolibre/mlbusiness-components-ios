@@ -16,5 +16,5 @@ import UIKit
     @objc optional func getSubtitle() -> String
     @objc optional func getButtonTitle() -> String
     @objc optional func getButtonDeepLink() -> String
-    @objc optional func getImageUrl() -> String
+    @objc optional func getImageUrl() -> String 
 }
