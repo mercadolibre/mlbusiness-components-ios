@@ -113,13 +113,12 @@ public class MLBusinessDynamicCoverCarouselItemView: UIView {
         return view
     }()
     
-    // TODO: TERMINAR DE IMPLEMENTAR ESTO
     private lazy var footerSecondaryContentView: MLBusinessMultipleDescriptionView = {
         let view = MLBusinessMultipleDescriptionView(with: imageProvider)
         return view
     }()
     
-    private var topContentStackViewLeadingConstraint = NSLayoutConstraint()
+    private var topContentStackViewLeadingConstraint: NSLayoutConstraint!
     private var mainStackViewBottomConstraint = NSLayoutConstraint()
     private var footerLabelConstraints: [NSLayoutConstraint] = []
         
@@ -150,10 +149,10 @@ public class MLBusinessDynamicCoverCarouselItemView: UIView {
     private func setupConstraints(){
         
         NSLayoutConstraint.activate([
-            topContentStackView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -12),
-            topContentStackView.topAnchor.constraint(equalTo: topAnchor, constant: 12)
+            topContentStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
+            topContentStackView.topAnchor.constraint(equalTo: topAnchor, constant: 12),
         ])
-        topContentStackViewLeadingConstraint = topContentStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12)
+        topContentStackViewLeadingConstraint = topContentStackView.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: 12)
         topContentStackViewLeadingConstraint.isActive = true
         
         NSLayoutConstraint.activate([
@@ -232,9 +231,13 @@ public class MLBusinessDynamicCoverCarouselItemView: UIView {
             NSLayoutConstraint.activate([
                 topPlainImageView.topAnchor.constraint(equalTo: topAnchor, constant: 12),
                 topPlainImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 12),
-                middlePlainImageView.heightAnchor.constraint(equalToConstant: 46)
+                topPlainImageView.heightAnchor.constraint(equalToConstant: 46)
             ])
-            topContentStackViewLeadingConstraint = topContentStackView.leadingAnchor.constraint(equalTo: topPlainImageView.trailingAnchor, constant: 12)
+            
+            topContentStackViewLeadingConstraint.isActive = false
+            topContentStackViewLeadingConstraint = topContentStackView.leadingAnchor.constraint(greaterThanOrEqualTo: topPlainImageView.trailingAnchor, constant: 12)
+            topContentStackViewLeadingConstraint.isActive = true
+            
         }
             
         if let footer = content.getFooterContent() {
@@ -271,6 +274,11 @@ public class MLBusinessDynamicCoverCarouselItemView: UIView {
         
         if let secondaryDescription = content.getMainSecondaryDescription() {
             mainSecondaryDescriptionView.update(with: secondaryDescription, size: "SMALL")
+        }
+        
+        if let footerSecondaryContent = content.getFooterSecondaryContent() {
+            footerSecondaryContentView.update(with: footerSecondaryContent, size: "SMALL")
+            mainStackView.addArrangedSubview(footerSecondaryContentView)
         }
     }
     
