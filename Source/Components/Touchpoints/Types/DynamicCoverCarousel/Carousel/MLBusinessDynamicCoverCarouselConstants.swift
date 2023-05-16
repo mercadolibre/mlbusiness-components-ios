@@ -17,9 +17,14 @@ enum MLBusinessDynamicCoverCarouselConstants {
         static let itemMaxHeightPortait = Float(200)
         
         /// LandscapeExtended
-        static let itemMaxHeightLandscapeExtended = Float(220)
+        static let itemMaxHeightLandscapeExtended = Float(199)
         static let insetLandscapeExtended = CGFloat(16)
         static let peakWidthLandscapeExtended = Float(0.20)
+        
+        /// LandscapeSuperExtended
+        static let itemMaxHeightLandscapeSuperExtended = Float(220)
+        static let insetLandscapeSuperExtended = CGFloat(16)
+        static let peakWidthLandscapeSuperExtended = Float(0.20)
         
         /// LandscapeShortened
         static let itemMaxHeightLandscapeShortened = Float(150)
