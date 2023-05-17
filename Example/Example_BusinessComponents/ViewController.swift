@@ -93,9 +93,15 @@ extension ViewController {
         
         let broadcaster = MLBusinessLoyaltyBroadcaster.instance as MLBusinessLoyaltyBroadcaster
         broadcaster.register(receiver)
-        broadcaster.updateInfo(MLBusinessLoyaltyBroadcastData(level: ringData.getRingNumber(),
-                                                              percentage: ringData.getRingPercentage(),
-                                                              primaryColor: ringData.getRingHexaColor()))
+        
+        if (ringData.getRingNumber() != nil &&
+            ringData.getRingPercentage() != nil &&
+            ringData.getRingHexaColor() != nil
+        ){
+            broadcaster.updateInfo(MLBusinessLoyaltyBroadcastData(level: ringData.getRingNumber() as! Int,
+                                                                  percentage: Float(truncating: ringData.getRingPercentage()!),
+                                                                  primaryColor: ringData.getRingHexaColor()!))
+        }
         
         return ringView
     }

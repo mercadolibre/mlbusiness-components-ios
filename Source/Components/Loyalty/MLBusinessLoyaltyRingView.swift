@@ -73,11 +73,11 @@ extension MLBusinessLoyaltyRingView {
     
     private func buildRing() -> UICircularProgressRing {
         let ring = RingFactory.create(
-            number: viewData.getRingNumber?() ?? 0,
+            number: Int(truncating: viewData.getRingNumber?() ?? 0),
             hexaColor: viewData.getRingHexaColor?() ?? "",
-            percent: viewData.getRingPercentage?() ?? 0,
+            percent: Float(truncating: viewData.getRingPercentage?() ?? 0),
             fillPercentage: fillPercentProgress,
-            innerCenterText: viewData.getRingNumber?() != nil ? String(viewData.getRingNumber!()) : "")
+            innerCenterText: viewData.getRingNumber?() != nil ? String(viewData.getRingNumber!()!.stringValue) : "")
         ring.isHidden = viewData.getRingNumber?() == nil ||
         viewData.getRingHexaColor?() == nil ||
         viewData.getRingPercentage?() == nil ||
