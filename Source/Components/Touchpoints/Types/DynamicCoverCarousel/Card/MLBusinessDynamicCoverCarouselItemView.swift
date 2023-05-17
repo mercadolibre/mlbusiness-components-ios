@@ -38,20 +38,20 @@ public class MLBusinessDynamicCoverCarouselItemView: UIView {
     }()
     
     private lazy var topPlainImageView: UIImageView = {
-        let logoView = UIImageView()
-        logoView.translatesAutoresizingMaskIntoConstraints = false
-        logoView.clipsToBounds = true
-        logoView.contentMode = .scaleAspectFit
-        return logoView
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFit
+        return imageView
     }()
     
     private lazy var middlePlainImageView: UIImageView = {
-        let logoView = UIImageView()
-        logoView.translatesAutoresizingMaskIntoConstraints = false
-        logoView.clipsToBounds = true
-        logoView.contentMode = .scaleAspectFit
-        logoView.layer.cornerRadius = 24
-        return logoView
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFit
+        imageView.layer.cornerRadius = 24
+        return imageView
     }()
     
     private lazy var topContentStackView: UIStackView = {
@@ -208,6 +208,29 @@ public class MLBusinessDynamicCoverCarouselItemView: UIView {
         }
     }
     
+    private func setupTopPlainImage() {
+        self.addSubview(topPlainImageView)
+        NSLayoutConstraint.activate([
+            topPlainImageView.topAnchor.constraint(equalTo: topAnchor, constant: 12),
+            topPlainImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 12),
+            topPlainImageView.heightAnchor.constraint(equalToConstant: 46)
+        ])
+        
+        topContentStackViewLeadingConstraint.isActive = false
+        topContentStackViewLeadingConstraint = topContentStackView.leadingAnchor.constraint(greaterThanOrEqualTo: topPlainImageView.trailingAnchor, constant: 12)
+        topContentStackViewLeadingConstraint.isActive = true
+    }
+    
+    private func setupMiddlePlainImage() {
+        self.addSubview(middlePlainImageView)
+        NSLayoutConstraint.activate([
+            middlePlainImageView.bottomAnchor.constraint(equalTo: mainStackView.topAnchor, constant: -8),
+            middlePlainImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 12),
+            middlePlainImageView.heightAnchor.constraint(equalToConstant: 48),
+            middlePlainImageView.widthAnchor.constraint(equalToConstant: 48)
+        ])
+    }
+    
     public override func layoutSublayers(of layer: CALayer) {
         super.layoutSublayers(of: layer)
         gradientLayer.frame = gradientView.bounds
@@ -226,18 +249,7 @@ public class MLBusinessDynamicCoverCarouselItemView: UIView {
             imageProvider.getImage(key: topPlainImage) { [weak self] image in
                 self?.topPlainImageView.image = image
             }
-
-            self.addSubview(topPlainImageView)
-            NSLayoutConstraint.activate([
-                topPlainImageView.topAnchor.constraint(equalTo: topAnchor, constant: 12),
-                topPlainImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 12),
-                topPlainImageView.heightAnchor.constraint(equalToConstant: 46)
-            ])
-            
-            topContentStackViewLeadingConstraint.isActive = false
-            topContentStackViewLeadingConstraint = topContentStackView.leadingAnchor.constraint(greaterThanOrEqualTo: topPlainImageView.trailingAnchor, constant: 12)
-            topContentStackViewLeadingConstraint.isActive = true
-            
+            setupTopPlainImage()
         }
             
         if let footer = content.getFooterContent() {
@@ -253,14 +265,7 @@ public class MLBusinessDynamicCoverCarouselItemView: UIView {
             imageProvider.getImage(key: middlePlainImage) { [weak self] image in
                 self?.middlePlainImageView.image = image
             }
-            
-            self.addSubview(middlePlainImageView)
-            NSLayoutConstraint.activate([
-                middlePlainImageView.bottomAnchor.constraint(equalTo: mainStackView.topAnchor, constant: -8),
-                middlePlainImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 12),
-                middlePlainImageView.heightAnchor.constraint(equalToConstant: 48),
-                middlePlainImageView.widthAnchor.constraint(equalToConstant: 48)
-            ])
+            setupMiddlePlainImage()
         }
                 
         if let mainDescriptionLeft = content.getMainDescriptionLeft() {
