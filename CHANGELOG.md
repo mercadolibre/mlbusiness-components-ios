@@ -1,3 +1,7 @@
+## [1.55.0] - 2023-05-18
+## Added
+- Se agrega params para soportar logo de store y ranking en Dynamic Carrousel.
+
 ## [1.54.0] - 2023-02-01
 ## Added
 - (LiveImages) Se agrega validacion para no mostrar imagenes animadas segun estado de bateria y consumo datos.
