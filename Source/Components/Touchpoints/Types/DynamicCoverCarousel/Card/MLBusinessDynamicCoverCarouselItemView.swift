@@ -37,6 +37,23 @@ public class MLBusinessDynamicCoverCarouselItemView: UIView {
         return view
     }()
     
+    private lazy var topPlainImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+    
+    private lazy var middlePlainImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFit
+        imageView.layer.cornerRadius = 24
+        return imageView
+    }()
+    
     private lazy var topContentStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -53,7 +70,6 @@ public class MLBusinessDynamicCoverCarouselItemView: UIView {
         if #available(iOS 11.0, *) {
             view.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         }
-        
         return view
     }()
     
@@ -70,7 +86,7 @@ public class MLBusinessDynamicCoverCarouselItemView: UIView {
     private lazy var mainStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.spacing = 2
+        stackView.spacing = 4
         stackView.axis = .vertical
         return stackView
     }()
@@ -97,6 +113,12 @@ public class MLBusinessDynamicCoverCarouselItemView: UIView {
         return view
     }()
     
+    private lazy var footerSecondaryContentView: MLBusinessMultipleDescriptionView = {
+        let view = MLBusinessMultipleDescriptionView(with: imageProvider)
+        return view
+    }()
+    
+    private var topContentStackViewLeadingConstraint: NSLayoutConstraint!
     private var mainStackViewBottomConstraint = NSLayoutConstraint()
     private var footerLabelConstraints: [NSLayoutConstraint] = []
         
@@ -127,10 +149,11 @@ public class MLBusinessDynamicCoverCarouselItemView: UIView {
     private func setupConstraints(){
         
         NSLayoutConstraint.activate([
-            topContentStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
-            topContentStackView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -12),
-            topContentStackView.topAnchor.constraint(equalTo: topAnchor, constant: 12)
+            topContentStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
+            topContentStackView.topAnchor.constraint(equalTo: topAnchor, constant: 12),
         ])
+        topContentStackViewLeadingConstraint = topContentStackView.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: 12)
+        topContentStackViewLeadingConstraint.isActive = true
         
         NSLayoutConstraint.activate([
             footerView.heightAnchor.constraint(equalToConstant: 22),
@@ -185,6 +208,29 @@ public class MLBusinessDynamicCoverCarouselItemView: UIView {
         }
     }
     
+    private func setupTopPlainImage() {
+        self.addSubview(topPlainImageView)
+        NSLayoutConstraint.activate([
+            topPlainImageView.topAnchor.constraint(equalTo: topAnchor, constant: 12),
+            topPlainImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 12),
+            topPlainImageView.heightAnchor.constraint(equalToConstant: 46)
+        ])
+        
+        topContentStackViewLeadingConstraint.isActive = false
+        topContentStackViewLeadingConstraint = topContentStackView.leadingAnchor.constraint(greaterThanOrEqualTo: topPlainImageView.trailingAnchor, constant: 12)
+        topContentStackViewLeadingConstraint.isActive = true
+    }
+    
+    private func setupMiddlePlainImage() {
+        self.addSubview(middlePlainImageView)
+        NSLayoutConstraint.activate([
+            middlePlainImageView.bottomAnchor.constraint(equalTo: mainStackView.topAnchor, constant: -8),
+            middlePlainImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 12),
+            middlePlainImageView.heightAnchor.constraint(equalToConstant: 48),
+            middlePlainImageView.widthAnchor.constraint(equalToConstant: 48)
+        ])
+    }
+    
     public override func layoutSublayers(of layer: CALayer) {
         super.layoutSublayers(of: layer)
         gradientLayer.frame = gradientView.bounds
@@ -198,6 +244,13 @@ public class MLBusinessDynamicCoverCarouselItemView: UIView {
         }
         
         backgroundImageView.update(coverMedia: content.getCoverMultimedia(), cover: content.getImageHeader())
+        
+        if let topPlainImage = content.getTopPlainImage() {
+            imageProvider.getImage(key: topPlainImage) { [weak self] image in
+                self?.topPlainImageView.image = image
+            }
+            setupTopPlainImage()
+        }
             
         if let footer = content.getFooterContent() {
             footerView.backgroundColor = footer.getBackgroundColor()?.hexaToUIColor()
@@ -205,7 +258,14 @@ public class MLBusinessDynamicCoverCarouselItemView: UIView {
             footerLabel.text = footer.getText()
             footerView.addSubview(footerLabel)
             NSLayoutConstraint.activate(footerLabelConstraints)
-            mainStackViewBottomConstraint.constant = -8
+            mainStackViewBottomConstraint.constant = -12
+        }
+        
+        if let middlePlainImage = content.getMiddlePlainImage() {
+            imageProvider.getImage(key: middlePlainImage) { [weak self] image in
+                self?.middlePlainImageView.image = image
+            }
+            setupMiddlePlainImage()
         }
                 
         if let mainDescriptionLeft = content.getMainDescriptionLeft() {
@@ -219,6 +279,11 @@ public class MLBusinessDynamicCoverCarouselItemView: UIView {
         
         if let secondaryDescription = content.getMainSecondaryDescription() {
             mainSecondaryDescriptionView.update(with: secondaryDescription, size: "SMALL")
+        }
+        
+        if let footerSecondaryContent = content.getFooterSecondaryContent() {
+            footerSecondaryContentView.update(with: footerSecondaryContent, size: "SMALL")
+            mainStackView.addArrangedSubview(footerSecondaryContentView)
         }
     }
     
@@ -245,7 +310,7 @@ public class MLBusinessDynamicCoverCarouselItemView: UIView {
         topContentStackView.layoutIfNeeded()
     }
     
-    private func buildMainDescriptionRight (with mainDescriptionRight: [MLBusinessMultipleDescriptionModel]){
+    private func buildMainDescriptionRight(with mainDescriptionRight: [MLBusinessMultipleDescriptionModel]){
         mainDescriptionRightView.update(with: mainDescriptionRight)
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -263,16 +328,17 @@ public class MLBusinessDynamicCoverCarouselItemView: UIView {
         topContentStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         mainDescriptionStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         mainStackViewBottomConstraint.constant = 10
+        topContentStackViewLeadingConstraint.constant = 12
         footerView.subviews.forEach { $0.removeFromSuperview() }
         footerView.backgroundColor = itemConstants.footerBackgroundColor.hexaToUIColor()
     }
-    
     
     public func applyAlphaBackgroundImageView(alpha: CGFloat) {
         backgroundImageView.alpha = alpha
     }
 }
 
+// MARK: - MLBusinessLiveImagesHelper
 extension MLBusinessDynamicCoverCarouselItemView: MLBusinessLiveImagesHelper {
     func play() {
         backgroundImageView.play()
