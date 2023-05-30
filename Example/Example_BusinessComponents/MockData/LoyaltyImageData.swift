@@ -15,8 +15,8 @@ class LoyaltyImageData: NSObject, MLBusinessLoyaltyRingData {
         return "Sumaste 400 puntos. <b>¡Ya sos Nivel6!</b>"
     }
     
-    func getSubtitle() -> String {
-        return "Sigue disfrutando de los beneficios."
+    func getSubtitle() -> String? {
+        return nil
     }
     
     func getButtonTitle() -> String {

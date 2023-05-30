@@ -94,7 +94,7 @@ extension MLBusinessLoyaltyRingView {
         setBold(
             uiLabel: titleLabel,
             string: viewData.getTitle(),
-            uiFontNormal: UIFont.ml_lightSystemFont(ofSize: UI.FontSize.S_FONT),
+            uiFontNormal: UIFont.ml_regularSystemFont(ofSize: UI.FontSize.S_FONT),
             uiFontBold: UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.S_FONT)
         )
         titleLabel.applyBusinessLabelStyle()
@@ -142,7 +142,12 @@ extension MLBusinessLoyaltyRingView {
     // MARK: Constraints.
     func makeConstraints(_ titleLabel: UILabel, _ subtitleLabel: UILabel, _ button: UIButton, _ ring: UICircularProgressRing, _ img : UIImageView) {
         var constraint = [NSLayoutConstraint]()
-        constraint.append(titleLabel.topAnchor.constraint(equalTo: topAnchor))
+        if((subtitleLabel.text == nil || subtitleLabel.text == "")
+           && (button.titleLabel?.text == nil || button.titleLabel?.text == "")) {
+            titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        } else {
+            constraint.append(titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: UI.Margin.XXXS_MARGIN))
+        }
         constraint.append(titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor))
         constraint.append(subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: UI.Margin.XXXS_MARGIN))
         constraint.append(subtitleLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor))
