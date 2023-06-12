@@ -59,32 +59,6 @@ extension MLBusinessLoyaltyRingView {
         makeConstraints(titleLabel, subtitleLabel, button, ring, imageUrl)
     }
     
-    private func buildImageUrl() -> UIImageView {
-        let icon = UIImageView()
-        icon.layer.cornerRadius =  imageSize / 2
-        icon.layer.masksToBounds = true
-        icon.isHidden = viewData.getImageUrl?() == nil || viewData.getImageUrl?() == ""
-        icon.setRemoteImage(imageUrl: viewData.getImageUrl?() ?? "")
-        icon.translatesAutoresizingMaskIntoConstraints = false
-        icon.contentMode = .scaleAspectFill
-        icon.prepareForAutolayout(.clear)
-        return icon
-    }
-    
-    private func buildRing() -> UICircularProgressRing {
-        let ring = RingFactory.create(
-            number: Int(truncating: viewData.getRingNumber?() ?? 0),
-            hexaColor: viewData.getRingHexaColor?() ?? "",
-            percent: Float(truncating: viewData.getRingPercentage?() ?? 0),
-            fillPercentage: fillPercentProgress,
-            innerCenterText: viewData.getRingNumber?() != nil ? String(viewData.getRingNumber!()!.stringValue) : "")
-        ring.isHidden = viewData.getRingNumber?() == nil ||
-        viewData.getRingHexaColor?() == nil ||
-        viewData.getRingPercentage?() == nil ||
-        viewData.getRingNumber?() == nil
-        return ring
-    }
-    
     // MARK: Builders.
     private func buildTitle() -> UILabel {
         let titleLabel = UILabel()
@@ -137,6 +111,38 @@ extension MLBusinessLoyaltyRingView {
         button.addTarget(self, action:  #selector(self.didTapOnButton), for: .touchUpInside)
         button.isHidden = viewData.getButtonTitle?() == "" || viewData.getButtonTitle?() == nil || viewData.getButtonDeepLink?() == ""
         return button
+    }
+    
+    private func buildImageUrl() -> UIImageView {
+        let icon = UIImageView()
+        icon.layer.cornerRadius =  imageSize / 2
+        icon.layer.masksToBounds = true
+        icon.isHidden = viewData.getImageUrl?() == nil || viewData.getImageUrl?() == ""
+        icon.setRemoteImage(imageUrl: viewData.getImageUrl?() ?? "")
+        icon.translatesAutoresizingMaskIntoConstraints = false
+        icon.contentMode = .scaleAspectFill
+        icon.prepareForAutolayout(.clear)
+        return icon
+    }
+    
+    private func buildRing() -> UICircularProgressRing {
+        let number = Int(truncating: viewData.getRingNumber?() ?? 0)
+        let centerRingText = number != 0 ? String(number) : ""
+        
+        let ring = RingFactory.create(
+            number: number,
+            hexaColor: viewData.getRingHexaColor?() ?? "",
+            percent: Float(truncating: viewData.getRingPercentage?() ?? 0),
+            fillPercentage: fillPercentProgress,
+            innerCenterText: centerRingText)
+        
+        ring.isHidden = shouldHideRing()
+        
+        return ring
+    }
+    
+    private func shouldHideRing() -> Bool {
+        return viewData.getRingNumber?() == nil || viewData.getRingHexaColor?() == nil || viewData.getRingPercentage?() == nil || viewData.getRingNumber?() == nil
     }
 
     // MARK: Constraints.

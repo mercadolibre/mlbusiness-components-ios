@@ -94,15 +94,6 @@ extension ViewController {
         let broadcaster = MLBusinessLoyaltyBroadcaster.instance as MLBusinessLoyaltyBroadcaster
         broadcaster.register(receiver)
         
-        if (ringData.getRingNumber() != nil &&
-            ringData.getRingPercentage() != nil &&
-            ringData.getRingHexaColor() != nil
-        ){
-            broadcaster.updateInfo(MLBusinessLoyaltyBroadcastData(level: ringData.getRingNumber() as! Int,
-                                                                  percentage: Float(truncating: ringData.getRingPercentage()!),
-                                                                  primaryColor: ringData.getRingHexaColor()!))
-        }
-        
         return ringView
     }
     
@@ -117,10 +108,6 @@ extension ViewController {
             imgView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
             imgView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 20)
         ])
-        
-        imgView.addTapAction { deepLink in
-            print(deepLink)
-        }
         
         return imgView
     }
