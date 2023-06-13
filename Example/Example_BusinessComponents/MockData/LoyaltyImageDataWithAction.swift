@@ -1,30 +1,30 @@
 //
-//  LoyaltyImageData.swift
+//  LoyaltyImageDataWithAction.swift
 //  Example_BusinessComponents
 //
-//  Created by Dario Facundo Gaspar on 03/05/2023.
+//  Created by Guido Maceira on 12/06/2023.
 //  Copyright © 2023 Mercado Libre. All rights reserved.
 //
 
 import UIKit
 import MLBusinessComponents
 
-class LoyaltyImageData: NSObject, MLBusinessLoyaltyRingData {
+class LoyaltyImageDataWithAction: NSObject, MLBusinessLoyaltyRingData {
     
     func getTitle() -> String {
-        return "<b>Sumaste 400 puntos.</b> Estás más cerca de ser Nivel6"
+        return "Sumaste 400 puntos. <b>¡Ya sos Nivel6!</b>"
     }
     
     func getSubtitle() -> String? {
         return nil
     }
     
-    func getButtonTitle() -> String? {
-        return nil
+    func getButtonTitle() -> String {
+        return "Consultar mis beneficios"
     }
     
-    func getButtonDeepLink() -> String? {
-        return nil
+    func getButtonDeepLink() -> String {
+        return "mercadopago://home"
     }
     
     func getImageUrl() -> String{

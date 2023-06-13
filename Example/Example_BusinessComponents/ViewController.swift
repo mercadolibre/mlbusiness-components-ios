@@ -40,8 +40,9 @@ extension ViewController {
     private func setupView(_ receiver: MLBusinessLoyaltyBroadcastReceiver) {
         let newRingView = setupRingView(receiver)
         self.ringView = newRingView
-        let newImgView = setupImageView(bottomOf: newRingView)
-        let dividingLineView = setupDividingLineView(bottomOf: newImgView)
+        let loyalImgView = setupLoyalRowWithImageAndAction(bottomOf: newRingView)
+        let loyalImgViewWithoutAction = setupLoyalRowWithImageAndWithoutAction(bottomOf: loyalImgView)
+        let dividingLineView = setupDividingLineView(bottomOf: loyalImgViewWithoutAction)
         let itemDescriptionView = setupItemDescriptionView(bottomOf: dividingLineView)
         let crossSellingBoxView = setupCrossSellingBoxView(bottomOf: itemDescriptionView)
         let discountView = setupDiscountView(numberOfItems: 6, bottomOf: crossSellingBoxView)
@@ -97,19 +98,34 @@ extension ViewController {
         return ringView
     }
     
-    private func setupImageView(bottomOf targetView: UIView) -> MLBusinessLoyaltyRingView {
-        let imgData = LoyaltyImageData()
-        let imgView = MLBusinessLoyaltyRingView(imgData, fillPercentProgress: false)
+    private func setupLoyalRowWithImageAndAction(bottomOf targetView: UIView) -> MLBusinessLoyaltyRingView {
+        let loyaltyData = LoyaltyImageDataWithAction()
+        let loyalRowWithImageAndAction = MLBusinessLoyaltyRingView(loyaltyData, fillPercentProgress: false)
         
-        containerView.addSubview(imgView)
+        containerView.addSubview(loyalRowWithImageAndAction)
         
         NSLayoutConstraint.activate([
-            imgView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
-            imgView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
-            imgView.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 20)
+            loyalRowWithImageAndAction.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            loyalRowWithImageAndAction.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+            loyalRowWithImageAndAction.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 20)
         ])
         
-        return imgView
+        return loyalRowWithImageAndAction
+    }
+    
+    private func setupLoyalRowWithImageAndWithoutAction(bottomOf targetView: UIView) -> MLBusinessLoyaltyRingView {
+        let loyaltyData = LoyaltyImageData()
+        let loyalRowWithImage = MLBusinessLoyaltyRingView(loyaltyData, fillPercentProgress: false)
+        
+        containerView.addSubview(loyalRowWithImage)
+        
+        NSLayoutConstraint.activate([
+            loyalRowWithImage.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            loyalRowWithImage.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+            loyalRowWithImage.topAnchor.constraint(equalTo: targetView.bottomAnchor, constant: 20)
+        ])
+        
+        return loyalRowWithImage
     }
 
     private func setupDividingLineView(bottomOf targetView: UIView) -> UIView {
