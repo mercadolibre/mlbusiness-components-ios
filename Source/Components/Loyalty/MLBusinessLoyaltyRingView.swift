@@ -12,7 +12,8 @@ import MLUI
 @objcMembers
 open class MLBusinessLoyaltyRingView: UIView {
     let viewData: MLBusinessLoyaltyRingData
-
+    
+    private let viewModel: MLBusinessLoyaltyRowViewModel
     private let verticalMargin: CGFloat = 4
     private let ringSize: CGFloat = 46
     private let buttonHeight: CGFloat = 20
@@ -26,6 +27,7 @@ open class MLBusinessLoyaltyRingView: UIView {
     public init(_ ringViewData: MLBusinessLoyaltyRingData, fillPercentProgress: Bool = true) {
         self.viewData = ringViewData
         self.fillPercentProgress = fillPercentProgress
+        self.viewModel = MLBusinessLoyaltyRowViewModel.init(loyaltyRowData: ringViewData)
         super.init(frame: .zero)
         render()
     }
@@ -109,7 +111,7 @@ extension MLBusinessLoyaltyRingView {
         button.titleLabel?.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.XS_FONT)
         button.setTitleColor(MLStyleSheetManager.styleSheet.secondaryColor, for: .normal)
         button.addTarget(self, action:  #selector(self.didTapOnButton), for: .touchUpInside)
-        button.isHidden = viewData.getButtonTitle?() == "" || viewData.getButtonTitle?() == nil || viewData.getButtonDeepLink?() == ""
+        button.isHidden = viewModel.buttonShouldBeHidden()
         return button
     }
     
@@ -117,7 +119,7 @@ extension MLBusinessLoyaltyRingView {
         let icon = UIImageView()
         icon.layer.cornerRadius =  imageSize / 2
         icon.layer.masksToBounds = true
-        icon.isHidden = viewData.getImageUrl?() == nil || viewData.getImageUrl?() == ""
+        icon.isHidden = viewModel.iconShouldBeHidden()
         icon.setRemoteImage(imageUrl: viewData.getImageUrl?() ?? "")
         icon.translatesAutoresizingMaskIntoConstraints = false
         icon.contentMode = .scaleAspectFill
@@ -125,24 +127,17 @@ extension MLBusinessLoyaltyRingView {
         return icon
     }
     
-    private func buildRing() -> UICircularProgressRing {
-        let number = Int(truncating: viewData.getRingNumber?() ?? 0)
-        let centerRingText = number != 0 ? String(number) : ""
-        
+    private func buildRing() -> UICircularProgressRing {       
         let ring = RingFactory.create(
-            number: number,
+            number: viewModel.getRingNumber(),
             hexaColor: viewData.getRingHexaColor?() ?? "",
-            percent: Float(truncating: viewData.getRingPercentage?() ?? 0),
+            percent: viewModel.getRingPercentage(),
             fillPercentage: fillPercentProgress,
-            innerCenterText: centerRingText)
+            innerCenterText: viewModel.getRingCenterText())
         
-        ring.isHidden = shouldHideRing()
+        ring.isHidden = viewModel.ringShouldBeHidden()
         
         return ring
-    }
-    
-    private func shouldHideRing() -> Bool {
-        return viewData.getRingNumber?() == nil || viewData.getRingHexaColor?() == nil || viewData.getRingPercentage?() == nil || viewData.getRingNumber?() == nil
     }
 
     // MARK: Constraints.
@@ -195,6 +190,6 @@ extension MLBusinessLoyaltyRingView {
     }
 
     @objc open func fillPercentProgressWithAnimation(_ duration: TimeInterval = 1.0) {
-        ringView?.startProgress(to: CGFloat(viewData.getRingPercentage?() ?? 0), duration: duration)
+        ringView?.startProgress(to: CGFloat(viewModel.getRingPercentage()), duration: duration)
     }
 }
