@@ -17,6 +17,9 @@ public final class MLBusinessLoyaltyHeaderView: UIView {
     private let titleNumberOfLines: Int = 1
     private let ringSize: CGFloat = 36
     
+    //New part:
+    private weak var iconView: UIImageView?
+    
     private weak var ringView: UICircularProgressRing?
     private weak var titleLabel: UILabel?
     private weak var subTitleLabel: UILabel?
@@ -46,22 +49,24 @@ private extension MLBusinessLoyaltyHeaderView {
         self.backgroundColor = viewData?.getBackgroundHexaColor().hexaToUIColor()
         
         self.titleLabel?.text = viewData?.getTitle()
-        self.titleLabel?.textColor = viewData?.getPrimaryHexaColor().hexaToUIColor()
+        self.titleLabel?.textColor = viewData?.getPrimaryHexaColor()?.hexaToUIColor()
         
         self.subTitleLabel?.text = viewData?.getSubtitle()
-        self.subTitleLabel?.textColor = viewData?.getPrimaryHexaColor().hexaToUIColor()
+        self.subTitleLabel?.textColor = viewData?.getPrimaryHexaColor()?.hexaToUIColor()
+        
         
         let ringNumber = viewData?.getRingNumber() ?? 1
         let ringHexaColor = viewData?.getPrimaryHexaColor() ?? "FFFFFF"
         let secondaryHexaColor = viewData?.getSecondaryHexaColor() ?? "FFFFFF"
         let ringPercentage = viewData?.getRingPercentage() ?? 0
+        
         let iconSize = viewData?.getIconSize() ?? 50
         let descriptionSize = viewData?.getDescriptionSize() ?? 14
         
         self.ringView?.fontColor = ringHexaColor.hexaToUIColor()
         self.ringView?.innerRingColor = ringHexaColor.hexaToUIColor()
         self.ringView?.outerRingColor = secondaryHexaColor.hexaToUIColor()
-        self.ringView?.innerCenterText = String(ringNumber)
+        self.ringView?.innerCenterText = String(Float(ringNumber))
         
         if self.fillPercentProgress {
             self.ringView?.startProgress(to: CGFloat(ringPercentage), duration: 0)
@@ -80,7 +85,12 @@ private extension MLBusinessLoyaltyHeaderView {
         let ringView = buildRing()
         self.addSubview(ringView)
         
+        //new part
+        //let iconView = buildIcon()
+        //self.addSubview(iconView)
+        
         makeConstraints(titleLabel, subTitleLabel, ringView)
+        //makeConstraints(titleLabel, subTitleLabel)
     }
     
     // MARK: Builders.
@@ -103,7 +113,7 @@ private extension MLBusinessLoyaltyHeaderView {
     }
     
     private func buildRing() -> UIView {
-        let ring = RingFactory.create(number: self.viewData?.getRingNumber() ?? 1,
+        let ring = RingFactory.create(number: Int(self.viewData?.getRingNumber() ?? 1),
                                       hexaColor: self.viewData?.getPrimaryHexaColor() ?? "FFFFFF",
                                       percent: self.viewData?.getRingPercentage() ?? 0,
                                       fillPercentage: self.fillPercentProgress)
