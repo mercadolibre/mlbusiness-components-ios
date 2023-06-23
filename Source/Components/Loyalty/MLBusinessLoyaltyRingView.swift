@@ -124,57 +124,67 @@ extension MLBusinessLoyaltyRingView {
         icon.translatesAutoresizingMaskIntoConstraints = false
         icon.contentMode = .scaleAspectFill
         icon.prepareForAutolayout(.clear)
+        icon.widthAnchor.constraint(equalToConstant: imageSize).isActive = true
+        icon.heightAnchor.constraint(equalToConstant: imageSize).isActive = true
         return icon
     }
     
-    private func buildRing() -> UICircularProgressRing {       
+    private func buildRing() -> UICircularProgressRing {
         let ring = RingFactory.create(
             number: viewModel.getRingNumber(),
             hexaColor: viewData.getRingHexaColor?() ?? "",
             percent: viewModel.getRingPercentage(),
             fillPercentage: fillPercentProgress,
             innerCenterText: viewModel.getRingCenterText())
-        
+        ring.prepareForAutolayout(.clear)
         ring.isHidden = viewModel.ringShouldBeHidden()
-        
+        ring.widthAnchor.constraint(equalToConstant: ringSize).isActive = true
+        ring.heightAnchor.constraint(equalToConstant: ringSize).isActive = true
         return ring
     }
 
     // MARK: Constraints.
     func makeConstraints(_ titleLabel: UILabel, _ subtitleLabel: UILabel, _ button: UIButton, _ ring: UICircularProgressRing, _ img : UIImageView) {
-        var constraint = [NSLayoutConstraint]()
-        if((subtitleLabel.text == nil || subtitleLabel.text == "")
-           && (button.titleLabel?.text == nil || button.titleLabel?.text == "")) {
+        if ring.isHidden && img.isHidden {
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: UI.Margin.M_MARGIN).isActive = true
+        } else {
+            titleLabel.leadingAnchor.constraint(equalTo: ring.trailingAnchor, constant: UI.Margin.M_MARGIN).isActive = true
+            ring.topAnchor.constraint(equalTo: topAnchor, constant: verticalMargin).isActive = true
+            ring.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+            img.topAnchor.constraint(equalTo: topAnchor, constant: verticalMargin).isActive = true
+            img.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        }
+
+        titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+
+        if subtitleLabel.text.isNilOrEmpty && button.titleLabel.isNilOrEmpty {
             titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         } else {
-            constraint.append(titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: UI.Margin.XXXS_MARGIN))
+            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: UI.Margin.XXXS_MARGIN).isActive = true
         }
-        constraint.append(titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor))
-        constraint.append(subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: UI.Margin.XXXS_MARGIN))
-        constraint.append(subtitleLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor))
-        constraint.append(subtitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor))
-        if ring.isHidden && img.isHidden {
-            constraint.append(titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: UI.Margin.M_MARGIN))
+
+        if !subtitleLabel.text.isNilOrEmpty {
+            subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: UI.Margin.XXXS_MARGIN).isActive = true
+            subtitleLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor).isActive = true
+            subtitleLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor).isActive = true
+        }
+
+        if button.titleLabel.isNilOrEmpty || button.isHidden {
+            if !subtitleLabel.text.isNilOrEmpty {
+                subtitleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -verticalMargin).isActive = true
+            } else {
+                titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -verticalMargin).isActive = true
+            }
         } else {
-            constraint.append(ring.topAnchor.constraint(equalTo: topAnchor, constant: verticalMargin))
-            constraint.append(ring.leadingAnchor.constraint(equalTo: leadingAnchor))
-            constraint.append(ring.widthAnchor.constraint(equalToConstant: ringSize))
-            constraint.append(ring.heightAnchor.constraint(equalToConstant: ringSize))
-            constraint.append(img.topAnchor.constraint(equalTo: topAnchor, constant: verticalMargin))
-            constraint.append(img.leadingAnchor.constraint(equalTo: leadingAnchor))
-            constraint.append(img.widthAnchor.constraint(equalToConstant: imageSize))
-            constraint.append(img.heightAnchor.constraint(equalToConstant: imageSize))
-            constraint.append(titleLabel.leadingAnchor.constraint(equalTo: ring.trailingAnchor, constant: UI.Margin.M_MARGIN))
+            if !subtitleLabel.text.isNilOrEmpty {
+                button.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: UI.Margin.XXXS_MARGIN).isActive = true
+            } else {
+                button.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: UI.Margin.XXXS_MARGIN).isActive = true
+            }
+            button.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor).isActive = true
+            button.heightAnchor.constraint(equalToConstant: buttonHeight).isActive = true
+            button.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -verticalMargin).isActive = true
         }
-        if button.isHidden {
-            constraint.append(subtitleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -verticalMargin))
-        } else {
-            constraint.append(button.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor))
-            constraint.append(button.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor))
-            constraint.append(button.heightAnchor.constraint(equalToConstant: buttonHeight))
-            constraint.append(button.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -verticalMargin))
-        }
-        NSLayoutConstraint.activate(constraint)
     }
 
     // MARK: Tap Selector.
@@ -191,5 +201,17 @@ extension MLBusinessLoyaltyRingView {
 
     @objc open func fillPercentProgressWithAnimation(_ duration: TimeInterval = 1.0) {
         ringView?.startProgress(to: CGFloat(viewModel.getRingPercentage()), duration: duration)
+    }
+}
+
+extension Optional where Wrapped == String {
+    var isNilOrEmpty: Bool {
+        self == nil || self == ""
+    }
+}
+
+extension Optional where Wrapped == UILabel {
+    var isNilOrEmpty: Bool {
+        self == nil || self?.text == ""
     }
 }
