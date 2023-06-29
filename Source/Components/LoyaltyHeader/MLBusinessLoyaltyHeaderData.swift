@@ -7,14 +7,14 @@
 
 import UIKit
 
-@objc public protocol MLBusinessLoyaltyHeaderData: NSObjectProtocol {
-    @objc func getBackgroundHexaColor() -> String
-    @objc func getPrimaryHexaColor() -> String?
-    @objc func getSecondaryHexaColor() -> String?
-    @objc func getRingNumber() -> NSNumber?
-    @objc func getRingPercentage() -> Float
-    @objc func getTitle() -> String
-    @objc func getSubtitle() -> String
-    @objc func getIconSize() -> Int
-    @objc func getDescriptionSize() -> Int
+public protocol MLBusinessLoyaltyHeaderData {
+    func getBackgroundHexaColor() -> String
+    func getPrimaryHexaColor() -> String?
+    func getSecondaryHexaColor() -> String?
+    func getRingNumber() -> Int?
+    func getRingPercentage() -> Float?
+    func getTitle() -> String?
+    func getSubtitle() -> String
+    func getIconSize() -> Int?
+    func getDescriptionSize() -> Int?
 }

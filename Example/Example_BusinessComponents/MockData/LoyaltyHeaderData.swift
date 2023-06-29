@@ -14,23 +14,23 @@ final class LoyaltyHeaderData: NSObject, MLBusinessLoyaltyHeaderData {
         return "1AC2B0"
     }
     
-    func getPrimaryHexaColor() -> String {
+    func getPrimaryHexaColor() -> String? {
         return "FFFFFF"
     }
     
-    func getSecondaryHexaColor() -> String {
+    func getSecondaryHexaColor() -> String? {
         return "65A69E"
     }
     
-    func getRingNumber() -> Int {
+    func getRingNumber() -> Int? {
         return 4
     }
     
-    func getRingPercentage() -> Float {
+    func getRingPercentage() -> Float? {
         return 0.8
     }
     
-    func getTitle() -> String {
+    func getTitle() -> String? {
         return "Beneficios"
     }
     
@@ -38,11 +38,11 @@ final class LoyaltyHeaderData: NSObject, MLBusinessLoyaltyHeaderData {
         return "Nivel 4 - Mercado Puntos"
     }
     
-    func getIconSize() -> Int {
+    func getIconSize() -> Int? {
         return 50
     }
     
-    func getDescriptionSize() -> Int {
+    func getDescriptionSize() -> Int? {
         return 14
     }
 }
