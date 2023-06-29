@@ -66,12 +66,12 @@ extension MLBusinessLoyaltyRingView {
         let titleLabel = UILabel()
         titleLabel.prepareForAutolayout(.clear)
         titleLabel.numberOfLines = titleNumberOfLines
-        titleLabel.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.S_FONT)
+        titleLabel.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.XS_FONT)
         setBold(
             uiLabel: titleLabel,
             string: viewData.getTitle(),
-            uiFontNormal: UIFont.ml_regularSystemFont(ofSize: UI.FontSize.S_FONT),
-            uiFontBold: UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.S_FONT)
+            uiFontNormal: UIFont.ml_regularSystemFont(ofSize: UI.FontSize.XS_FONT),
+            uiFontBold: UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.XS_FONT)
         )
         titleLabel.applyBusinessLabelStyle()
         return titleLabel
@@ -143,16 +143,22 @@ extension MLBusinessLoyaltyRingView {
         return ring
     }
 
+    
     // MARK: Constraints.
     func makeConstraints(_ titleLabel: UILabel, _ subtitleLabel: UILabel, _ button: UIButton, _ ring: UICircularProgressRing, _ img : UIImageView) {
         if ring.isHidden && img.isHidden {
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: UI.Margin.M_MARGIN).isActive = true
         } else {
-            titleLabel.leadingAnchor.constraint(equalTo: ring.trailingAnchor, constant: UI.Margin.M_MARGIN).isActive = true
-            ring.topAnchor.constraint(equalTo: topAnchor, constant: verticalMargin).isActive = true
-            ring.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-            img.topAnchor.constraint(equalTo: topAnchor, constant: verticalMargin).isActive = true
-            img.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+            if(ring.isHidden) {
+                titleLabel.leadingAnchor.constraint(equalTo: img.trailingAnchor, constant: UI.Margin.M_MARGIN).isActive = true
+                img.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+                img.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+            } else {
+                titleLabel.leadingAnchor.constraint(equalTo: ring.trailingAnchor, constant: UI.Margin.M_MARGIN).isActive = true
+                ring.topAnchor.constraint(equalTo: topAnchor, constant: verticalMargin).isActive = true
+                ring.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+            }
+            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         }
 
         titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
@@ -179,7 +185,7 @@ extension MLBusinessLoyaltyRingView {
             if !subtitleLabel.text.isNilOrEmpty {
                 button.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: UI.Margin.XXXS_MARGIN).isActive = true
             } else {
-                button.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: UI.Margin.XXXS_MARGIN).isActive = true
+                button.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: verticalMargin).isActive = true
             }
             button.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor).isActive = true
             button.heightAnchor.constraint(equalToConstant: buttonHeight).isActive = true
