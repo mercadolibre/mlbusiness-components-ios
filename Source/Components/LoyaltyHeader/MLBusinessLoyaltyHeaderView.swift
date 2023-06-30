@@ -67,7 +67,7 @@ private extension MLBusinessLoyaltyHeaderView {
         self.ringView?.fontColor = ringHexaColor.hexaToUIColor()
         self.ringView?.innerRingColor = ringHexaColor.hexaToUIColor()
         self.ringView?.outerRingColor = secondaryHexaColor.hexaToUIColor()
-        self.ringView?.innerCenterText = String(Float(ringNumber))
+        self.ringView?.innerCenterText = String(ringNumber)
         self.ringView?.isHidden = false
         
         if self.fillPercentProgress {
