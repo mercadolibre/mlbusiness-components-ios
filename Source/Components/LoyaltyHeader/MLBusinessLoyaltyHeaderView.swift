@@ -137,7 +137,8 @@ private extension MLBusinessLoyaltyHeaderView {
             ring!.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: UI.Margin.XXXS_MARGIN),
             ring!.widthAnchor.constraint(equalToConstant: 0),
             self.subTitleLabel!.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 2),
-            self.subTitleLabel!.topAnchor.constraint(equalTo: topAnchor, constant: 2)
+            self.subTitleLabel!.topAnchor.constraint(equalTo: topAnchor, constant: 2),
+            self.subTitleLabel!.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: UI.Margin.S_MARGIN)
         ])
     }
     
