@@ -78,7 +78,7 @@ private extension MLBusinessLoyaltyHeaderView {
             if(viewData?.getRingNumber() == nil){
                 hideRing(self.ringView!)
             }
-            if(viewData?.getTitle() != nil){
+            if(viewData?.getTitle() == nil){
                 hideTitle()
             }
         }
@@ -135,27 +135,24 @@ private extension MLBusinessLoyaltyHeaderView {
         self.ringView?.isHidden = true
         NSLayoutConstraint.activate([
             ring!.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: UI.Margin.XXXS_MARGIN),
-            ring!.widthAnchor.constraint(equalToConstant: 0)
+            ring!.widthAnchor.constraint(equalToConstant: 0),
+            self.subTitleLabel!.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 2),
+            self.subTitleLabel!.topAnchor.constraint(equalTo: topAnchor, constant: 2)
         ])
-        self.subTitleLabel?.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 2).isActive = true
-        self.subTitleLabel?.topAnchor.constraint(equalTo: topAnchor, constant: 2).isActive = true
     }
     
+    //Esta funcion esconde el titulo y reubica el subtitulo
     private func hideTitle() {
-        //Esta parte pone al subtitle en el centro!
-        subTitleLabel!.topAnchor.constraint(equalTo: topAnchor, constant: UI.Margin.XXS_MARGIN).isActive = true
-        subTitleLabel!.bottomAnchor.constraint(equalTo: bottomAnchor, constant: UI.Margin.XXS_MARGIN).isActive = true
-        
-        //Revisar esta parte
-        //Agregar documentacion explicando que onda
-        //Esta parte esconde propiamente el title
         titleLabel?.isHidden = true
-        titleLabel!.widthAnchor.constraint(equalTo: self.widthAnchor, constant: 0).isActive = true
-        titleLabel!.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: UI.Margin.XS_MARGIN).isActive = true
-        titleLabel!.topAnchor.constraint(equalTo: self.topAnchor, constant: 0).isActive = true
-        titleLabel!.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive = true
-        titleLabel?.heightAnchor.constraint(equalToConstant: 0)
-        
+        NSLayoutConstraint.activate([
+            subTitleLabel!.topAnchor.constraint(equalTo: topAnchor, constant: UI.Margin.XXS_MARGIN),
+            subTitleLabel!.bottomAnchor.constraint(equalTo: bottomAnchor, constant: UI.Margin.XXS_MARGIN),
+            titleLabel!.widthAnchor.constraint(equalTo: self.widthAnchor, constant: 0),
+            titleLabel!.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: UI.Margin.XS_MARGIN),
+            titleLabel!.topAnchor.constraint(equalTo: self.topAnchor, constant: 0),
+            titleLabel!.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0),
+            titleLabel!.heightAnchor.constraint(equalToConstant: 0)
+        ])
     }
     
     // MARK: Constraints.
