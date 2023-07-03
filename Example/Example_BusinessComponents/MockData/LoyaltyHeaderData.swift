@@ -37,12 +37,4 @@ final class LoyaltyHeaderData: NSObject, MLBusinessLoyaltyHeaderData {
     func getSubtitle() -> String {
         return "Nivel 4 - Mercado Puntos"
     }
-    
-    func getIconSize() -> Int? {
-        return 50
-    }
-    
-    func getDescriptionSize() -> Int? {
-        return 14
-    }
 }

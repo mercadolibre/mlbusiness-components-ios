@@ -61,9 +61,6 @@ private extension MLBusinessLoyaltyHeaderView {
         let secondaryHexaColor = viewData?.getSecondaryHexaColor() ?? "FFFFFF"
         let ringPercentage = viewData?.getRingPercentage() ?? 0
         
-        let iconSize = viewData?.getIconSize() ?? 50
-        let descriptionSize = viewData?.getDescriptionSize() ?? 14
-        
         self.ringView?.fontColor = ringHexaColor.hexaToUIColor()
         self.ringView?.innerRingColor = ringHexaColor.hexaToUIColor()
         self.ringView?.outerRingColor = secondaryHexaColor.hexaToUIColor()
