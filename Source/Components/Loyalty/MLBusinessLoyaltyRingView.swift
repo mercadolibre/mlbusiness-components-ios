@@ -107,10 +107,12 @@ extension MLBusinessLoyaltyRingView {
     private func buildButton() -> UIButton {
         let button = UIButton()
         button.prepareForAutolayout(.clear)
-        button.setTitle(viewData.getButtonTitle?() ?? "", for: .normal)
+        button.setTitle(viewData.getButtonTitle?(), for: .normal)
         button.titleLabel?.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.XS_FONT)
         button.setTitleColor(MLStyleSheetManager.styleSheet.secondaryColor, for: .normal)
-        button.addTarget(self, action:  #selector(self.didTapOnButton), for: .touchUpInside)
+        if (viewData.getButtonDeepLink?() != nil) {
+            button.addTarget(self, action:  #selector(self.didTapOnButton), for: .touchUpInside)
+        }
         button.isHidden = viewModel.buttonShouldBeHidden()
         return button
     }

@@ -1,3 +1,7 @@
+## Unreleased
+## Changed
+- Modificado componente de congrats de Loyalty, permitiendo agregar una imagen y mostrar o no el diferentes partes existentes
+
 ## [1.55.0] - 2023-05-18
 ## Added
 - Se agrega params para soportar logo de store y ranking en Dynamic Carrousel.
