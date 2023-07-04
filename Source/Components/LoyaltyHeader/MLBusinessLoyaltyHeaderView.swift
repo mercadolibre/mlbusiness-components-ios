@@ -17,9 +17,7 @@ public final class MLBusinessLoyaltyHeaderView: UIView {
     private let titleNumberOfLines: Int = 1
     private let ringSize: CGFloat = 36
     
-    //New part:
     private weak var iconView: UIImageView?
-    
     private weak var ringView: UICircularProgressRing?
     private weak var titleLabel: UILabel?
     private weak var subTitleLabel: UILabel?
@@ -73,7 +71,9 @@ private extension MLBusinessLoyaltyHeaderView {
         
         if(viewData?.getSubtitle() != nil){
             if(viewData?.getRingNumber() == nil){
-                hideRing(self.ringView!)
+                if(self.ringView != nil){
+                    hideRing(self.ringView)
+                }
             }
             if(viewData?.getTitle() == nil){
                 hideTitle()
@@ -139,18 +139,20 @@ private extension MLBusinessLoyaltyHeaderView {
         ])
     }
     
-    //Esta funcion esconde el titulo y reubica el subtitulo
+    /// Esta funcion esconde el titulo y reubica el subtitulo
     private func hideTitle() {
-        titleLabel?.isHidden = true
-        NSLayoutConstraint.activate([
-            subTitleLabel!.topAnchor.constraint(equalTo: topAnchor, constant: UI.Margin.XXS_MARGIN),
-            subTitleLabel!.bottomAnchor.constraint(equalTo: bottomAnchor, constant: UI.Margin.XXS_MARGIN),
-            titleLabel!.widthAnchor.constraint(equalTo: self.widthAnchor, constant: 0),
-            titleLabel!.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: UI.Margin.XS_MARGIN),
-            titleLabel!.topAnchor.constraint(equalTo: self.topAnchor, constant: 0),
-            titleLabel!.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0),
-            titleLabel!.heightAnchor.constraint(equalToConstant: 0)
-        ])
+        if(titleLabel != nil){
+            titleLabel?.isHidden = true
+            NSLayoutConstraint.activate([
+                subTitleLabel!.topAnchor.constraint(equalTo: topAnchor, constant: UI.Margin.XXS_MARGIN),
+                subTitleLabel!.bottomAnchor.constraint(equalTo: bottomAnchor, constant: UI.Margin.XXS_MARGIN),
+                titleLabel!.widthAnchor.constraint(equalTo: self.widthAnchor, constant: 0),
+                titleLabel!.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: UI.Margin.XS_MARGIN),
+                titleLabel!.topAnchor.constraint(equalTo: self.topAnchor, constant: 0),
+                titleLabel!.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0),
+                titleLabel!.heightAnchor.constraint(equalToConstant: 0)
+            ])
+        }
     }
     
     // MARK: Constraints.
