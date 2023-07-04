@@ -17,7 +17,6 @@ public final class MLBusinessLoyaltyHeaderView: UIView {
     private let titleNumberOfLines: Int = 1
     private let ringSize: CGFloat = 36
     
-    private weak var iconView: UIImageView?
     private weak var ringView: UICircularProgressRing?
     private weak var titleLabel: UILabel?
     private weak var subTitleLabel: UILabel?
