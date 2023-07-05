@@ -68,13 +68,13 @@ private extension MLBusinessLoyaltyHeaderView {
             self.ringView?.startProgress(to: CGFloat(ringPercentage), duration: 0)
         }
         
-        if(viewData?.getSubtitle() != nil){
-            if(viewData?.getRingNumber() == nil){
-                if(self.ringView != nil){
+        if viewData?.getSubtitle() != nil {
+            if viewData?.getRingNumber() == nil {
+                if let ringView = self.ringView {
                     hideRing(self.ringView)
                 }
             }
-            if(viewData?.getTitle() == nil){
+            if viewData?.getTitle() == nil {
                 hideTitle()
             }
         }
@@ -129,27 +129,39 @@ private extension MLBusinessLoyaltyHeaderView {
     
     private func hideRing( _ ring: UIView?) {
         self.ringView?.isHidden = true
+        guard let ring = ring else {
+            return
+        }
         NSLayoutConstraint.activate([
-            ring!.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: UI.Margin.XXXS_MARGIN),
-            ring!.widthAnchor.constraint(equalToConstant: 0),
-            self.subTitleLabel!.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 2),
-            self.subTitleLabel!.topAnchor.constraint(equalTo: topAnchor, constant: 2),
-            self.subTitleLabel!.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: UI.Margin.S_MARGIN)
+            ring.leadingAnchor.constraint(equalTo: leadingAnchor, constant: UI.Margin.XXXS_MARGIN),
+            ring.widthAnchor.constraint(equalToConstant: 0)
         ])
+        
+        if let subTitleLabel = subTitleLabel {
+            NSLayoutConstraint.activate([
+                subTitleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 2),
+                subTitleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 2),
+                subTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: UI.Margin.S_MARGIN)
+            ])
+        }
     }
     
     /// Esta funcion esconde el titulo y reubica el subtitulo
     private func hideTitle() {
-        if(titleLabel != nil){
-            titleLabel?.isHidden = true
+        if let titleLabel = titleLabel {
+            titleLabel.isHidden = true
             NSLayoutConstraint.activate([
-                subTitleLabel!.topAnchor.constraint(equalTo: topAnchor, constant: UI.Margin.XXS_MARGIN),
-                subTitleLabel!.bottomAnchor.constraint(equalTo: bottomAnchor, constant: UI.Margin.XXS_MARGIN),
-                titleLabel!.widthAnchor.constraint(equalTo: self.widthAnchor, constant: 0),
-                titleLabel!.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: UI.Margin.XS_MARGIN),
-                titleLabel!.topAnchor.constraint(equalTo: self.topAnchor, constant: 0),
-                titleLabel!.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0),
-                titleLabel!.heightAnchor.constraint(equalToConstant: 0)
+                titleLabel.widthAnchor.constraint(equalTo: self.widthAnchor, constant: 0),
+                titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: UI.Margin.XS_MARGIN),
+                titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 0),
+                titleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0),
+                titleLabel.heightAnchor.constraint(equalToConstant: 0)
+            ])
+        }
+        if let subtitleLabel = subTitleLabel {
+            NSLayoutConstraint.activate([
+                subtitleLabel.topAnchor.constraint(equalTo: topAnchor, constant: UI.Margin.XXS_MARGIN),
+                subtitleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: UI.Margin.XXS_MARGIN)
             ])
         }
     }
