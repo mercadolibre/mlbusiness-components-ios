@@ -46,10 +46,12 @@ private extension MLBusinessLoyaltyHeaderView {
         self.backgroundColor = viewData?.getBackgroundHexaColor().hexaToUIColor()
         
         self.titleLabel?.text = viewData?.getTitle()
-        self.titleLabel?.textColor = viewData?.getPrimaryHexaColor().hexaToUIColor()
+        self.titleLabel?.textColor = viewData?.getPrimaryHexaColor()?.hexaToUIColor()
+        self.titleLabel?.isHidden = false
         
         self.subTitleLabel?.text = viewData?.getSubtitle()
-        self.subTitleLabel?.textColor = viewData?.getPrimaryHexaColor().hexaToUIColor()
+        self.subTitleLabel?.textColor = viewData?.getPrimaryHexaColor()?.hexaToUIColor()
+        
         
         let ringNumber = viewData?.getRingNumber() ?? 1
         let ringHexaColor = viewData?.getPrimaryHexaColor() ?? "FFFFFF"
@@ -60,9 +62,21 @@ private extension MLBusinessLoyaltyHeaderView {
         self.ringView?.innerRingColor = ringHexaColor.hexaToUIColor()
         self.ringView?.outerRingColor = secondaryHexaColor.hexaToUIColor()
         self.ringView?.innerCenterText = String(ringNumber)
+        self.ringView?.isHidden = false
         
         if self.fillPercentProgress {
             self.ringView?.startProgress(to: CGFloat(ringPercentage), duration: 0)
+        }
+        
+        if viewData?.getSubtitle() != nil {
+            if viewData?.getRingNumber() == nil {
+                if let ringView = self.ringView {
+                    hideRing(self.ringView)
+                }
+            }
+            if viewData?.getTitle() == nil {
+                hideTitle()
+            }
         }
     }
     
@@ -101,7 +115,8 @@ private extension MLBusinessLoyaltyHeaderView {
     }
     
     private func buildRing() -> UIView {
-        let ring = RingFactory.create(number: self.viewData?.getRingNumber() ?? 1,
+        self.ringView?.isHidden = false
+        let ring = RingFactory.create(number: Int(self.viewData?.getRingNumber() ?? 1),
                                       hexaColor: self.viewData?.getPrimaryHexaColor() ?? "FFFFFF",
                                       percent: self.viewData?.getRingPercentage() ?? 0,
                                       fillPercentage: self.fillPercentProgress)
@@ -110,6 +125,37 @@ private extension MLBusinessLoyaltyHeaderView {
         ring.font = UIFont.ml_semiboldSystemFont(ofSize: 20)
         self.ringView = ring
         return ring
+    }
+    
+    private func hideRing( _ ring: UIView?) {
+        self.ringView?.isHidden = true
+        guard let ring = ring else {
+            return
+        }
+        NSLayoutConstraint.activate([
+            ring.leadingAnchor.constraint(equalTo: leadingAnchor, constant: UI.Margin.XXXS_MARGIN),
+            ring.widthAnchor.constraint(equalToConstant: 0)
+        ])
+        
+        if let subTitleLabel = subTitleLabel {
+            NSLayoutConstraint.activate([
+                subTitleLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
+                subTitleLabel.topAnchor.constraint(equalTo: topAnchor),
+                subTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: UI.Margin.S_MARGIN)
+            ])
+        }
+    }
+    
+    private func hideTitle() {
+        if let titleLabel = titleLabel {
+            titleLabel.isHidden = true
+        }
+        if let subtitleLabel = subTitleLabel {
+            NSLayoutConstraint.activate([
+                subtitleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+                subtitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: UI.Margin.S_MARGIN),
+                subtitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: UI.Margin.S_MARGIN)])
+        }
     }
     
     // MARK: Constraints.
@@ -122,7 +168,7 @@ private extension MLBusinessLoyaltyHeaderView {
             titleLabel.leftAnchor.constraint(equalTo: ring.rightAnchor, constant: UI.Margin.S_MARGIN),
             titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: UI.Margin.XS_MARGIN),
             titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -UI.Margin.S_MARGIN),
-            subTitleLabel.bottomAnchor.constraint(equalTo: ring.bottomAnchor, constant: 1),
+            subTitleLabel.bottomAnchor.constraint(equalTo: ring.bottomAnchor, constant: 2),
             subTitleLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             subTitleLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
             self.heightAnchor.constraint(equalToConstant: viewHeight)
