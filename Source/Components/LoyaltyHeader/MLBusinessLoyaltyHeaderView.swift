@@ -139,8 +139,8 @@ private extension MLBusinessLoyaltyHeaderView {
         
         if let subTitleLabel = subTitleLabel {
             NSLayoutConstraint.activate([
-                subTitleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 2),
-                subTitleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 2),
+                subTitleLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
+                subTitleLabel.topAnchor.constraint(equalTo: topAnchor),
                 subTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: UI.Margin.S_MARGIN)
             ])
         }
