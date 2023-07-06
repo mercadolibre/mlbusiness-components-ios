@@ -146,23 +146,15 @@ private extension MLBusinessLoyaltyHeaderView {
         }
     }
     
-    /// Esta funcion esconde el titulo y reubica el subtitulo
     private func hideTitle() {
         if let titleLabel = titleLabel {
             titleLabel.isHidden = true
-            NSLayoutConstraint.activate([
-                titleLabel.widthAnchor.constraint(equalTo: self.widthAnchor, constant: 0),
-                titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: UI.Margin.XS_MARGIN),
-                titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 0),
-                titleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0),
-                titleLabel.heightAnchor.constraint(equalToConstant: 0)
-            ])
         }
         if let subtitleLabel = subTitleLabel {
             NSLayoutConstraint.activate([
-                subtitleLabel.topAnchor.constraint(equalTo: topAnchor, constant: UI.Margin.XXS_MARGIN),
-                subtitleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: UI.Margin.XXS_MARGIN)
-            ])
+                subtitleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+                subtitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: UI.Margin.S_MARGIN),
+                subtitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: UI.Margin.S_MARGIN)])
         }
     }
     
