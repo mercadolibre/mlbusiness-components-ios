@@ -1,4 +1,4 @@
-## Unreleased
+## [2.0.0] - 2023-07-06
 ## Changed
 - Modificado componente de congrats de Loyalty, permitiendo agregar una imagen y mostrar o no el diferentes partes existentes
 - Se agregan las modificaciones necesarias en el componente de Beneficios de Loyalty para poder mandar la data del progress ring en null y seguir pintando correctamente el componente.
