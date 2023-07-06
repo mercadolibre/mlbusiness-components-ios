@@ -1,6 +1,7 @@
 ## Unreleased
 ## Changed
-- Se agregan las modificaciones necesarias para poder mandar la data del progress ring en null y seguir pintando correctamente el componente.
+- Modificado componente de congrats de Loyalty, permitiendo agregar una imagen y mostrar o no el diferentes partes existentes
+- Se agregan las modificaciones necesarias en el componente de Beneficios de Loyalty para poder mandar la data del progress ring en null y seguir pintando correctamente el componente.
 
 ## [1.55.0] - 2023-05-18
 ## Added
