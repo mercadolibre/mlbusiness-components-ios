@@ -11,15 +11,15 @@ import MLBusinessComponents
 
 class LoyaltyRingData: NSObject, MLBusinessLoyaltyRingData {
     
-    func getRingNumber() -> NSNumber? {
+    func getRingNumber() -> Int {
         return 3
     }
 
-    func getRingHexaColor() -> String? {
+    func getRingHexaColor() -> String {
         return "#17aad6"
     }
 
-    func getRingPercentage() -> NSNumber? {
+    func getRingPercentage() -> Float {
         return 0.80
     }
 
