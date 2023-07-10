@@ -1,6 +1,6 @@
 ## Unreleased
 ### Fixed
-- Modificada firma de LoyalCongrats component para que sea retrocompatible
+- Se revierten cambios de LoyaltyCongrats para agilizar otros desarrollos
 
 ## [1.56.1] - 2023-07-10
 ### Fixed
