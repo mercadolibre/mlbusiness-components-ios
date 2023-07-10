@@ -1,4 +1,4 @@
-## Unreleased
+## [1.56.2] - 2023-07-10
 ### Fixed
 - Se revierten cambios de LoyaltyCongrats para agilizar otros desarrollos
 
