@@ -1,3 +1,7 @@
+## Unreleased
+### Fixed
+- Modificada firma de LoyaltyHeader para que sea retrocompatible
+
 ## [1.56.0] - 2023-07-07
 ## Changed
 - Modificado componente de congrats de Loyalty, permitiendo agregar una imagen y mostrar o no el diferentes partes existentes
