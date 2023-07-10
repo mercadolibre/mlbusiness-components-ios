@@ -8,7 +8,7 @@
 
 import UIKit
 
-public protocol MLBusinessLoyaltyRingData {
+@objc public protocol MLBusinessLoyaltyRingData {
     @available(*, deprecated, message: "Use optional getRingHexaColor() instead")
     func getRingHexaColor() -> String
     @available(*, deprecated, message: "Use NSNumber getRingNumber() instead")
