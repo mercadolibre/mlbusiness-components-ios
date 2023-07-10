@@ -84,7 +84,7 @@ extension MLBusinessLoyaltyRingView {
         subtitleLabel.font = UIFont.ml_regularSystemFont(ofSize: UI.FontSize.XS_FONT)
         setBold(
             uiLabel: subtitleLabel,
-            string: viewData.getSubtitle?() ?? nil,
+            string: viewData.getSubtitle() ?? nil,
             uiFontNormal: UIFont.ml_regularSystemFont(ofSize: UI.FontSize.XS_FONT),
             uiFontBold: UIFont.ml_boldSystemFont(ofSize: UI.FontSize.XS_FONT))
         subtitleLabel.textColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.45)
@@ -107,10 +107,10 @@ extension MLBusinessLoyaltyRingView {
     private func buildButton() -> UIButton {
         let button = UIButton()
         button.prepareForAutolayout(.clear)
-        button.setTitle(viewData.getButtonTitle?(), for: .normal)
+        button.setTitle(viewData.getButtonTitle(), for: .normal)
         button.titleLabel?.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.XS_FONT)
         button.setTitleColor(MLStyleSheetManager.styleSheet.secondaryColor, for: .normal)
-        if (viewData.getButtonDeepLink?() != nil) {
+        if (viewData.getButtonDeepLink() != nil) {
             button.addTarget(self, action:  #selector(self.didTapOnButton), for: .touchUpInside)
         }
         button.isHidden = viewModel.buttonShouldBeHidden()
@@ -122,7 +122,7 @@ extension MLBusinessLoyaltyRingView {
         icon.layer.cornerRadius =  imageSize / 2
         icon.layer.masksToBounds = true
         icon.isHidden = viewModel.iconShouldBeHidden()
-        icon.setRemoteImage(imageUrl: viewData.getImageUrl?() ?? "")
+        icon.setRemoteImage(imageUrl: viewData.getImageUrl() ?? "")
         icon.translatesAutoresizingMaskIntoConstraints = false
         icon.contentMode = .scaleAspectFill
         icon.prepareForAutolayout(.clear)
@@ -134,7 +134,7 @@ extension MLBusinessLoyaltyRingView {
     private func buildRing() -> UICircularProgressRing {
         let ring = RingFactory.create(
             number: viewModel.getRingNumber(),
-            hexaColor: viewData.getRingHexaColor?() ?? "",
+            hexaColor: viewData.getRingHexaColor() ?? "",
             percent: viewModel.getRingPercentage(),
             fillPercentage: fillPercentProgress,
             innerCenterText: viewModel.getRingCenterText())
@@ -197,7 +197,7 @@ extension MLBusinessLoyaltyRingView {
 
     // MARK: Tap Selector.
     @objc private func didTapOnButton() {
-        tapAction?(viewData.getButtonDeepLink?() ?? "")
+        tapAction?(viewData.getButtonDeepLink() ?? "")
     }
 }
 

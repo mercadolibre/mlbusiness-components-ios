@@ -27,7 +27,7 @@ class LoyaltyImageDataWithAction: NSObject, MLBusinessLoyaltyRingData {
         return "mercadopago://home"
     }
     
-    func getImageUrl() -> String{
+    func getImageUrl() -> String? {
         return "https://i.ibb.co/8d2yZtZ/logo.png"
     }
 }

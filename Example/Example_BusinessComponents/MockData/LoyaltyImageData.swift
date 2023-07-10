@@ -27,7 +27,7 @@ class LoyaltyImageData: NSObject, MLBusinessLoyaltyRingData {
         return nil
     }
     
-    func getImageUrl() -> String{
+    func getImageUrl() -> String? {
         return "https://i.ibb.co/8d2yZtZ/logo.png"
     }
 }

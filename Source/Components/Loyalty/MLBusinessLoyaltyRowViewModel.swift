@@ -16,19 +16,19 @@ class MLBusinessLoyaltyRowViewModel {
     }
     
     func buttonShouldBeHidden() -> Bool {
-        return loyaltyRowData.getButtonTitle?() == "" || loyaltyRowData.getButtonTitle?() == nil || loyaltyRowData.getButtonDeepLink?() == ""
+        return loyaltyRowData.getButtonTitle() == "" || loyaltyRowData.getButtonTitle() == nil || loyaltyRowData.getButtonDeepLink() == ""
     }
     
     func iconShouldBeHidden() -> Bool {
-        return loyaltyRowData.getImageUrl?() == nil || loyaltyRowData.getImageUrl?() == ""
+        return loyaltyRowData.getImageUrl() == nil || loyaltyRowData.getImageUrl() == ""
     }
     
     func ringShouldBeHidden() -> Bool {
-        return loyaltyRowData.getRingNumber?() == nil || loyaltyRowData.getRingHexaColor?() == nil || loyaltyRowData.getRingPercentage?() == nil || loyaltyRowData.getRingNumber?() == nil
+        return loyaltyRowData.getRingNumber() == nil || loyaltyRowData.getRingHexaColor() == nil || loyaltyRowData.getRingPercentage() == nil || loyaltyRowData.getRingNumber() == nil
     }
 
     func getRingNumber() -> Int {
-        return Int(truncating: loyaltyRowData.getRingNumber?() ?? 0)
+        return Int(truncating: (loyaltyRowData.getRingNumber() ?? 0))
     }
     
     func getRingCenterText() -> String {
@@ -36,6 +36,6 @@ class MLBusinessLoyaltyRowViewModel {
     }
     
     func getRingPercentage() -> Float {
-        return Float(truncating: loyaltyRowData.getRingPercentage?() ?? 0)
+        return Float(truncating: (loyaltyRowData.getRingPercentage() ?? 0))
     }
 }
