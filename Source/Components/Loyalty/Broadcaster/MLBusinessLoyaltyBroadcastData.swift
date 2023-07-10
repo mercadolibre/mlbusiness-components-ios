@@ -12,10 +12,10 @@ public class MLBusinessLoyaltyBroadcastData: NSObject {
     public let percentage: Float
     public let primaryColor: String
 
-    public init(level: Int?, percentage: Float?, primaryColor: String?) {
-        self.level = level ?? 1
-        self.percentage = percentage ?? 0.0
-        self.primaryColor = primaryColor ?? "#FFFFFF"
+    public init(level: Int, percentage: Float, primaryColor: String) {
+        self.level = level
+        self.percentage = percentage
+        self.primaryColor = primaryColor
     }
 
 }
