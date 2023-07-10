@@ -1,4 +1,4 @@
-## Unreleased
+## [1.56.1] - 2023-07-10
 ### Fixed
 - Modificada firma de LoyaltyHeader para que sea retrocompatible
 
