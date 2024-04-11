@@ -1,3 +1,7 @@
+## [Unrelease] 
+### Changed
+- Se verifica una URL sacando la vulnerabilidade de injeción de HTML
+
 ## [1.56.2] - 2023-07-10
 ### Fixed
 - Se revierten cambios de LoyaltyCongrats para agilizar otros desarrollos

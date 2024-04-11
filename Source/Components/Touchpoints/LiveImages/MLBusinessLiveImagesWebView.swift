@@ -50,6 +50,10 @@ class MLBusinessLiveImagesWebView: UIView {
     }
         
     func loadImage(from url: String) {
+        guard let urlString = URL(string: url) else {
+            return
+        }
+        
         let html = """
         <html>
         <style>
@@ -91,7 +95,7 @@ class MLBusinessLiveImagesWebView: UIView {
         </html>
         """
         
-        let imageDataString = "data:image/webp;base64, \(url)"
+        let imageDataString = "data:image/webp;base64, \(urlString)"
 
         let s = html.replacingOccurrences(of: "[URL]", with: imageDataString)
         webview.loadHTMLString(s, baseURL: nil)
@@ -109,4 +113,3 @@ extension MLBusinessLiveImagesWebView: WKNavigationDelegate {
         imageAnimationManager?.changeState(to: .readyToPlay)
     }
 }
-
