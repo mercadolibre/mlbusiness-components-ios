@@ -1,6 +1,8 @@
-## [Unrelease] 
-### Changed
-- Se verifica una URL sacando la vulnerabilidade de injeción de HTML
+## [Unrelease]
+
+## [1.57.0] - 2024-04-17
+### Fixed
+- Se verifica una URL sacando la vulnerabilidade de injeción de HTML (XSS)
 
 ## [1.56.2] - 2023-07-10
 ### Fixed
