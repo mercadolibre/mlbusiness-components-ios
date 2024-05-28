@@ -1,4 +1,4 @@
-## [Unrelease]
+## [1.58.0] - 2024-05-28
 ### Fixed
 - Se verifica una URL sacando la vulnerabilidade de injeción de HTML (XSS) y arreglamos el bug que no aparecia la imagen
 
