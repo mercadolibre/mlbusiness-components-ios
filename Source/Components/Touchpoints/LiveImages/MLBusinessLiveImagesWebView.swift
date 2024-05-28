@@ -95,7 +95,7 @@ class MLBusinessLiveImagesWebView: UIView {
         </html>
         """
         
-        let imageDataString = "data:image/webp;base64, \(urlString)"
+        let imageDataString = "data:image/webp;base64, \(url)"
 
         let s = html.replacingOccurrences(of: "[URL]", with: imageDataString)
         webview.loadHTMLString(s, baseURL: nil)
