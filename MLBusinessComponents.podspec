@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   s.author           = "PX Team - Juan Sanzone & Esteban Boffa"
   s.source           = { :git => "https://github.com/mercadolibre/mlbusiness-components-ios", :tag => s.version.to_s }
   s.swift_version    = '5.5'
-  s.platform         = :ios, '13.0'
+  s.platform         = :ios, '15.0'
   s.requires_arc     = true
   s.default_subspec = 'Default'
   s.static_framework = true
@@ -16,5 +16,6 @@ Pod::Spec.new do |s|
     default.source_files = ['Source/**/**/**/*.{h,m,swift}']
     default.resource_bundles = { 'MLBusinessComponentsResources' => ['Source/Assets/*.xcassets'] }
     s.dependency 'MLUI', '~> 5.0'
+    s.dependency 'AndesUI', '~> 3.147'
   end
 end

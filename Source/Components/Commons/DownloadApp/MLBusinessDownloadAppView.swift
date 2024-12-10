@@ -7,6 +7,7 @@
 
 import Foundation
 import MLUI
+import AndesUI
 
 @objcMembers
 open class MLBusinessDownloadAppView: UIView {
@@ -107,7 +108,7 @@ extension MLBusinessDownloadAppView {
 
     private func buildDownloadButton(leftTo targetView: UIView) -> UIButton {
         let downloadButton = UIButton()
-        downloadButton.prepareForAutolayout(MLStyleSheetManager.styleSheet.secondaryColor)
+        downloadButton.prepareForAutolayout(UIColor.Andes.fillAccent)
         self.addSubview(downloadButton)
         downloadButton.layer.cornerRadius = 6
         downloadButton.setTitle(viewData.getButtonTitle(), for: .normal)

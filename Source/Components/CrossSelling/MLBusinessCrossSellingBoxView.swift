@@ -7,6 +7,7 @@
 
 import Foundation
 import MLUI
+import AndesUI
 
 @objcMembers
 open class MLBusinessCrossSellingBoxView: UIView {
@@ -85,7 +86,7 @@ extension MLBusinessCrossSellingBoxView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(viewData.getButtonTitle(), for: .normal)
         button.titleLabel?.font = UIFont.ml_semiboldSystemFont(ofSize: UI.FontSize.XS_FONT)
-        button.setTitleColor(MLStyleSheetManager.styleSheet.secondaryColor, for: .normal)
+        button.setTitleColor(UIColor.Andes.fillAccent, for: .normal)
         button.contentHorizontalAlignment = .left
         button.titleLabel?.lineBreakMode = .byTruncatingTail
         button.titleLabel?.numberOfLines = 1
