@@ -7,6 +7,7 @@
 
 import Foundation
 import MLUI
+import AndesUI
 
 @objc
 public class MLBusinessAnimatedButton: UIButton {
@@ -21,7 +22,7 @@ public class MLBusinessAnimatedButton: UIButton {
 
     public override var isEnabled: Bool {
         didSet {
-            backgroundColor = self.isEnabled ? MLStyleSheetManager.styleSheet.secondaryColor : MLStyleSheetManager.styleSheet.lightGreyColor
+            backgroundColor = self.isEnabled ? UIColor.Andes.fillAccent : UIColor.Andes.fillDisabled
         }
     }
 
@@ -42,12 +43,12 @@ public class MLBusinessAnimatedButton: UIButton {
         translatesAutoresizingMaskIntoConstraints = false
         heightAnchor.constraint(equalToConstant: 48).isActive = true
         setTitle(normalLabel, for: .normal)
-        setTitleColor(MLStyleSheetManager.styleSheet.whiteColor, for: .normal)
-        setTitleColor(MLStyleSheetManager.styleSheet.greyColor, for: .disabled)
+        setTitleColor(UIColor.Andes.textColorWhite, for: .normal)
+        setTitleColor(UIColor.Andes.textColorDisabled, for: .disabled)
         layer.cornerRadius = 4
-        backgroundColor = MLStyleSheetManager.styleSheet.secondaryColor
-        layer.borderColor = MLStyleSheetManager.styleSheet.secondaryColor.cgColor
-        titleLabel?.font = MLStyleSheetManager.styleSheet.regularSystemFont(ofSize: CGFloat(kMLFontsSizeMedium))
+        backgroundColor = UIColor.Andes.fillAccent
+        layer.borderColor = UIColor.Andes.fillAccent.cgColor
+        titleLabel?.font = UIFont.Andes.semiboldSystemFontOfSize(size: AndesFontSize.bodyM)
     }
 
     @objc
