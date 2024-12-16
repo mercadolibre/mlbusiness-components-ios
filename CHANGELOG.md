@@ -1,4 +1,5 @@
 ## [Unrelease]
+
 ## [1.59.0]
 - Se actualizaron los componentes de CrossSelling y DownloadApp para usar los colores de AndesUI.
 
