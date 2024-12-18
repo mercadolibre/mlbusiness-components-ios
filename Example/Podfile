@@ -1,6 +1,7 @@
 source 'https://cdn.cocoapods.org'
 
-platform :ios, '15.0'
+min_deployment_target = '15.0'
+platform :ios, min_deployment_target
 use_frameworks!
 
 target 'Example_BusinessComponents' do
@@ -8,4 +9,39 @@ target 'Example_BusinessComponents' do
     #target 'Example_BusinessComponentsTests' do
     	#inherit! :search_paths
     #end
+end
+
+post_install do |installer|
+
+  installer.pods_project.build_configurations.each do |config|
+    if /aarch64|arm64/.match?(`uname -m`)
+      config.build_settings['EXCLUDED_ARCHS[sdk=iphonesimulator*]'] = 'arm64'
+    else
+      config.build_settings['EXCLUDED_ARCHS[sdk=iphonesimulator*]'] = 'ARCHS_STANDARD'
+    end
+  end
+
+  #  Set IPHONEOS_DEPLOYMENT_TARGET to all user project & pods project targets
+  installer.generated_aggregate_targets.each do |aggregate_target|
+    aggregate_target.user_project.build_configurations.each do |config|
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = min_deployment_target
+    end
+
+    aggregate_target.user_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = min_deployment_target
+      end
+    end
+  end
+
+  installer.pods_project.build_configurations.each do |config|
+    config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = min_deployment_target
+  end
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = min_deployment_target
+    end
+  end
+  #  Set IPHONEOS_DEPLOYMENT_TARGET to all user project & pods project targets
+
 end

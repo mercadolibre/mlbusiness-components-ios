@@ -1,4 +1,10 @@
 ## [Unrelease]
+
+## [1.59.0]
+- Modificado el componente MLBusinessAnimatedButton para que use colores de Andes.
+- Se actualizaron los componentes de CrossSelling y DownloadApp para usar los colores de AndesUI.
+
+## [1.58.0]
 ### Fixed
 - Se verifica una URL sacando la vulnerabilidade de injeción de HTML (XSS) y arreglamos el bug que no aparecia la imagen
 
