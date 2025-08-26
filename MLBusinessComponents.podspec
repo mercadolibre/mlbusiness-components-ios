@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
     default.source_files = ['Source/**/**/**/*.{h,m,swift}']
     default.resource_bundles = { 'MLBusinessComponentsResources' => ['Source/Assets/*.xcassets'] }
     s.dependency 'MLUI', '~> 5.0'
-    s.dependency 'AndesUI', '~> 3.147'
+    s.dependency 'AndesUI', '~> 3.162'
   end
   
   s.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
