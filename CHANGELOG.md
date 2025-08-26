@@ -1,5 +1,7 @@
 ## [Unrelease]
 
+- Andes update in MLBusinessComponents.podspec
+
 ## [1.59.0]
 - Modificado el componente MLBusinessAnimatedButton para que use colores de Andes.
 - Se actualizaron los componentes de CrossSelling y DownloadApp para usar los colores de AndesUI.
